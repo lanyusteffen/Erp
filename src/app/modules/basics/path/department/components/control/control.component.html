@@ -1,0 +1,68 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+  <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
+    <div class="card-content">
+      <div class="heading">
+        基本信息
+      </div>
+      <table class="form">
+        <tr>
+          <th class="form-label">
+            所属分类：
+          </th>
+          <td class="form-control-group">
+            <input #formField type="hidden" [ngModel] formControlName = "CategoryId">
+            {{categoryName}}
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            部门编号：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Code'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+            </app-form-field>
+          </td>
+          <th>
+            <span class="required">*</span>
+            部门名称：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Name'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+            </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            联系电话：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Mobile'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Mobile">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            地址：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Address'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Address">
+            </app-form-field>
+          </td>
+        </tr>
+      </table>
+      <div class="heading">备注</div>
+      <input type="text" formControlName="Remark" class="form-control" [ngModel]>
+    </div>
+    <div app-card-footer>
+      <app-ui-button [style]="'primary'" type="submit">
+        保存
+      </app-ui-button>
+      <app-ui-button (click)="handleClose()">
+        取消
+      </app-ui-button>
+    </div>
+  </app-card>
+</form>

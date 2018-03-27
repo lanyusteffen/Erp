@@ -1,0 +1,85 @@
+<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+        <th>供应商编号</th>
+        <th>供应商名称</th>
+        <th>所属地区</th>
+        <th>所属采购人员</th>
+        <th>联系人信息</th>
+        <th>期初应付款</th>
+        <th>应付款额度</th>
+        <th>应付款账期</th>
+        <th>售价等级</th>
+        <th>银行账号</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of suppliers">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a (click)="update(item.Id)">修改</a>
+          <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+        </td>
+        <td>{{item.Code}}</td>
+        <td>{{item.Name}}</td>
+        <td>{{item.AreaName}}</td>
+        <td>{{item.EmployeeName}}</td>
+        <td>
+          <a (click)="showContact(item.Id)">详情</a>
+        </td>
+        <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>
+        <td>{{item.ShouldPayAmountLimit | number: '1.2'}}</td>
+        <td>{{item.ShoulePayAmountPeriod | stringAddon: '天'}}</td>
+        <td>{{item.SalePriceLevelDes}}</td>
+        <td>{{item.BankInfo}}</td>
+        <td>{{item.Remark}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar
+    [total]="pagination.TotalCount"
+    [current]="pagination.PageIndex"
+    (onChange)="onPageChange($event)"
+  ></app-pagination-bar>
+  <app-card [header]="'联系人信息'" [show]="_showContact" (onCancel)="closeContact()">
+    <app-ui-table>
+      <thead>
+        <th>联系人</th>
+        <th>手机</th>
+        <th>座机</th>
+        <th>传真</th>
+        <th>邮箱</th>
+        <th>单位地址</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of contactList">
+          <td>{{item.Name}}</td>
+          <td>{{item.Mobile}}</td>
+          <td>{{item.Tel}}</td>
+          <td>{{item.Fax}}</td>
+          <td>{{item.Email}}</td>
+          <td>{{item.Address}}</td>
+        </tr>
+      </tbody>
+    </app-ui-table>
+    <div app-card-footer>
+      <app-ui-button [style]="'primary'" (click)="closeContact()">
+        确定
+      </app-ui-button>
+    </div>
+  </app-card>
+  <app-supplier-control
+    [type]="'update'"
+    [customerId]="selectedId"
+    [show]="_showUpdate"
+    (onClose)="closeUpdate()"
+  ></app-supplier-control>
+</div>

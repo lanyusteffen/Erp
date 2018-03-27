@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <app-card [header]="'商品价格管理'" [show]="_show" (onCancel)="handleClose()">
+        <div class="card-content">
+            <app-ui-table>
+              <thead>                    
+                  <th>仓库</th>
+                  <th>颜色</th>
+                  <th>尺码</th>
+                  <th>单位</th>                  
+                  <th>期初数量</th>
+                  <th>成本单价</th>
+                  <th>期初总额</th>
+                  <th>下线报警值</th>
+                  <th>上线报警值</th>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of storageInitList">
+                    <td>{{item.StorageName}}</td>
+                    <td>{{item.ProductSpecColorAlias}}</td>
+                    <td>{{item.ProductSpecSizeAlias}}</td>
+                    <td>{{item.ProductUnit}}</td>
+                    <td>{{item.UnitCost}}</td>
+                    <td>{{item.InitialTotalAmount}}</td>
+                    <td>{{item.BeginCount}}</td>
+                    <td>{{item.StorageLowerAlarmCount}}</td>
+                    <td>{{item.StorageUpAlarmCount}}</td>
+                  </tr>
+              </tbody>
+            </app-ui-table>
+        </div>
+    </app-card>
+    </form>

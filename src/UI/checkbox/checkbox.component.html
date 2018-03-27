@@ -1,0 +1,5 @@
+<label class="checkbox" [ngClass]="{'checked': checked, 'inline': inline}">
+  <input type="checkbox" [(ngModel)]="checked" (change)="handleChange($event)" />
+  <i class="iconfont icon-selected"></i>
+  <ng-content></ng-content>
+</label>

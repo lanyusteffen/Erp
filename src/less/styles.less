@@ -1,0 +1,224 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system , BlinkMacSystemFont , "Segoe UI" , Roboto , "Segoe UI" , "Helvetica Neue", "PingFang SC", "Noto Sans" , "Noto Sans CJK SC" , "Microsoft YaHei" , "微软雅黑" , sans-serif;
+  font-size: 12px;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+  color: @text-color;
+  height: 100%;
+}
+
+a {
+  color: @text-color;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  outline: none;
+}
+
+input {
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.text-danger {
+  color: @danger-color;
+}
+
+.text-success {
+  color: @success-color;
+}
+
+.actions {
+  padding: 10px 16px;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid @border-color;
+  display: flex;
+
+  .btn {
+    margin-left: 10px;
+  }
+
+  .more {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.more-actions {
+  padding: 10px 16px;
+  border-bottom: 1px solid @border-color;
+
+  .btn + .btn {
+    margin-left: 10px;
+  }
+}
+
+.form {
+  width: 100%;
+  white-space: nowrap;
+
+  th, td {
+    padding: 5px;
+    font-weight: normal;
+  }
+}
+
+.validate-message {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 2px;
+  color: @danger-color;
+  font-size: 12px;
+  background-color: #fcedeb;
+  border: 1px solid #edbab5;
+  border-radius: 2px;
+  padding: 5px;
+  color: @form-control-color;
+  z-index: 1;
+
+  .iconfont {
+    color: @danger-color;
+  }
+}
+
+.form-label {
+  font-size: 12px;
+  color: @text-color;
+  text-align: right;
+  width: 1%;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: @border-color;
+  background: #fff;
+  outline: none;
+  padding: 5px 10px;
+  line-height: normal;
+  font-size: 12px;
+  color: @form-control-color;
+  transition: all .3s ease;
+
+  &:focus {
+    border-color: @primary-color;
+  }
+}
+
+.form-static-control {
+  font-size: 12px;
+  color: @form-control-color;
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.required {
+  color: @danger-color;
+  font-size: 12px;
+}
+
+.backdrop-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 1);
+  transition: all .3s ease;
+  z-index: -1;
+
+  &.show {
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 998;
+  }
+}
+
+.alert-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.close {
+  color: @close-color;
+
+  &:hover {
+    color: @close-hover-color;
+  }
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+
+  .form-group-label {
+    // display: flex;
+    // align-items: center;
+  }
+
+  .form-group-control {}
+
+  &+.form-group {
+    margin-left: 10px;
+  }
+}
+
+.selector-group {
+  position: relative;
+  width: 200px;
+
+  .form-control {
+    border-width: 1px;
+    border-radius: 4px;
+    padding-right: 40px;
+  }
+
+  .addon {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    right: 0;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid @border-color;
+    cursor: pointer;
+  }
+}

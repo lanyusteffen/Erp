@@ -1,0 +1,14 @@
+<app-ui-dropdown [placement]="placement" [class.form-select]="formSelect">
+  <button type="button" class="dropdown-toggle" #toggle app-ui-dropdown-toggle>
+    <span class="text">{{_currentValue.label}}</span>
+    <span class="caret"></span>
+  </button>
+  <ul #menu app-ui-dropdown-menu>
+    <li *ngFor="let option of options">
+      <a
+        [class.active]="_currentValue.value === option.value"
+        (click)="handleChange(option.value)"
+      >{{option.label}}</a>
+    </li>
+  </ul>
+</app-ui-dropdown>

@@ -1,0 +1,21 @@
+<div
+  class="card"
+  [class.show]="show"
+>
+  <div class="card-header">
+    <div class="title">{{header}}</div>
+    <a (click)="handleCancel()" class="close">
+      <i class="iconfont icon-close"></i>
+    </a>
+  </div>
+  <div class="card-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="card-footer">
+    <ng-content select="[app-card-footer]"></ng-content>
+  </div>
+</div>
+<div
+  class="backdrop-background"
+  [class.show]="show"
+></div>

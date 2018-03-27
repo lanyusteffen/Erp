@@ -1,0 +1,29 @@
+<div class="table-wrapper">
+    <app-ui-table>
+      <thead>
+        <tr>         
+          <th>商品编号</th>
+          <th>商品名称</th>
+          <th>规格型号</th>
+          <th>单位</th>
+          <th>颜色</th>
+          <th>尺码</th>
+          <th>条形码</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of barcodes">         
+          <td>{{item.ProductCode}}</td>
+          <td>{{item.ProductName}}</td>
+          <td>{{item.Spec}}</td>
+          <td>{{item.ProductUnit}}</td>
+          <td>{{item.ProductColor}}</td>
+          <td>{{item.ProductSize}}</td>
+          <td><input #formField type="text" value="{{item.BarCode}}" class="form-control" (keyup.enter)="changeBarcode(item,formField.value)"/></td>
+          <td>{{item.Remark}}</td>
+        </tr>
+      </tbody>
+    </app-ui-table>
+    <app-pagination-bar [total]="pagination.TotalCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
+  </div>

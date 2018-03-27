@@ -1,0 +1,44 @@
+<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+        <th>收入编号</th>
+        <th>收入名称</th>
+        <th>账户详情</th>
+        <th>起初余额</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of funds">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a (click)="update(item.Id)">修改</a>
+          <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+        </td>
+        <td>{{item.Code}}</td>
+        <td>{{item.Name}}</td>
+        <td>{{item.AccountInfo}}</td>
+        <td>{{item.InitBalance}}</td>
+        <td>{{item.Remark}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar
+    [total]="pagination.TotalCount"
+    [current]="pagination.PageIndex"
+    (onChange)="onPageChange($event)"
+  ></app-pagination-bar>
+  <app-funds-control
+    [type]="'update'"
+    [fundsId]="selectedId"
+    [show]="_showUpdate"
+    (onClose)="closeUpdate()"
+  ></app-funds-control>
+</div>

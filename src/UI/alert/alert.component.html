@@ -1,0 +1,9 @@
+<div class="alert alert-{{_type}}">
+  <p>
+    <i class="icon iconfont icon-{{icon}}"></i>
+    <ng-content></ng-content>
+  </p>
+  <a (click)="handleClose()" class="close">
+    <i class="iconfont icon-close"></i>
+  </a>
+</div>

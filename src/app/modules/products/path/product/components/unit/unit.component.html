@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <app-card [header]="'商品价格管理'" [show]="_show" (onCancel)="handleClose()">
+        <div class="card-content">
+            <app-ui-table>
+              <thead>                    
+                  <th>单位类型</th>
+                  <th>单位名称</th>
+                  <th>单位倍量</th>
+                  <th>预设采购价</th>                  
+                  <th>1级售价</th>
+                  <th>2级售价</th>
+                  <th>3级售价</th>
+                  <th>4级售价</th>
+                  <th>5级售价</th>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of productUnitList">
+                    <td>{{item.UnitTypeName}}</td>
+                    <td>{{item.Name}}</td>
+                    <td>{{item.UnitTime}}</td>
+                    <td>{{item.PrePurchasePrice}}</td>
+                    <td>{{item.PriceLevel1}}</td>
+                    <td>{{item.PriceLevel2}}</td>
+                    <td>{{item.PriceLevel3}}</td>
+                    <td>{{item.PriceLevel4}}</td>
+                    <td>{{item.PriceLevel5}}</td>
+                  </tr>
+              </tbody>
+            </app-ui-table>
+        </div>
+    </app-card>
+    </form>

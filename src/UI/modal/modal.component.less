@@ -1,0 +1,53 @@
+@import "ui.variables.less";
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 520px;
+  min-height: 150px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 24px 0 rgba(42, 53, 65, 0.24), 0 0 12px 0 rgba(42, 53, 65, 0.12);
+  display: none;
+  flex-direction: column;
+
+  &.show {
+    display: flex;
+    z-index: 999;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid @border-color;
+    display: flex;
+    padding: 0 16px;
+    height: 48px;
+    align-items: center;
+
+    .modal-title {
+      flex: 1;
+      color: @modal-header-title-color;
+      font-size: 16px;
+      font-weight: 300;
+    }
+  }
+
+  .modal-body {
+    flex: 1;
+    overflow: auto;
+  }
+
+  .modal-footer {
+    border-top: 1px solid @border-color;
+    background-color: @general-background-color;
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 0 0 4px 4px;
+    padding: 8px 16px;
+
+    .btn {
+      margin-left: 8px;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<div
+  class="dropdown dropdown-{{placement}}"
+  [class.visible]="_visible"
+>
+  <ng-content select="[app-ui-dropdown-toggle]"></ng-content>
+  <div class="dropdown-menu">
+    <ng-content select="[app-ui-dropdown-menu]"></ng-content>
+  </div>
+</div>

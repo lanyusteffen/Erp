@@ -1,0 +1,54 @@
+@import "ui.variables.less";
+
+.table {
+
+  table {
+    min-width: 100%;
+    white-space: nowrap;
+    text-align: left;
+
+    thead {
+
+      th {
+        height: 40px;
+        color: @table-thead-color;
+        font-weight: normal;
+        border-bottom: 1px solid @border-color;
+        padding: 0 8px;
+
+        app-ui-checkbox {
+          display: block;
+          font-size: 0;
+        }
+      }
+    }
+
+    tbody {
+
+      td {
+        height: 40px;
+        color: @table-tbody-color;
+        border-bottom: 1px solid @border-color;
+        padding: 0 8px;
+
+        app-ui-checkbox {
+          display: block;
+          font-size: 0;
+        }
+
+        a {
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      tr {
+        &:hover {
+          background-color: @table-tbody-hover-color;
+        }
+      }
+    }
+  }
+}

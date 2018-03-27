@@ -1,0 +1,66 @@
+<div class="selector-group">
+  <input type="text" class="form-control" />
+  <span class="addon" (click)="showModal($event)">
+    <i class="iconfont icon-filter"></i>
+  </span>
+</div>
+<app-ui-modal [show]="show" (onClose)="closeModal($event)">
+  <div app-ui-modal-header>
+    选择供应商
+  </div>
+  <div class="modal-body-wrapper">
+    <div class="tabs">
+      <ul class="tabs-list">
+        <li><a href="">客户</a></li>
+        <li><a href="" class="active">供应商</a></li>
+        <li><a href="">其他往来单位</a></li>
+      </ul>
+    </div>
+    <div class="actions">
+      <app-quick-search [placeholder]="'编号、姓名'"></app-quick-search>
+      <div class="more">
+        <a href="">
+          <i class="iconfont icon-refresh"></i>
+        </a>
+      </div>
+    </div>
+    <div class="content">
+      <app-category></app-category>
+      <div class="table-wrapper">
+        <app-ui-table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>客户编号</th>
+              <th>客户名称</th>
+              <th>应收款</th>
+              <th>信用额度</th>
+              <th>可用额度</th>
+              <th>价格等级</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </app-ui-table>
+        <app-pagination-bar
+          [total]="10"
+          [current]="1"
+          (onChange)="onPageChange($event)"
+        ></app-pagination-bar>
+      </div>
+    </div>
+  </div>
+  <div app-ui-modal-footer>
+    <app-ui-button [style]="'primary'">确定</app-ui-button>
+    <app-ui-button (click)="closeModal($event)">取消</app-ui-button>
+  </div>
+</app-ui-modal>

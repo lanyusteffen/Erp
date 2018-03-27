@@ -1,0 +1,57 @@
+@import 'ui.variables.less';
+
+.btn {
+  display: inline-flex;
+  background-color: #fff;
+  color: @button-default-color;
+  outline: none;
+  border: 1px solid @button-default-border-color;
+  border-radius: 4px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 16px;
+  align-items: center;
+  vertical-align: top;
+  cursor: pointer;
+
+  &:hover {
+    color: @button-default-hover-color;
+  }
+
+  .iconfont {
+    margin-right: 4px;
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    border-color: @disabled-background-color;
+    background-color: @disabled-background-color;
+    color: @disabled-color;
+    cursor: default;
+  }
+}
+
+.btn-default {
+}
+
+.btn-primary {
+  background-color: @button-primary-color;
+  border: 0;
+  color: #fff;
+
+  &:hover {
+    background-color: @button-primary-hover-color;
+    color: #fff;
+  }
+}
+
+.btn-danger {
+  background-color: @button-danger-color;
+  color: #fff;
+  border: 0;
+
+  &:hover {
+    background-color: @button-danger-hover-color;
+    color: #fff;
+  }
+}

@@ -1,0 +1,28 @@
+.form-select {
+  display: block;
+  width: 100%;
+
+  .dropdown {
+    display: block;
+    width: 100%;
+
+    .dropdown-toggle {
+      border-width: 0 0 1px;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+
+      .text {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &:hover {
+        background: none;
+        cursor: pointer;
+      }
+    }
+  }
+}

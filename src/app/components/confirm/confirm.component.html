@@ -1,0 +1,10 @@
+<app-ui-modal [show]="show" (onClose)="handleOnClose()">
+  <div app-ui-modal-header>
+    确认提示
+  </div>
+  <ng-content></ng-content>
+  <div app-ui-modal-footer>
+    <app-ui-button [style]="'primary'" (click)="handleOnConfirm()">确定</app-ui-button>
+    <app-ui-button (click)="handleOnClose()" >取消</app-ui-button>
+  </div>
+</app-ui-modal>

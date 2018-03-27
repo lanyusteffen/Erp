@@ -1,0 +1,63 @@
+@import "ui.variables.less";
+
+.checkbox {
+  display: block;
+  position: relative;
+  min-height: 16px;
+  line-height: 16px;
+  font-size: 12px;
+  padding-left: 22px;
+  cursor: pointer;
+
+  &.inline {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &.checked {
+
+    &:before {
+      border-color: @primary-color;
+      background-color: @primary-color;
+    }
+
+    i {
+      color: #fff;
+    }
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+
+    &:checked + i {
+      visibility: visible;
+    }
+  }
+
+  i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    font-size: 16px;
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border: 1px solid @border-color;
+    border-radius: 4px;
+  }
+}

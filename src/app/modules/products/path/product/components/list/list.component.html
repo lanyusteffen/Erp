@@ -1,0 +1,60 @@
+<div class="table-wrapper">
+    <app-ui-table>
+      <thead>
+        <tr>
+          <th>
+            <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+          </th>
+          <th>操作</th>
+          <th>商品编号</th>
+          <th>商品名称</th>
+          <th>规格型号</th>
+          <th>品牌</th>
+          <th>产地</th>
+          <th>重量</th>
+          <th>扩展属性</th>
+          <th>价格管理</th>
+          <th>期初信息</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of products">
+          <td>
+            <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+          </td>
+          <td>
+            <a (click)="update(item.Id)">修改</a>
+            <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="onRemove(item.Id)">删除</a>
+            <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+          </td>
+          <td>{{item.Code}}</td>
+          <td>{{item.Name}}</td>
+          <td>{{item.Spec}}</td>
+          <td>{{item.BrandName}}</td>
+          <td>{{item.ProductionPlace}}</td>
+          <td>{{item.Weight}}</td>
+          <td><a *ngIf="item.IsOpenSku" (click)="extension(item.Id)">详情</a></td>
+          <td><a (click)="unit(item.Id)">详情</a></td>
+          <td><a (click)="storageInit(item.Id)">详情</a></td>
+          <td>{{item.Remark}}</td>
+        </tr>
+      </tbody>
+    </app-ui-table>
+    <app-pagination-bar [total]="pagination.TotalCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
+    <app-product-extension
+    [productId]="extendProductId"
+    [show]="_showUpdate"
+    (onClose)="closeExtension()"
+  ></app-product-extension>
+  <app-product-unit
+    [productId]="unitProductId"
+    [show]="_showUnitUpdate"
+    (onClose)="closeUnit()"
+  ></app-product-unit>
+  <app-product-storageInit
+    [productId]="storageInitProductId"
+    [show]="_showStorageInitUpdate"
+    (onClose)="closeStorageInit()"
+  ></app-product-storageInit>
+  </div>

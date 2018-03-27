@@ -1,0 +1,27 @@
+<div class="pagination-bar">
+  <div class="summary">
+    共 {{_total}} 条，当前第 {{current}} 页
+  </div>
+  <app-ui-pagination
+    [boundaryLinks]="true"
+    [prev]="true"
+    [next]="true"
+    [ellipsis]="true"
+    [items]="items"
+    [maxButtons]="5"
+    [activePage]="current"
+    (onChange)="handleChange($event)"
+  ></app-ui-pagination>
+  <app-ui-select
+    class="per-page"
+    [options]="options"
+    [value]="_size"
+    [placement]="'top'"
+    (onChange)="handleSizeChange($event)"
+  ></app-ui-select>
+  <div class="jump">
+    跳至
+    <input type="text" class="form-control" (keyup.enter)="handleJumpPage($event)" />
+    页
+  </div>
+</div>

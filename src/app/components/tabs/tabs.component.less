@@ -1,0 +1,88 @@
+@import "variables.less";
+
+.tabs {
+  border-bottom: 1px solid @border-color;
+  display: flex;
+}
+
+.tabs-list {
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  li {
+    height: 100%;
+    margin-bottom: -1px;
+
+    a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      position: relative;
+      padding: 0 16px;
+      color: @text-color;
+      border-bottom: 2px solid transparent;
+
+      .iconfont {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: @danger-color;
+      }
+
+      &:hover {
+        color: @primary-color;
+
+        .iconfont {
+          display: block;
+        }
+      }
+
+      &.active {
+        color: @primary-color;
+        border-bottom-color: @primary-color;
+      }
+    }
+  }
+}
+
+.angle {
+  width: 20px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.angle-left {
+    border-right: 1px solid @border-color;
+  }
+
+  &.angle-right {
+    border-left: 1px solid @border-color;
+  }
+
+  &:hover {
+    background-color: @hover-color;
+  }
+}
+
+.more {
+  border-left: 1px solid @border-color;
+  height: 36px;
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 0;
+    height: 100%;
+    width: 25px;
+
+    &:hover {
+      background-color: @hover-color;
+      cursor: pointer;
+    }
+  }
+}

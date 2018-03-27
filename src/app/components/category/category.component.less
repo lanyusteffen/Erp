@@ -1,0 +1,82 @@
+@import "variables.less";
+
+app-category {
+  height: 100%;
+  width: 280px;
+  min-width: 280px;
+  border-right: 1px solid @border-color;
+}
+
+.category {
+
+  ul {
+
+    li {
+      position: relative;
+      padding-left: 20px;
+      line-height: 30px;
+
+      .iconfont {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-color: #fff;
+        position: relative;
+        z-index: 1;
+        line-height: normal;
+
+        & + a {
+          margin-left: 0;
+        }
+      }
+
+      a {
+        margin-left: 10px;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 0;
+        top: -15px;
+        bottom: 15px;
+        left: 6px;
+        border-left: 1px dashed @border-color;
+      }
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 0;
+        width: 20px;
+        border-top: 1px dashed @border-color;
+        top: 14px;
+        left: 6px;
+      }
+
+      &:last-child:before {
+        bottom: ~"calc(100% - 15px)";
+      }
+
+      &.active {
+
+        > a {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+
+  > ul {
+
+    > li {
+
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

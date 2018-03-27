@@ -1,0 +1,25 @@
+<div class="menu">
+  <ul class="menu-list">
+    <li *ngFor="let menu of menus">
+      <a title="{{menu.name}}">
+        <i class="iconfont icon-{{menu.icon}}"></i>
+      </a>
+      <div class="sub-menu">
+        <ul>
+          <li *ngFor="let subMenu of menu.subMenu">
+            <a>{{subMenu.name}}</a>
+            <div class="sub-menu">
+              <ul>
+                <li *ngFor="let subMenuLink of subMenu.subMenu">
+                  <a routerLink="{{subMenuLink.link}}" (click)="createTab(subMenuLink)">
+                    {{subMenuLink.name}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,116 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+  <app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
+    <div class="card-content">
+      <div class="heading">
+        基本信息
+      </div>
+      <table class="form">
+        <tr>
+          <th class="form-label">所属分类：</th>
+          <td class="form-control-group" colspan="3">
+            {{categoryName}}
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            往来单位编号：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Code'">
+             <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+            </app-form-field>
+          </td>
+          <th>
+            <span class="required">*</span>
+            往来单位名称：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Name'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+            </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">所属地区：</th>
+          <td class="form-control-group">
+            <app-area-selector formControlName="AreaId" ngModel></app-area-selector>
+          </td>
+          <th class="form-label">所属采购人员：</th>
+          <td class="form-control-group">
+            <app-employee-selector formControlName="EmployeeId" ngModel></app-employee-selector>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">银行账户：</th>
+          <td class="form-control-group" colspan="3">
+            <input type="text" formControlName="BankInfo" class="form-control" [ngModel]>
+            <input type="hidden" formControlName="CustomerType" class="form-control" [ngModel]>
+          </td>
+        </tr>
+      </table>
+      <div class="heading">
+        期初信息
+      </div>
+      <table class="form">
+        <tr>
+          <th class="form-label">期初应付款：</th>
+          <td class="form-control-group">
+            <input type="text" formControlName="InitShouldPayAmount" class="form-control" [ngModel]>
+          </td>
+          <th class="form-label">售价等级：</th>
+          <td class="form-control-group">
+            <app-sale-price-level-selector formControlName="SalePriceLevelId" ngModel></app-sale-price-level-selector>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">应收款额度：</th>
+          <td class="form-control-group">
+            <input type="text" formControlName="ShouldPayAmountLimit" class="form-control" [ngModel]>
+          </td>
+          <th class="form-label">应收款账期：</th>
+          <td class="form-control-group">
+            <input type="text" formControlName="ShoulePayAmountPeriod" class="form-control" [ngModel]>
+          </td>
+        </tr>
+      </table>
+      <div class="heading">联系人信息</div>
+      <app-ui-table>
+        <thead>
+          <th>操作</th>
+          <th>联系人</th>
+          <th>手机</th>
+          <th>座机</th>
+          <th>传真</th>
+          <th>邮箱</th>
+          <th>单位地址</th>
+        </thead>
+        <tbody formArrayName="CustomerContractorList">
+          <tr *ngFor="let item of contractorList.controls; index as i" [formGroupName]="i">
+            <td>
+              <a class="text-success" (click)="addContractor(i)"><i class="iconfont icon-add"></i></a>
+              <a class="text-danger" (click)="removeContractor(i)"><i class="iconfont icon-close"></i></a>
+            </td>
+            <td><input type="text" formControlName="Name" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="Mobile" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="Tel"  class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="Fax"  class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="Email" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="Address" class="form-control" [ngModel]></td>
+          </tr>
+        </tbody>
+      </app-ui-table>
+      <div class="heading">备注</div>
+      <input type="text" formControlName="Remark" class="form-control" [ngModel]>
+    </div>
+    <div app-card-footer>
+      <app-ui-button [style]="'primary'" type="submit">
+        保存
+      </app-ui-button>
+      <app-ui-button (click)="handleClose()">
+        取消
+      </app-ui-button>
+    </div>
+  </app-card>
+  <input type="hidden" formControlName="CustomerType" value="3" [ngModel]>
+</form>

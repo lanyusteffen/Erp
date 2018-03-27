@@ -1,0 +1,39 @@
+@import "./ui.variables.less";
+
+.alert {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 9px 10px;
+  box-shadow: 0 1px 1.5px 0 rgba(42, 53, 65, 0.06), 0 0 1px 0 rgba(42, 53, 65, 0.06);
+  color: @alert-text-color;
+  font-size: 12px;
+  margin-top: 4px;
+
+  .close {
+    margin-left: 10px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.alert-success {
+  border-color: @alert-success-border-color;
+  background-color: @alert-success-background-color;
+
+  .icon {
+    color: @alert-success-icon-color;
+  }
+}
+
+.alert-danger {
+  border-color: @alert-danger-border-color;
+  background-color: @alert-danger-background-color;
+
+  .icon {
+    color: @alert-danger-icon-color;
+  }
+}
