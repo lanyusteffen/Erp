@@ -49,13 +49,29 @@ export class TabsService {
   }
 
   remove(tab: Tab) {
-    this.tabs = this.tabs.filter(item => item.id !== tab.id);
+    let removeIndex = 0;
+    for (let i = 0; i < this.tabs.length; i++) {
+      const item = this.tabs[i];
+      if (item.id === tab.id) {
+        this.tabs.splice(i, 1);
+        removeIndex = i;
+        break;
+      }
+    }
     this.tabs$.next(this.tabs);
+    // while (this.tabs.length <= removeIndex) {
+    //   --removeIndex;
+    // }
   }
 
   clear() {
     this.id = 1;
-    this.tabs = [homeTab];
+    for (let i = 0; i < this.tabs.length; i++) {
+      if (i == 0) {
+        continue;
+      }
+      this.tabs.splice(i, 1);
+    }
     this.tabs$.next(this.tabs);
   }
 }
