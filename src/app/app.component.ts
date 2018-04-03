@@ -2,11 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TabsService, Tab } from './components/tabs/tabs.service';
 import { AppService } from './services/app.service';
-import { Router } from '@angular/router';
 import { AlertService } from './services/alert.service';
-import { LoadingService } from './services/loading.service';
 import { ConfirmService } from './services/confirm.service';
-
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { NavigationCancel, Event, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -31,13 +30,13 @@ export class AppComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private alertService: AlertService,
     private confirmService: ConfirmService,
-    private loadingService: LoadingService
+    private _router: Router,
+    private _loadingBar: SlimLoadingBarService
   ) {
-    this.loadingSubscription = this.loadingService
-      .get()
-      .subscribe((loading) => {
-        this.loading = loading;
-      });
+
+    // this._router.events.subscribe((event: Event) => {
+    //   this.navigationInterceptor(event);
+    // });
 
     this.subscription = this.tabsService
       .get()
@@ -56,6 +55,37 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((confirm) => {
         this.confirm = confirm;
       });
+  }
+
+   /**
+   * This is used to intercept and show Loading bar based on the current state of our
+   * Router navigation
+   * @param {Event} event
+   */
+  private navigationInterceptor(event: Event): void {
+    // if (event instanceof NavigationStart) {
+    //   if (!this._loadingBar.visible) {
+    //     this._loadingBar.start();
+    //   }
+    // }
+
+    // if (event instanceof NavigationEnd) {
+    //   if (this._loadingBar.visible) {
+    //     this._loadingBar.complete();
+    //   }
+    // }
+
+    // if (event instanceof NavigationCancel) {
+    //   if (this._loadingBar.visible) {
+    //     this._loadingBar.complete();
+    //   }
+    // }
+
+    // if (event instanceof NavigationError) {
+    //   if (this._loadingBar.visible) {
+    //     this._loadingBar.complete();
+    //   }
+    // }
   }
 
   ngOnInit() {

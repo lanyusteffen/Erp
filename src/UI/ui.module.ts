@@ -10,7 +10,6 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SelectComponent } from './select/select.component';
 import { AlertComponent } from './alert/alert.component';
 import { ModalComponent } from './modal/modal.component';
-import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +20,7 @@ import { LoadingComponent } from './loading/loading.component';
     CheckboxComponent,
     SelectComponent,
     AlertComponent,
-    ModalComponent,
-    LoadingComponent
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +34,7 @@ import { LoadingComponent } from './loading/loading.component';
     CheckboxComponent,
     SelectComponent,
     AlertComponent,
-    ModalComponent,
-    LoadingComponent
+    ModalComponent
   ]
 })
 

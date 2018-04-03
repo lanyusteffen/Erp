@@ -12,14 +12,18 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
   tabs: Tab[];
   subscription: Subscription;
 
-  constructor(private tabsService: TabsService) {
-    this.tabs = this.tabsService.all();
+  constructor(private tabService: TabsService) {
+    this.tabs = this.tabService.all();
   }
 
   ngAfterViewInit() {
-    this.subscription = this.tabsService.get().subscribe((tabs) => {
+    this.subscription = this.tabService.get().subscribe((tabs) => {
       this.tabs = tabs;
     });
+  }
+
+  closeTab(tab) {
+    this.tabService.remove(tab);
   }
 
   ngOnDestroy() {

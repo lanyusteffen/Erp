@@ -31,6 +31,16 @@ export class TabsService {
   }
 
   create(tab) {
+    let isExistedTab = false;
+    this.tabs.forEach(v => {
+      if (v.link === tab.link) {
+        isExistedTab = true;
+        return;
+      }
+    });
+    if (isExistedTab) {
+      return;
+    }
     this.tabs.push({
       id: ++this.id,
       ...tab

@@ -6,11 +6,11 @@
     <li *ngFor="let tab of tabs">
       <a routerLink="{{tab.link}}" routerLinkActive="active">
         {{tab.name}}
-        <i class="iconfont icon-close"></i>
+        <i class="iconfont icon-close" (click)="closeTab(tab)"></i>
       </a>
     </li>
   </ul>
-  <a href="" class="angle angle-right">
+  <a class="angle angle-right" href="javascript:void(0)">
     <i class="iconfont icon-more"></i>
   </a>
   <div class="more">

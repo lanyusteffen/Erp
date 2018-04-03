@@ -1,3 +1,5 @@
+<ng2-slim-loading-bar color="red" height="2px"></ng2-slim-loading-bar>
+
 <div class="container">
   <div class="left-side">
     <a href="/" class="logo">
@@ -23,5 +25,3 @@
 <app-confirm *ngIf="confirm" [show]="!!confirm" (onConfirm)="confirm.onConfirm()" (onClose)="handleCloseConfirm()">
   {{confirm.content}}
 </app-confirm>
-
-<app-ui-loading *ngIf="loading"></app-ui-loading>

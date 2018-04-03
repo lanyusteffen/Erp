@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 import { UIModule } from '../UI/ui.module';
 import { AppComponent } from './app.component';
@@ -15,12 +16,10 @@ import { TabOutletDirective } from './directives/outlet.directive';
 import { TabsService } from './components/tabs/tabs.service';
 import { HttpService } from './services/http.service';
 import { AlertService } from './services/alert.service';
-import { LoadingService } from './services/loading.service';
 import { ErrorService } from './services/error.service';
 import { ConfirmService } from './services/confirm.service';
 
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
-import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { HttpExtensionInterceptor } from './interceptors/http.interceptor.extension';
 
 import { HomeComponent } from './modules/home/home.component';
 
@@ -81,7 +80,7 @@ export const ROUTES: Routes = [
   {
     path: 'basics/employee',
     loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule'
-  },  
+  },
   {
     path: 'basics/employee/disabled',
     loadChildren: './modules/basics/path/employee/employee-disabled.module#EmployeeDisabledModule'
@@ -101,7 +100,7 @@ export const ROUTES: Routes = [
   {
     path: 'basics/area/disabled',
     loadChildren: './modules/basics/path/area/area-disabled.module#AreaDisabledModule'
-  },  
+  },
   {
     path: 'products/storage',
     loadChildren: './modules/products/path/storage/storage.module#StorageModule'
@@ -144,24 +143,16 @@ export const ROUTES: Routes = [
     CommonModule,
     HttpClientModule,
     UIModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    SlimLoadingBarModule.forRoot()
   ],
-  providers: [
-  //   {
-  //   provide: HTTP_INTERCEPTORS,
-  //   useClass: LoadingInterceptor,
-  //   multi: true
-  // },
-  {
+  providers: [{
     provide: HTTP_INTERCEPTORS,
-    useClass: ErrorInterceptor,
+    useClass: HttpExtensionInterceptor,
     multi: true
-  }, LoadingService, HttpService, TabsService, AlertService, ConfirmService, ErrorService],
+  }, HttpService, TabsService, AlertService, ConfirmService, ErrorService],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
-
-
-
 }
