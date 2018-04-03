@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private alertSubscription: Subscription;
   private confirmSubScription: Subscription;
   private loadingSubscription: Subscription;
+  private routeSubscription: Subscription;
   private alert = null;
   private confirm = null;
   private loading: boolean;
@@ -34,9 +35,17 @@ export class AppComponent implements OnInit, OnDestroy {
     private _loadingBar: SlimLoadingBarService
   ) {
 
-    // this._router.events.subscribe((event: Event) => {
-    //   this.navigationInterceptor(event);
-    // });
+    this.routeSubscription = this.router.events.subscribe(event => {
+        if (event instanceof NavigationStart) {
+            this._loadingBar.start();
+        } else if ( event instanceof NavigationEnd ||
+                    event instanceof NavigationCancel ||
+                    event instanceof NavigationError) {
+            this._loadingBar.complete();
+        }
+    }, (error: any) => {
+        this._loadingBar.complete();
+    });
 
     this.subscription = this.tabsService
       .get()
@@ -57,37 +66,6 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-   /**
-   * This is used to intercept and show Loading bar based on the current state of our
-   * Router navigation
-   * @param {Event} event
-   */
-  private navigationInterceptor(event: Event): void {
-    // if (event instanceof NavigationStart) {
-    //   if (!this._loadingBar.visible) {
-    //     this._loadingBar.start();
-    //   }
-    // }
-
-    // if (event instanceof NavigationEnd) {
-    //   if (this._loadingBar.visible) {
-    //     this._loadingBar.complete();
-    //   }
-    // }
-
-    // if (event instanceof NavigationCancel) {
-    //   if (this._loadingBar.visible) {
-    //     this._loadingBar.complete();
-    //   }
-    // }
-
-    // if (event instanceof NavigationError) {
-    //   if (this._loadingBar.visible) {
-    //     this._loadingBar.complete();
-    //   }
-    // }
-  }
-
   ngOnInit() {
     this.tabs = this.tabsService.all();
     this.appService.getSystemConfig().subscribe((data) => {
@@ -101,6 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.alertSubscription.unsubscribe();
     this.loadingSubscription.unsubscribe();
     this.confirmSubScription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 
   handleCloseAlert() {

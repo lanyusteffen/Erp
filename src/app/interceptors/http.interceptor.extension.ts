@@ -17,9 +17,9 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (!this._loadingBar.visible) {
-      this._loadingBar.start();
-    }
+    // if (!this._loadingBar.visible) {
+    //   this._loadingBar.start();
+    // }
 
     return next
       .handle(req)
@@ -27,9 +27,9 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
 
         if (event instanceof HttpResponse) {
 
-          if (this._loadingBar.visible) {
-            this._loadingBar.complete();
-          }
+          // if (this._loadingBar.visible) {
+          //   this._loadingBar.complete();
+          // }
 
           const { body } = event;
 
@@ -44,9 +44,9 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
         }
       }, (err: any) => {
 
-        if (this._loadingBar.visible) {
-          this._loadingBar.complete();
-        }
+        // if (this._loadingBar.visible) {
+        //   this._loadingBar.complete();
+        // }
 
         this.alertService.open({
           type: 'danger',
