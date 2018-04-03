@@ -1,5 +1,4 @@
-<ng2-slim-loading-bar color="red"></ng2-slim-loading-bar>
-
+<ng2-slim-loading-bar></ng2-slim-loading-bar>
 <div class="container">
   <div class="left-side">
     <a href="/" class="logo">
@@ -16,6 +15,7 @@
     </app-content>
   </div>
 </div>
+
 <div class="alert-container">
   <app-ui-alert [type]="alert.type" *ngIf="alert" (onClose)="handleCloseAlert()">
     {{alert.content}}

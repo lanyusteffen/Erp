@@ -19,7 +19,8 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "app",
         "styles": [
-          "less/app.less"
+          "less/app.less",
+          "../node_modules/ng2-slim-loading-bar/style.css"
         ],
         "stylePreprocessorOptions": {
           "includePaths": [
