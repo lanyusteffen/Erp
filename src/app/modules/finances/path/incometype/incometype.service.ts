@@ -21,7 +21,7 @@ export class IncomeTypeService {
 
   get() { return this.incomeTypes$.asObservable(); }
 
-  listDisabled() {
+  listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
       currentPagination: {
@@ -35,7 +35,7 @@ export class IncomeTypeService {
       BlanceType: 'Income',
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         incomeTypes: data.FeeTypeList,
@@ -44,10 +44,14 @@ export class IncomeTypeService {
 
       this.state = nextState;
       this.incomeTypes$.next(nextState);
-    });
+
+      if (successNotify !== undefined) {
+        successNotify();
+      }
+    }, fallback);
   }
 
-  list() {
+  list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
       currentPagination: {
@@ -61,7 +65,7 @@ export class IncomeTypeService {
       BlanceType: 'Income',
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         incomeTypes: data.FeeTypeList,
@@ -70,36 +74,40 @@ export class IncomeTypeService {
 
       this.state = nextState;
       this.incomeTypes$.next(nextState);
-    });
+
+      if (successNotify !== undefined) {
+        successNotify();
+      }
+    }, fallback);
   }
 
-  newOne() {
-    return this.http.get('/FeeType/GetForModify');
+  newOne(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/FeeType/GetForModify', next, fallback);
   }
 
-  detail(feeTypeId) {
-    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`);
+  detail(feeTypeId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`, next, fallback);
   }
 
-  create(feeType) {
+  create(feeType, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/New', {
       feeType
-    });
+    }, next, fallback);
   }
 
-  update(feeType) {
+  update(feeType, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Modify', {
       feeType
-    });
+    }, next, fallback);
   }
 
-  cancel(entityIdList) {
+  cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Cancel', {
       entityIdList
-    });
+    }, next, fallback);
   }
 
-  onPageChange(pagination) {
+  onPageChange(pagination, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -109,10 +117,10 @@ export class IncomeTypeService {
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback);
   }
 
-  onPageChangeDisabled(pagination) {
+  onPageChangeDisabled(pagination, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -122,39 +130,39 @@ export class IncomeTypeService {
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback);
   }
 
 
-  onSearch(queryKey) {
+  onSearch(queryKey, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback);
   }
 
-  onSearchDisabled(queryKey) {
+  onSearchDisabled(queryKey, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback);
   }
 
-  remove(entityIdList) {
+  remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Remove', {
       entityIdList
-    });
+    }, next, fallback);
   }
 
-  restore(entityIdList) {
+  restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Restore', {
       entityIdList
-    });
+    }, next, fallback);
   }
 }

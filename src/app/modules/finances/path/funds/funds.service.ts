@@ -21,7 +21,7 @@ export class FundsService {
 
   get() { return this.funds$.asObservable(); }
 
-  list() {
+  list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
       currentPagination: {
@@ -34,7 +34,7 @@ export class FundsService {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         funds: data.FundsAccountList,
@@ -43,10 +43,14 @@ export class FundsService {
 
       this.state = nextState;
       this.funds$.next(nextState);
-    });
+
+      if (successNotify !== undefined) {
+        successNotify();
+      }
+    }, fallback);
   }
 
-  listDisabled() {
+  listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
       currentPagination: {
@@ -59,7 +63,7 @@ export class FundsService {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         funds: data.FundsAccountList,
@@ -68,36 +72,40 @@ export class FundsService {
 
       this.state = nextState;
       this.funds$.next(nextState);
-    });
+
+      if (successNotify !== undefined) {
+        successNotify();
+      }
+    }, fallback);
   }
 
-  newOne() {
+  newOne(next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.get('/FundsAccount/GetForNew');
   }
 
-  detail(fundsAccountId) {
+  detail(fundsAccountId, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.get(`/FundsAccount/GetForModify?fundsAccountId=${fundsAccountId}`);
   }
 
-  create(fundsAccount) {
+  create(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/New', {
       fundsAccount
     });
   }
 
-  update(fundsAccount) {
+  update(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Modify', {
       fundsAccount
     });
   }
 
-  cancel(entityIdList) {
+  cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Cancel', {
       entityIdList
     });
   }
 
-  onPageChange(pagination) {
+  onPageChange(pagination, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -107,10 +115,10 @@ export class FundsService {
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback);
   }
 
-  onPageChangeDisabled(pagination) {
+  onPageChangeDisabled(pagination, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -120,38 +128,38 @@ export class FundsService {
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback);
   }
 
-  onSearch(queryKey) {
+  onSearch(queryKey, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback);
   }
 
-  onSearchDisabled(queryKey) {
+  onSearchDisabled(queryKey, fallback: (error: any) => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback);
   }
 
-  remove(entityIdList) {
+  remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Remove', {
       entityIdList
-    });
+    }, next, fallback);
   }
 
-  restore(entityIdList) {
+  restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Restore', {
       entityIdList
-    });
+    }, next, fallback);
   }
 }

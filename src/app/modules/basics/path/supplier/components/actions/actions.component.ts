@@ -54,7 +54,7 @@ export class SupplierActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.supplierService
-          .cancel(this.selectedItems.map(item => item.Id)), ({ IsValid, ErrorMessages }) => {
+          .cancel(this.selectedItems.map(item => item.Id), ({ IsValid, ErrorMessages }) => {
             if (IsValid) {
               this.supplierService.list((err) => {
                 this.alertService.open({
@@ -74,6 +74,10 @@ export class SupplierActionsComponent {
               });
             }
           }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });
