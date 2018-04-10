@@ -41,7 +41,12 @@ export class SupplierActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.supplierService.onSearch(queryKey);
+    this.supplierService.onSearch(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定供应商列表失败, ' + err
+      });
+    });
   }
 
   onCancel() {
@@ -49,20 +54,26 @@ export class SupplierActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.supplierService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(({ IsValid, ErrorMessages }) => {
+          .cancel(this.selectedItems.map(item => item.Id)), ({ IsValid, ErrorMessages }) => {
             if (IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.supplierService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定供应商列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
+                });
               });
-              this.supplierService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + ErrorMessages
               });
             }
+          }, (err) => {
           });
       }
     });

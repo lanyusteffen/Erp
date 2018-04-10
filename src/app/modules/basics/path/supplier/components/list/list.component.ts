@@ -37,7 +37,9 @@ export class SupplierListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.supplierService.list();
+    this.supplierService.list((err) => {
+
+    });
   }
 
   ngOnDestroy() {
@@ -46,8 +48,10 @@ export class SupplierListComponent implements OnInit, OnDestroy {
 
   showContact(customerId) {
     this._showContact = true;
-    this.supplierService.contactList(customerId).subscribe(data => {
+    this.supplierService.contactList(customerId, data => {
       this.contactList = data;
+    }, (err) => {
+
     });
   }
 
@@ -78,6 +82,8 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     this.supplierService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+
     });
   }
 
@@ -95,20 +101,30 @@ export class SupplierListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.supplierService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '停用成功！'
+              this.supplierService.list((err) => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '绑定供应商列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '停用成功！'
+                });
               });
-              this.supplierService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '停用失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败, ' + err
+            });
           });
       }
     });

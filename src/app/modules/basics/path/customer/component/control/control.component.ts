@@ -111,13 +111,13 @@ export class CustomerControlComponent {
     if (this.type === 'create') {
       this.customerService.create(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
           this.customerService.list((err) => {
             this.alertService.open({
               type: 'danger',
-              content: '添加失败, ' + err
+              content: '绑定客户列表失败, ' + err
             });
           }, () => {
+            this.onClose.emit();
             this.alertService.open({
               type: 'success',
               content: '添加成功！'

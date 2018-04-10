@@ -70,15 +70,23 @@ export class SupplierControlComponent {
     if (this._show) {
       if (this.type === 'create') {
         this.supplierService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '新增供应商失败, ' + err
+            });
           });
       } else {
         this.supplierService
-          .detail(this.customerId)
-          .subscribe(data => {
+          .detail(this.customerId, data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '查看供应商详情失败, ' + err
+            });
           });
       }
     }
@@ -103,26 +111,45 @@ export class SupplierControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.supplierService.create(value).subscribe(data => {
+      this.supplierService.create(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '添加成功！'
+          this.supplierService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定供应商列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '添加成功！'
+            });
           });
-          this.supplierService.list();
         }
+      }, (err) => {
+
       });
     } else {
-      this.supplierService.update(value).subscribe(data => {
+      this.supplierService.update(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
+          this.supplierService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定供应商列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
           });
-          this.supplierService.list();
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败, ' + err
+        });
       });
     }
   }

@@ -52,7 +52,12 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
-    this.customerService.listDisabled();
+    this.customerService.listDisabled((err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败, ' + err
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -82,6 +87,11 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
     this.customerService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败, ' + err
+      });
     });
   }
 
@@ -90,20 +100,30 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.customerService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.customerService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定客户列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
+                });
               });
-              this.customerService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });
@@ -114,20 +134,30 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.customerService
-          .restore([id])
-          .subscribe(data => {
+          .restore([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
+              this.customerService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定客户列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '还原成功！'
+                });
               });
-              this.customerService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + err
+            });
           });
       }
     });

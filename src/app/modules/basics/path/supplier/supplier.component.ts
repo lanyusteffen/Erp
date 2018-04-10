@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SupplierService } from './supplier.service';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-basics-supplier',
@@ -35,7 +36,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private supplierService: SupplierService
+    private supplierService: SupplierService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -55,6 +57,11 @@ export class SupplierComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(selected) {
-    this.supplierService.onCategoryChange(selected);
+    this.supplierService.onCategoryChange(selected, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定供应商列表失败, ' + err
+      });
+    });
   }
 }
