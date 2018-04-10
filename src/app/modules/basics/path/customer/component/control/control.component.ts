@@ -34,8 +34,8 @@ export class CustomerControlComponent {
   private contactList = [{}, {}, {}];
   private form = new FormGroup({});
   private _show = false;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
-  
   get show() {
     return this._show;
   }
@@ -60,9 +60,9 @@ export class CustomerControlComponent {
 
   getTitle(): string {
     if (this.type === 'create') {
-      return '添加供应商';
+      return '添加客户';
     } else {
-      return '修改供应商';
+      return '修改客户';
     }
   }
 
@@ -70,21 +70,27 @@ export class CustomerControlComponent {
     if (this._show) {
       if (this.type === 'create') {
         this.customerService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '新增客户失败, ' + err
+            });
           });
       } else {
         this.customerService
-          .detail(this.customerId)
-          .subscribe(data => {
+          .detail(this.customerId, data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '查看客户详情失败, ' + err
+            });
           });
       }
     }
   }
-
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private customerService: CustomerService,
@@ -103,26 +109,48 @@ export class CustomerControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.customerService.create(value).subscribe(data => {
+      this.customerService.create(value, data => {
         if (data.IsValid) {
           this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '添加成功！'
+          this.customerService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '添加失败, ' + err
+            });
+          }, () => {
+            this.alertService.open({
+              type: 'success',
+              content: '添加成功！'
+            });
           });
-          this.customerService.list();
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '添加失败, ' + err
+        });
       });
     } else {
-      this.customerService.update(value).subscribe(data => {
+      this.customerService.update(value, data => {
         if (data.IsValid) {
           this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
+          this.customerService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '修改失败, ' + err
+            });
+          }, () => {
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
           });
-          this.customerService.list();
         }
+      }, error => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败, ' + error
+        });
       });
     }
   }

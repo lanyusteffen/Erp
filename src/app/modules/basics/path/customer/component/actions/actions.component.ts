@@ -41,7 +41,12 @@ export class CustomerActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.customerService.onSearch(queryKey);
+    this.customerService.onSearch(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败, ' + err
+      });
+    });
   }
 
   onCancel() {
@@ -49,20 +54,30 @@ export class CustomerActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.customerService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.customerService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定客户列表失败, ' + err
+                }, () => {
+                  this.alertService.open({
+                    type: 'success',
+                    content: '删除成功！'
+                  });
+                });
               });
-              this.customerService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });

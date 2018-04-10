@@ -73,7 +73,12 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
   }
 
   onSearch(queryKey) {
-    this.customerService.onSearchDisabled(queryKey);
+    this.customerService.onSearchDisabled(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败, ' + err
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -94,7 +99,12 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(selected) {
-    this.customerService.onCategoryChangeDisabled(selected);
+    this.customerService.onCategoryChangeDisabled(selected, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败, ' + err
+      });
+    });
   }
 
   delete() {
@@ -102,20 +112,30 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.customerService
-          .remove(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.customerService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定客户列表失败, ' + err
+                }, () => {
+                  this.alertService.open({
+                    type: 'success',
+                    content: '删除成功！'
+                  });
+                });
               });
-              this.customerService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, err => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定客户列表失败, ' + err
+            });
           });
       }
     });
@@ -126,20 +146,29 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.customerService
-          .restore(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.customerService.listDisabled();
+              this.customerService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '还原失败, ' + err
+                });
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + err
+            });
           });
       }
     });

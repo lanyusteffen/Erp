@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomerService } from './customer.service';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-basics-customer',
@@ -35,7 +36,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -55,6 +57,11 @@ export class CustomerComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(selected) {
-    this.customerService.onCategoryChange(selected);
+    this.customerService.onCategoryChange(selected, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败, ' + err
+      });
+    });
   }
 }

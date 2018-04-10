@@ -94,7 +94,7 @@ export class SupplierService {
   }
 
   detail(customerId) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`);
+    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, );
   }
 
   create(customer) {

@@ -37,7 +37,12 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.customerService.list();
+    this.customerService.list((err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '获取客户列表失败, ' + err
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -46,8 +51,13 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   showContact(customerId) {
     this._showContact = true;
-    this.customerService.contactList(customerId).subscribe(data => {
+    this.customerService.contactList(customerId, data => {
       this.contactList = data;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '获取联系人列表失败, ' + err
+      });
     });
   }
 
@@ -62,7 +72,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.customers : []);
-
   }
 
   select(evt, selectedItem) {
@@ -78,6 +87,11 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     this.customerService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    }, err => {
+      this.alertService.open({
+        type: 'danger',
+        content: '获取客户列表失败, ' + err
+      });
     });
   }
 
@@ -95,20 +109,29 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.customerService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '停用成功！'
               });
-              this.customerService.list();
+              this.customerService.list(err => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '停用失败, ' + err
+                });
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '停用失败, ' + data.ErrorMessages
               });
             }
+          }, err => {
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败, ' + err
+            });
           });
       }
     });
