@@ -40,7 +40,12 @@ export class IncomeTypeActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.incomeTypeService.onSearch(queryKey);
+    this.incomeTypeService.onSearch(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定收入类型列表失败, ' + err
+      });
+    });
   }
 
   onCancel() {
@@ -48,20 +53,30 @@ export class IncomeTypeActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.incomeTypeService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.incomeTypeService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定收入类型列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
+                });
               });
-              this.incomeTypeService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'success',
+              content: '删除失败, ' + err
+            });
           });
       }
     });

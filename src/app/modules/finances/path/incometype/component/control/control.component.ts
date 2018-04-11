@@ -48,16 +48,16 @@ export class IncomeTypeControlComponent {
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-        // this.incomeTypeService
-        //   .newOne()
-        //   .subscribe(data => {
           this.form = this.formService.createForm('{"Id":0,"Name":"","Code":""}');
-        //   });
       } else {
         this.incomeTypeService
-          .detail(this.incomeTypeId)
-          .subscribe(data => {
+          .detail(this.incomeTypeId, data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '查看收入类型详情失败, ' + err
+            });
           });
       }
     }
@@ -80,26 +80,53 @@ export class IncomeTypeControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.incomeTypeService.create(value).subscribe(data => {
+      this.incomeTypeService.create(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '添加成功！'
+          this.incomeTypeService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定收入类型列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '添加成功！'
+            });
           });
-          this.incomeTypeService.list();
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '添加失败, ' + data.ErrorMessages
+          });
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'success',
+          content: '添加失败, ' + err
+        });
       });
     } else {
-      this.incomeTypeService.update(value).subscribe(data => {
+      this.incomeTypeService.update(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
+          this.incomeTypeService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定收入类型列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
           });
-          this.incomeTypeService.list();
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败, ' + err
+        });
       });
     }
   }
