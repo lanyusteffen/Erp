@@ -37,7 +37,9 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.otherExchangeUnitService.list();
+    this.otherExchangeUnitService.list((err) => {
+      
+    });
   }
 
   ngOnDestroy() {
@@ -46,8 +48,13 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
 
   showContact(otherExchangeUnitId) {
     this._showContact = true;
-    this.otherExchangeUnitService.contactList(otherExchangeUnitId).subscribe(data => {
+    this.otherExchangeUnitService.contactList(otherExchangeUnitId, data => {
       this.contactList = data;
+    },(err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定往来单位列表失败, ' + err
+      });
     });
   }
 
@@ -78,6 +85,11 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
     this.otherExchangeUnitService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定往来单位列表失败, ' + err
+      });
     });
   }
 
@@ -95,20 +107,30 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.otherExchangeUnitService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '停用成功！'
+              this.otherExchangeUnitService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定往来单位列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '停用成功！'
+                });
               });
-              this.otherExchangeUnitService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '停用失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败, ' + err
+            });
           });
       }
     });

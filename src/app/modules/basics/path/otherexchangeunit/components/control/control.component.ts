@@ -70,15 +70,23 @@ export class OtherExchangeUnitControlComponent {
     if (this._show) {
       if (this.type === 'create') {
         this.otherExchangeUnitService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '新增往来单位失败, ' + err
+            });
           });
       } else {
         this.otherExchangeUnitService
-          .detail(this.customerId)
-          .subscribe(data => {
+          .detail(this.customerId, data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '查看往来单位详情失败, ' + err
+            });
           });
       }
     }
@@ -103,26 +111,58 @@ export class OtherExchangeUnitControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.otherExchangeUnitService.create(value).subscribe(data => {
+      this.otherExchangeUnitService.create(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '添加成功！'
+          this.otherExchangeUnitService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定往来单位列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '添加成功！'
+            });
           });
-          this.otherExchangeUnitService.list();
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '添加失败 ' + data.ErrorMessages
+          });
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '添加失败 ' + err
+        });
       });
     } else {
-      this.otherExchangeUnitService.update(value).subscribe(data => {
+      this.otherExchangeUnitService.update(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
+          this.otherExchangeUnitService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定往来单位列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
           });
-          this.otherExchangeUnitService.list();
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '修改失败 ' + data.ErrorMessages
+          });
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败 ' + err
+        });
       });
     }
   }

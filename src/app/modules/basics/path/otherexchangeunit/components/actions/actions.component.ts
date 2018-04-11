@@ -33,7 +33,12 @@ export class OtherExchangeUnitActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.otherExchangeUnitService.onSearch(queryKey);
+    this.otherExchangeUnitService.onSearch(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定往来单位列表失败, ' + err
+      });
+    });
   }
 
   showDisabled() {
@@ -49,20 +54,30 @@ export class OtherExchangeUnitActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.otherExchangeUnitService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.otherExchangeUnitService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定往来单位列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
+                });
               });
-              this.otherExchangeUnitService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });

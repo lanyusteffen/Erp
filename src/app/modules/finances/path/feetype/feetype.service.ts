@@ -82,29 +82,29 @@ export class FeeTypeService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/FeeType/GetForModify');
+    return this.http.get('/FeeType/GetForModify', next, fallback);
   }
 
   detail(feeTypeId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`);
+    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`, next, fallback);
   }
 
   create(feeType, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/New', {
       feeType
-    });
+    }, next, fallback);
   }
 
   update(feeType, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Modify', {
       feeType
-    });
+    }, next, fallback);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Cancel', {
       entityIdList
-    });
+    }, next, fallback);
   }
 
   onPageChange(pagination, fallback: (error: any) => void) {

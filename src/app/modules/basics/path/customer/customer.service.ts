@@ -38,7 +38,7 @@ export class CustomerService {
       CustomerType: 'Customer',
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         customers: data.CustomerList,
@@ -51,22 +51,22 @@ export class CustomerService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    });
+    }, fallback);
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', {
+    return this.http.get('/CustomerContractor/GetList', next, fallback, {
       customerId
-    }, next, fallback);
+    });
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentCategory } = this.state;
 
-    return this.http.get('/Customer/GetForNew', {
+    return this.http.get('/Customer/GetForNew', next, fallback, {
       customerType: 'Customer',
       customerCategoryId: currentCategory.Id
-    }, next, fallback);
+    });
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as settings from '../../assets/appsettings.json';
 
 interface BodyMethodOption {
@@ -30,6 +30,20 @@ export class HttpService {
         return headers;
     }
 
+    private parseParams(params: any): HttpParams {
+      let ret = new HttpParams();
+  
+      if (params) {
+        for (const key in params) {
+          if (typeof params[key] !== 'undefined') {
+            ret = ret.set(key, `${params[key]}`);
+          }
+        }
+      }
+  
+      return ret;
+    }  
+
     private getAbsoluteUrl(url: string): string {
         if (url.startsWith('http')) {
             return url;
@@ -38,9 +52,9 @@ export class HttpService {
     }
 
     public post(url: string, postData: any,
-      next: (data: any) => void, fallback: (error: any) => void, dict?: { [key: string]: string | string[]; }): void {
+      next: (data: any) => void, fallback: (error: any) => void, params?: Object, dict?: { [key: string]: string | string[]; }): void {
         const headers = this.addRequestHeader(dict);
-        this.http.post(this.getAbsoluteUrl(url), postData, { headers })
+        this.http.post(this.getAbsoluteUrl(url), postData, { headers: headers,  observe: 'body',  params: this.parseParams(params) })
           .subscribe(
             data => {
               next(data);
@@ -52,9 +66,9 @@ export class HttpService {
     }
 
     public get(url: string, next: (value: any) => void,
-      fallback: (error: any) => void, dict?: { [key: string]: string | string[]; }): void {
+      fallback: (error: any) => void, params?: Object, dict?: { [key: string]: string | string[]; }): void {
         const headers = this.addRequestHeader(dict);
-        this.http.get(this.getAbsoluteUrl(url), { headers })
+        this.http.get(this.getAbsoluteUrl(url), { headers: headers,  observe: 'body',  params: this.parseParams(params) })
           .subscribe(
             data => {
               next(data);

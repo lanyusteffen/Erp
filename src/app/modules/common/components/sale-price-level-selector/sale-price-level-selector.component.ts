@@ -21,13 +21,14 @@ export class SalePriceLevelSelectorComponent implements OnInit, ControlValueAcce
 
   ngOnInit() {
     this.commonService
-      .all()
-      .subscribe(data => {
+      .all(data => {
         this.list = data.map(item => ({
           label: item.Name,
           value: item.Id
         }));
         this.innerValue = 0;
+      }, (err) => {
+        
       });
   }
 

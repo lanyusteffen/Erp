@@ -73,7 +73,12 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
   }
 
   onSearch(queryKey) {
-    this.otherExchangeUnitService.onSearchDisabled(queryKey);
+    this.otherExchangeUnitService.onSearchDisabled(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定往来单位列表失败, ' + err
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -94,7 +99,12 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(selected) {
-    this.otherExchangeUnitService.onCategoryChangeDisabled(selected);
+    this.otherExchangeUnitService.onCategoryChangeDisabled(selected, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定往来单位列表失败, ' + err
+      });
+    });
   }
 
   delete() {
@@ -102,20 +112,30 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.otherExchangeUnitService
-          .remove(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.otherExchangeUnitService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定往来单位列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
+                });
               });
-              this.otherExchangeUnitService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });
@@ -126,20 +146,30 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.otherExchangeUnitService
-          .restore(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
+              this.otherExchangeUnitService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定往来单位列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '还原成功！'
+                });
               });
-              this.otherExchangeUnitService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + err
+            });
           });
       }
     });

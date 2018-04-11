@@ -80,29 +80,29 @@ export class FundsService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/FundsAccount/GetForNew');
+    return this.http.get('/FundsAccount/GetForNew', next, fallback);
   }
 
   detail(fundsAccountId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/FundsAccount/GetForModify?fundsAccountId=${fundsAccountId}`);
+    return this.http.get(`/FundsAccount/GetForModify?fundsAccountId=${fundsAccountId}`, next, fallback);
   }
 
   create(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/New', {
       fundsAccount
-    });
+    }, next, fallback);
   }
 
   update(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Modify', {
       fundsAccount
-    });
+    }, next, fallback);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Cancel', {
       entityIdList
-    });
+    }, next, fallback);
   }
 
   onPageChange(pagination, fallback: (error: any) => void) {

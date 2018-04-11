@@ -70,7 +70,7 @@ export class OtherExchangeUnitService {
       CustomerType: 'Other',
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         otherExchangeUnits: data.CustomerList,
@@ -87,7 +87,7 @@ export class OtherExchangeUnitService {
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', {
+    return this.http.get('/CustomerContractor/GetList', next, fallback, {
       customerId
     });
   }
@@ -95,32 +95,32 @@ export class OtherExchangeUnitService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentCategory } = this.state;
 
-    return this.http.get('/Customer/GetForNew', {
+    return this.http.get('/Customer/GetForNew', next, fallback, {
       customerType: 'Other',
       customerCategoryId: currentCategory.Id
     });
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`);
+    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/New', {
       customer
-    });
+    }, next, fallback);
   }
 
   update(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Modify', {
       customer
-    });
+    }, next, fallback);
   }
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
       customerIdList
-    });
+    }, next, fallback);
   }
 
   onCategoryChange(selected, fallback: (error: any) => void) {

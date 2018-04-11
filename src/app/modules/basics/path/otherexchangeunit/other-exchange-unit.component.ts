@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OtherExchangeUnitService } from './other-exchange-unit.service';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-basics-otherexchangeunit',
@@ -34,7 +35,8 @@ export class OtherExchangeUnitComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private otherExchangeUnitService: OtherExchangeUnitService
+    private otherExchangeUnitService: OtherExchangeUnitService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -54,6 +56,11 @@ export class OtherExchangeUnitComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(selected) {
-    this.otherExchangeUnitService.onCategoryChange(selected);
+    this.otherExchangeUnitService.onCategoryChange(selected, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定往来单位列表失败, ' + err
+      });
+    });
   }
 }

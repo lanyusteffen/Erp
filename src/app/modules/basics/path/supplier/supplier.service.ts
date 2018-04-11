@@ -38,7 +38,7 @@ export class SupplierService {
       CustomerType: 'Supplier',
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    }, data => {
       const nextState = {
         ...this.state,
         suppliers: data.CustomerList,
@@ -47,7 +47,11 @@ export class SupplierService {
 
       this.state = nextState;
       this.suppliers$.next(nextState);
-    });
+
+      if (successNotify !== undefined) {
+        successNotify();
+      }
+    }, fallback);
   }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
@@ -79,13 +83,11 @@ export class SupplierService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, (err) => {
-      fallback(err);
-    });
+    }, fallback);
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', {
+    return this.http.get('/CustomerContractor/GetList', next, fallback, {
       customerId
     });
   }
@@ -93,32 +95,32 @@ export class SupplierService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentCategory } = this.state;
 
-    return this.http.get('/Customer/GetForNew', {
+    return this.http.get('/Customer/GetForNew', next, fallback, {
       customerType: 'Supplier',
       customerCategoryId: currentCategory.Id
     });
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, );
+    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/New', {
       customer
-    });
+    }, next, fallback);
   }
 
   update(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Modify', {
       customer
-    });
+    }, next, fallback);
   }
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
       customerIdList
-    });
+    }, next, fallback);
   }
 
   onCategoryChange(selected, fallback: (error: any) => void) {

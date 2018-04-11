@@ -60,11 +60,11 @@ export class CustomerActionsComponent {
                 this.alertService.open({
                   type: 'danger',
                   content: '绑定客户列表失败, ' + err
-                }, () => {
-                  this.alertService.open({
-                    type: 'success',
-                    content: '删除成功！'
-                  });
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
                 });
               });
             } else {
