@@ -14,6 +14,7 @@ import { AlertService } from '@services/alert.service';
 export class FundsControlComponent {
   private form = new FormGroup({});
   private _show = false;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
     return this._show;
@@ -49,21 +50,24 @@ export class FundsControlComponent {
     if (this._show) {
       if (this.type === 'create') {
         this.fundsService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+        }, (err) => {
+
         });
       } else {
         this.fundsService
-          .detail(this.fundsId)
-          .subscribe(data => {
+          .detail(this.fundsId, data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: ''
+            });
           });
       }
     }
   }
-
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fundsService: FundsService,
@@ -80,26 +84,50 @@ export class FundsControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.fundsService.create(value).subscribe(data => {
+      this.fundsService.create(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '添加成功！'
+          this.fundsService.list((err) => {
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '添加成功！'
+            });
           });
-          this.fundsService.list();
         }
+      }, (err) => {
+
       });
     } else {
-      this.fundsService.update(value).subscribe(data => {
+      this.fundsService.update(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
+          this.fundsService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定资金账户列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
           });
-          this.fundsService.list();
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '修改失败, ' + data.ErrorMessages
+          });
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败, ' + err
+        });
       });
     }
   }

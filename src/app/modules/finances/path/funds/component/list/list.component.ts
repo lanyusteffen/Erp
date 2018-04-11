@@ -35,7 +35,12 @@ export class FundsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.fundsService.list();
+    this.fundsService.list((err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定资金账户列表失败, ' + err
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -65,6 +70,11 @@ export class FundsListComponent implements OnInit, OnDestroy {
     this.fundsService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定资金账户列表失败, ' + err
+      });
     });
   }
 
@@ -82,20 +92,30 @@ export class FundsListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.fundsService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '停用成功！'
+              this.fundsService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定资金账户列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '停用成功！'
+                });
               });
-              this.fundsService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '停用失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败, ' + err
+            });
           });
       }
     });

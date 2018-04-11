@@ -96,7 +96,7 @@ export class FeeTypeControlComponent {
         } else {
           this.alertService.open({
             type: 'danger',
-            content: '添加失败, ' + data.ErrorMessage
+            content: '添加失败, ' + data.ErrorMessages
           });
         }
       }, (err) => {
@@ -120,11 +120,16 @@ export class FeeTypeControlComponent {
               content: '修改成功！'
             });
           });
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '修改失败, ' + data.ErrorMessages
+          });
         }
       }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '修改失败！'
+          content: '修改失败, ' + err
         });
       });
     }

@@ -123,6 +123,11 @@ export class CustomerControlComponent {
               content: '添加成功！'
             });
           });
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '添加失败, ' + data.ErrorMessages
+          });
         }
       }, (err) => {
         this.alertService.open({
@@ -144,6 +149,11 @@ export class CustomerControlComponent {
               type: 'success',
               content: '修改成功！'
             });
+          });
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '修改失败, ' + data.ErrorMessages
           });
         }
       }, error => {
