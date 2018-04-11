@@ -33,7 +33,12 @@ export class FeeTypeActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.feeTypeService.onSearch(queryKey);
+    this.feeTypeService.onSearch(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定费用类型列表失败, ' + err
+      });
+    });
   }
 
   showDisabled() {

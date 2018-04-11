@@ -14,6 +14,7 @@ import { AlertService } from '@services/alert.service';
 export class FeeTypeControlComponent {
   private form = new FormGroup({});
   private _show = false;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
     return this._show;
@@ -48,22 +49,20 @@ export class FeeTypeControlComponent {
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-        // this.feeTypeService
-        //   .newOne()
-        //   .subscribe(data => {
-             this.form = this.formService.createForm('{"Id":,"Name":"","Code":""}');
-        //   });
+        this.form = this.formService.createForm('{"Id":,"Name":"","Code":""}');
       } else {
         this.feeTypeService
-          .detail(this.feeTypeId)
-          .subscribe(data => {
+          .detail(this.feeTypeId, data => {
             this.form = this.formService.createForm(data);
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定费用类型列表失败, ' + err
+            });
           });
       }
     }
   }
-
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private feeTypeService: FeeTypeService,
@@ -80,26 +79,53 @@ export class FeeTypeControlComponent {
 
   onSubmit({ value }) {
     if (this.type === 'create') {
-      this.feeTypeService.create(value).subscribe(data => {
+      this.feeTypeService.create(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '添加成功！'
+          this.feeTypeService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定费用类型列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '添加成功！'
+            });
           });
-          this.feeTypeService.list();
+        } else {
+          this.alertService.open({
+            type: 'danger',
+            content: '添加失败, ' + data.ErrorMessage
+          });
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '添加失败, ' + err
+        });
       });
     } else {
-      this.feeTypeService.update(value).subscribe(data => {
+      this.feeTypeService.update(value, data => {
         if (data.IsValid) {
-          this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
+          this.feeTypeService.list((err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '绑定费用类型列表失败, ' + err
+            });
+          }, () => {
+            this.onClose.emit();
+            this.alertService.open({
+              type: 'success',
+              content: '修改成功！'
+            });
           });
-          this.feeTypeService.list();
         }
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败！'
+        });
       });
     }
   }

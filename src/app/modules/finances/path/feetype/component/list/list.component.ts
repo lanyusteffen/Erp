@@ -36,7 +36,12 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.feeTypeService.list();
+    this.feeTypeService.list((err) => {
+      this.alertService.open({
+        type: 'success',
+        content: '停用成功！'
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -66,6 +71,11 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
     this.feeTypeService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定费用类型列表失败, ' + err
+      });
     });
   }
 
@@ -83,20 +93,30 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.feeTypeService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '停用成功！'
+              this.feeTypeService.list((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定费用类型列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '停用成功！'
+                });
               });
-              this.feeTypeService.list();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '停用失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败, ' + err
+            });
           });
       }
     });

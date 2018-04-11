@@ -52,7 +52,12 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
-    this.feeTypeService.listDisabled();
+    this.feeTypeService.listDisabled((err) => {
+      this.alertService.open({
+        type: 'success',
+        content: '绑定费用类型列表失败, ' + err
+      });
+    });
   }
 
   ngOnDestroy() {
@@ -82,6 +87,11 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     this.feeTypeService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+      this.alertService.open({
+        type: 'success',
+        content: '绑定费用类型列表失败, ' + err
+      });
     });
   }
 
@@ -90,20 +100,30 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.feeTypeService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
+              this.feeTypeService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定费用类型列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '删除成功！'
+                });
               });
-              this.feeTypeService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });
@@ -114,20 +134,30 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.feeTypeService
-          .restore([id])
-          .subscribe(data => {
+          .restore([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
+              this.feeTypeService.listDisabled((err) => {
+                this.alertService.open({
+                  type: 'danger',
+                  content: '绑定费用类型列表失败, ' + err
+                });
+              }, () => {
+                this.alertService.open({
+                  type: 'success',
+                  content: '还原成功！'
+                });
               });
-              this.feeTypeService.listDisabled();
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + err
+            });
           });
       }
     });
