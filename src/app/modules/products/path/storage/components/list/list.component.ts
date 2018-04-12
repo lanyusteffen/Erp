@@ -44,9 +44,20 @@ export class StorageListComponent implements OnInit, OnDestroy {
       });
   }
 
+  
+
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定仓库列表失败!'+err
+    });
+  }
+
   ngOnInit() {
     this.getSystemConfig();
-    this.storageService.list();
+    this.storageService.list((err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
   ngOnDestroy() {
@@ -87,6 +98,8 @@ export class StorageListComponent implements OnInit, OnDestroy {
     this.storageService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    },(err)=>{
+      this.listErrorCallBack(err);
     });
   }
 
@@ -104,15 +117,21 @@ export class StorageListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.storageService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id],data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '停用成功！'
               });
-              this.storageService.list();
+              this.storageService.list((err)=>{
+                this.listErrorCallBack(err);
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败！'+err
+            });
           });
       }
     });
@@ -123,15 +142,21 @@ export class StorageListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id],data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.list();
+              this.storageService.list((err)=>{
+                this.listErrorCallBack(err);
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！'+err
+            });
           });
       }
     });

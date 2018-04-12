@@ -21,13 +21,18 @@ export class StorageService {
   constructor(private http: HttpService) {}
 
   all() {
-    console.log(1);
     return this.http.get('/Storage/GetAll');
   }
 
   get() { return this.storage$.asObservable(); }
 
-  list() {
+  succeessNotifyCallback(successNotify?):void{
+    if(successNotify!=undefined){
+      successNotify();
+    }
+  }
+
+  list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
       currentPagination: {
@@ -50,10 +55,13 @@ export class StorageService {
 
       this.state = nextState;
       this.storage$.next(nextState);
+
+      this.succeessNotifyCallback(successNotify);
+
     });
   }
 
-  listDisabled() {
+  listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
       currentPagination: {
@@ -67,7 +75,7 @@ export class StorageService {
       Status:-99,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         storages: data.StorageList,
@@ -76,51 +84,54 @@ export class StorageService {
 
       this.state = nextState;
       this.storage$.next(nextState);
-    });
+
+      this.succeessNotifyCallback(successNotify);
+
+    },fallback);
   }
 
-  newOne() {
+  newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const {  } = this.state;
 
     return this.http.get('/Storage/GetForNew', {
-    });
+    },next,fallback);
   }
 
-  detail(storageId) {
-    return this.http.get(`/Storage/GetForModify?storageId=${storageId}`);
+  detail(storageId,next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/Storage/GetForModify?storageId=${storageId}`,next,fallback);
   }
 
-  create(storage) {
+  create(storage,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/New', {
       storage
-    });
+    },next,fallback);
   }
 
-  modify(storage){
+  modify(storage,next: (data: any) => void, fallback: (error: any) => void){
     return this.http.post('/Storage/Modify', {
       storage
-    });
+    },next,fallback);
   }
 
-  cancel(entityIdList) {
+  cancel(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/Cancel', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  remove(entityIdList) {
+  remove(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/Remove', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  restore(entityIdList) {
+  restore(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/Restore', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  onPageChange(pagination) {
+  onPageChange(pagination,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -130,27 +141,27 @@ export class StorageService {
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onSearch(queryKey) {
+  onSearch(queryKey,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onSearchDisabled(queryKey){
+  onSearchDisabled(queryKey,fallback: (error: any) => void, successNotify?: () => void){
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback,successNotify);
   }
 
 }

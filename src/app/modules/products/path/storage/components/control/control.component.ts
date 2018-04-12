@@ -38,18 +38,33 @@ export class StorageControlComponent {
     if (this._show) {
       if (this.type === 'create') {
         this.storageService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type:'danger',
+              content:'获取仓库失败!'+err
+            });
           });
       } else {
         this.storageService
-          .detail(this._storageId)
-          .subscribe(data => {
+          .detail(this._storageId,data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+              this.alertService.open({
+                type:'danger',
+                content:'获取仓库失败!'+err
+              });
           });
       }
     }
+  }  
+
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定仓库列表失败!'+err
+    });
   }
 
   get storageId() {
@@ -82,18 +97,29 @@ export class StorageControlComponent {
         type: 'success',
         content: option+'成功！'
       });      
-      this.storageService.list();
+      this.storageService.list((err)=>{
+        this.listErrorCallBack(err);
+      });
     }
   }
 
   onSubmit({ value }) {
     if(value.Id==0){
-      this.storageService.create(value).subscribe(data => {
-        this.validate(data,"添加");
-      });
+      this.storageService.create(value,data => {
+        this.validate(data,"添加")},(err)=>{
+          this.alertService.open({
+            type: 'danger',
+            content: '添加成功！'+err
+          });  
+        });
     }else{
-      this.storageService.modify(value).subscribe(data => {
+      this.storageService.modify(value,data => {
         this.validate(data,"修改");
+      },(err)=>{
+        this.alertService.open({
+          type: 'danger',
+          content:'修改成功！'+err
+        });  
       });
     }    
   }

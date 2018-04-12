@@ -42,8 +42,19 @@ export class StorageActionsComponent {
     this._show = false;
   }
 
+  
+
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定仓库列表失败!'+err
+    });
+  }
+
   onSearch(queryKey) {
-    this.storageService.onSearch(queryKey);
+    this.storageService.onSearch(queryKey,(err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
   onCancel() {
@@ -51,15 +62,21 @@ export class StorageActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.list();
+              this.storageService.list((err)=>{
+                this.listErrorCallBack(err);
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！'+err
+            });
           });
       }
     });

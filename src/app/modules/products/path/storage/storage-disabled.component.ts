@@ -68,6 +68,13 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定停用仓库列表失败!'+err
+    });
+  }
+
   getSystemConfig(): any {
     if (!this.systemConfig) {
       this.appService.getSystemConfig().subscribe((data) => {
@@ -78,7 +85,9 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
   }
 
   onSearch(queryKey) {
-    this.storageService.onSearchDisabled(queryKey);
+    this.storageService.onSearchDisabled(queryKey,(err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
 
@@ -95,20 +104,26 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.storageService
-          .restore(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .restore(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.storageService.listDisabled();
+              this.storageService.listDisabled((err)=>{
+                this.listErrorCallBack(err);
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + err
+            });
           });
       }
     });
@@ -119,20 +134,26 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .remove(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .remove(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.listDisabled();
+              this.storageService.listDisabled((err)=>{
+                this.listErrorCallBack(err);
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });

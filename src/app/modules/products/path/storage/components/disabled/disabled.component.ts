@@ -48,10 +48,20 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     }
     return this.systemConfig;
   }
+  
+
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定停用仓库列表失败!'+err
+    });
+  }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.storageService.listDisabled();
+    this.storageService.listDisabled((err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
   ngOnDestroy() {
@@ -82,6 +92,8 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     this.storageService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    },(err)=>{
+      this.listErrorCallBack(err);
     });
   }
 
@@ -94,20 +106,26 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id],data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.listDisabled();
+              this.storageService.listDisabled((err)=>{
+                this.listErrorCallBack(err);
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            })
           });
       }
     });
@@ -117,21 +135,27 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.storageService.restore([id])
-          .subscribe(data => {
-            if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
-              });
-              this.storageService.listDisabled();
-            } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
-            }
+        this.storageService.restore([id],data => {
+          if (data.IsValid) {
+            this.alertService.open({
+              type: 'success',
+              content: '还原成功！'
+            });
+            this.storageService.listDisabled((err)=>{
+              this.listErrorCallBack(err);
+            });
+          } else {
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + data.ErrorMessages
+            });
+          }
+        },(err)=>{
+          this.alertService.open({
+            type: 'danger',
+            content: '还原失败, ' + err
           });
+        });
       }
     });
   }
