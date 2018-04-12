@@ -21,6 +21,7 @@ export class StorageService {
   constructor(private http: HttpService) {}
 
   all() {
+    console.log(1);
     return this.http.get('/Storage/GetAll');
   }
 
