@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EmployeeService } from '../../employee.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-employee-selector',
@@ -17,16 +18,20 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
 
-  constructor(private employeeService: EmployeeService) {console.log(1);}
+  constructor(private employeeService: EmployeeService,private alertService:AlertService) {console.log(1);}
 
   ngOnInit() {
     this.employeeService
-      .all()
-      .subscribe(data => {
+      .all(data => {
         this.list = data.map(item => ({
           label: item.Name,
           value: item.Id
         }));        
+      },(err)=>{
+        this.alertService.open({
+          type:'danger',
+          content:'获取职员信息失败'+err
+        });
       });
   }
 

@@ -13,16 +13,16 @@ import { TabsService } from '@components/tabs/tabs.service';
 export class DepartmentActionsComponent {
   private _show = false;
   private selectedId: number;
-  private _category:any;
-  private selectCategory:any;
+  private _category: any;
+  private selectCategory: any;
 
-  @Input() selectedItems = <any>[];  
+  @Input() selectedItems = <any>[];
 
-  @Input() set category(category){
+  @Input() set category(category) {
     this._category = category;
   };
 
-  get category(){
+  get category() {
     return this._category;
   }
 
@@ -30,8 +30,8 @@ export class DepartmentActionsComponent {
     private departmentService: DepartmentService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private tabsService:TabsService
-  ) {}
+    private tabsService: TabsService
+  ) { }
 
   show() {
     this._show = true;
@@ -39,7 +39,7 @@ export class DepartmentActionsComponent {
     this.selectedId = 0;
   }
 
-  
+
   showDisabled() {
     this.tabsService.create({
       name: '停用部门',
@@ -52,24 +52,39 @@ export class DepartmentActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定停用部门列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
-    this.departmentService.onSearch(queryKey);
+    this.departmentService.onSearch(queryKey, (err) => {
+      this.listErrorCallBack(err);
+    });
   }
 
   onCancel() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.departmentService 
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+        this.departmentService
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.departmentService.list();
+              this.departmentService.list((err) => {
+                this.listErrorCallBack(err);
+              });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！' + err
+            });
           });
       }
     });

@@ -5,7 +5,7 @@ import { HttpService } from './http.service';
 export class AppService {
   constructor(private http: HttpService) {}
 
-  getSystemConfig() {
-    return this.http.get('/SystemConfig/GetForModify');
+  getSystemConfig(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/SystemConfig/GetForModify',next,fallback);
   }
 }

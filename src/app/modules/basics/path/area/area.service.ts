@@ -27,8 +27,8 @@ export class AreaService {
     }
   }
 
-  all() {
-    return this.http.get('/Area/GetAll');
+  all(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Area/GetAll',next,fallback);
   }
 
   get() { return this.area$.asObservable(); }
@@ -94,9 +94,9 @@ export class AreaService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { areaParentId  } = this.state;
 
-    return this.http.get('/Area/GetForNew', {
+    return this.http.get('/Area/GetForNew',next,fallback, {
       areaParentId
-    },next,fallback);
+    });
   }
 
   detail(areaId,next: (data: any) => void, fallback: (error: any) => void) {

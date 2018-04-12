@@ -47,15 +47,29 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
   
   getSystemConfig(): any {
     if (!this.systemConfig) {
-      this.appService.getSystemConfig().subscribe((data) => {
+      this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
+      },(err)=>{
+        this.alertService.open({
+          type:'danger',
+          content:'获取系统配置失败'+err
+        });
       });
     }
     return this.systemConfig;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定部门列表失败!' + err
+    });
+  }
+
   ngOnInit() {
-    this.departmentService.list();
+    this.departmentService.list((err) => {
+      this.listErrorCallBack(err);
+    });
   }
 
   ngOnDestroy() {
@@ -86,6 +100,8 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
     this.departmentService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    },(err) => {
+      this.listErrorCallBack(err);
     });
   }
 
@@ -103,15 +119,21 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.departmentService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id],data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '停用成功！'
               });
-              this.departmentService.list();
+              this.departmentService.list((err) => {
+                this.listErrorCallBack(err);
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败！'+err
+            });
           });
       }
     });
@@ -119,18 +141,24 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 
   onRemove(id) {
     this.confirmService.open({
-      content: '确认停用吗？',
+      content: '确认删除吗？',
       onConfirm: () => {
         this.departmentService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id],data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
-                content: '停用成功！'
+                content: '删除成功！'
               });
-              this.departmentService.list();
+              this.departmentService.list((err) => {
+                this.listErrorCallBack(err);
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！'+err
+            });
           });
       }
     });

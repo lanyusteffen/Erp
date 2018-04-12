@@ -41,8 +41,17 @@ export class EmployeeActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定停用职员列表失败!'+err
+    });
+  }
+
   onSearch(queryKey) {
-    this.employeeService.onSearch(queryKey);
+    this.employeeService.onSearch(queryKey,(err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
   onCancel() {
@@ -50,15 +59,21 @@ export class EmployeeActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.employeeService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.employeeService.list();
+              this.employeeService.list((err)=>{
+                this.listErrorCallBack(err);
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！'+err
+            });
           });
       }
     });

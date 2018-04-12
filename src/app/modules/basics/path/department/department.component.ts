@@ -1,7 +1,9 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import {  DepartmentService } from './department.service'
+import {  DepartmentService } from './department.service';
+
+import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-basics-department',
@@ -34,7 +36,8 @@ export class DepartmentComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private alertService:AlertService
   ) {
   }
 
@@ -52,9 +55,18 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     this.selectedItems = selected;
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定停用仓库列表失败!'+err
+    });
+  }
+
   onCategoryChange(selected) {    
 
     this.selectCategory = selected;
-    this.departmentService.onCategoryChange(selected);
+    this.departmentService.onCategoryChange(selected,(err)=>{
+      this.listErrorCallBack(err)
+    });
   }
 }

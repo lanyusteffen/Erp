@@ -68,17 +68,31 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定停用职员列表失败!'+err
+    });
+  }
+
   getSystemConfig(): any {
     if (!this.systemConfig) {
-      this.appService.getSystemConfig().subscribe((data) => {
+      this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
+      },(err)=>{
+        this.alertService.open({
+          type:'danger',
+          content:'获取系统配置失败'+err
+        });
       });
     }
     return this.systemConfig;
   }
 
   onSearch(queryKey) {
-    this.employeeService.onSearchDisabled(queryKey);
+    this.employeeService.onSearchDisabled(queryKey,(err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
 
@@ -95,20 +109,26 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.employeeService
-          .restore(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .restore(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.employeeService.listDisabled();
+              this.employeeService.listDisabled((err)=>{
+                this.listErrorCallBack(err);
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + err
+            });
           });
       }
     });
@@ -119,20 +139,26 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.employeeService
-          .remove(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .remove(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.employeeService.listDisabled();
+              this.employeeService.listDisabled((err)=>{
+                this.listErrorCallBack(err);
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });

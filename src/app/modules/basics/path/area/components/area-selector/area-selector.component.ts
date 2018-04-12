@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AreaService } from '../../area.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-area-selector',
@@ -17,16 +18,20 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
 
-  constructor(private areaService: AreaService) {}
+  constructor(private areaService: AreaService,private alertService:AlertService) {}
 
   ngOnInit() {
     this.areaService
-      .all()
-      .subscribe(data => {
+      .all(data => {
         this.list = data.map(item => ({
           label: item.Name,
           value: item.Id
         }));
+      },(err)=>{
+        this.alertService.open({
+          type: 'danger',
+          content: '获取地区数据失败！'+err
+        });
       });
   }
 

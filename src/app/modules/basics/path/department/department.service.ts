@@ -21,17 +21,23 @@ export class DepartmentService {
 
   constructor(private http: HttpService) { }
 
-  all() {
-    return this.http.get('/Department/GetAll');
+  succeessNotifyCallback(successNotify?):void{
+    if(successNotify!=undefined){
+      successNotify();
+    }
   }
 
-  dropdownlist() {
-    return this.http.get('/Department/GetDropdownList');
+  all(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Department/GetAll',next,fallback);
+  }
+
+  dropdownlist(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Department/GetDropdownList',next,fallback);
   }
 
   get() { return this.department$.asObservable(); }
 
-  list() {
+  list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentCategory,
       currentQueryKey,
@@ -47,7 +53,7 @@ export class DepartmentService {
       Status: 1,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         departments: data.DepartmentList,
@@ -56,10 +62,12 @@ export class DepartmentService {
 
       this.state = nextState;
       this.department$.next(nextState);
-    });
+
+      this.succeessNotifyCallback(successNotify)
+    },fallback);
   }
 
-  listDisabled() {
+  listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentCategory,
       currentQueryKey,
@@ -75,7 +83,7 @@ export class DepartmentService {
       Status: -99,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         departments: data.DepartmentList,
@@ -84,71 +92,73 @@ export class DepartmentService {
 
       this.state = nextState;
       this.department$.next(nextState);
-    });
+
+      this.succeessNotifyCallback(successNotify);
+    },fallback);
   }
 
-  newOne() {
+  newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const {} = this.state;
 
-    return this.http.get('/Department/GetForNew', {
+    return this.http.get('/Department/GetForNew',next,fallback, {
     });
   }
 
-  detail(departmentId) {
-    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`);
+  detail(departmentId,next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`,next,fallback);
   }
 
-  create(department) {
+  create(department,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/New', {
       department
-    });
+    },next,fallback);
   }
 
-  modify(department) {
+  modify(department,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Modify', {
       department
-    });
+    },next,fallback);
   }
 
-  cancel(entityIdList) {
+  cancel(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Cancel', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  remove(entityIdList) {
+  remove(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Remove', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  restore(entityIdList) {
+  restore(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Restore', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  onCategoryChange(selected) {
+  onCategoryChange(selected,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentCategory: selected
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onDisabledCategoryChange(selected) {
+  onDisabledCategoryChange(selected,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentCategory: selected
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback,successNotify);
   }
 
-  onPageChange(pagination) {
+  onPageChange(pagination,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -158,26 +168,26 @@ export class DepartmentService {
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onSearch(queryKey) {
+  onSearch(queryKey,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onSearchDisabled(queryKey){
+  onSearchDisabled(queryKey,fallback: (error: any) => void, successNotify?: () => void){
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback,successNotify);
   }
 }

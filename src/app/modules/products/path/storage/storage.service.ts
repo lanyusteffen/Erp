@@ -20,8 +20,10 @@ export class StorageService {
 
   constructor(private http: HttpService) {}
 
-  all() {
-    return this.http.get('/Storage/GetAll');
+  all(fallback: (error: any) => void, successNotify?: () => void) {
+    return this.http.get('/Storage/GetAll',()=>{
+      this.succeessNotifyCallback(successNotify)
+    },fallback);
   }
 
   get() { return this.storage$.asObservable(); }
@@ -46,7 +48,7 @@ export class StorageService {
       Status:1,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         storages: data.StorageList,
@@ -58,7 +60,7 @@ export class StorageService {
 
       this.succeessNotifyCallback(successNotify);
 
-    });
+    },fallback);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -93,8 +95,7 @@ export class StorageService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const {  } = this.state;
 
-    return this.http.get('/Storage/GetForNew', {
-    },next,fallback);
+    return this.http.get('/Storage/GetForNew',next,fallback);
   }
 
   detail(storageId,next: (data: any) => void, fallback: (error: any) => void) {

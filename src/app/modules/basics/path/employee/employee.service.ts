@@ -23,13 +23,19 @@ export class EmployeeService {
   constructor(private http: HttpService) {
   }
 
-  all() {
-    return this.http.get('/employee/GetAll');
+  all(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/employee/GetAll',next,fallback);
   }
 
   get() { return this.employee$.asObservable(); }
 
-  list() {
+  succeessNotifyCallback(successNotify?):void{
+    if(successNotify!=undefined){
+      successNotify();
+    }
+  }
+
+  list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentEmployee,
       currentQueryKey,
@@ -45,7 +51,7 @@ export class EmployeeService {
       Status:1,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         employees: data.EmployeeList,
@@ -54,10 +60,12 @@ export class EmployeeService {
 
       this.state = nextState;
       this.employee$.next(nextState);
-    });
+
+      this.succeessNotifyCallback(successNotify);
+    },fallback);
   }
 
-  listDisabled() {
+  listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentEmployee,
       currentQueryKey,
@@ -73,7 +81,7 @@ export class EmployeeService {
       Status:-99,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         employees: data.EmployeeList,
@@ -82,61 +90,63 @@ export class EmployeeService {
 
       this.state = nextState;
       this.employee$.next(nextState);
-    });
+
+      this.succeessNotifyCallback(successNotify);
+    },fallback);
   }
 
-  newOne() {
+  newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentEmployee } = this.state;
 
-    return this.http.get('/Employee/GetForNew', {
+    return this.http.get('/Employee/GetForNew',next,fallback, {
     });
   }
 
-  detail(employeeId) {
-    return this.http.get(`/Employee/GetForModify?employeeId=${employeeId}`);
+  detail(employeeId,next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/Employee/GetForModify?employeeId=${employeeId}`,next,fallback);
   }
 
-  create(employee) {
+  create(employee,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Employee/New', {
       employee
-    });
+    },next,fallback);
   }
 
-  modify(employee){
+  modify(employee,next: (data: any) => void, fallback: (error: any) => void){
     return this.http.post('/Employee/Modify', {
       employee
-    });
+    },next,fallback);
   }
 
-  cancel(entityIdList) {
+  cancel(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Employee/Cancel', {
       entityIdList
-    });
+    },next,fallback);
   }  
 
-  remove(entityIdList) {
+  remove(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Employee/Remove', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  restore(entityIdList) {
+  restore(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Employee/Restore', {
       entityIdList
-    });
+    },next,fallback);
   }
 
-  onDepartmentChange(selected) {
+  onDepartmentChange(selected,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentEmployee: selected
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onPageChange(pagination) {
+  onPageChange(pagination,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -146,27 +156,27 @@ export class EmployeeService {
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
 
-  onSearch(queryKey) {
+  onSearch(queryKey,fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list();
+    this.list(fallback,successNotify);
   }
   
 
-  onSearchDisabled(queryKey){
+  onSearchDisabled(queryKey,fallback: (error: any) => void, successNotify?: () => void){
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled();
+    this.listDisabled(fallback,successNotify);
   }
 }

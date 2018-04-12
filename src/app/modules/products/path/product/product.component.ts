@@ -2,7 +2,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from './product.service';
 import { AlertService } from '@services/alert.service';
-import { AlertService } from '../../../../services/alert.service';
 
 
 @Component({

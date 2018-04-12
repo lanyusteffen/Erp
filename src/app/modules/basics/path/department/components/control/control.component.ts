@@ -44,20 +44,35 @@ export class DepartmentControlComponent {
    this.showPop();
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定部门列表失败!' + err
+    });
+  }
+
   private showPop(): void {
     if (this._show) {
       if (this.type === 'create') {
         this.departmentService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             data.CategoryId = this._category.Id;
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '获取部门数据失败'+err
+            });  
           });
       } else {
         this.departmentService
-          .detail(this._departmentId)
-          .subscribe(data => {
+          .detail(this._departmentId,data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '获取部门数据失败'+err
+            });  
           });
       }
     }
@@ -94,18 +109,30 @@ export class DepartmentControlComponent {
         type: 'success',
         content: option+'成功！'
       });      
-      this.departmentService.list();
+      this.departmentService.list( (err) => {
+        this.listErrorCallBack(err);
+      });
     }
   }
 
   onSubmit({ value }) {
     if(value.Id==0){
-      this.departmentService.create(value).subscribe(data => {
+      this.departmentService.create(value,data => {
         this.validate(data,"添加");
+      },(err)=>{
+        this.alertService.open({
+          type: 'danger',
+          content: '添加失败！'+err
+        }); 
       });
     }else{
-      this.departmentService.modify(value).subscribe(data => {
+      this.departmentService.modify(value,data => {
         this.validate(data,"修改");
+      },(err)=>{
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败！'+err
+        }); 
       });
     }    
   }

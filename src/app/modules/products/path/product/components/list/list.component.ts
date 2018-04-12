@@ -69,8 +69,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   getSystemConfig(): any {
     if (!this.systemConfig) {
-      this.appService.getSystemConfig().subscribe((data) => {
+      this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
+      },(err)=>{
+        this.alertService.open({
+          type:'danger',
+          content:'获取系统配置失败'+err
+        });
       });
     }
     return this.systemConfig;

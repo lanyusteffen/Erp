@@ -34,19 +34,34 @@ export class EmployeeControlComponent {
    this.showPop();
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定职员列表失败!'+err
+    });
+  }
+
   private showPop(): void {
     if (this._show) {
       if (this.type === 'create') {
         this.employeeService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type:'danger',
+              content:'获取职员信息失败'+err
+            });
           });
       } else {
         this.employeeService
-          .detail(this._employeeId)
-          .subscribe(data => {
+          .detail(this._employeeId,data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type:'danger',
+              content:'获取职员信息失败'+err
+            });
           });
       }
     }
@@ -82,18 +97,30 @@ export class EmployeeControlComponent {
         type: 'success',
         content: option+'成功！'
       });      
-      this.employeeService.list();
+      this.employeeService.list((err)=>{
+        this.listErrorCallBack(err);
+      });
     }
   }
 
   onSubmit({ value }) {
     if(value.Id==0){
-      this.employeeService.create(value).subscribe(data => {
+      this.employeeService.create(value,data => {
         this.validate(data,"添加");
+      },(err)=>{
+        this.alertService.open({
+          type: 'danger',
+          content:'添加成功！'
+        });    
       });
     }else{
-      this.employeeService.modify(value).subscribe(data => {
+      this.employeeService.modify(value,data => {
         this.validate(data,"修改");
+      },(err)=>{
+        this.alertService.open({
+          type: 'danger',
+          content: '修改成功！'
+        });    
       });
     }    
   }

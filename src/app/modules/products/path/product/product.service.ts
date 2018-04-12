@@ -21,8 +21,8 @@ export class ProductService {
 
   constructor(private http: HttpService) {}
 
-  all() {
-    return this.http.get('/Product/GetAll');
+  all(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Product/GetAll',next,fallback);
   }
 
   get() { return this.product$.asObservable(); }
@@ -60,7 +60,7 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    });
+    },fallback);
   } 
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -90,7 +90,7 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    });
+    },fallback);
   }
 
   listBarcode(fallback: (error: any) => void, successNotify?: () => void) {
@@ -108,7 +108,7 @@ export class ProductService {
       Status:1,
       PageIndex,
       PageSize
-    }).subscribe(data => {
+    },data => {
       const nextState = {
         ...this.state,
         barcodes: data.ProductBarCodeList,
@@ -117,7 +117,9 @@ export class ProductService {
 
       this.state = nextState;
       this.product$.next(nextState);
-    });
+
+      this.succeessNotifyCallback(successNotify);
+    },fallback);
   }
 
   productExtensions(entityId,next: (data: any) => void, fallback: (error: any) => void){
@@ -141,12 +143,11 @@ export class ProductService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const {  } = this.state;
 
-    return this.http.get('/Product/GetForNew', {
-    },next,fallback);
+    return this.http.get('/Product/GetForNew',next,fallback);
   }
 
   detail(productId,next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Product/GetForModify?productId=${productId}`);
+    return this.http.get(`/Product/GetForModify?productId=${productId}`,next,fallback);
   }
 
   create(product,next: (data: any) => void, fallback: (error: any) => void) {
