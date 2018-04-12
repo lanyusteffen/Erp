@@ -41,8 +41,17 @@ export class AreaActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定地区列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
-    this.areaService.onSearch(queryKey);
+    this.areaService.onSearch(queryKey,(err) => {
+      this.listErrorCallBack(err)
+    });
   }
 
   onCancel() {
@@ -50,15 +59,21 @@ export class AreaActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.areaService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id),data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.areaService.list();
+              this.areaService.list((err) => {
+                this.listErrorCallBack(err)
+              });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！'+err
+            });
           });
       }
     });

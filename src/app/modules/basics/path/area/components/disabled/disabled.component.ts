@@ -34,8 +34,17 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
       });
   } 
   
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定停用地区列表失败!' + err
+    });
+  }
+
   ngOnInit() {
-    this.areaService.listDisabled();
+    this.areaService.listDisabled((err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 
   ngOnDestroy() {
@@ -66,6 +75,8 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
     this.areaService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    },(err)=>{
+      this.listErrorCallBack(err);
     });
   }
 
@@ -83,20 +94,26 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.areaService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id],data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.areaService.listDisabled();
+              this.areaService.listDisabled((err)=>{
+                this.listErrorCallBack(err);
+              });
             } else {
               this.alertService.open({
                 type: 'danger',
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
+          },(err)=>{
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败, ' + err
+            });
           });
       }
     });
@@ -106,21 +123,27 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.areaService.restore([id])
-          .subscribe(data => {
-            if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
-              });
-              this.areaService.listDisabled();
-            } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
-            }
+        this.areaService.restore([id],data => {
+          if (data.IsValid) {
+            this.alertService.open({
+              type: 'success',
+              content: '还原成功！'
+            });
+            this.areaService.listDisabled((err)=>{
+              this.listErrorCallBack(err);
+            });
+          } else {
+            this.alertService.open({
+              type: 'danger',
+              content: '还原失败, ' + data.ErrorMessages
+            });
+          }
+        },(err)=>{
+          this.alertService.open({
+            type: 'danger',
+            content: '还原失败, ' + err
           });
+        });
       }
     });
   }

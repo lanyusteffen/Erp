@@ -34,6 +34,15 @@ export class AreaControlComponent {
    this.showPop();
   }
 
+  
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定地区列表失败!' + err
+    });
+  }
+
+
   get title(){
     return this.type=='create'?'新增地区':'修改地区';
   }
@@ -42,15 +51,23 @@ export class AreaControlComponent {
     if (this._show) {
       if (this.type === 'create') {
         this.areaService
-          .newOne()
-          .subscribe(data => {
+          .newOne(data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type:'danger',
+              content:'获取地区数据失败！'+err
+            });
           });
       } else {
         this.areaService
-          .detail(this._areaId)
-          .subscribe(data => {
+          .detail(this._areaId,data => {
             this.form = this.formService.createForm(data);
+          },(err)=>{
+            this.alertService.open({
+              type:'danger',
+              content:'获取地区数据失败'+err
+            });
           });
       }
     }
@@ -82,18 +99,30 @@ export class AreaControlComponent {
         type: 'success',
         content: option+'成功！'
       });      
-      this.areaService.list();
+      this.areaService.list((err) => {
+        this.listErrorCallBack(err)
+      });
     }
   }
 
   onSubmit({ value }) {
     if(value.Id==0){
-      this.areaService.create(value).subscribe(data => {
+      this.areaService.create(value,data => {
         this.validate(data,"添加");
+      },(err)=>{
+          this.alertService.open({
+            type:'danger',
+            content:'添加失败'+err
+          });
       });
     }else{
-      this.areaService.modify(value).subscribe(data => {
+      this.areaService.modify(value,data => {
         this.validate(data,"修改");
+      },(err)=>{
+        this.alertService.open({
+          type:'danger',
+          content:'修改失败'+err
+        });
       });
     }    
   }
