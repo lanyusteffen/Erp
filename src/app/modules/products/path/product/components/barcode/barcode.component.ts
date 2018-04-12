@@ -33,8 +33,18 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
       });
   }
 
+  
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定条形码列表失败!' + err
+    });
+  }
+
   ngOnInit() {
-    this.productService.listBarcode();
+    this.productService.listBarcode((err) => {
+      this.listErrorCallBack(err)
+    });
   }
 
   ngOnDestroy() {
@@ -43,14 +53,21 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
 
   changeBarcode(item,barcode){    
     item.BarCode = barcode;
-    this.productService.modifyBarCode(item).subscribe(data => {
+    this.productService.modifyBarCode(item,data => {
       if (data.IsValid) {
         this.alertService.open({
           type: 'success',
           content: '修改条形码成功！'
         });
-        this.productService.listBarcode();
+        this.productService.listBarcode((err) => {
+          this.listErrorCallBack(err)
+        });
       }
-    });;
+    },(err)=>{
+      this.alertService.open({
+        type: 'daner',
+        content: '修改条形码失败！'
+      });
+    });
   }
 }

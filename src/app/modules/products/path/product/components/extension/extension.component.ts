@@ -33,6 +33,14 @@ export class ProductExtensionComponent {
   ) {
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定扩展信息失败!' + err
+    });
+  }
+
+
   @Input()
   get show() {
     return this._show;
@@ -59,17 +67,18 @@ export class ProductExtensionComponent {
   set productId(productId){
     this._productId = productId;
     if(this.show){
-        this.productService.productExtensions(productId).subscribe(data=>{   
-            console.log(data);
-            const extensions = {
-              PropertyName1:data.PropertyName1,
-              PropertyName2:data.PropertyName2
-            };
+        this.productService.productExtensions(productId,data=>{   
+          const extensions = {
+            PropertyName1:data.PropertyName1,
+            PropertyName2:data.PropertyName2
+          };
 
-            this._productExtendItemList = data.ProductExtendItemList;
+          this._productExtendItemList = data.ProductExtendItemList;
 
-            this.form = this.formService.createForm(extensions);
-        });
+          this.form = this.formService.createForm(extensions);
+      },(err)=>{
+        this.listErrorCallBack(err);
+      });
     }    
   }
  

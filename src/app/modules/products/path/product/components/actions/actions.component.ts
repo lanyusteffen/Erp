@@ -21,8 +21,15 @@ export class ProductActionsComponent {
     private productService: ProductService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private tabsService:TabsService
-  ) {}
+    private tabsService: TabsService
+  ) { }
+
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定商品列表失败!' + err
+    });
+  }
 
   show() {
     this._show = true;
@@ -37,7 +44,7 @@ export class ProductActionsComponent {
     });
   }
 
-  onShowBarcode(){
+  onShowBarcode() {
     this.tabsService.create({
       name: '商品条形码',
       link: '/products/product/barcode',
@@ -50,7 +57,9 @@ export class ProductActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.productService.onSearch(queryKey);
+    this.productService.onSearch(queryKey, (err) => {
+      this.listErrorCallBack(err)
+    });
   }
 
 
@@ -59,15 +68,21 @@ export class ProductActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.productService
-          .cancel(this.selectedItems.map(item => item.Id))
-          .subscribe(data => {
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.productService.list();
+              this.productService.list((err) => {
+                this.listErrorCallBack(err)
+              });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'daner',
+              content: '删除失败！' + err
+            });
           });
       }
     });

@@ -1,6 +1,8 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from './product.service';
+import { AlertService } from '@services/alert.service';
+import { AlertService } from '../../../../services/alert.service';
 
 
 @Component({
@@ -33,8 +35,16 @@ export class ProductComponent implements OnInit, OnDestroy {
   private selectCategory :any;
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private alertService:AlertService
   ) {
+  }  
+
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定商品列表失败!'+err
+    });
   }
 
   ngOnInit() {
@@ -55,6 +65,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   onCategoryChange(selected) {    
 
     this.selectCategory = selected;
-    this.productService.onCategoryChange(selected);
+    this.productService.onCategoryChange(selected,(err)=>{
+      this.listErrorCallBack(err);
+    });
   }
 }

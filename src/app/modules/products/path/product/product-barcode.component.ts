@@ -46,8 +46,17 @@ export class ProductBarcodeComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定商品条形码列表失败!'+err
+    });
+  }
+
   onSearch(queryKey) {
-    this.productService.onSearchBarcode(queryKey);
+    this.productService.onSearchBarcode(queryKey,(err)=>{
+      this.listErrorCallBack(err)
+    });
   }
 
 

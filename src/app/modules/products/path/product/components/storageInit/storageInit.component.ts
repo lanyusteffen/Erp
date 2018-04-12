@@ -49,16 +49,24 @@ export class ProductStorageInitComponent {
     this.onClose.emit();
   }
 
- 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定期初列表失败!'+err
+    });
+  }
+
 
   @Input()
   set productId(productId){
     this._productId = productId;
     if(this.show){        
-        this.productService.getStorageDetailList(productId).subscribe(data=>{
-            this.createStorageInitList(data);
-            this.form = this.formService.createForm(this._storageInitList);
-        });            
+        this.productService.getStorageDetailList(productId,data=>{
+          this.createStorageInitList(data);
+          this.form = this.formService.createForm(this._storageInitList);
+      },(err)=>{
+        this.listErrorCallBack(err)
+      });            
     }    
   }
 

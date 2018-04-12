@@ -9,13 +9,13 @@ import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
-    selector: 'app-product-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.less'],
-    providers:[
-      AppService
-    ]
-  })
+  selector: 'app-product-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.less'],
+  providers: [
+    AppService
+  ]
+})
 
 export class ProductListComponent implements OnInit, OnDestroy {
   private products = <any>[];
@@ -24,14 +24,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private extendProductId: number;
   private unitProductId: number;
-  private storageInitProductId:number;
-  private _showUpdate = false;  
+  private storageInitProductId: number;
+  private _showUpdate = false;
   private _showUnitUpdate = false;
   private _showStorageInitUpdate = false;
   private subscription: Subscription;
 
   @LocalStorage()
-  systemConfig:any;
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -39,7 +39,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.subscription = this.productService
       .get()
@@ -49,9 +49,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定仓库列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.getSystemConfig();
-    this.productService.list();
+    this.productService.list((err) => {
+      this.listErrorCallBack(err)
+    });
   }
 
   ngOnDestroy() {
@@ -92,6 +101,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
+    }, (err) => {
+      this.listErrorCallBack(err)
     });
   }
 
@@ -136,15 +147,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.productService
-          .cancel([id])
-          .subscribe(data => {
+          .cancel([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '停用成功！'
               });
-              this.productService.list();
+              this.productService.list((err) => {
+                this.listErrorCallBack(err)
+              });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '停用失败！'
+            });
           });
       }
     });
@@ -155,15 +172,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.productService
-          .remove([id])
-          .subscribe(data => {
+          .remove([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.productService.list();
+              this.productService.list((err) => {
+                this.listErrorCallBack(err)
+              });
             }
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '删除失败！'
+            });
           });
       }
     });

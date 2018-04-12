@@ -41,6 +41,13 @@ export class ProductUnitComponent {
     this._show = isShow;
   }
 
+  listErrorCallBack(err:any):void{
+    this.alertService.open({
+      type:'danger',
+      content:'绑定商品单位列表失败!'+err
+    });
+  }
+
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
   get productUnitList():Array<any>{ return this._productUnitList;}
@@ -53,10 +60,12 @@ export class ProductUnitComponent {
   set productId(productId){
     this._productId = productId;
     if(this.show){
-        this.productService.detail(productId).subscribe(data=>{             
-            this._productUnitList=data.ProductUnitList;
-            this.form = this.formService.createForm(data.ProductUnitList);
-        });
+        this.productService.detail(productId,data=>{             
+          this._productUnitList=data.ProductUnitList;
+          this.form = this.formService.createForm(data.ProductUnitList);
+      },(err)=>{
+        this.listErrorCallBack(err)
+      });
     }    
   }
  
