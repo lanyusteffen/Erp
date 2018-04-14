@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
 
 @Injectable()
 export class SupplierService {
@@ -95,7 +94,7 @@ export class SupplierService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentCategory } = this.state;
 
-    return this.http.get('/Customer/GetForNew', next, fallback, {
+    return this.http.get('/Customer/GetForNew', next, fallback, ModuleType.Basic, {
       customerType: 'Supplier',
       customerCategoryId: currentCategory.Id
     });

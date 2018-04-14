@@ -31,8 +31,9 @@ export class HttpService {
     }
 
     private parseParams(params: any): HttpParams {
+
       let ret = new HttpParams();
-  
+
       if (params) {
         for (const key in params) {
           if (typeof params[key] !== 'undefined') {
@@ -40,21 +41,55 @@ export class HttpService {
           }
         }
       }
-  
-      return ret;
-    }  
 
-    private getAbsoluteUrl(url: string): string {
+      return ret;
+    }
+
+    private getAbsoluteUrl(url: string, moduleType: ModuleType): string {
         if (url.startsWith('http')) {
             return url;
         }
-        return (<any>settings).BaseApiUrl + url;
+        let modulePath = '';
+        switch (moduleType) {
+
+          case ModuleType.Admin:
+            modulePath = 'Admin';
+            break;
+
+          case ModuleType.Basic:
+            modulePath = 'Basic';
+            break;
+
+          case ModuleType.Finance:
+            modulePath = 'Finance';
+            break;
+
+          case ModuleType.Inventory:
+            modulePath = 'Inventory';
+            break;
+
+          case ModuleType.Product:
+            modulePath = 'Product';
+            break;
+
+          case ModuleType.Purchase:
+            modulePath = 'Purchase';
+            break;
+
+          case ModuleType.Sale:
+            modulePath = 'Sale';
+            break;
+        }
+
+        return (<any>settings).BaseApiUrl + '/' + modulePath + '/' + url;
     }
 
-    public post(url: string, postData: any,
-      next: (data: any) => void, fallback: (error: any) => void, params?: Object, dict?: { [key: string]: string | string[]; }): void {
+    public post(url: string, postData: any, next: (data: any) => void,
+      fallback: (error: any) => void, moduleType = ModuleType.Basic,
+      params?: Object, dict?: { [key: string]: string | string[]; }): void {
         const headers = this.addRequestHeader(dict);
-        this.http.post(this.getAbsoluteUrl(url), postData, { headers: headers,  observe: 'body',  params: this.parseParams(params) })
+        this.http.post(this.getAbsoluteUrl(url, moduleType), postData,
+          { headers: headers,  observe: 'body',  params: this.parseParams(params) })
           .subscribe(
             data => {
               next(data);
@@ -66,9 +101,10 @@ export class HttpService {
     }
 
     public get(url: string, next: (value: any) => void,
-      fallback: (error: any) => void, params?: Object, dict?: { [key: string]: string | string[]; }): void {
-        const headers = this.addRequestHeader(dict);
-        this.http.get(this.getAbsoluteUrl(url), { headers: headers,  observe: 'body',  params: this.parseParams(params) })
+      fallback: (error: any) => void, moduleType = ModuleType.Basic,
+      params?: Object, headerDict?: { [key: string]: string | string[]; }): void {
+        const headers = this.addRequestHeader(headerDict);
+        this.http.get(this.getAbsoluteUrl(url, moduleType), { headers: headers,  observe: 'body',  params: this.parseParams(params) })
           .subscribe(
             data => {
               next(data);
@@ -78,4 +114,14 @@ export class HttpService {
             }
           );
     }
+}
+
+export enum ModuleType {
+  Admin,
+  Basic,
+  Finance,
+  Product,
+  Sale,
+  Purchase,
+  Inventory
 }
