@@ -85,7 +85,7 @@ export class HttpService {
     }
 
     public post(url: string, postData: any, next: (data: any) => void,
-      fallback: (error: any) => void, moduleType = ModuleType.Basic,
+      fallback: (error: any) => void, moduleType: ModuleType,
       params?: Object, dict?: { [key: string]: string | string[]; }): void {
         const headers = this.addRequestHeader(dict);
         this.http.post(this.getAbsoluteUrl(url, moduleType), postData,
@@ -101,7 +101,7 @@ export class HttpService {
     }
 
     public get(url: string, next: (value: any) => void,
-      fallback: (error: any) => void, moduleType = ModuleType.Basic,
+      fallback: (error: any) => void, moduleType: ModuleType,
       params?: Object, headerDict?: { [key: string]: string | string[]; }): void {
         const headers = this.addRequestHeader(headerDict);
         this.http.get(this.getAbsoluteUrl(url, moduleType), { headers: headers,  observe: 'body',  params: this.parseParams(params) })
