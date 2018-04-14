@@ -53,31 +53,31 @@ export class HttpService {
         switch (moduleType) {
 
           case ModuleType.Admin:
-            modulePath = 'Admin';
+            modulePath = 'Admin/api';
             break;
 
           case ModuleType.Basic:
-            modulePath = 'Basic';
+            modulePath = 'Basic/api';
             break;
 
           case ModuleType.Finance:
-            modulePath = 'Finance';
+            modulePath = 'Finance/api';
             break;
 
           case ModuleType.Inventory:
-            modulePath = 'Inventory';
+            modulePath = 'Inventory/api';
             break;
 
           case ModuleType.Product:
-            modulePath = 'Product';
+            modulePath = 'Product/api';
             break;
 
           case ModuleType.Purchase:
-            modulePath = 'Purchase';
+            modulePath = 'Purchase/api';
             break;
 
           case ModuleType.Sale:
-            modulePath = 'Sale';
+            modulePath = 'Sale/api';
             break;
         }
 

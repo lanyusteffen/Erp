@@ -7,9 +7,9 @@ import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-basics-department',
-  template: `   
+  template: `
     <app-department-actions [selectedItems]="selectedItems"  [category]="selectCategory"></app-department-actions> 
-    <div class="content">    
+    <div class="content">
     <app-category  [categoryType]="'Department'" [resourceType]="''" (onChange)="onCategoryChange($event)"
     ></app-category>
     <app-department-list (selectItems)="selectItems($event)"></app-department-list>
