@@ -2,11 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as settings from '../../assets/appsettings.json';
 
-interface BodyMethodOption {
-  params: Object;
-  headers: Object;
-}
-
 @Injectable()
 export class HttpService {
 
