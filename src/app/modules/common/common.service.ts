@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -8,9 +8,9 @@ import { Subject } from 'rxjs/Subject';
 export class CommonService {
   private salePriceLevel$ = new Subject<any>();
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/SalePriceLevel/GetAll', next, fallback);
+    return this.http.get('/SalePriceLevel/GetAll', next, fallback, ModuleType.Basic);
   }
 }

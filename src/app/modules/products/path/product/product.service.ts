@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 export class ProductService {
   private product$ = new Subject<any>();
 
-  private state ={
+  private state = {
     product: [],
     currentQueryKey: '',
     currentCategory: { Id: null },
@@ -19,16 +19,16 @@ export class ProductService {
     }
   };
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Product/GetAll',next,fallback);
+    return this.http.get('/Product/GetAll', next, fallback, ModuleType.Basic);
   }
 
   get() { return this.product$.asObservable(); }
 
-  succeessNotifyCallback(successNotify?):void{
-    if(successNotify!=undefined){
+  succeessNotifyCallback(successNotify?): void {
+    if (successNotify !== undefined) {
       successNotify();
     }
   }
@@ -45,11 +45,11 @@ export class ProductService {
 
     return this.http.post('/Product/GetProductListPaged', {
       QueryKey: currentQueryKey,
-      ProductCategoryId:currentCategory.Id,
-      Status:1,
+      ProductCategoryId: currentCategory.Id,
+      Status: 1,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         products: data.ProductList,
@@ -60,8 +60,8 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    },fallback);
-  } 
+    }, fallback, ModuleType.Basic);
+  }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -75,11 +75,11 @@ export class ProductService {
 
     return this.http.post('/Product/GetCancelListPaged', {
       QueryKey: currentQueryKey,
-      ProductCategoryId:currentCategory.Id,
-      Status:-99,
+      ProductCategoryId: currentCategory.Id,
+      Status: -99,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         products: data.ProductList,
@@ -90,7 +90,7 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    },fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   listBarcode(fallback: (error: any) => void, successNotify?: () => void) {
@@ -105,10 +105,10 @@ export class ProductService {
 
     return this.http.post('/ProductBarCode/GetListPaged', {
       QueryKey: currentQueryKey,
-      Status:1,
+      Status: 1,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         barcodes: data.ProductBarCodeList,
@@ -119,75 +119,75 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    },fallback);
+    }, fallback, ModuleType.Basic);
   }
 
-  productExtensions(entityId,next: (data: any) => void, fallback: (error: any) => void){
+  productExtensions(entityId, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/GetProducExtendList', {
       entityId
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  getStorageDetailList(productId,next: (data: any) => void, fallback: (error: any) => void){
-    return this.http.get('/ProductStorageInit/GetStorageDetailList?productId='+productId,next,fallback);
+  getStorageDetailList(productId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/ProductStorageInit/GetStorageDetailList?productId=' + productId, next, fallback, ModuleType.Basic);
   }
 
-  getStorageDetailSkuList(productId,next: (data: any) => void, fallback: (error: any) => void){
-    return this.http.get('/ProductStorageInit/GetStorageDetailSkuList?productId='+productId,next,fallback);
+  getStorageDetailSkuList(productId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/ProductStorageInit/GetStorageDetailSkuList?productId=' + productId, next, fallback, ModuleType.Basic);
   }
 
-  getStorageDetailProductUnitList(productId,next: (data: any) => void, fallback: (error: any) => void){
-    return this.http.get('/ProductStorageInit/GetStorageDetailProductUnitList='+productId,next,fallback);
+  getStorageDetailProductUnitList(productId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/ProductStorageInit/GetStorageDetailProductUnitList=' + productId, next, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    const {  } = this.state;
+    const { } = this.state;
 
-    return this.http.get('/Product/GetForNew',next,fallback);
+    return this.http.get('/Product/GetForNew', next, fallback, ModuleType.Basic);
   }
 
-  detail(productId,next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Product/GetForModify?productId=${productId}`,next,fallback);
+  detail(productId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/Product/GetForModify?productId=${productId}`, next, fallback, ModuleType.Basic);
   }
 
-  create(product,next: (data: any) => void, fallback: (error: any) => void) {
+  create(product, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/New', {
       product
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  modify(product,next: (data: any) => void, fallback: (error: any) => void){
+  modify(product, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Modify', {
       product
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  modifyBarCode(product,next: (data: any) => void, fallback: (error: any) => void){
+  modifyBarCode(product, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/ProductBarCode/ModifyBarCode', {
-      Id :product.Id,
-      BarCode:product.BarCode
-    },next,fallback);
+      Id: product.Id,
+      BarCode: product.BarCode
+    }, next, fallback, ModuleType.Basic);
   }
 
-  cancel(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Cancel', {
       entityIdList
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  remove(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Remove', {
       entityIdList
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  restore(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Restore', {
       entityIdList
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  onPageChange(pagination,fallback: (error: any) => void, successNotify?: () => void) {
+  onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -197,47 +197,47 @@ export class ProductService {
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onSearch(queryKey,fallback: (error: any) => void, successNotify?: () => void) {
+  onSearch(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onSearchDisabled(queryKey,fallback: (error: any) => void, successNotify?: () => void){
+  onSearchDisabled(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled(fallback,successNotify);
+    this.listDisabled(fallback, successNotify);
   }
 
-  onSearchBarcode(queryKey,fallback: (error: any) => void, successNotify?: () => void){
+  onSearchBarcode(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listBarcode(fallback,successNotify);
+    this.listBarcode(fallback, successNotify);
   }
 
-  onCategoryChange(selected,fallback: (error: any) => void, successNotify?: () => void) {
+  onCategoryChange(selected, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentCategory: selected
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
 }

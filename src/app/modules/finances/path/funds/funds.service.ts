@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -47,7 +47,7 @@ export class FundsService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -76,33 +76,33 @@ export class FundsService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/FundsAccount/GetForNew', next, fallback);
+    return this.http.get('/FundsAccount/GetForNew', next, fallback, ModuleType.Basic);
   }
 
   detail(fundsAccountId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/FundsAccount/GetForModify?fundsAccountId=${fundsAccountId}`, next, fallback);
+    return this.http.get(`/FundsAccount/GetForModify?fundsAccountId=${fundsAccountId}`, next, fallback, ModuleType.Basic);
   }
 
   create(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/New', {
       fundsAccount
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   update(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Modify', {
       fundsAccount
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Cancel', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   onPageChange(pagination, fallback: (error: any) => void) {
@@ -154,12 +154,12 @@ export class FundsService {
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Remove', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FundsAccount/Restore', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 }
