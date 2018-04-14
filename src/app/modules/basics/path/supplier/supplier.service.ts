@@ -86,7 +86,7 @@ export class SupplierService {
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', next, fallback, {
+    return this.http.get('/CustomerContractor/GetList', next, fallback, ModuleType.Basic, {
       customerId
     });
   }

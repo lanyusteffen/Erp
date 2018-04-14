@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { ModuleType } from '../../../../services/http.service';
 
 
 @Injectable()
@@ -21,18 +22,18 @@ export class DepartmentService {
 
   constructor(private http: HttpService) { }
 
-  succeessNotifyCallback(successNotify?):void{
-    if(successNotify!=undefined){
+  succeessNotifyCallback(successNotify?): void {
+    if (successNotify !== undefined) {
       successNotify();
     }
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Department/GetAll',next,fallback);
+    return this.http.get('/Department/GetAll', next, fallback);
   }
 
   dropdownlist(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Department/GetDropdownList',next,fallback);
+    return this.http.get('/Department/GetDropdownList', next, fallback);
   }
 
   get() { return this.department$.asObservable(); }
@@ -53,7 +54,7 @@ export class DepartmentService {
       Status: 1,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         departments: data.DepartmentList,
@@ -63,8 +64,8 @@ export class DepartmentService {
       this.state = nextState;
       this.department$.next(nextState);
 
-      this.succeessNotifyCallback(successNotify)
-    },fallback);
+      this.succeessNotifyCallback(successNotify);
+    }, fallback);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -83,7 +84,7 @@ export class DepartmentService {
       Status: -99,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         departments: data.DepartmentList,
@@ -94,71 +95,71 @@ export class DepartmentService {
       this.department$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    },fallback);
+    }, fallback);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const {} = this.state;
 
-    return this.http.get('/Department/GetForNew',next,fallback, {
+    return this.http.get('/Department/GetForNew', next, fallback, ModuleType.Basic, {
     });
   }
 
-  detail(departmentId,next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`,next,fallback);
+  detail(departmentId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`, next, fallback);
   }
 
-  create(department,next: (data: any) => void, fallback: (error: any) => void) {
+  create(department, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/New', {
       department
-    },next,fallback);
+    }, next, fallback);
   }
 
-  modify(department,next: (data: any) => void, fallback: (error: any) => void) {
+  modify(department, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Modify', {
       department
-    },next,fallback);
+    }, next, fallback);
   }
 
-  cancel(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Cancel', {
       entityIdList
-    },next,fallback);
+    }, next, fallback);
   }
 
-  remove(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Remove', {
       entityIdList
-    },next,fallback);
+    }, next, fallback);
   }
 
-  restore(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Restore', {
       entityIdList
-    },next,fallback);
+    }, next, fallback);
   }
 
-  onCategoryChange(selected,fallback: (error: any) => void, successNotify?: () => void) {
+  onCategoryChange(selected, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentCategory: selected
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onDisabledCategoryChange(selected,fallback: (error: any) => void, successNotify?: () => void) {
+  onDisabledCategoryChange(selected, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentCategory: selected
     };
 
     this.state = nextState;
-    this.listDisabled(fallback,successNotify);
+    this.listDisabled(fallback, successNotify);
   }
 
-  onPageChange(pagination,fallback: (error: any) => void, successNotify?: () => void) {
+  onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -168,26 +169,26 @@ export class DepartmentService {
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onSearch(queryKey,fallback: (error: any) => void, successNotify?: () => void) {
+  onSearch(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onSearchDisabled(queryKey,fallback: (error: any) => void, successNotify?: () => void){
+  onSearchDisabled(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled(fallback,successNotify);
+    this.listDisabled(fallback, successNotify);
   }
 }
