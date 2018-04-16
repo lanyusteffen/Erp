@@ -7,7 +7,7 @@ import { AreaService } from './area.service';
   selector: 'app-basics-area',
   template: `
   <app-area-actions [selectedItems]="selectedItems" ></app-area-actions>
-  <div class="content">    
+  <div class="content">
     <app-area-list (selectItems)="selectItems($event)"></app-area-list>
   </div>
   `,
