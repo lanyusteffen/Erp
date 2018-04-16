@@ -9,7 +9,7 @@ import { ConfirmService } from '@services/confirm.service';
 @Component({
   selector: 'app-basics-area-disabled',
   template: `
-  
+
   <div class="actions">
     <app-quick-search [placeholder]="'输入编号、名称'" (onSearch)="onSearch($event)"></app-quick-search>
     <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="restore()">
@@ -23,7 +23,7 @@ import { ConfirmService } from '@services/confirm.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">    
+  <div class="content">
     <app-area-disabled-list (selectItems)="selectItems($event)"></app-area-disabled-list>
   </div>
   `,
@@ -163,5 +163,4 @@ export class AreaDisabledComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 }

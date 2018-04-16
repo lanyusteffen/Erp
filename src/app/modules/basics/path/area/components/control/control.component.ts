@@ -16,6 +16,7 @@ export class AreaControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _areaId: number;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   @Input()
   get show() {
@@ -34,7 +35,6 @@ export class AreaControlComponent {
     this.showPop();
   }
 
-
   listErrorCallBack(err: any): void {
     this.alertService.open({
       type: 'danger',
@@ -44,7 +44,7 @@ export class AreaControlComponent {
 
 
   get title() {
-    return this.type == 'create' ? '新增地区' : '修改地区';
+    return this.type === 'create' ? '新增地区' : '修改地区';
   }
 
   private showPop(): void {
@@ -77,8 +77,6 @@ export class AreaControlComponent {
     return this._areaId;
   }
 
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
-
   constructor(
     private areaService: AreaService,
     private formService: FormService,
@@ -100,7 +98,7 @@ export class AreaControlComponent {
         content: option + '成功！'
       });
       this.areaService.list((err) => {
-        this.listErrorCallBack(err)
+        this.listErrorCallBack(err);
       });
     }
   }
