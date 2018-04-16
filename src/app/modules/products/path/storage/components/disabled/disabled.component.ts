@@ -8,10 +8,10 @@ import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
-    selector: 'app-storage-disabled-list',
-    templateUrl: './disabled.component.html',
-    styleUrls: ['./disabled.component.less']
-  })
+  selector: 'app-storage-disabled-list',
+  templateUrl: './disabled.component.html',
+  styleUrls: ['./disabled.component.less']
+})
 
 export class StorageDisabledListComponent implements OnInit, OnDestroy {
   private storages = <any>[];
@@ -21,8 +21,8 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
   private _showUpdate = false;
   private subscription: Subscription;
 
- @LocalStorage()
-  systemConfig:any;
+  @LocalStorage()
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -30,7 +30,7 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.subscription = this.storageService
       .get()
@@ -44,27 +44,27 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
     return this.systemConfig;
   }
-  
 
-  listErrorCallBack(err:any):void{
+
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用仓库列表失败!'+err
+      type: 'danger',
+      content: '绑定停用仓库列表失败!' + err
     });
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.storageService.listDisabled((err)=>{
+    this.storageService.listDisabled((err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -97,7 +97,7 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     this.storageService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    },(err)=>{
+    }, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -111,13 +111,13 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .remove([id],data => {
+          .remove([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.listDisabled((err)=>{
+              this.storageService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -126,11 +126,11 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err
-            })
+            });
           });
       }
     });
@@ -140,13 +140,13 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.storageService.restore([id],data => {
+        this.storageService.restore([id], data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
               content: '还原成功！'
             });
-            this.storageService.listDisabled((err)=>{
+            this.storageService.listDisabled((err) => {
               this.listErrorCallBack(err);
             });
           } else {
@@ -155,7 +155,7 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
               content: '还原失败, ' + data.ErrorMessages
             });
           }
-        },(err)=>{
+        }, (err) => {
           this.alertService.open({
             type: 'danger',
             content: '还原失败, ' + err

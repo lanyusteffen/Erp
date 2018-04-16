@@ -8,13 +8,13 @@ import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
-    selector: 'app-employee-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.less'],
-    providers:[
-      AppService
-    ]
-  })
+  selector: 'app-employee-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.less'],
+  providers: [
+    AppService
+  ]
+})
 
 export class EmployeeListComponent implements OnInit, OnDestroy {
   private employees = <any>[];
@@ -25,7 +25,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @LocalStorage()
-  systemConfig:any;
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -33,7 +33,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private employeeService: EmployeeService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.subscription = this.employeeService
       .get()
@@ -41,32 +41,32 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.employees = employees;
         this.pagination = currentPagination;
       });
-  }  
+  }
 
   getSystemConfig(): any {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
     return this.systemConfig;
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用职员列表失败!'+err
+      type: 'danger',
+      content: '绑定停用职员列表失败!' + err
     });
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.employeeService.list((err)=>{
+    this.employeeService.list((err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -99,7 +99,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.employeeService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    },(err)=>{
+    }, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -118,20 +118,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.employeeService
-          .cancel([id],data => {
+          .cancel([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '停用成功！'
               });
-              this.employeeService.list((err)=>{
+              this.employeeService.list((err) => {
                 this.listErrorCallBack(err);
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '停用失败！'+err
+              content: '停用失败！' + err
             });
           });
       }
@@ -143,20 +143,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.employeeService
-          .cancel([id],data => {
+          .cancel([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.employeeService.list((err)=>{
+              this.employeeService.list((err) => {
                 this.listErrorCallBack(err);
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '删除失败！'+err
+              content: '删除失败！' + err
             });
           });
       }

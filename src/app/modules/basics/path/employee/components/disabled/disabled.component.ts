@@ -8,10 +8,10 @@ import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
-    selector: 'app-employee-disabled-list',
-    templateUrl: './disabled.component.html',
-    styleUrls: ['./disabled.component.less']
-  })
+  selector: 'app-employee-disabled-list',
+  templateUrl: './disabled.component.html',
+  styleUrls: ['./disabled.component.less']
+})
 
 export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
   private employees = <any>[];
@@ -22,7 +22,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @LocalStorage()
-  systemConfig:any;
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -30,7 +30,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
     private employeeService: EmployeeService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.subscription = this.employeeService
       .get()
@@ -39,32 +39,32 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
         this.pagination = currentPagination;
       });
   }
- 
+
 
   getSystemConfig(): any {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
     return this.systemConfig;
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用职员列表失败!'+err
+      type: 'danger',
+      content: '绑定停用职员列表失败!' + err
     });
   }
 
   ngOnInit() {
     this.getSystemConfig()
-    this.employeeService.listDisabled((err)=>{
+    this.employeeService.listDisabled((err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -97,7 +97,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
     this.employeeService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    },(err)=>{
+    }, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -116,13 +116,13 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.employeeService
-          .remove([id],data => {
+          .remove([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.employeeService.listDisabled((err)=>{
+              this.employeeService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -131,7 +131,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err
@@ -145,13 +145,13 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.employeeService.restore([id],data => {
+        this.employeeService.restore([id], data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
               content: '还原成功！'
             });
-            this.employeeService.listDisabled((err)=>{
+            this.employeeService.listDisabled((err) => {
               this.listErrorCallBack(err);
             });
           } else {
@@ -160,7 +160,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
               content: '还原失败, ' + data.ErrorMessages
             });
           }
-        },(err)=>{
+        }, (err) => {
           this.alertService.open({
             type: 'danger',
             content: '还原失败, ' + err

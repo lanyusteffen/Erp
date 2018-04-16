@@ -44,4 +44,4 @@ export const ROUTES: Routes = [
   providers: [SupplierService]
 })
 
-export class SupplierModule {}
+export class SupplierModule { }

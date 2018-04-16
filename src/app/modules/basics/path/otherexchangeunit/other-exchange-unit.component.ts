@@ -8,7 +8,7 @@ import { AlertService } from '../../../../services/alert.service';
   template: `
     <app-otherexchangeunit-actions [selectedItems]="selectedItems" [category]="category"></app-otherexchangeunit-actions>
     <div class="content">
-      <app-category (onChange)="onCategoryChange($event)"  
+      <app-category (onChange)="onCategoryChange($event)"
         [categoryType]="'Customer'"
         [resourceType]="'Other'"
       ></app-category>
@@ -37,7 +37,7 @@ export class OtherExchangeUnitComponent implements OnInit, OnDestroy {
   constructor(
     private otherExchangeUnitService: OtherExchangeUnitService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.subscription = this.otherExchangeUnitService

@@ -17,7 +17,7 @@ export class SupplierService {
     }
   };
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
   get() { return this.suppliers$.asObservable(); }
 

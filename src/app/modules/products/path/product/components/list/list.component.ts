@@ -59,7 +59,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getSystemConfig();
     this.productService.list((err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -71,10 +71,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -107,7 +107,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -159,7 +159,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
                 content: '停用成功！'
               });
               this.productService.list((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             }
           }, (err) => {
@@ -184,7 +184,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
                 content: '删除成功！'
               });
               this.productService.list((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             }
           }, (err) => {

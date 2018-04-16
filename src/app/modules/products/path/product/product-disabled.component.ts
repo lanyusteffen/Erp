@@ -57,20 +57,20 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private alertService: AlertService,
-    private appService:AppService,
-    private confirmService : ConfirmService
+    private appService: AppService,
+    private confirmService: ConfirmService
   ) {
-  }  
+  }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用商品列表失败!'+err
+      type: 'danger',
+      content: '绑定停用商品列表失败!' + err
     });
   }
 
   ngOnInit() {
-    
+
     this.systemConfig = this.getSystemConfig();
     this.subscription = this.productService
       .get()
@@ -81,10 +81,10 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -92,7 +92,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
   }
 
   onSearch(queryKey) {
-    this.productService.onSearchDisabled(queryKey,(err)=>{
+    this.productService.onSearchDisabled(queryKey, (err) => {
       this.listErrorCallBack(err)
     });
   }
@@ -111,13 +111,13 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.productService
-          .restore(this.selectedItems.map(item => item.Id),data => {
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.productService.listDisabled((err)=>{
+              this.productService.listDisabled((err) => {
                 this.listErrorCallBack(err)
               });
             } else {
@@ -126,7 +126,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '还原失败, ' + err
@@ -134,20 +134,20 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
           });
       }
     });
-  } 
+  }
 
-  delete(){
+  delete() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.productService
-          .remove(this.selectedItems.map(item => item.Id),data => {
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.productService.listDisabled((err)=>{
+              this.productService.listDisabled((err) => {
                 this.listErrorCallBack(err)
               });
             } else {
@@ -156,7 +156,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err

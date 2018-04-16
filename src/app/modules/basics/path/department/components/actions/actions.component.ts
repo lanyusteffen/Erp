@@ -20,7 +20,7 @@ export class DepartmentActionsComponent {
 
   @Input() set category(category) {
     this._category = category;
-  };
+  }
 
   get category() {
     return this._category;

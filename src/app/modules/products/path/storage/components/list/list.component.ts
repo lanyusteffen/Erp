@@ -9,13 +9,13 @@ import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
-    selector: 'app-storage-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.less'],
-    providers:[
-      AppService
-    ]
-  })
+  selector: 'app-storage-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.less'],
+  providers: [
+    AppService
+  ]
+})
 
 export class StorageListComponent implements OnInit, OnDestroy {
   private storages = <any>[];
@@ -26,7 +26,7 @@ export class StorageListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @LocalStorage()
-  systemConfig:any;
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -34,7 +34,7 @@ export class StorageListComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.subscription = this.storageService
       .get()
@@ -44,18 +44,18 @@ export class StorageListComponent implements OnInit, OnDestroy {
       });
   }
 
-  
 
-  listErrorCallBack(err:any):void{
+
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定仓库列表失败!'+err
+      type: 'danger',
+      content: '绑定仓库列表失败!' + err
     });
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.storageService.list((err)=>{
+    this.storageService.list((err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -68,10 +68,10 @@ export class StorageListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -103,7 +103,7 @@ export class StorageListComponent implements OnInit, OnDestroy {
     this.storageService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    },(err)=>{
+    }, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -122,20 +122,20 @@ export class StorageListComponent implements OnInit, OnDestroy {
       content: '确认停用吗？',
       onConfirm: () => {
         this.storageService
-          .cancel([id],data => {
+          .cancel([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '停用成功！'
               });
-              this.storageService.list((err)=>{
+              this.storageService.list((err) => {
                 this.listErrorCallBack(err);
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '停用失败！'+err
+              content: '停用失败！' + err
             });
           });
       }
@@ -147,20 +147,20 @@ export class StorageListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .remove([id],data => {
+          .remove([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.list((err)=>{
+              this.storageService.list((err) => {
                 this.listErrorCallBack(err);
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '删除失败！'+err
+              content: '删除失败！' + err
             });
           });
       }

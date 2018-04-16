@@ -16,14 +16,16 @@ export class DepartmentControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _departmentId: number;
-  private _category:any;
+  private _category: any;
 
-  @Input() 
-  set category(category){
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
+
+  @Input()
+  set category(category) {
     this._category = category;
-  };
+  }
 
-  get category(){
+  get category() {
     return this._category;
   }
 
@@ -37,11 +39,11 @@ export class DepartmentControlComponent {
   }
 
   @Input() type = 'create';
- 
+
   @Input()
   set departmentId(departmentId) {
-   this._departmentId = departmentId;
-   this.showPop();
+    this._departmentId = departmentId;
+    this.showPop();
   }
 
   listErrorCallBack(err: any): void {
@@ -58,21 +60,21 @@ export class DepartmentControlComponent {
           .newOne(data => {
             data.CategoryId = this._category.Id;
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '获取部门数据失败'+err
-            });  
+              content: '获取部门数据失败' + err
+            });
           });
       } else {
         this.departmentService
-          .detail(this._departmentId,data => {
+          .detail(this._departmentId, data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '获取部门数据失败'+err
-            });  
+              content: '获取部门数据失败' + err
+            });
           });
       }
     }
@@ -82,11 +84,9 @@ export class DepartmentControlComponent {
     return this._departmentId;
   }
 
-  get title(){
-    return this.type=='create'?'新增部门':'修改部门';
+  get title() {
+    return this.type === 'create' ? '新增部门' : '修改部门';
   }
-
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private departmentService: DepartmentService,
@@ -96,45 +96,45 @@ export class DepartmentControlComponent {
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
-  get categoryName():String { return this.category? this.category.Name : this.form.get("CategoryName").value;}
+  get categoryName(): String { return this.category ? this.category.Name : this.form.get('CategoryName').value; }
 
   handleClose() {
     this.onClose.emit();
   }
 
-  validate(data,option:string):void{
+  validate(data, option: string): void {
     if (data.IsValid) {
       this.onClose.emit();
       this.alertService.open({
         type: 'success',
-        content: option+'成功！'
-      });      
-      this.departmentService.list( (err) => {
+        content: option + '成功！'
+      });
+      this.departmentService.list((err) => {
         this.listErrorCallBack(err);
       });
     }
   }
 
   onSubmit({ value }) {
-    if(value.Id==0){
-      this.departmentService.create(value,data => {
-        this.validate(data,"添加");
-      },(err)=>{
+    if (value.Id === 0) {
+      this.departmentService.create(value, data => {
+        this.validate(data, '添加');
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '添加失败！'+err
-        }); 
+          content: '添加失败！' + err
+        });
       });
-    }else{
-      this.departmentService.modify(value,data => {
-        this.validate(data,"修改");
-      },(err)=>{
+    } else {
+      this.departmentService.modify(value, data => {
+        this.validate(data, '修改');
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '修改失败！'+err
-        }); 
+          content: '修改失败！' + err
+        });
       });
-    }    
+    }
   }
 }
 

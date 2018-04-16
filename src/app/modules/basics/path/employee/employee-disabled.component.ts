@@ -55,23 +55,23 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
   constructor(
     private employeeService: EmployeeService,
     private alertService: AlertService,
-    private appService:AppService,
-    private confirmService : ConfirmService
+    private appService: AppService,
+    private confirmService: ConfirmService
   ) {
-  }  
+  }
 
   ngOnInit() {
-    
+
     this.systemConfig = this.getSystemConfig();
     this.subscription = this.employeeService
       .get()
       .subscribe();
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用职员列表失败!'+err
+      type: 'danger',
+      content: '绑定停用职员列表失败!' + err
     });
   }
 
@@ -79,10 +79,10 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -90,7 +90,7 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
   }
 
   onSearch(queryKey) {
-    this.employeeService.onSearchDisabled(queryKey,(err)=>{
+    this.employeeService.onSearchDisabled(queryKey, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -109,13 +109,13 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.employeeService
-          .restore(this.selectedItems.map(item => item.Id),data => {
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.employeeService.listDisabled((err)=>{
+              this.employeeService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -124,7 +124,7 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '还原失败, ' + err
@@ -132,20 +132,20 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
           });
       }
     });
-  } 
+  }
 
-  delete(){
+  delete() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.employeeService
-          .remove(this.selectedItems.map(item => item.Id),data => {
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.employeeService.listDisabled((err)=>{
+              this.employeeService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -154,7 +154,7 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err

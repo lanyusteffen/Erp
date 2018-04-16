@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SupplierService } from '../../supplier.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
-import { TabsService } from '../../../../../../components/tabs/tabs.service';
+import { TabsService } from '@components/tabs/tabs.service';
 
 @Component({
   selector: 'app-supplier-actions',

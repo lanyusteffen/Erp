@@ -49,8 +49,8 @@ import { ConfirmService } from '@services/confirm.service';
 export class DepartmentDisabledComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
   private department;
-  private subscription: Subscription;  
-  private selectCategory :any;
+  private subscription: Subscription;
+  private selectCategory: any;
 
   @LocalStorage()
   systemConfig: any;
@@ -58,13 +58,13 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
   constructor(
     private departmentService: DepartmentService,
     private alertService: AlertService,
-    private appService:AppService,
-    private confirmService : ConfirmService
+    private appService: AppService,
+    private confirmService: ConfirmService
   ) {
-  }  
+  }
 
   ngOnInit() {
-    
+
     this.systemConfig = this.getSystemConfig();
     this.subscription = this.departmentService
       .get()
@@ -75,26 +75,26 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
     return this.systemConfig;
   }
 
-  
-  listErrorCallBack(err:any):void{
+
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用部门列表失败!'+err
+      type: 'danger',
+      content: '绑定停用部门列表失败!' + err
     });
   }
 
   onSearch(queryKey) {
-    this.departmentService.onSearchDisabled(queryKey,(err)=>{
+    this.departmentService.onSearchDisabled(queryKey, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -107,11 +107,11 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
   selectItems(selected) {
     this.selectedItems = selected;
   }
-  
-  onCategoryChange(selected) {    
+
+  onCategoryChange(selected) {
 
     this.selectCategory = selected;
-    this.departmentService.onDisabledCategoryChange(selected,(err)=>{
+    this.departmentService.onDisabledCategoryChange(selected, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -121,13 +121,13 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.departmentService
-          .restore(this.selectedItems.map(item => item.Id),data => {
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.departmentService.listDisabled((err)=>{
+              this.departmentService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -136,7 +136,7 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '还原失败, ' + err
@@ -144,20 +144,20 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
           });
       }
     });
-  } 
+  }
 
-  delete(){
+  delete() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.departmentService
-          .remove(this.selectedItems.map(item => item.Id),data => {
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.departmentService.listDisabled((err)=>{
+              this.departmentService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -166,7 +166,7 @@ export class DepartmentDisabledComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err

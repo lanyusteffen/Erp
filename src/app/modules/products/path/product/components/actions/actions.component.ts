@@ -58,7 +58,7 @@ export class ProductActionsComponent {
 
   onSearch(queryKey) {
     this.productService.onSearch(queryKey, (err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -75,7 +75,7 @@ export class ProductActionsComponent {
                 content: '删除成功！'
               });
               this.productService.list((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             }
           }, (err) => {

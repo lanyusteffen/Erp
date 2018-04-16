@@ -43,7 +43,7 @@ export class AreaListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.areaService.list((err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -76,7 +76,7 @@ export class AreaListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -101,7 +101,7 @@ export class AreaListComponent implements OnInit, OnDestroy {
                 content: '停用成功！'
               });
               this.areaService.list((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             }
           }, (err) => {
@@ -126,7 +126,7 @@ export class AreaListComponent implements OnInit, OnDestroy {
                 content: '删除成功！'
               });
               this.areaService.list((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             }
           }, (err) => {

@@ -27,4 +27,4 @@ import { SharedModule } from '@app/shared.module';
   ]
 })
 
-export class BasicsModule {}
+export class BasicsModule { }

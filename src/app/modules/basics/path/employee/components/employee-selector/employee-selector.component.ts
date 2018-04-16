@@ -18,7 +18,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
 
-  constructor(private employeeService: EmployeeService,private alertService:AlertService) {console.log(1);}
+  constructor(private employeeService: EmployeeService, private alertService: AlertService) { console.log(1); }
 
   ngOnInit() {
     this.employeeService
@@ -26,11 +26,11 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
         this.list = data.map(item => ({
           label: item.Name,
           value: item.Id
-        }));        
-      },(err)=>{
+        }));
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取职员信息失败'+err
+          type: 'danger',
+          content: '获取职员信息失败' + err
         });
       });
   }

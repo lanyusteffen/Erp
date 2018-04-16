@@ -38,7 +38,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
   constructor(
     private supplierService: SupplierService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.subscription = this.supplierService

@@ -23,7 +23,7 @@ import { ConfirmService } from '@services/confirm.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">    
+  <div class="content">
     <app-storage-disabled-list (selectItems)="selectItems($event)"></app-storage-disabled-list>
   </div>
   `,
@@ -55,23 +55,23 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
   constructor(
     private storageService: StorageService,
     private alertService: AlertService,
-    private appService:AppService,
-    private confirmService : ConfirmService
+    private appService: AppService,
+    private confirmService: ConfirmService
   ) {
-  }  
+  }
 
   ngOnInit() {
-    
+
     this.systemConfig = this.getSystemConfig();
     this.subscription = this.storageService
       .get()
       .subscribe();
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用仓库列表失败!'+err
+      type: 'danger',
+      content: '绑定停用仓库列表失败!' + err
     });
   }
 
@@ -79,10 +79,10 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -90,7 +90,7 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
   }
 
   onSearch(queryKey) {
-    this.storageService.onSearchDisabled(queryKey,(err)=>{
+    this.storageService.onSearchDisabled(queryKey, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -109,13 +109,13 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
       content: '确认还原吗？',
       onConfirm: () => {
         this.storageService
-          .restore(this.selectedItems.map(item => item.Id),data => {
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '还原成功！'
               });
-              this.storageService.listDisabled((err)=>{
+              this.storageService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -124,7 +124,7 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
                 content: '还原失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '还原失败, ' + err
@@ -132,20 +132,20 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
           });
       }
     });
-  } 
+  }
 
-  delete(){
+  delete() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .remove(this.selectedItems.map(item => item.Id),data => {
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.listDisabled((err)=>{
+              this.storageService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -154,7 +154,7 @@ export class StorageDisabledComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err
