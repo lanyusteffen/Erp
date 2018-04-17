@@ -76,7 +76,9 @@ export class HttpService {
             break;
         }
 
-        return (<any>settings).BaseApiUrl + '/' + modulePath + '/' + url;
+        console.log((<any>settings).CrossProxyURL + '/' + modulePath + '/' + url);
+
+        return (<any>settings).CrossProxyURL + '/' + modulePath + '/' + url;
     }
 
     public post(url: string, postData: any, next: (data: any) => void,

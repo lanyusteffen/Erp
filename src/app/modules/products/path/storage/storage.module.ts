@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
@@ -11,7 +11,7 @@ import { StorageListComponent } from './components/list/list.component';
 import { StorageActionsComponent } from './components/actions/actions.component';
 import { StorageControlComponent } from './components/control/control.component';
 import { AppCommonModule } from '@modules/common/common.module';
-import { SharedModule} from '@app/shared.module';
+import { SharedModule } from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
@@ -39,4 +39,4 @@ export const ROUTES: Routes = [
   providers: [StorageService]
 })
 
-export class StorageModule {}
+export class StorageModule { }
