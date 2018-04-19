@@ -76,8 +76,6 @@ export class HttpService {
             break;
         }
 
-        console.log((<any>settings).CrossProxyURL + '/' + modulePath + '/' + url);
-
         return (<any>settings).CrossProxyURL + '/' + modulePath + '/' + url;
     }
 
