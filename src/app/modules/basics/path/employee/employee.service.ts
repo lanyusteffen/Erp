@@ -98,11 +98,11 @@ export class EmployeeService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentEmployee } = this.state;
 
-    return this.http.get('/Employee/GetForNew', next, fallback, ModuleType.Basic);
+    return this.http.post('/Employee/GetForNew', {}, next, fallback, ModuleType.Basic);
   }
 
   detail(employeeId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Employee/GetForModify?employeeId=${employeeId}`, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Employee/GetForModify`, { employeeId }, next, fallback, ModuleType.Basic);
   }
 
   create(employee, next: (data: any) => void, fallback: (error: any) => void) {
