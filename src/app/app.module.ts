@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-
+import { Ng2Webstorage } from 'ngx-webstorage';
 import { UIModule } from '../UI/ui.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -143,6 +143,7 @@ export const ROUTES: Routes = [
     CommonModule,
     HttpClientModule,
     UIModule,
+    Ng2Webstorage,
     RouterModule.forRoot(ROUTES),
     SlimLoadingBarModule.forRoot()
   ],
