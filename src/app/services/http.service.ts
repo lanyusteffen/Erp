@@ -1,16 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as settings from '../../assets/appsettings.json';
+import { LocalStorage, SessionStorage } from 'ngx-webstorage';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpService {
 
-    constructor(private http: HttpClient) { }
+    @SessionStorage()
+    private authToken: String;
+
+    @LocalStorage()
+    private persistenceAuthToken: String;
+
+    constructor(private http: HttpClient, private router: Router) { }
 
     private addRequestHeader(dict?: { [key: string]: string | string[]; }): HttpHeaders {
 
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         headers.append('Accept', '*/*');
+
+        if (this.persistenceAuthToken !== null) {
+          headers.append('Authorization', 'Bearer ' + this.persistenceAuthToken);
+        } else if (this.authToken !== null) {
+          headers.append('Authorization', 'Bearer ' + this.authToken);
+        }
 
         // 使用--strictNullChecks参数进行编译
         // type T1 = (x?: number) => string;              // x的类型是 number | undefined
@@ -79,6 +93,19 @@ export class HttpService {
         return (<any>settings).CrossProxyURL + '/' + modulePath + '/' + url;
     }
 
+    checkAuthenticateResponse(err: any, fallback: (error: any) => void) {
+      if (err instanceof Response) {
+        const resp = err as Response;
+        if (resp.status === 401) {
+          this.router.navigate(['authorize']);
+        } else {
+          fallback(err);
+        }
+      } else {
+        fallback(err);
+      }
+    }
+
     public post(url: string, postData: any, next: (data: any) => void,
       fallback: (error: any) => void, moduleType: ModuleType,
       params?: Object, dict?: { [key: string]: string | string[]; }): void {
@@ -90,8 +117,8 @@ export class HttpService {
             data => {
               next(data);
             },
-            error => {
-              fallback(error);
+            err => {
+              this.checkAuthenticateResponse(err, fallback);
             }
           );
     }
@@ -105,8 +132,8 @@ export class HttpService {
             data => {
               next(data);
             },
-            error => {
-              fallback(error);
+            err => {
+              this.checkAuthenticateResponse(err, fallback);
             }
           );
     }
