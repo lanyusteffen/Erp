@@ -6,21 +6,21 @@ import { ProductService } from '../../product.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-    selector: 'app-product-unit',
-    templateUrl: './unit.component.html',
-    styleUrls: ['./unit.component.less'],
-    providers: [FormService]
-  })
+  selector: 'app-product-unit',
+  templateUrl: './unit.component.html',
+  styleUrls: ['./unit.component.less'],
+  providers: [FormService]
+})
 
 export class ProductUnitComponent {
   private products = <any>[];
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
-  private form=new FormGroup({});
-  private _show:boolean;
-  private _productId:number;
-  private _productUnitList:Array<any>;
+  private form = new FormGroup({});
+  private _show: boolean;
+  private _productId: number;
+  private _productUnitList: Array<any>;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -28,7 +28,7 @@ export class ProductUnitComponent {
     private productService: ProductService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private formService:FormService
+    private formService: FormService
   ) {
   }
 
@@ -41,36 +41,36 @@ export class ProductUnitComponent {
     this._show = isShow;
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定商品单位列表失败!'+err
+      type: 'danger',
+      content: '绑定商品单位列表失败!' + err
     });
   }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
-  get productUnitList():Array<any>{ return this._productUnitList;}
+  get productUnitList(): Array<any> { return this._productUnitList; }
 
   handleClose() {
     this.onClose.emit();
   }
 
   @Input()
-  set productId(productId){
+  set productId(productId) {
     this._productId = productId;
-    if(this.show){
-        this.productService.detail(productId,data=>{             
-          this._productUnitList=data.ProductUnitList;
-          this.form = this.formService.createForm(data.ProductUnitList);
-      },(err)=>{
-        this.listErrorCallBack(err)
+    if (this.show) {
+      this.productService.detail(productId, data => {
+        this._productUnitList = data.ProductUnitList;
+        this.form = this.formService.createForm(data.ProductUnitList);
+      }, (err) => {
+        this.listErrorCallBack(err);
       });
-    }    
+    }
   }
- 
-  get productId(){
-      return this._productId;
+
+  get productId() {
+    return this._productId;
   }
 
   getKeys(item) {

@@ -21,14 +21,14 @@ export class AreaActionsComponent {
     private areaService: AreaService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private tabsService:TabsService
-  ) {}
+    private tabsService: TabsService
+  ) { }
 
   show() {
     this._show = true;
     this.selectedId = 0;
   }
-  
+
   showDisabled() {
     this.tabsService.create({
       name: '停用地区',
@@ -49,8 +49,8 @@ export class AreaActionsComponent {
   }
 
   onSearch(queryKey) {
-    this.areaService.onSearch(queryKey,(err) => {
-      this.listErrorCallBack(err)
+    this.areaService.onSearch(queryKey, (err) => {
+      this.listErrorCallBack(err);
     });
   }
 
@@ -59,20 +59,20 @@ export class AreaActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.areaService
-          .cancel(this.selectedItems.map(item => item.Id),data => {
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
               this.areaService.list((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '删除失败！'+err
+              content: '删除失败！' + err
             });
           });
       }

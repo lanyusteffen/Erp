@@ -7,7 +7,7 @@ import { StorageService } from './storage.service';
   selector: 'app-products-storage',
   template: `
   <app-storage-actions [selectedItems]="selectedItems" ></app-storage-actions>
-  <div class="content">    
+  <div class="content">
     <app-storage-list (selectItems)="selectItems($event)"></app-storage-list>
   </div>
   `,

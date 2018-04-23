@@ -38,7 +38,7 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.otherExchangeUnitService.list((err) => {
-      
+
     });
   }
 
@@ -50,7 +50,7 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
     this._showContact = true;
     this.otherExchangeUnitService.contactList(otherExchangeUnitId, data => {
       this.contactList = data;
-    },(err) => {
+    }, (err) => {
       this.alertService.open({
         type: 'danger',
         content: '绑定往来单位列表失败, ' + err

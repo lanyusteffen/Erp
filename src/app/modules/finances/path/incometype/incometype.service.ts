@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -48,7 +48,7 @@ export class IncomeTypeService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
@@ -78,33 +78,33 @@ export class IncomeTypeService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/FeeType/GetForModify', next, fallback);
+    return this.http.get('/FeeType/GetForModify', next, fallback, ModuleType.Basic);
   }
 
   detail(feeTypeId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`, next, fallback);
+    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`, next, fallback, ModuleType.Basic);
   }
 
   create(feeType, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/New', {
       feeType
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   update(feeType, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Modify', {
       feeType
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Cancel', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   onPageChange(pagination, fallback: (error: any) => void) {
@@ -157,12 +157,12 @@ export class IncomeTypeService {
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Remove', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/FeeType/Restore', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 }

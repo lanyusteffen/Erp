@@ -8,33 +8,33 @@ import { LocalStorage } from 'ngx-webstorage';
 
 
 @Component({
-    selector: 'app-department-disabled-list',
-    templateUrl: './disabled.component.html',
-    styleUrls: ['./disabled.component.less'],
-    providers:[
-      AppService
-    ]
-  })
+  selector: 'app-department-disabled-list',
+  templateUrl: './disabled.component.html',
+  styleUrls: ['./disabled.component.less'],
+  providers: [
+    AppService
+  ]
+})
 
 export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
   private departments = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
-  private selectCategory:any;
+  private selectCategory: any;
   private _showUpdate = false;
   private subscription: Subscription;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   @LocalStorage()
-  systemConfig:any;
+  systemConfig: any;
 
   constructor(
     private departmentService: DepartmentService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService:AppService
+    private appService: AppService
   ) {
     this.subscription = this.departmentService
       .get()
@@ -48,10 +48,10 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -100,7 +100,7 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
     this.departmentService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    },(err) => {
+    }, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -119,7 +119,7 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.departmentService
-          .remove([id],data => {
+          .remove([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
@@ -134,7 +134,7 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err
@@ -148,7 +148,7 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.departmentService.restore([id],data => {
+        this.departmentService.restore([id], data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
@@ -163,7 +163,7 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
               content: '还原失败, ' + data.ErrorMessages
             });
           }
-        },(err)=>{
+        }, (err) => {
           this.alertService.open({
             type: 'danger',
             content: '还原失败, ' + err

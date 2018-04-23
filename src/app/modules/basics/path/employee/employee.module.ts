@@ -15,7 +15,7 @@ import { FormService } from '@services/form.service';
 
 import { DepartmentModule } from '../department/department.module';
 import { AppCommonModule } from '@modules/common/common.module';
-import { SharedModule} from '@app/shared.module';
+import { SharedModule } from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
@@ -41,8 +41,8 @@ export const ROUTES: Routes = [
     SharedModule,
     RouterModule.forChild(ROUTES)
   ],
-  exports: [EmployeeSelectorComponent,EmployeeListComponent],
+  exports: [EmployeeSelectorComponent, EmployeeListComponent],
   providers: [EmployeeService]
 })
 
-export class EmployeeModule {}
+export class EmployeeModule { }

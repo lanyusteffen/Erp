@@ -32,7 +32,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   constructor(
     private employeeService: EmployeeService,
-    private alertService:AlertService
+    private alertService: AlertService
   ) {
   }
 
@@ -44,10 +44,10 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       });
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定职员列表失败!'+err
+      type: 'danger',
+      content: '绑定职员列表失败!' + err
     });
   }
 
@@ -61,7 +61,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
 
   onDepartmentChange(selected) {
-    this.employeeService.onDepartmentChange(selected,(err)=>{
+    this.employeeService.onDepartmentChange(selected, (err) => {
       this.listErrorCallBack(err);
     });
   }

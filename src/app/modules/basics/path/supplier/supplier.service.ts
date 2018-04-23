@@ -17,7 +17,7 @@ export class SupplierService {
     }
   };
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
   get() { return this.suppliers$.asObservable(); }
 
@@ -50,7 +50,7 @@ export class SupplierService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
@@ -82,7 +82,7 @@ export class SupplierService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
@@ -101,25 +101,25 @@ export class SupplierService {
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback);
+    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback, ModuleType.Basic);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/New', {
       customer
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   update(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Modify', {
       customer
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
       customerIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   onCategoryChange(selected, fallback: (error: any) => void) {
@@ -191,12 +191,12 @@ export class SupplierService {
   remove(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Remove', {
       customerIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   restore(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Restore', {
       customerIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 }

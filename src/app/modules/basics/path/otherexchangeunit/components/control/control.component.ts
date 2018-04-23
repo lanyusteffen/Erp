@@ -34,8 +34,9 @@ export class OtherExchangeUnitControlComponent {
   private contactList = [{}, {}, {}];
   private form = new FormGroup({});
   private _show = false;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
-  
+
   get show() {
     return this._show;
   }
@@ -92,14 +93,12 @@ export class OtherExchangeUnitControlComponent {
     }
   }
 
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
-
   constructor(
     private otherExchangeUnitService: OtherExchangeUnitService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   get contractorList(): FormArray { return this.form.get('CustomerContractorList') as FormArray; }
   get categoryName() { return this.form.get('CustomerCategoryName').value; }

@@ -36,15 +36,15 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
 
     this.routeSubscription = this.router.events.subscribe(event => {
-        if (event instanceof NavigationStart) {
-            this._loadingBar.start();
-        } else if ( event instanceof NavigationEnd ||
-                    event instanceof NavigationCancel ||
-                    event instanceof NavigationError) {
-            this._loadingBar.complete();
-        }
-    }, (error: any) => {
+      if (event instanceof NavigationStart) {
+        this._loadingBar.start();
+      } else if (event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError) {
         this._loadingBar.complete();
+      }
+    }, (error: any) => {
+      this._loadingBar.complete();
     });
 
     this.subscription = this.tabsService

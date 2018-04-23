@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import {  DepartmentService } from './department.service';
+import { DepartmentService } from './department.service';
 
 import { AlertService } from '@services/alert.service';
 
@@ -31,19 +31,19 @@ import { AlertService } from '@services/alert.service';
 
 export class DepartmentComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private subscription: Subscription;  
-  private selectCategory :any;
+  private subscription: Subscription;
+  private selectCategory: any;
 
 
   constructor(
     private departmentService: DepartmentService,
-    private alertService:AlertService
+    private alertService: AlertService
   ) {
   }
 
   ngOnInit() {
     this.subscription = this.departmentService
-      .get().subscribe(({  }) => {
+      .get().subscribe(({ }) => {
       });
   }
 
@@ -55,18 +55,18 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     this.selectedItems = selected;
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定停用仓库列表失败!'+err
+      type: 'danger',
+      content: '绑定停用仓库列表失败!' + err
     });
   }
 
-  onCategoryChange(selected) {    
+  onCategoryChange(selected) {
 
     this.selectCategory = selected;
-    this.departmentService.onCategoryChange(selected,(err)=>{
-      this.listErrorCallBack(err)
+    this.departmentService.onCategoryChange(selected, (err) => {
+      this.listErrorCallBack(err);
     });
   }
 }

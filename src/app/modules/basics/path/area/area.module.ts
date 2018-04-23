@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
@@ -12,7 +12,7 @@ import { AreaListComponent } from './components/list/list.component';
 import { AreaActionsComponent } from './components/actions/actions.component';
 import { AreaControlComponent } from './components/control/control.component';
 import { AppCommonModule } from '@modules/common/common.module';
-import { SharedModule} from '@app/shared.module';
+import { SharedModule } from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
@@ -41,4 +41,4 @@ export const ROUTES: Routes = [
   providers: [AreaService]
 })
 
-export class AreaModule {}
+export class AreaModule { }

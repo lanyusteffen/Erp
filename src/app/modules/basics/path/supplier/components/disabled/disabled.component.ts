@@ -45,10 +45,10 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -104,7 +104,7 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
         this.supplierService
           .remove([id], data => {
             if (data.IsValid) {
-           
+
               this.supplierService.listDisabled((err) => {
 
               }, () => {

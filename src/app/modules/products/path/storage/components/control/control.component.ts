@@ -17,6 +17,8 @@ export class StorageControlComponent {
   private _show = false;
   private _storageId: number;
 
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
+
   @Input()
   get show() {
     return this._show;
@@ -27,11 +29,11 @@ export class StorageControlComponent {
   }
 
   @Input() type = 'create';
- 
+
   @Input()
   set storageId(storageId) {
-   this._storageId = storageId;
-   this.showPop();
+    this._storageId = storageId;
+    this.showPop();
   }
 
   private showPop(): void {
@@ -40,30 +42,30 @@ export class StorageControlComponent {
         this.storageService
           .newOne(data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
-              type:'danger',
-              content:'获取仓库失败!'+err
+              type: 'danger',
+              content: '获取仓库失败!' + err
             });
           });
       } else {
         this.storageService
-          .detail(this._storageId,data => {
+          .detail(this._storageId, data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
-              this.alertService.open({
-                type:'danger',
-                content:'获取仓库失败!'+err
-              });
+          }, (err) => {
+            this.alertService.open({
+              type: 'danger',
+              content: '获取仓库失败!' + err
+            });
           });
       }
     }
-  }  
+  }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定仓库列表失败!'+err
+      type: 'danger',
+      content: '绑定仓库列表失败!' + err
     });
   }
 
@@ -71,11 +73,9 @@ export class StorageControlComponent {
     return this._storageId;
   }
 
-  get title(){
-    return this.type=='create'?'新增仓库':'修改仓库';
+  get title() {
+    return this.type === 'create' ? '新增仓库' : '修改仓库';
   }
-
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private storageService: StorageService,
@@ -90,38 +90,39 @@ export class StorageControlComponent {
     this.onClose.emit();
   }
 
-  validate(data,option:string):void{
+  validate(data, option: string): void {
     if (data.IsValid) {
       this.onClose.emit();
       this.alertService.open({
         type: 'success',
-        content: option+'成功！'
-      });      
-      this.storageService.list((err)=>{
+        content: option + '成功！'
+      });
+      this.storageService.list((err) => {
         this.listErrorCallBack(err);
       });
     }
   }
 
   onSubmit({ value }) {
-    if(value.Id==0){
-      this.storageService.create(value,data => {
-        this.validate(data,"添加")},(err)=>{
-          this.alertService.open({
-            type: 'danger',
-            content: '添加成功！'+err
-          });  
-        });
-    }else{
-      this.storageService.modify(value,data => {
-        this.validate(data,"修改");
-      },(err)=>{
+    if (value.Id === 0) {
+      this.storageService.create(value, data => {
+        this.validate(data, '添加');
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content:'修改成功！'+err
-        });  
+          content: '添加成功！' + err
+        });
       });
-    }    
+    } else {
+      this.storageService.modify(value, data => {
+        this.validate(data, '修改');
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改成功！' + err
+        });
+      });
+    }
   }
 }
 

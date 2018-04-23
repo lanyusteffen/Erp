@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -18,7 +18,7 @@ export class OtherExchangeUnitService {
     }
   };
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
   get() { return this.otherExchangeUnits$.asObservable(); }
 
@@ -51,7 +51,7 @@ export class OtherExchangeUnitService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
@@ -83,11 +83,11 @@ export class OtherExchangeUnitService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', next, fallback, {
+    return this.http.get('/CustomerContractor/GetList', next, fallback, ModuleType.Basic, {
       customerId
     });
   }
@@ -95,32 +95,32 @@ export class OtherExchangeUnitService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentCategory } = this.state;
 
-    return this.http.get('/Customer/GetForNew', next, fallback, {
+    return this.http.get('/Customer/GetForNew', next, fallback, ModuleType.Basic, {
       customerType: 'Other',
       customerCategoryId: currentCategory.Id
     });
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback);
+    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback, ModuleType.Basic);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/New', {
       customer
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   update(customer, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Modify', {
       customer
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
       customerIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   onCategoryChange(selected, fallback: (error: any) => void) {
@@ -192,12 +192,12 @@ export class OtherExchangeUnitService {
   remove(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Remove', {
       customerIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   restore(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Restore', {
       customerIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 }

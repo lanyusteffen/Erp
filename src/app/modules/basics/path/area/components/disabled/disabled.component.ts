@@ -5,10 +5,10 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-    selector: 'app-area-disabled-list',
-    templateUrl: './disabled.component.html',
-    styleUrls: ['./disabled.component.less']
-  })
+  selector: 'app-area-disabled-list',
+  templateUrl: './disabled.component.html',
+  styleUrls: ['./disabled.component.less']
+})
 
 export class AreaDisabledListComponent implements OnInit, OnDestroy {
   private areas = <any>[];
@@ -17,7 +17,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
-  private systemConfig:boolean;
+  private systemConfig: boolean;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -32,8 +32,8 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
         this.areas = areas;
         this.pagination = currentPagination;
       });
-  } 
-  
+  }
+
   listErrorCallBack(err: any): void {
     this.alertService.open({
       type: 'danger',
@@ -42,7 +42,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.areaService.listDisabled((err)=>{
+    this.areaService.listDisabled((err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -75,7 +75,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
     this.areaService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    },(err)=>{
+    }, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -94,13 +94,13 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
       content: '确认删除吗？',
       onConfirm: () => {
         this.areaService
-          .remove([id],data => {
+          .remove([id], data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.areaService.listDisabled((err)=>{
+              this.areaService.listDisabled((err) => {
                 this.listErrorCallBack(err);
               });
             } else {
@@ -109,7 +109,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
                 content: '删除失败, ' + data.ErrorMessages
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
               content: '删除失败, ' + err
@@ -123,13 +123,13 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.areaService.restore([id],data => {
+        this.areaService.restore([id], data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
               content: '还原成功！'
             });
-            this.areaService.listDisabled((err)=>{
+            this.areaService.listDisabled((err) => {
               this.listErrorCallBack(err);
             });
           } else {
@@ -138,7 +138,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
               content: '还原失败, ' + data.ErrorMessages
             });
           }
-        },(err)=>{
+        }, (err) => {
           this.alertService.open({
             type: 'danger',
             content: '还原失败, ' + err

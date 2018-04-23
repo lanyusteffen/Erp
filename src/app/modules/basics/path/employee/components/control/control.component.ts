@@ -16,6 +16,7 @@ export class EmployeeControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _employeeId: number;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   @Input()
   get show() {
@@ -27,17 +28,17 @@ export class EmployeeControlComponent {
   }
 
   @Input() type = 'create';
- 
+
   @Input()
   set employeeId(employeeId) {
-   this._employeeId = employeeId;
-   this.showPop();
+    this._employeeId = employeeId;
+    this.showPop();
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定职员列表失败!'+err
+      type: 'danger',
+      content: '绑定职员列表失败!' + err
     });
   }
 
@@ -47,20 +48,20 @@ export class EmployeeControlComponent {
         this.employeeService
           .newOne(data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
-              type:'danger',
-              content:'获取职员信息失败'+err
+              type: 'danger',
+              content: '获取职员信息失败' + err
             });
           });
       } else {
         this.employeeService
-          .detail(this._employeeId,data => {
+          .detail(this._employeeId, data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
-              type:'danger',
-              content:'获取职员信息失败'+err
+              type: 'danger',
+              content: '获取职员信息失败' + err
             });
           });
       }
@@ -71,11 +72,10 @@ export class EmployeeControlComponent {
     return this._employeeId;
   }
 
-  get title(){
-    return this.type=='create'?'新增职员':'修改职员';
+  get title() {
+    return this.type === 'create' ? '新增职员' : '修改职员';
   }
 
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private employeeService: EmployeeService,
@@ -90,39 +90,39 @@ export class EmployeeControlComponent {
     this.onClose.emit();
   }
 
-  validate(data,option:string):void{
+  validate(data, option: string): void {
     if (data.IsValid) {
       this.onClose.emit();
       this.alertService.open({
         type: 'success',
-        content: option+'成功！'
-      });      
-      this.employeeService.list((err)=>{
+        content: option + '成功！'
+      });
+      this.employeeService.list((err) => {
         this.listErrorCallBack(err);
       });
     }
   }
 
   onSubmit({ value }) {
-    if(value.Id==0){
-      this.employeeService.create(value,data => {
-        this.validate(data,"添加");
-      },(err)=>{
+    if (value.Id === 0) {
+      this.employeeService.create(value, data => {
+        this.validate(data, '添加');
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content:'添加成功！'
-        });    
+          content: '添加成功！'
+        });
       });
-    }else{
-      this.employeeService.modify(value,data => {
-        this.validate(data,"修改");
-      },(err)=>{
+    } else {
+      this.employeeService.modify(value, data => {
+        this.validate(data, '修改');
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
           content: '修改成功！'
-        });    
+        });
       });
-    }    
+    }
   }
 }
 

@@ -18,7 +18,7 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
   private onTouched;
   private onChange;
 
-  constructor(private departmentService: DepartmentService,private alertService: AlertService) {}
+  constructor(private departmentService: DepartmentService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.departmentService
@@ -27,10 +27,10 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
           label: item.Name,
           value: item.Id
         }));
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取部门数据失败'+err
+          type: 'danger',
+          content: '获取部门数据失败' + err
         });
       });
   }

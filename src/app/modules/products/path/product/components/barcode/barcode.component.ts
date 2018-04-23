@@ -5,10 +5,10 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-    selector: 'app-product-barcode-list',
-    templateUrl: './barcode.component.html',
-    styleUrls: ['./barcode.component.less']
-  })
+  selector: 'app-product-barcode-list',
+  templateUrl: './barcode.component.html',
+  styleUrls: ['./barcode.component.less']
+})
 
 export class ProductBarcodeListComponent implements OnInit, OnDestroy {
   private barcodes = <any>[];
@@ -33,7 +33,7 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
       });
   }
 
-  
+
   listErrorCallBack(err: any): void {
     this.alertService.open({
       type: 'danger',
@@ -43,7 +43,7 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.productService.listBarcode((err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -51,19 +51,19 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  changeBarcode(item,barcode){    
+  changeBarcode(item, barcode) {
     item.BarCode = barcode;
-    this.productService.modifyBarCode(item,data => {
+    this.productService.modifyBarCode(item, data => {
       if (data.IsValid) {
         this.alertService.open({
           type: 'success',
           content: '修改条形码成功！'
         });
         this.productService.listBarcode((err) => {
-          this.listErrorCallBack(err)
+          this.listErrorCallBack(err);
         });
       }
-    },(err)=>{
+    }, (err) => {
       this.alertService.open({
         type: 'daner',
         content: '修改条形码失败！'

@@ -16,6 +16,7 @@ export class AreaControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _areaId: number;
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   @Input()
   get show() {
@@ -27,14 +28,13 @@ export class AreaControlComponent {
   }
 
   @Input() type = 'create';
- 
+
   @Input()
   set areaId(areaId) {
-   this._areaId = areaId;
-   this.showPop();
+    this._areaId = areaId;
+    this.showPop();
   }
 
-  
   listErrorCallBack(err: any): void {
     this.alertService.open({
       type: 'danger',
@@ -43,8 +43,8 @@ export class AreaControlComponent {
   }
 
 
-  get title(){
-    return this.type=='create'?'新增地区':'修改地区';
+  get title() {
+    return this.type === 'create' ? '新增地区' : '修改地区';
   }
 
   private showPop(): void {
@@ -53,20 +53,20 @@ export class AreaControlComponent {
         this.areaService
           .newOne(data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
-              type:'danger',
-              content:'获取地区数据失败！'+err
+              type: 'danger',
+              content: '获取地区数据失败！' + err
             });
           });
       } else {
         this.areaService
-          .detail(this._areaId,data => {
+          .detail(this._areaId, data => {
             this.form = this.formService.createForm(data);
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
-              type:'danger',
-              content:'获取地区数据失败'+err
+              type: 'danger',
+              content: '获取地区数据失败' + err
             });
           });
       }
@@ -76,8 +76,6 @@ export class AreaControlComponent {
   get areaId() {
     return this._areaId;
   }
-
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private areaService: AreaService,
@@ -92,39 +90,39 @@ export class AreaControlComponent {
     this.onClose.emit();
   }
 
-  validate(data,option:string):void{
+  validate(data, option: string): void {
     if (data.IsValid) {
       this.onClose.emit();
       this.alertService.open({
         type: 'success',
-        content: option+'成功！'
-      });      
+        content: option + '成功！'
+      });
       this.areaService.list((err) => {
-        this.listErrorCallBack(err)
+        this.listErrorCallBack(err);
       });
     }
   }
 
   onSubmit({ value }) {
-    if(value.Id==0){
-      this.areaService.create(value,data => {
-        this.validate(data,"添加");
-      },(err)=>{
-          this.alertService.open({
-            type:'danger',
-            content:'添加失败'+err
-          });
-      });
-    }else{
-      this.areaService.modify(value,data => {
-        this.validate(data,"修改");
-      },(err)=>{
+    if (value.Id === 0) {
+      this.areaService.create(value, data => {
+        this.validate(data, '添加');
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'修改失败'+err
+          type: 'danger',
+          content: '添加失败' + err
         });
       });
-    }    
+    } else {
+      this.areaService.modify(value, data => {
+        this.validate(data, '修改');
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '修改失败' + err
+        });
+      });
+    }
   }
 }
 

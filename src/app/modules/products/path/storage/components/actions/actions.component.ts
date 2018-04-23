@@ -21,15 +21,15 @@ export class StorageActionsComponent {
     private storageService: StorageService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private tabsService:TabsService
-  ) {}
+    private tabsService: TabsService
+  ) { }
 
   show() {
     this._show = true;
     this.selectedId = 0;
   }
 
-   
+
   showDisabled() {
     this.tabsService.create({
       name: '停用仓库',
@@ -42,17 +42,17 @@ export class StorageActionsComponent {
     this._show = false;
   }
 
-  
 
-  listErrorCallBack(err:any):void{
+
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定仓库列表失败!'+err
+      type: 'danger',
+      content: '绑定仓库列表失败!' + err
     });
   }
 
   onSearch(queryKey) {
-    this.storageService.onSearch(queryKey,(err)=>{
+    this.storageService.onSearch(queryKey, (err) => {
       this.listErrorCallBack(err);
     });
   }
@@ -62,20 +62,20 @@ export class StorageActionsComponent {
       content: '确认删除吗？',
       onConfirm: () => {
         this.storageService
-          .cancel(this.selectedItems.map(item => item.Id),data => {
+          .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.alertService.open({
                 type: 'success',
                 content: '删除成功！'
               });
-              this.storageService.list((err)=>{
+              this.storageService.list((err) => {
                 this.listErrorCallBack(err);
               });
             }
-          },(err)=>{
+          }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '删除失败！'+err
+              content: '删除失败！' + err
             });
           });
       }

@@ -18,7 +18,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
 
-  constructor(private areaService: AreaService,private alertService:AlertService) {}
+  constructor(private areaService: AreaService, private alertService: AlertService) { }
 
   ngOnInit() {
     this.areaService
@@ -27,10 +27,10 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
           label: item.Name,
           value: item.Id
         }));
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '获取地区数据失败！'+err
+          content: '获取地区数据失败！' + err
         });
       });
   }

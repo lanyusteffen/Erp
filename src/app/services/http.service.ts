@@ -76,13 +76,14 @@ export class HttpService {
             break;
         }
 
-        return (<any>settings).BaseApiUrl + '/' + modulePath + '/' + url;
+        return (<any>settings).CrossProxyURL + '/' + modulePath + '/' + url;
     }
 
     public post(url: string, postData: any, next: (data: any) => void,
       fallback: (error: any) => void, moduleType: ModuleType,
       params?: Object, dict?: { [key: string]: string | string[]; }): void {
         const headers = this.addRequestHeader(dict);
+        console.log(this.getAbsoluteUrl(url, moduleType));
         this.http.post(this.getAbsoluteUrl(url, moduleType), postData,
           { headers: headers,  observe: 'body',  params: this.parseParams(params) })
           .subscribe(

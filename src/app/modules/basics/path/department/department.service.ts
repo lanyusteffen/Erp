@@ -29,11 +29,11 @@ export class DepartmentService {
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Department/GetAll', next, fallback);
+    return this.http.get('/Department/GetAll', next, fallback, ModuleType.Basic);
   }
 
   dropdownlist(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Department/GetDropdownList', next, fallback);
+    return this.http.get('/Department/GetDropdownList', next, fallback, ModuleType.Basic);
   }
 
   get() { return this.department$.asObservable(); }
@@ -65,7 +65,7 @@ export class DepartmentService {
       this.department$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -95,7 +95,7 @@ export class DepartmentService {
       this.department$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -106,37 +106,37 @@ export class DepartmentService {
   }
 
   detail(departmentId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`, next, fallback);
+    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`, next, fallback, ModuleType.Basic);
   }
 
   create(department, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/New', {
       department
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   modify(department, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Modify', {
       department
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Cancel', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Remove', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Department/Restore', {
       entityIdList
-    }, next, fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
   onCategoryChange(selected, fallback: (error: any) => void, successNotify?: () => void) {

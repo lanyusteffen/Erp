@@ -8,7 +8,7 @@ import { AlertService } from '@services/alert.service';
   selector: 'app-basics-product',
   template: `
   <app-product-actions [selectedItems]="selectedItems" ></app-product-actions>
-  <div class="content"> 
+  <div class="content">
     <app-category  [categoryType]="'Product'" [resourceType]="''" (onChange)="onCategoryChange($event)"
   ></app-category>
     <app-product-list (selectItems)="selectItems($event)"></app-product-list>
@@ -31,18 +31,18 @@ import { AlertService } from '@services/alert.service';
 export class ProductComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
   private subscription: Subscription;
-  private selectCategory :any;
+  private selectCategory: any;
 
   constructor(
     private productService: ProductService,
-    private alertService:AlertService
+    private alertService: AlertService
   ) {
-  }  
+  }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定商品列表失败!'+err
+      type: 'danger',
+      content: '绑定商品列表失败!' + err
     });
   }
 
@@ -59,12 +59,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   selectItems(selected) {
     this.selectedItems = selected;
   }
- 
 
-  onCategoryChange(selected) {    
+
+  onCategoryChange(selected) {
 
     this.selectCategory = selected;
-    this.productService.onCategoryChange(selected,(err)=>{
+    this.productService.onCategoryChange(selected, (err) => {
       this.listErrorCallBack(err);
     });
   }

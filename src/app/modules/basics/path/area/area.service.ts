@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -8,10 +8,10 @@ import { Subject } from 'rxjs/Subject';
 export class AreaService {
   private area$ = new Subject<any>();
 
-  private state ={
+  private state = {
     area: [],
     currentQueryKey: '',
-    areaParentId:0,
+    areaParentId: 0,
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -19,16 +19,16 @@ export class AreaService {
     }
   };
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) { }
 
-  succeessNotifyCallback(successNotify?):void{
-    if(successNotify!=undefined){
+  succeessNotifyCallback(successNotify?): void {
+    if (successNotify !== undefined) {
       successNotify();
     }
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Area/GetAll',next,fallback);
+    return this.http.get('/Area/GetAll', next, fallback, ModuleType.Basic);
   }
 
   get() { return this.area$.asObservable(); }
@@ -45,10 +45,10 @@ export class AreaService {
 
     return this.http.post('/Area/GetListPaged', {
       QueryKey: currentQueryKey,
-      Status:1,
+      Status: 1,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         areas: data.AreaList,
@@ -59,7 +59,7 @@ export class AreaService {
       this.area$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    },fallback);
+    }, fallback, ModuleType.Basic);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -74,10 +74,10 @@ export class AreaService {
 
     return this.http.post('/Area/GetListPaged', {
       QueryKey: currentQueryKey,
-      Status:-99,
+      Status: -99,
       PageIndex,
       PageSize
-    },data => {
+    }, data => {
       const nextState = {
         ...this.state,
         areas: data.AreaList,
@@ -87,54 +87,54 @@ export class AreaService {
       this.state = nextState;
       this.area$.next(nextState);
 
-      this.succeessNotifyCallback(successNotify)
-    },fallback);
+      this.succeessNotifyCallback(successNotify);
+    }, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    const { areaParentId  } = this.state;
+    const { areaParentId } = this.state;
 
-    return this.http.get('/Area/GetForNew',next,fallback, {
+    return this.http.get('/Area/GetForNew', next, fallback, ModuleType.Basic, {
       areaParentId
     });
   }
 
-  detail(areaId,next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Area/GetForModify?areaId=${areaId}`,next,fallback);
+  detail(areaId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get(`/Area/GetForModify?areaId=${areaId}`, next, fallback, ModuleType.Basic);
   }
 
-  create(area,next: (data: any) => void, fallback: (error: any) => void) {
+  create(area, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Area/New', {
       area
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  modify(area,next: (data: any) => void, fallback: (error: any) => void){
+  modify(area, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Area/Modify', {
       area
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  cancel(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Area/Cancel', {
       entityIdList
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
- 
 
-  remove(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+
+  remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Area/Remove', {
       entityIdList
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  restore(entityIdList,next: (data: any) => void, fallback: (error: any) => void) {
+  restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Area/Restore', {
       entityIdList
-    },next,fallback);
+    }, next, fallback, ModuleType.Basic);
   }
 
-  onPageChange(pagination,fallback: (error: any) => void, successNotify?: () => void) {
+  onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -144,26 +144,26 @@ export class AreaService {
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onSearch(queryKey,fallback: (error: any) => void, successNotify?: () => void) {
+  onSearch(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list(fallback,successNotify);
+    this.list(fallback, successNotify);
   }
 
-  onSearchDisabled(queryKey,fallback: (error: any) => void, successNotify?: () => void){
+  onSearchDisabled(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled(fallback,successNotify);
+    this.listDisabled(fallback, successNotify);
   }
 }

@@ -7,11 +7,10 @@ import { ConfirmService } from '@services/confirm.service';
 @Component({
   selector: 'app-products-product-barcode',
   template: `
-  
   <div class="actions">
     <app-quick-search [placeholder]="'输入商品编号、名称、规格型号、品牌'" (onSearch)="onSearch($event)"></app-quick-search>
   </div>
-  <div class="content">  
+  <div class="content">
     <app-product-barcode-list></app-product-barcode-list>
   </div>
   `,
@@ -36,32 +35,32 @@ export class ProductBarcodeComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private alertService: AlertService,
-    private confirmService : ConfirmService
+    private confirmService: ConfirmService
   ) {
-  }  
+  }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.subscription = this.productService
       .get()
       .subscribe();
   }
 
-  listErrorCallBack(err:any):void{
+  listErrorCallBack(err: any): void {
     this.alertService.open({
-      type:'danger',
-      content:'绑定商品条形码列表失败!'+err
+      type: 'danger',
+      content: '绑定商品条形码列表失败!' + err
     });
   }
 
   onSearch(queryKey) {
-    this.productService.onSearchBarcode(queryKey,(err)=>{
-      this.listErrorCallBack(err)
+    this.productService.onSearchBarcode(queryKey, (err) => {
+      this.listErrorCallBack(err);
     });
   }
 
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  } 
+  }
 
 }
