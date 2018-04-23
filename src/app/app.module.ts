@@ -22,6 +22,7 @@ import { ConfirmService } from './services/confirm.service';
 import { HttpExtensionInterceptor } from './interceptors/http.interceptor.extension';
 import { rootRoutes } from './router/app.router';
 import { HomeComponent } from './modules/home/home.component';
+import { IndexComponent } from './modules/home/components/index/index.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HomeComponent } from './modules/home/home.component';
     TabsComponent,
     TabOutletDirective,
     HomeComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,

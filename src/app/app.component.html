@@ -1,27 +1,2 @@
-<ng2-slim-loading-bar></ng2-slim-loading-bar>
-<div class="container">
-  <div class="left-side">
-    <a href="/" class="logo">
-      普兰云管
-    </a>
-    <app-menu></app-menu>
-  </div>
-  <div class="right-side">
-    <app-header></app-header>
-    <app-content>
-      <app-tabs></app-tabs>
-      <router-outlet></router-outlet>
-      <div appTabOutlet *ngFor="let tab of tabs" [name]="tab.outlet"></div>
-    </app-content>
-  </div>
-</div>
+<router-outlet></router-outlet>
 
-<div class="alert-container">
-  <app-ui-alert [type]="alert.type" *ngIf="alert" (onClose)="handleCloseAlert()">
-    {{alert.content}}
-  </app-ui-alert>
-</div>
-
-<app-confirm *ngIf="confirm" [show]="!!confirm" (onConfirm)="confirm.onConfirm()" (onClose)="handleCloseConfirm()">
-  {{confirm.content}}
-</app-confirm>

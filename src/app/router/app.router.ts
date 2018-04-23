@@ -3,6 +3,9 @@ import { AuthGuard } from '../services/auth-guard.service';
 import { PageNotFoundComponent } from '../components/other/page-not-found.component';
 import { ModuleWithProviders } from '@angular/core';
 import { AppComponent } from '../app.component';
+import { HomeComponent } from '../modules/home/home.component';
+import { IndexComponent } from '../modules/home/components/index/index.component';
+import { LoginComponent } from '../authorize/login/login.component';
 
 export const rootRoutes: Routes = [
     {
@@ -10,131 +13,140 @@ export const rootRoutes: Routes = [
         component: AppComponent
     },
     {
+        path: 'authority/login',
+        component: LoginComponent
+    },
+    {
         path: 'home',
         canActivate: [
             AuthGuard
         ],
-        component: IndexComponent,
+        component: HomeComponent,
         children: [
-            {
+              {
+                path: 'index',
+                canLoad: [ AuthGuard],
+                component: IndexComponent
+              },
+              {
                 path: 'basics/supplier',
                 loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/otherexchangeunit',
                 loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit.module#OtherExchangeUnitModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/customer',
                 loadChildren: './modules/basics/path/customer/customer.module#CustomerModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'finances/incometype',
                 loadChildren: './modules/finances/path/incometype/incometype.module#IncomeTypeModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'finances/feetype',
                 loadChildren: './modules/finances/path/feetype/feetype.module#FeeTypeModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'finances/funds',
                 loadChildren: './modules/finances/path/funds/funds.module#FundsModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/customer/disabled',
                 loadChildren: './modules/basics/path/customer/customer-disabled.module#CustomerDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/supplier/disabled',
                 loadChildren: './modules/basics/path/supplier/supplier-disabled.module#SupplierDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/otherexchangeunit/disabled',
                 loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.module#OtherExchangeUnitDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'finances/incometype/disabled',
                 loadChildren: './modules/finances/path/incometype/incometype-disabled.module#IncomeTypeDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'finances/feetype/disabled',
                 loadChildren: './modules/finances/path/feetype/feetype-disabled.module#FeeTypeDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'finances/funds/disabled',
                 loadChildren: './modules/finances/path/funds/funds-disabled.module#FundsDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/employee',
                 loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/employee/disabled',
                 loadChildren: './modules/basics/path/employee/employee-disabled.module#EmployeeDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/department',
                 loadChildren: './modules/basics/path/department/department.module#DepartmentModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/department/disabled',
                 loadChildren: './modules/basics/path/department/department-disabled.module#DepartmentDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/area',
                 loadChildren: './modules/basics/path/area/area.module#AreaModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'basics/area/disabled',
                 loadChildren: './modules/basics/path/area/area-disabled.module#AreaDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'products/storage',
                 loadChildren: './modules/products/path/storage/storage.module#StorageModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'products/storage/disabled',
                 loadChildren: './modules/products/path/storage/storage-disabled.module#StorageDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'purchase/order/new',
                 loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'products/product',
                 loadChildren: './modules/products/path/product/product.module#ProductModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'products/product/disabled',
                 loadChildren: './modules/products/path/product/product-disabled.module#ProductDisabledModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               },
               {
                 path: 'products/product/barcode',
                 loadChildren: './modules/products/path/product/product-barcode.module#ProductBarcodeModule',
-                canLoad: AuthGuard
+                canLoad: [AuthGuard]
               }
         ]
     },
