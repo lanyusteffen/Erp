@@ -18,8 +18,8 @@ export class MenuComponent {
         {
           name: '采购订单管理',
           subMenu: [
-            { name: '新增采购订单', link: '/purchase/order/new', outlet: 'purchase-order-new' },
-            { name: '采购订单历史', link: '/purchase/order/record' }
+            { name: '新增采购订单', link: '/home/purchase/order/new', outlet: 'purchase-order-new' },
+            { name: '采购订单历史', link: '/home/purchase/order/record' }
           ]
         }
       ]
@@ -31,9 +31,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '商品信息', link: '/home/product' },
+            { name: '价格管理表', link: '/home/product' },
+            { name: '商品套餐', link: '/home/product' }
           ]
         }
       ]
@@ -45,9 +45,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '商品信息', link: '/home/product' },
+            { name: '价格管理表', link: '/home/product' },
+            { name: '商品套餐', link: '/home/product' }
           ]
         }
       ]
@@ -59,9 +59,9 @@ export class MenuComponent {
         {
           name: '基础资料',
           subMenu: [
-            { name: '资金账户', link: '/finances/funds', outlet: 'finances-funds' },
-            { name: '费用类型', link: '/finances/feetype', outlet: 'finances-feetype' },
-            { name: '收入类型', link: '/finances/incometype', outlet: 'finances-incometype' }
+            { name: '资金账户', link: '/home/finances/funds', outlet: 'finances-funds' },
+            { name: '费用类型', link: '/home/finances/feetype', outlet: 'finances-feetype' },
+            { name: '收入类型', link: '/home/finances/incometype', outlet: 'finances-incometype' }
           ]
         }
       ]
@@ -73,9 +73,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '商品信息', link: '/home/product' },
+            { name: '价格管理表', link: '/home/product' },
+            { name: '商品套餐', link: '/home/product' }
           ]
         }
       ]
@@ -87,27 +87,27 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/products/product',outlet:"products-product" },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '商品信息', link: '/home/products/product', outlet: 'products-product' },
+            { name: '价格管理表', link: '/home/product' },
+            { name: '商品套餐', link: '/home/product' }
           ]
         },
         {
           name: '往来单位',
           subMenu: [
-            { name: '供应商', link: '/basics/supplier', outlet: 'basics-supplier' },
-            { name: '客户', link: '/basics/customer', outlet: 'basics-customer' },
-            { name: '其他往来单位', link: '/basics/otherexchangeunit',
+            { name: '供应商', link: '/home/basics/supplier', outlet: 'basics-supplier' },
+            { name: '客户', link: '/home/basics/customer', outlet: 'basics-customer' },
+            { name: '其他往来单位', link: '/home/basics/otherexchangeunit',
                 outlet: 'basics-otherexchangeunit' },
-            { name: '地区信息', link: '/basics/area', outlet: 'basics-area' },
+            { name: '地区信息', link: '/home/basics/area', outlet: 'basics-area' },
           ]
         },
         {
           name: '公司内部组织',
           subMenu: [
-            { name: '部门信息', link: '/basics/department', outlet: 'basics-department' },
-            { name: '仓库信息', link: '/products/storage',outlet:'products-storage' },
-            { name: '内部职员', link: '/basics/employee', outlet: 'basics-employee' }
+            { name: '部门信息', link: '/home/basics/department', outlet: 'basics-department' },
+            { name: '仓库信息', link: '/home/products/storage', outlet: 'products-storage' },
+            { name: '内部职员', link: '/home/basics/employee', outlet: 'basics-employee' }
           ]
         }
       ]
@@ -119,9 +119,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/product' },
-            { name: '价格管理表', link: '/product' },
-            { name: '商品套餐', link: '/product' }
+            { name: '商品信息', link: '/home/product' },
+            { name: '价格管理表', link: '/home/product' },
+            { name: '商品套餐', link: '/home/product' }
           ]
         }
       ]

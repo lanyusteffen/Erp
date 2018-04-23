@@ -90,14 +90,15 @@ export class HttpService {
             break;
         }
 
-        return (<any>settings).CrossProxyURL + '/' + modulePath + '/' + url;
+        return (<any>settings).CrossProxyURL + '/' + modulePath
+          + (url.startsWith('/') ? '' : '/') + url;
     }
 
     checkAuthenticateResponse(err: any, fallback: (error: any) => void) {
       if (err instanceof Response) {
         const resp = err as Response;
         if (resp.status === 401) {
-          this.router.navigate(['authorize']);
+          this.router.navigate(['/authorize/login']);
         } else {
           fallback(err);
         }

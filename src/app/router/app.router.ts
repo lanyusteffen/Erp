@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '../services/auth-guard.service';
-import { PageNotFoundComponent } from '../components/other/page-not-found.component';
+import { PageNotFoundComponent } from '../page-not-found.component';
 import { ModuleWithProviders } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HomeComponent } from '../modules/home/home.component';
@@ -13,7 +13,7 @@ export const rootRoutes: Routes = [
         component: AppComponent
     },
     {
-        path: 'authority/login',
+        path: 'authorize/login',
         component: LoginComponent
     },
     {

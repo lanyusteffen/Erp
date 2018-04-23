@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 
 @Injectable()

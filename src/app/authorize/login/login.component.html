@@ -1,3 +1,20 @@
-<p>
-  login works!
-</p>
+<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value, loginForm.valid)">
+  <div style="text-align: center;">
+    <div style="display: block;">
+        <span style="text-align: left;" for="companyName">公司名称</span>
+        <input type="text" name="companyName" formControlName="companyName" placeholder="公司名称"
+          required />
+    </div>
+    <div style="display: block;">
+      <span style="text-align: left;" for="userName">用户名</span>
+      <input type="passport" name="userName" formControlName="userName" placeholder="用户名"
+        required autofocus />
+    </div>
+    <div style="display: block;">
+      <span style="text-align: left;" for="password">密码</span>
+      <input type="password" name="password" formControlName="password" placeholder="密码"
+        required />
+    </div>
+    <button type="submit">登录</button>
+  </div>
+</form>

@@ -23,6 +23,10 @@ import { HttpExtensionInterceptor } from './interceptors/http.interceptor.extens
 import { rootRoutes } from './router/app.router';
 import { HomeComponent } from './modules/home/home.component';
 import { IndexComponent } from './modules/home/components/index/index.component';
+import { AuthorizeModule } from './authorize/authorize.module';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +38,15 @@ import { IndexComponent } from './modules/home/components/index/index.component'
     TabOutletDirective,
     HomeComponent,
     ConfirmComponent,
-    IndexComponent
+    IndexComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     HttpClientModule,
     UIModule,
+    AuthorizeModule,
     RouterModule.forRoot(rootRoutes),
     SlimLoadingBarModule.forRoot()
   ],
@@ -48,7 +54,7 @@ import { IndexComponent } from './modules/home/components/index/index.component'
     provide: HTTP_INTERCEPTORS,
     useClass: HttpExtensionInterceptor,
     multi: true
-  }, HttpService, TabsService, AlertService, ConfirmService, ErrorService],
+  }, HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 
