@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EmployeeService } from './employee.service';
+import { AuthorizeService } from './authorize.service';
 import { AlertService } from '@services/alert.service';
 
 @Component({
@@ -25,30 +25,18 @@ import { AlertService } from '@services/alert.service';
   `]
 })
 
-export class EmployeeComponent implements OnInit, OnDestroy {
-  private selectedItems = <any>[];
-  private department;
+export class AuthorizeComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-    private employeeService: EmployeeService,
+    private authorizeService: AuthorizeService,
     private alertService: AlertService
   ) {
   }
 
   ngOnInit() {
-    this.subscription = this.employeeService
-      .get()
-      .subscribe(({ currentDepartment }) => {
-        this.department = currentDepartment;
-      });
-  }
-
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定职员列表失败!' + err
-    });
+    this.subscription = this.authorizeService
+      .get().subscribe();
   }
 
 
@@ -56,13 +44,4 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  selectItems(selected) {
-    this.selectedItems = selected;
-  }
-
-  onDepartmentChange(selected) {
-    this.employeeService.onDepartmentChange(selected, (err) => {
-      this.listErrorCallBack(err);
-    });
-  }
 }

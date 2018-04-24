@@ -9,13 +9,13 @@ import { ContactsPopupSelectorService } from './contacts-popup-selector.service'
 })
 
 export class ContactsPopupSelectorComponent implements OnInit {
-  private show: boolean = false;
+  private show = false;
 
   constructor(
     private contactsPopupSelectorService: ContactsPopupSelectorService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   showModal() {
     this.show = true;

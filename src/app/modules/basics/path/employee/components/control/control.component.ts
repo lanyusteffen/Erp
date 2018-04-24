@@ -110,7 +110,7 @@ export class EmployeeControlComponent {
       }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '添加成功！'
+          content: '添加失败' + err
         });
       });
     } else {
@@ -119,7 +119,7 @@ export class EmployeeControlComponent {
       }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '修改成功！'
+          content: '修改失败' + err
         });
       });
     }

@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <table class="form">
+        <tr>
+            <th class="form-label">公司名称：</th>
+            <td class="form-control-group">
+                <app-form-field [name]="'CompanyName'">
+                    <input #formField type="text" class="form-control" [ngModel] formControlName="CompanyName">
+                </app-form-field>
+            </td>
+            <th class="form-label">用户名：</th>
+            <td class="form-control-group">
+                <app-form-field [name]="'LoginName'">
+                    <input #formField type="text" class="form-control" [ngModel] formControlName="LoginName">
+                </app-form-field>
+            </td>
+        </tr>
+        <tr>
+            <th class="form-label">密码：</th>
+            <td class="form-control-group">
+                    <app-form-field [name]="'Password'">
+                        <input #formField type="text" class="form-control" [ngModel] formControlName="Password">
+                    </app-form-field>
+                </td>
+        </tr>
+    </table>
+    <app-ui-button [style]="'primary'" type="submit">
+        保存
+    </app-ui-button>
+    <app-ui-button (click)="handleClose()">
+        关闭
+    </app-ui-button>
+</form>
