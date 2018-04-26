@@ -40,26 +40,23 @@ export class LoginComponent implements OnInit {
   }
 
   loginCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '登录失败' + err
-    });
+    // this.alertService.open({
+    //   type: 'danger',
+    //   content: '登录失败' + err
+    // });
+    alert('登录失败' + err);
   }
 
 
   login(loginRequest: LoginRequest, isValid: boolean) {
 
     this.authorizeService.login(loginRequest, data => {
-      if (data.Token !== '') {
+      if (data.IsValid !== false) {
         this.submitted = true;
         this.authToken = data.Token;
-        this.alertService.open({
-          type: 'success',
-          content: '登录成功'
-        });
         this.router.navigate(['/home/index']);
       } else {
-        this.loginCallBack(data.err);
+        this.loginCallBack(data.ErrorMessages);
       }
     }, (err) => {
       this.loginCallBack(err);
@@ -69,9 +66,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.builder.group(
       {
-        userName: [''],
-        password: [''],
-        companyName: ['']
+        LoginName: [''],
+        Password: [''],
+        CompanyName: ['']
       }
     );
   }

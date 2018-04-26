@@ -23,7 +23,9 @@ export class AuthorizeService {
 
   login(loginRequest, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/User/Login', {
-      loginRequest
+      LoginName: loginRequest.LoginName,
+      Password: loginRequest.Password,
+      CompanyName: loginRequest.CompanyName
     }, next, fallback, ModuleType.Admin);
   }
 
