@@ -53,7 +53,11 @@ export class LoginComponent implements OnInit {
     this.authorizeService.login(loginRequest, data => {
       if (data.IsValid !== false) {
         this.submitted = true;
-        this.authToken = data.Token;
+        if (loginRequest.rememberMe) {
+          this.persistenceAuthToken = data.Token;
+        } else {
+          this.authToken = data.Token;
+        }
         this.router.navigate(['/home/index']);
       } else {
         this.loginCallBack(data.ErrorMessages);
@@ -68,7 +72,8 @@ export class LoginComponent implements OnInit {
       {
         LoginName: [''],
         Password: [''],
-        CompanyName: ['']
+        CompanyName: [''],
+        rememberMe: ['']
       }
     );
   }
