@@ -117,9 +117,9 @@ export class MenuComponent {
       icon: 'set',
       subMenu: [
         {
-          name: '商品管理',
+          name: '系统设置',
           subMenu: [
-            { name: '商品信息', link: '/home/product' },
+            { name: '公司管理', link: '/home/admins/company', outlet: 'admin-company' },
             { name: '价格管理表', link: '/home/product' },
             { name: '商品套餐', link: '/home/product' }
           ]

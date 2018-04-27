@@ -7,7 +7,6 @@ import { UIModule } from '@UI/ui.module';
 import { QuickSearchComponent } from '@components/quick-search/quick-search.component';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 import { SharedModule } from '@app/shared.module';
-import { AuthorizeComponent } from './authorize.component';
 
 @NgModule({
   declarations: [
@@ -17,11 +16,10 @@ import { AuthorizeComponent } from './authorize.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
-    AuthorizeComponent
+    SharedModule
   ],
   exports: [
   ]
 })
 
-export class AuthorizeModule { }
+export class AdminsModule { }

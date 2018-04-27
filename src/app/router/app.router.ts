@@ -147,6 +147,16 @@ export const rootRoutes: Routes = [
                 path: 'products/product/barcode',
                 loadChildren: './modules/products/path/product/product-barcode.module#ProductBarcodeModule',
                 canLoad: [AuthGuard]
+              },
+              {
+                path: 'admins/company',
+                loadChildren: './modules/admins/path/company/company.module#CompanyModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'admins/company/disabled',
+                loadChildren: './modules/admins/path/company/company-disabled.module#CompanyDisabledModule',
+                canLoad: [AuthGuard]
               }
         ]
     },
