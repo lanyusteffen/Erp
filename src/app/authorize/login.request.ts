@@ -1,6 +1,6 @@
 export interface LoginRequest {
-    companyName: String;
-    userName: String;
-    password: String;
+    companyName: string;
+    userName: string;
+    password: string;
     rememberMe: boolean;
 }
