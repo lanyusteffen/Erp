@@ -1,5 +1,5 @@
 export interface LoginRequest {
-    UserName: string;
+    LoginName: string;
     CompanyName: string;
     Password: string;
     RememberMe: boolean;

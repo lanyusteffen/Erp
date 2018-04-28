@@ -44,8 +44,7 @@ export class LoginComponent implements OnInit {
 
   login(loginRequest: LoginRequest, isValid: boolean): void {
     this.cacheCompanyName = loginRequest.CompanyName;
-    this.cacheUserName = loginRequest.UserName;
-    console.log(this.cacheCompanyName);
+    this.cacheUserName = loginRequest.LoginName;
     this.authorizeService.login(loginRequest, data => {
       if (data.IsValid) {
         if (loginRequest.RememberMe) {
@@ -65,7 +64,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.builder.group(
       {
-        UserName: [''],
+        LoginName: [''],
         Password: [''],
         CompanyName: [''],
         RememberMe: ['']
