@@ -5,12 +5,12 @@
       </div>
     <div style="display: block;">
         <span style="text-align: left;" for="CompanyName">公司名称</span>
-        <input type="text" value="cacheCompanyName" name="CompanyName" formControlName="CompanyName" placeholder="公司名称"
+        <input type="text" [(ngModel)]="cacheCompanyName" name="CompanyName" formControlName="CompanyName" placeholder="公司名称"
           required />
     </div>
     <div style="display: block;">
       <span style="text-align: left;" for="LoginName">用户名</span>
-      <input type="passport" name="LoginName" formControlName="LoginName" placeholder="用户名"
+      <input type="passport" [(ngModel)]="cacheUserName" name="UserName" formControlName="UserName" placeholder="用户名"
         required autofocus />
     </div>
     <div style="display: block;">
@@ -19,7 +19,7 @@
         required />
     </div>
     <div style="display: block;">
-        <input type="checkbox" name="rememberMe" formControlName="rememberMe" />记住我
+        <input type="checkbox" name="RememberMe" formControlName="RememberMe" />记住我
     </div>
     <button type="submit">登录</button>
   </div>

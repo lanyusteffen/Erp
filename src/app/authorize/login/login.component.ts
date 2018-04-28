@@ -21,6 +21,10 @@ export class LoginComponent implements OnInit {
   private authToken: string;
   @LocalStorage()
   private persistenceAuthToken: string;
+  @SessionStorage()
+  private cacheCompanyName: string;
+  @SessionStorage()
+  private cacheUserName: string;
 
   loginForm: FormGroup;
   alertInfo: string;
@@ -39,9 +43,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginRequest: LoginRequest, isValid: boolean): void {
+    this.cacheCompanyName = loginRequest.CompanyName;
+    this.cacheUserName = loginRequest.UserName;
+    console.log(this.cacheCompanyName);
     this.authorizeService.login(loginRequest, data => {
       if (data.IsValid) {
-        if (loginRequest.rememberMe) {
+        if (loginRequest.RememberMe) {
           this.persistenceAuthToken = data.Token;
         } else {
           this.authToken = data.Token;
@@ -58,10 +65,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.builder.group(
       {
-        LoginName: [''],
+        UserName: [''],
         Password: [''],
         CompanyName: [''],
-        rememberMe: ['']
+        RememberMe: ['']
       }
     );
   }
