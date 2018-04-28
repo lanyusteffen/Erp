@@ -5,11 +5,11 @@ import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 export class AuthService {
 
     @SessionStorage()
-    private authToken: String;
+    private authToken: string;
     @LocalStorage()
-    private persistenceAuthToken: String;
+    private persistenceAuthToken: string;
 
-    public redirectUrl: String;
+    public redirectUrl: string;
 
     logout(): void {
         this.authToken = null;
@@ -17,7 +17,7 @@ export class AuthService {
     }
 
     checkAuthorize(): boolean {
-        if (this.authToken !== '' || this.persistenceAuthToken !== '') {
+        if (this.authToken !== null || this.persistenceAuthToken !== null) {
             return true;
         }
         return false;

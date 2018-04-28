@@ -18,11 +18,11 @@ import { AuthorizeService } from '../authorize.service';
 export class LoginComponent implements OnInit {
 
   @SessionStorage()
-  private authToken: String;
+  private authToken: string;
   @LocalStorage()
-  private persistenceAuthToken: String;
+  private persistenceAuthToken: string;
   @LocalStorage()
-  cacheCompanyName: string;
+  private cacheCompanyName: string;
 
   loginForm: FormGroup;
   alertInfo: string;
