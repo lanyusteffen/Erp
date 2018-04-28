@@ -106,15 +106,11 @@ export class EmployeeService {
   }
 
   create(employee, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Employee/New', {
-      employee
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Employee/New', employee, next, fallback, ModuleType.Basic);
   }
 
   modify(employee, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Employee/Modify', {
-      employee
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Employee/Modify', employee, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

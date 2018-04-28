@@ -88,15 +88,11 @@ export class FundsService {
   }
 
   create(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FundsAccount/New', {
-      fundsAccount
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/FundsAccount/New', fundsAccount, next, fallback, ModuleType.Basic);
   }
 
   update(fundsAccount, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FundsAccount/Modify', {
-      fundsAccount
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/FundsAccount/Modify', fundsAccount, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
