@@ -106,15 +106,11 @@ export class OtherExchangeUnitService {
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Customer/New', {
-      customer
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Customer/New', customer, next, fallback, ModuleType.Basic);
   }
 
   update(customer, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Customer/Modify', {
-      customer
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Customer/Modify', customer, next, fallback, ModuleType.Basic);
   }
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
