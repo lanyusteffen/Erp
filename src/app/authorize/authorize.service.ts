@@ -6,8 +6,6 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthorizeService {
-  private admin$ = new Subject<any>();
-
 
   constructor(private http: HttpService) { }
 
@@ -28,8 +26,4 @@ export class AuthorizeService {
       CompanyName: loginRequest.CompanyName
     }, next, fallback, ModuleType.Admin);
   }
-
-
-  get() { return this.admin$.asObservable(); }
-
 }

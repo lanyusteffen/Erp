@@ -1,8 +1,11 @@
 <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value, loginForm.valid)">
   <div style="text-align: center;">
+      <div style="display: block;">
+          <span style="text-align: left;">{{alertInfo}}</span>
+      </div>
     <div style="display: block;">
         <span style="text-align: left;" for="CompanyName">公司名称</span>
-        <input type="text" name="CompanyName" formControlName="CompanyName" placeholder="公司名称"
+        <input type="text" value="cacheCompanyName" name="CompanyName" formControlName="CompanyName" placeholder="公司名称"
           required />
     </div>
     <div style="display: block;">

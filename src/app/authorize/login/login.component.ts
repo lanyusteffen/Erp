@@ -4,7 +4,6 @@ import { LoginRequest } from '../login.request';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { HttpService, ModuleType } from '../../services/http.service';
 import { Router } from '@angular/router';
-import { AlertService } from '@services/alert.service';
 import { AuthorizeService } from '../authorize.service';
 
 @Component({
@@ -22,37 +21,29 @@ export class LoginComponent implements OnInit {
   private authToken: String;
   @LocalStorage()
   private persistenceAuthToken: String;
+  @LocalStorage()
+  cacheCompanyName: String;
 
   loginForm: FormGroup;
-  submitted: boolean;
+  alertInfo: String;
 
   constructor(private builder: FormBuilder,
     private httpService: HttpService,
     private router: Router,
-    private alertService: AlertService,
     private authorizeService: AuthorizeService) { }
 
   errorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '获取登录信息失败!' + err
-    });
+    this.alertInfo = '登录异常:' + err.statusText;
   }
 
-  loginCallBack(err: any): void {
-    // this.alertService.open({
-    //   type: 'danger',
-    //   content: '登录失败' + err
-    // });
-    alert('登录失败' + err);
+  loginCallBack(data: any): void {
+    this.alertInfo = '登录失败:' + data.ErrorMessages;
   }
 
-
-  login(loginRequest: LoginRequest, isValid: boolean) {
-
+  login(loginRequest: LoginRequest, isValid: boolean): void {
+    this.cacheCompanyName = loginRequest.companyName;
     this.authorizeService.login(loginRequest, data => {
-      if (data.IsValid !== false) {
-        this.submitted = true;
+      if (data.IsValid) {
         if (loginRequest.rememberMe) {
           this.persistenceAuthToken = data.Token;
         } else {
@@ -63,7 +54,7 @@ export class LoginComponent implements OnInit {
         this.loginCallBack(data.ErrorMessages);
       }
     }, (err) => {
-      this.loginCallBack(err);
+      this.errorCallBack(err);
     });
   }
 
