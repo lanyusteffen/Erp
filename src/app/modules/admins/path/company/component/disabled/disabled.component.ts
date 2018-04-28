@@ -45,10 +45,10 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -60,7 +60,7 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
     this.companyService.listDisabled((err) => {
       this.alertService.open({
         type: 'success',
-        content: '绑定费用类型列表失败, ' + err
+        content: '绑定公司列表失败, ' + err
       });
     });
   }
@@ -95,7 +95,7 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
     }, (err) => {
       this.alertService.open({
         type: 'success',
-        content: '绑定费用类型列表失败, ' + err
+        content: '绑定公司列表失败, ' + err
       });
     });
   }
@@ -110,7 +110,7 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
               this.companyService.listDisabled((err) => {
                 this.alertService.open({
                   type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
+                  content: '绑定公司列表失败, ' + err
                 });
               }, () => {
                 this.alertService.open({
@@ -144,7 +144,7 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
               this.companyService.listDisabled((err) => {
                 this.alertService.open({
                   type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
+                  content: '绑定公司列表失败, ' + err
                 });
               }, () => {
                 this.alertService.open({

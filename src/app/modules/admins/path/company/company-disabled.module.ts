@@ -14,7 +14,7 @@ import { SharedModule} from '@app/shared.module';
 
 export const ROUTES: Routes = [
   {
-    path: '', component: CompanyDisabledComponent, outlet: 'finances-company-disabled'
+    path: '', component: CompanyDisabledComponent, outlet: 'admins-company-disabled'
   }
 ];
 

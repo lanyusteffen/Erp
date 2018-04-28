@@ -38,7 +38,7 @@ export class CompanyService {
     }, data => {
       const nextState = {
         ...this.state,
-        companys: data.CompanyList,
+        companys: data.List,
         currentPagination: data.Pagination
       };
 
@@ -68,7 +68,7 @@ export class CompanyService {
     }, data => {
       const nextState = {
         ...this.state,
-        companys: data.CompanyList,
+        companys: data.List,
         currentPagination: data.Pagination
       };
 
@@ -90,15 +90,11 @@ export class CompanyService {
   }
 
   create(company, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Company/New', {
-      company
-    }, next, fallback, ModuleType.Admin);
+    return this.http.post('/Company/New', company, next, fallback, ModuleType.Admin);
   }
 
   update(company, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Company/Modify', {
-      company
-    }, next, fallback, ModuleType.Admin);
+    return this.http.post('/Company/Modify', company, next, fallback, ModuleType.Admin);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

@@ -36,16 +36,16 @@ export class CompanyActionsComponent {
     this.companyService.onSearch(queryKey, (err) => {
       this.alertService.open({
         type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
+        content: '绑定公司列表失败, ' + err
       });
     });
   }
 
   showDisabled() {
     this.tabsService.create({
-      name: '停用费用类型',
-      link: '/finances/company/disabled',
-      outlet: 'finances-company-disabled'
+      name: '停用公司',
+      link: '/admins/company/disabled',
+      outlet: 'admins-company-disabled'
     });
   }
 
