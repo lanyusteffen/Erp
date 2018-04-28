@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as settings from '../../assets/appsettings.json';
-import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpService {
-
-    @SessionStorage()
-    private authToken: String;
-
-    @LocalStorage()
-    private persistenceAuthToken: String;
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -19,12 +12,6 @@ export class HttpService {
 
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         headers.append('Accept', '*/*');
-
-        if (this.persistenceAuthToken !== null) {
-          headers.append('Authorization', 'Bearer ' + this.persistenceAuthToken);
-        } else if (this.authToken !== null) {
-          headers.append('Authorization', 'Bearer ' + this.authToken);
-        }
 
         // 使用--strictNullChecks参数进行编译
         // type T1 = (x?: number) => string;              // x的类型是 number | undefined

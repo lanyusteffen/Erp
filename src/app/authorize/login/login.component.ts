@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
   @LocalStorage()
   private persistenceAuthToken: String;
   @LocalStorage()
-  cacheCompanyName: String;
+  cacheCompanyName: string;
 
   loginForm: FormGroup;
-  alertInfo: String;
+  alertInfo: string;
 
   constructor(private builder: FormBuilder,
     private httpService: HttpService,
