@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,10 @@ import { Router } from '@angular/router';
 })
 
 export class HeaderComponent {
+
+  @LocalStorage()
+  private cacheUserName: string;
+
   constructor(
     private authService: AuthService,
     private router: Router) { }

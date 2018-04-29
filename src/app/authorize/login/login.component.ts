@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
   private authToken: string;
   @LocalStorage()
   private persistenceAuthToken: string;
-  @SessionStorage()
+  @LocalStorage()
   private cacheCompanyName: string;
-  @SessionStorage()
+  @LocalStorage()
   private cacheUserName: string;
 
   loginForm: FormGroup;
@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   login(loginRequest: LoginRequest, isValid: boolean): void {
     this.cacheCompanyName = loginRequest.CompanyName;
     this.cacheUserName = loginRequest.LoginName;
+    console.log(loginRequest.RememberMe);
     this.authorizeService.login(loginRequest, data => {
       if (data.IsValid) {
         if (loginRequest.RememberMe) {
