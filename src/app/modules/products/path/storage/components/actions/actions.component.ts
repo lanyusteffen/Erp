@@ -33,7 +33,7 @@ export class StorageActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用仓库',
-      link: '/products/storage/disabled',
+      link: '/home/products/storage/disabled',
       outlet: 'products-storage-disabled'
     });
   }

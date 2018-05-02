@@ -44,7 +44,7 @@ export class FundsActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用资金账户',
-      link: '/finances/funds/disabled',
+      link: '/home/finances/funds/disabled',
       outlet: 'finances-funds-disabled'
     });
   }

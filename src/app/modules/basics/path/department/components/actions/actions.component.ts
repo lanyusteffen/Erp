@@ -43,7 +43,7 @@ export class DepartmentActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用部门',
-      link: '/basics/department/disabled',
+      link: '/home/basics/department/disabled',
       outlet: 'basics-department-disabled'
     });
   }

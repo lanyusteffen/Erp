@@ -1,0 +1,40 @@
+<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+        <th>用户编号</th>
+        <th>登录名</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of users">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a (click)="update(item.Id)">修改</a>
+          <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+        </td>
+        <td>{{item.Code}}</td>
+        <td>{{item.LoginName}}</td>
+        <td>{{item.Remark}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar
+    [total]="pagination.TotalCount"
+    [current]="pagination.PageIndex"
+    (onChange)="onPageChange($event)"
+  ></app-pagination-bar>
+  <app-user-control
+    [type]="'update'"
+    [userId]="selectedId"
+    [show]="_showUpdate"
+    (onClose)="closeUpdate()"
+  ></app-user-control>
+</div>

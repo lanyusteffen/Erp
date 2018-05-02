@@ -44,7 +44,7 @@ export class FeeTypeActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用费用类型',
-      link: '/finances/feetype/disabled',
+      link: '/home/finances/feetype/disabled',
       outlet: 'finances-feetype-disabled'
     });
   }

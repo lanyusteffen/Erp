@@ -120,7 +120,7 @@ export class MenuComponent {
           name: '系统设置',
           subMenu: [
             { name: '公司管理', link: '/home/admins/company', outlet: 'admin-company' },
-            { name: '价格管理表', link: '/home/product' },
+            { name: '用户管理', link: '/home/admins/user', outlet: 'admin-user' },
             { name: '商品套餐', link: '/home/product' }
           ]
         }

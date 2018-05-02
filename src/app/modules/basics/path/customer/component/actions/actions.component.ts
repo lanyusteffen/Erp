@@ -35,7 +35,7 @@ export class CustomerActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用客户',
-      link: '/basics/customer/disabled',
+      link: '/home/basics/customer/disabled',
       outlet: 'basics-customer-disabled'
     });
   }

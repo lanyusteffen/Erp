@@ -39,7 +39,7 @@ export class ProductActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用商品',
-      link: '/products/product/disabled',
+      link: '/home/products/product/disabled',
       outlet: 'products-product-disabled'
     });
   }
@@ -47,7 +47,7 @@ export class ProductActionsComponent {
   onShowBarcode() {
     this.tabsService.create({
       name: '商品条形码',
-      link: '/products/product/barcode',
+      link: '/home/products/product/barcode',
       outlet: 'products-product-barcode'
     });
   }

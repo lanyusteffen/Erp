@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
     private authorizeService: AuthorizeService) { }
 
   errorCallBack(err: any): void {
+    console.log(err);
     this.alertInfo = '登录异常:' + err.statusText;
   }
 
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginRequest: LoginRequest, isValid: boolean): void {
+    console.log(loginRequest);
     this.cacheCompanyName = loginRequest.companyName;
     this.authorizeService.login(loginRequest, data => {
       if (data.IsValid) {

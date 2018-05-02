@@ -18,7 +18,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
 
-  constructor(private employeeService: EmployeeService, private alertService: AlertService) { console.log(1); }
+  constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
   ngOnInit() {
     this.employeeService

@@ -30,7 +30,7 @@ export class IncomeTypeActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用收入类型',
-      link: '/finances/incometype/disabled',
+      link: '/home/finances/incometype/disabled',
       outlet: 'finances-incometype-disabled'
     });
   }
