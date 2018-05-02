@@ -19,10 +19,6 @@ export class AuthorizeService {
   }
 
   login(loginRequest, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/Login', {
-      LoginName: loginRequest.LoginName,
-      Password: loginRequest.Password,
-      CompanyName: loginRequest.CompanyName
-    }, next, fallback, ModuleType.Admin);
+    return this.http.post('/User/Login', loginRequest, next, fallback, ModuleType.Admin);
   }
 }

@@ -103,15 +103,11 @@ export class StorageService {
   }
 
   create(storage, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Storage/New', {
-      storage
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Storage/New', storage, next, fallback, ModuleType.Basic);
   }
 
   modify(storage, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Storage/Modify', {
-      storage
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Storage/Modify', storage, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

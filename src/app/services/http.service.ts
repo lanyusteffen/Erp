@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as settings from '../../assets/appsettings.json';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class HttpService {
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, 
+      private router: Router, private authservice: AuthService) { }
 
     private addRequestHeader(dict?: { [key: string]: string | string[]; }): HttpHeaders {
 
@@ -85,6 +87,7 @@ export class HttpService {
       if (err instanceof Response) {
         const resp = err as Response;
         if (resp.status === 401) {
+          this.authservice.logout();
           this.router.navigate(['/authorize/login']);
         } else {
           fallback(err);

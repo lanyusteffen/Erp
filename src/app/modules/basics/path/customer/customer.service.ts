@@ -74,9 +74,7 @@ export class CustomerService {
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Customer/New', {
-      customer
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Customer/New', customer, next, fallback, ModuleType.Basic);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -114,9 +112,7 @@ export class CustomerService {
   }
 
   update(customer, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Customer/Modify', {
-      customer
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Customer/Modify', customer, next, fallback, ModuleType.Basic);
   }
 
   remove(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {

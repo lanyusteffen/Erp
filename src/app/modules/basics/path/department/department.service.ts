@@ -110,15 +110,11 @@ export class DepartmentService {
   }
 
   create(department, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Department/New', {
-      department
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Department/New', department, next, fallback, ModuleType.Basic);
   }
 
   modify(department, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Department/Modify', {
-      department
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Department/Modify', department, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

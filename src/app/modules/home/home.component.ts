@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private alertSubscription: Subscription;
   private confirmSubScription: Subscription;
-  private loadingSubscription: Subscription;
   private routeSubscription: Subscription;
   private alert = null;
   private confirm = null;
@@ -71,7 +70,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.alertSubscription.unsubscribe();
-    this.loadingSubscription.unsubscribe();
     this.confirmSubScription.unsubscribe();
     this.routeSubscription.unsubscribe();
   }

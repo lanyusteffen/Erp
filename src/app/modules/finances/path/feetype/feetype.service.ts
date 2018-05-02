@@ -90,15 +90,11 @@ export class FeeTypeService {
   }
 
   create(feeType, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/New', {
-      feeType
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/FeeType/New', feeType, next, fallback, ModuleType.Basic);
   }
 
   update(feeType, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/Modify', {
-      feeType
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/FeeType/Modify', feeType, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

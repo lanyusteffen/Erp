@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   private persistenceAuthToken: string;
   @LocalStorage()
   private cacheCompanyName: string;
+  @LocalStorage()
+  private cacheUserName: string;
 
   loginForm: FormGroup;
   alertInfo: string;
@@ -42,11 +44,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginRequest: LoginRequest, isValid: boolean): void {
-    console.log(loginRequest);
-    this.cacheCompanyName = loginRequest.companyName;
+    this.cacheCompanyName = loginRequest.CompanyName;
+    this.cacheUserName = loginRequest.LoginName;
     this.authorizeService.login(loginRequest, data => {
       if (data.IsValid) {
-        if (loginRequest.rememberMe) {
+        if (loginRequest.RememberMe) {
           this.persistenceAuthToken = data.Token;
         } else {
           this.authToken = data.Token;
@@ -66,7 +68,7 @@ export class LoginComponent implements OnInit {
         LoginName: [''],
         Password: [''],
         CompanyName: [''],
-        rememberMe: ['']
+        RememberMe: ['']
       }
     );
   }

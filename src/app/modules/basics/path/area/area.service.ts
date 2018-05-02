@@ -104,15 +104,11 @@ export class AreaService {
   }
 
   create(area, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/New', {
-      area
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Area/New', area, next, fallback, ModuleType.Basic);
   }
 
   modify(area, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/Modify', {
-      area
-    }, next, fallback, ModuleType.Basic);
+    return this.http.post('/Area/Modify', area, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
