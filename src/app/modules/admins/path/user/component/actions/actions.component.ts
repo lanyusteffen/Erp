@@ -36,14 +36,14 @@ export class UserActionsComponent {
     this.userService.onSearch(queryKey, (err) => {
       this.alertService.open({
         type: 'danger',
-        content: '绑定公司列表失败, ' + err
+        content: '绑定用户列表失败, ' + err
       });
     });
   }
 
   showDisabled() {
     this.tabsService.create({
-      name: '停用公司',
+      name: '停用用户',
       link: '/home/admins/user/disabled',
       outlet: 'admins-user-disabled'
     });

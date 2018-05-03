@@ -38,7 +38,7 @@ export class UserService {
     }, data => {
       const nextState = {
         ...this.state,
-        users: data.List,
+        users: data.UserList,
         currentPagination: data.Pagination
       };
 
@@ -64,11 +64,11 @@ export class UserService {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize,
-      Status: -1
+      Status: -99
     }, data => {
       const nextState = {
         ...this.state,
-        users: data.List,
+        users: data.UserList,
         currentPagination: data.Pagination
       };
 

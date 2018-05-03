@@ -25,7 +25,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
       .all(data => {
         this.list = data.map(item => ({
           label: item.Name,
-          value: item.Id
+          value: item
         }));
       }, (err) => {
         this.alertService.open({
