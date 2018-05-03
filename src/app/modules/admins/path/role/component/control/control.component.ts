@@ -1,17 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UserService } from '../../user.service';
+import { RoleService } from '../../role.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
 
 @Component({
-  selector: 'app-user-control',
+  selector: 'app-role-control',
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.less'],
   providers: [FormService]
 })
 
-export class UserControlComponent {
+export class RoleControlComponent {
   private form = new FormGroup({});
   private _show = false;
   @Output() onClose: EventEmitter<any> = new EventEmitter();
@@ -26,57 +26,46 @@ export class UserControlComponent {
   }
   @Input() type = 'create';
 
-  private _userId: number;
+  private _roleId: number;
 
-  get userId() {
-    return this._userId;
+  get roleId() {
+    return this._roleId;
   }
 
   @Input()
-  set userId(userId) {
-    this._userId = userId;
+  set roleId(roleId) {
+    this._roleId = roleId;
     this.refreshList();
   }
 
   getTitle(): string {
     if (this.type === 'create') {
-      return '添加用户';
+      return '添加角色';
     } else {
-      return '修改用户';
+      return '修改角色';
     }
-  }
-
-  parseEmployee(user) {
-
-    user.Employee = {
-      Id : user.EmployeeId,
-      Name : user.EmployeeName
-    };
-
-    return user;
   }
 
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-        this.userService
+        this.roleService
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '绑定用户列表失败, ' + err
+              content: '绑定角色列表失败, ' + err
             });
           });
       } else {
-        this.userService
-          .detail(this.userId, data => {
-            data = this.parseEmployee(data);
+        this.roleService
+          .detail(this.roleId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.open({
               type: 'danger',
-              content: '绑定用户列表失败, ' + err
+              content: '绑定角色列表失败, ' + err
             });
           });
       }
@@ -84,7 +73,7 @@ export class UserControlComponent {
   }
 
   constructor(
-    private userService: UserService,
+    private roleService: RoleService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
@@ -96,22 +85,15 @@ export class UserControlComponent {
     this.onClose.emit();
   }
 
-  initEmployee(user) {
-    user.EmployeeId = user.Employee.Id;
-    user.EmployeeName = user.Employee.Name;
-  }
-
   onSubmit({ value }) {
 
-    this.initEmployee(value);
-
     if (this.type === 'create') {
-      this.userService.create(value, data => {
+      this.roleService.create(value, data => {
         if (data.IsValid) {
-          this.userService.list((err) => {
+          this.roleService.list((err) => {
             this.alertService.open({
               type: 'danger',
-              content: '绑定用户列表失败, ' + err
+              content: '绑定角色列表失败, ' + err
             });
           }, () => {
             this.onClose.emit();
@@ -133,12 +115,12 @@ export class UserControlComponent {
         });
       });
     } else {
-      this.userService.update(value, data => {
+      this.roleService.update(value, data => {
         if (data.IsValid) {
-          this.userService.list((err) => {
+          this.roleService.list((err) => {
             this.alertService.open({
               type: 'danger',
-              content: '绑定用户列表失败, ' + err
+              content: '绑定角色列表失败, ' + err
             });
           }, () => {
             this.onClose.emit();

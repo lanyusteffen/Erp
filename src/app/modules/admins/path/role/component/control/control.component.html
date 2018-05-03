@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady" name="loginForm">
+  <app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
+    <div class="card-content">
+      <div class="heading">
+        基本信息
+      </div>
+      <table class="form">
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            编号：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Code'">
+             <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            名称:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Name'">
+             <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+            </app-form-field>
+          </td>
+        </tr>        
+      </table>
+      <div class="heading">备注</div>
+      <input type="text" formControlName="Remark" class="form-control" [ngModel]>
+    </div>
+    <div app-card-footer>
+      <app-ui-button [style]="'primary'" type="submit">
+        保存
+      </app-ui-button>
+      <app-ui-button (click)="handleClose()">
+        取消
+      </app-ui-button>
+    </div>
+  </app-card>
+</form>

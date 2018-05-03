@@ -1,44 +1,76 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { UserService } from '../../user.service';
-import { LocalStorage } from 'ngx-webstorage';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { RoleService } from './role.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
+import { LocalStorage } from 'ngx-webstorage';
 import { AppService } from '@services/app.service';
 
 @Component({
-  selector: 'app-user-disabled-list',
-  templateUrl: './disabled.component.html',
-  styleUrls: ['./disabled.component.less'],
+  selector: 'app-role-disabled',
+  template: `
+  <div class="actions">
+    <app-quick-search [placeholder]="'输入编号、名称、手机号、联系人查询'" (onSearch)="onSearchDisabled($event)"></app-quick-search>
+    <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="restore()">
+        <i class="iconfont icon-delete"></i>
+        还原
+    </app-ui-button>
+    <app-ui-button *ngIf="!systemConfig.IsOpenBill" [style]="'danger'" [disabled]="!selectedItems.length" (click)="delete()">
+        <i class="iconfont icon-delete"></i>
+        删除
+    </app-ui-button>
+    <div class="more">
+    </div>
+  </div>
+  <div class="content">l
+    <app-role-disabled-list (selectItems)="selectItems($event)"></app-role-disabled-list>
+  </div>
+  `,
+  styles: [`
+    :host {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+    }
+  `],
   providers: [
     AppService
   ]
 })
 
-export class UserDisabledListComponent implements OnInit, OnDestroy {
-  private users = <any>[];
-  private pagination = {};
-  private allSelected = false;
-  private selectedId: number;
+export class RoleDisabledComponent implements OnInit, OnDestroy {
+  private selectedItems = <any>[];
   private subscription: Subscription;
 
   @LocalStorage()
   systemConfig: any;
 
-  @Output() selectItems: EventEmitter<any> = new EventEmitter();
-
   constructor(
-    private userService: UserService,
+    private roleService: RoleService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
-  ) {
-    this.subscription = this.userService
-      .get()
-      .subscribe(({ users, currentPagination }) => {
-        this.users = users;
-        this.pagination = currentPagination;
+  ) { }
+
+  ngOnInit() {
+    this.systemConfig = this.getSystemConfig();
+  }
+
+  onSearch(queryKey) {
+    this.roleService.onSearchDisabled(queryKey, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定费用类型列表失败, ' + err
       });
+    });
+  }
+
+  ngOnDestroy() {
   }
 
   getSystemConfig(): any {
@@ -55,62 +87,21 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
     return this.systemConfig;
   }
 
-  ngOnInit() {
-    this.getSystemConfig();
-    this.userService.listDisabled((err) => {
-      this.alertService.open({
-        type: 'success',
-        content: '绑定用户列表失败, ' + err
-      });
-    });
+  selectItems(selected) {
+    this.selectedItems = selected;
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  selectAll(evt) {
-    this.allSelected = evt.target.checked;
-    this.users = this.users.map(item => ({
-      ...item,
-      selected: this.allSelected
-    }));
-    this.selectItems.emit(this.allSelected ? this.users : []);
-
-  }
-
-  select(evt, selectedItem) {
-    this.users = this.users.map(item => ({
-      ...item,
-      selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
-    }));
-    this.allSelected = this.users.every(item => item.selected);
-    this.selectItems.emit(this.users.filter(item => item.selected));
-  }
-
-  onPageChange({ current, pageSize }) {
-    this.userService.onPageChangeDisabled({
-      PageIndex: current,
-      PageSize: pageSize
-    }, (err) => {
-      this.alertService.open({
-        type: 'success',
-        content: '绑定用户列表失败, ' + err
-      });
-    });
-  }
-
-  delete(id) {
+  delete() {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.userService
-          .remove([id], data => {
+        this.roleService
+          .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.userService.listDisabled((err) => {
+              this.roleService.listDisabled((err) => {
                 this.alertService.open({
                   type: 'danger',
-                  content: '绑定用户列表失败, ' + err
+                  content: '绑定费用类型列表失败, ' + err
                 });
               }, () => {
                 this.alertService.open({
@@ -134,17 +125,17 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
     });
   }
 
-  restore(id) {
+  restore() {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.userService
-          .restore([id], data => {
+        this.roleService
+          .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.userService.listDisabled((err) => {
+              this.roleService.listDisabled((err) => {
                 this.alertService.open({
                   type: 'danger',
-                  content: '绑定用户列表失败, ' + err
+                  content: '绑定费用类型列表失败, ' + err
                 });
               }, () => {
                 this.alertService.open({

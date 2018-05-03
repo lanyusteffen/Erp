@@ -5,10 +5,10 @@ import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
-export class UserService {
-  private users$ = new Subject<any>();
+export class RoleService {
+  private roles$ = new Subject<any>();
   private state = {
-    users: [],
+    roles: [],
     currentQueryKey: '',
     currentPagination: {
       PageIndex: 1,
@@ -19,7 +19,7 @@ export class UserService {
 
   constructor(private http: HttpService) { }
 
-  get() { return this.users$.asObservable(); }
+  get() { return this.roles$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -30,7 +30,7 @@ export class UserService {
       }
     } = this.state;
 
-    return this.http.post('/User/GetListPaged', {
+    return this.http.post('/Role/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize,
@@ -38,12 +38,12 @@ export class UserService {
     }, data => {
       const nextState = {
         ...this.state,
-        users: data.UserList,
+        roles: data.List,
         currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.users$.next(nextState);
+      this.roles$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();
@@ -60,7 +60,7 @@ export class UserService {
       }
     } = this.state;
 
-    return this.http.post('/User/GetListPaged', {
+    return this.http.post('/Role/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize,
@@ -68,12 +68,12 @@ export class UserService {
     }, data => {
       const nextState = {
         ...this.state,
-        users: data.UserList,
+        roles: data.List,
         currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.users$.next(nextState);
+      this.roles$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();
@@ -82,28 +82,23 @@ export class UserService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/GetForNew', {}, next, fallback, ModuleType.Admin);
+    return this.http.post('/Role/GetForNew', {}, next, fallback, ModuleType.Admin);
   }
 
-  detail(userId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post(`/User/GetForModify`, { EntityId: userId }, next, fallback, ModuleType.Admin);
+  detail(roleId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post(`/Role/GetForModify`, { EntityId: roleId }, next, fallback, ModuleType.Admin);
   }
 
-  create(user, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/New', user, next, fallback, ModuleType.Admin);
+  create(role, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Role/New', role, next, fallback, ModuleType.Admin);
   }
 
-  update(user, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/Modify', user, next, fallback, ModuleType.Admin);
+  update(role, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Role/Modify', role, next, fallback, ModuleType.Admin);
   }
-
-  changePassword(user, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/ChangePassword', user, next, fallback, ModuleType.Admin);
-  }
-
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/Cancel', {
+    return this.http.post('/Role/Cancel', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }
@@ -155,13 +150,13 @@ export class UserService {
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/Remove', {
+    return this.http.post('/Role/Remove', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/User/Restore', {
+    return this.http.post('/Role/Restore', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }

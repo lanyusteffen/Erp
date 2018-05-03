@@ -6,23 +6,22 @@
           <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
         </th>
         <th>操作</th>
-        <th>用户编号</th>
-        <th>登录名</th>
+        <th>编号</th>
+        <th>名称</th>
         <th>备注</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of users">
+      <tr *ngFor="let item of roles">
         <td>
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
         <td>
-          <a (click)="update(item.Id)">修改</a>
-          <a (click)="changePassword(item.Id)">修改密码</a>
-          <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+          <a (click)="restore(item.Id)">还原</a>
+          <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="delete(item.Id)">删除</a>
         </td>
         <td>{{item.Code}}</td>
-        <td>{{item.LoginName}}</td>
+        <td>{{item.Name}}</td>
         <td>{{item.Remark}}</td>
       </tr>
     </tbody>
@@ -32,14 +31,4 @@
     [current]="pagination.PageIndex"
     (onChange)="onPageChange($event)"
   ></app-pagination-bar>
-  <app-user-modify
-    [userId]="selectedId"
-    [show]="_showUpdate"
-    (onClose)="closeUpdate()"
-  ></app-user-modify>
-  <app-user-password
-    [userId]="selectedId"
-    [show]="_showPassword"
-    (onClose)="closeChangePassword()"
-  ></app-user-password>
 </div>

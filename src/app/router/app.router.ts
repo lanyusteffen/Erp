@@ -167,6 +167,16 @@ export const rootRoutes: Routes = [
                 path: 'admins/user/disabled',
                 loadChildren: './modules/admins/path/user/user-disabled.module#UserDisabledModule',
                 canLoad: [AuthGuard]
+              },
+              {
+                path: 'admins/role',
+                loadChildren: './modules/admins/path/role/role.module#RoleModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'admins/role/disabled',
+                loadChildren: './modules/admins/path/role/role-disabled.module#RoleDisabledModule',
+                canLoad: [AuthGuard]
               }
         ]
     },

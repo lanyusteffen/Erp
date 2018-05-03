@@ -1,43 +1,42 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { UserService } from '../../user.service';
+import { RoleService } from '../../role.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
-  selector: 'app-user-list',
+  selector: 'app-role-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.less']
 })
 
-export class UserListComponent implements OnInit, OnDestroy {
-  private users = <any>[];
+export class RoleListComponent implements OnInit, OnDestroy {
+  private roles = <any>[];
   private pagination = {};
   private _showContact = false;
   private allSelected = false;
   private selectedId: number;
   private _showUpdate = false;
-  private _showPassword = false;
   private subscription: Subscription;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private userService: UserService,
+    private roleService: RoleService,
     private confirmService: ConfirmService,
     private alertService: AlertService
   ) {
-    this.subscription = this.userService
+    this.subscription = this.roleService
       .get()
-      .subscribe(({ users, currentPagination }) => {
-        this.users = users;
+      .subscribe(({ roles, currentPagination }) => {
+        this.roles = roles;
         this.pagination = currentPagination;
       });
   }
 
   ngOnInit() {
-    this.userService.list((err) => {
+    this.roleService.list((err) => {
       this.alertService.open({
         type: 'success',
         content: '停用成功！'
@@ -51,25 +50,25 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.users = this.users.map(item => ({
+    this.roles = this.roles.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.users : []);
+    this.selectItems.emit(this.allSelected ? this.roles : []);
 
   }
 
   select(evt, selectedItem) {
-    this.users = this.users.map(item => ({
+    this.roles = this.roles.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.users.every(item => item.selected);
-    this.selectItems.emit(this.users.filter(item => item.selected));
+    this.allSelected = this.roles.every(item => item.selected);
+    this.selectItems.emit(this.roles.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
-    this.userService.onPageChange({
+    this.roleService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
@@ -89,23 +88,14 @@ export class UserListComponent implements OnInit, OnDestroy {
     this._showUpdate = false;
   }
 
-  changePassword(id) {
-    this.selectedId = id;
-    this._showPassword = true;
-  }
-
-  closeChangePassword() {
-    this._showPassword = false;
-  }
-
   onCancel(id) {
     this.confirmService.open({
       content: '确认停用吗？',
       onConfirm: () => {
-        this.userService
+        this.roleService
           .cancel([id], data => {
             if (data.IsValid) {
-              this.userService.list((err) => {
+              this.roleService.list((err) => {
                 this.alertService.open({
                   type: 'danger',
                   content: '绑定费用类型列表失败, ' + err

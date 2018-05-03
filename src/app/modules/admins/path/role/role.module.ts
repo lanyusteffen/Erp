@@ -4,13 +4,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
-import { UserComponent } from './user.component';
-import { UserListComponent } from './component/list/list.component';
-import { UserActionsComponent } from './component/actions/actions.component';
-import { UserControlComponent } from './component/control/control.component';
-import { UserModifyComponent } from './component/modify/modify.component';
-import { UserPasswordComponent } from './component/password/password.component';
-import { UserService } from './user.service';
+import { RoleComponent } from './role.component';
+import { RoleListComponent } from './component/list/list.component';
+import { RoleActionsComponent } from './component/actions/actions.component';
+import { RoleControlComponent } from './component/control/control.component';
+import { RoleService } from './role.service';
 import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
@@ -19,18 +17,16 @@ import { EmployeeModule } from '../../../basics/path/employee/employee.module';
 
 export const ROUTES: Routes = [
   {
-    path: '', component: UserComponent, outlet: 'admin-user'
+    path: '', component: RoleComponent, outlet: 'admin-role'
   }
 ];
 
 @NgModule({
   declarations: [
-    UserComponent,
-    UserListComponent,
-    UserActionsComponent,
-    UserControlComponent,
-    UserModifyComponent,
-    UserPasswordComponent
+    RoleComponent,
+    RoleListComponent,
+    RoleActionsComponent,
+    RoleControlComponent
   ],
   imports: [
     UIModule,
@@ -42,7 +38,7 @@ export const ROUTES: Routes = [
     SharedModule,
     RouterModule.forChild(ROUTES)
   ],
-  providers: [UserService]
+  providers: [RoleService]
 })
 
-export class UserModule {}
+export class RoleModule {}

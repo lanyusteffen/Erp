@@ -121,7 +121,7 @@ export class MenuComponent {
           subMenu: [
             { name: '公司管理', link: '/home/admins/company', outlet: 'admin-company' },
             { name: '用户管理', link: '/home/admins/user', outlet: 'admin-user' },
-            { name: '商品套餐', link: '/home/product' }
+            { name: '角色管理', link: '/home/admins/role', outlet: 'admin-role' }
           ]
         }
       ]

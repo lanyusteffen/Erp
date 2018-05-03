@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { UserService } from '../../user.service';
+import { RoleService } from '../../role.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService } from '@services/alert.service';
 import { AppService } from '@services/app.service';
 
 @Component({
-  selector: 'app-user-disabled-list',
+  selector: 'app-role-disabled-list',
   templateUrl: './disabled.component.html',
   styleUrls: ['./disabled.component.less'],
   providers: [
@@ -15,8 +15,8 @@ import { AppService } from '@services/app.service';
   ]
 })
 
-export class UserDisabledListComponent implements OnInit, OnDestroy {
-  private users = <any>[];
+export class RoleDisabledListComponent implements OnInit, OnDestroy {
+  private roles = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
@@ -28,15 +28,15 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private userService: UserService,
+    private roleService: RoleService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
   ) {
-    this.subscription = this.userService
+    this.subscription = this.roleService
       .get()
-      .subscribe(({ users, currentPagination }) => {
-        this.users = users;
+      .subscribe(({ roles, currentPagination }) => {
+        this.roles = roles;
         this.pagination = currentPagination;
       });
   }
@@ -57,10 +57,10 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
-    this.userService.listDisabled((err) => {
+    this.roleService.listDisabled((err) => {
       this.alertService.open({
         type: 'success',
-        content: '绑定用户列表失败, ' + err
+        content: '绑定公司列表失败, ' + err
       });
     });
   }
@@ -71,31 +71,31 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.users = this.users.map(item => ({
+    this.roles = this.roles.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.users : []);
+    this.selectItems.emit(this.allSelected ? this.roles : []);
 
   }
 
   select(evt, selectedItem) {
-    this.users = this.users.map(item => ({
+    this.roles = this.roles.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.users.every(item => item.selected);
-    this.selectItems.emit(this.users.filter(item => item.selected));
+    this.allSelected = this.roles.every(item => item.selected);
+    this.selectItems.emit(this.roles.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
-    this.userService.onPageChangeDisabled({
+    this.roleService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
       this.alertService.open({
         type: 'success',
-        content: '绑定用户列表失败, ' + err
+        content: '绑定公司列表失败, ' + err
       });
     });
   }
@@ -104,13 +104,13 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.userService
+        this.roleService
           .remove([id], data => {
             if (data.IsValid) {
-              this.userService.listDisabled((err) => {
+              this.roleService.listDisabled((err) => {
                 this.alertService.open({
                   type: 'danger',
-                  content: '绑定用户列表失败, ' + err
+                  content: '绑定公司列表失败, ' + err
                 });
               }, () => {
                 this.alertService.open({
@@ -138,13 +138,13 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.userService
+        this.roleService
           .restore([id], data => {
             if (data.IsValid) {
-              this.userService.listDisabled((err) => {
+              this.roleService.listDisabled((err) => {
                 this.alertService.open({
                   type: 'danger',
-                  content: '绑定用户列表失败, ' + err
+                  content: '绑定公司列表失败, ' + err
                 });
               }, () => {
                 this.alertService.open({

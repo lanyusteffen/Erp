@@ -35,34 +35,6 @@
           </td>
           
         </tr>
-        <tr>
-          <th class="form-label">
-            <span class="required">*</span>
-            用户密码:
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'Password'">
-              <!-- <input #formField type="password" [name]="Password" class="form-control" [ngModel] #password="ngModel" formControlName="Password" required>
-              <small [hidden]="password.valid || (password.pristine && !f.submitted)">
-               请输入密码
-              </small> -->
-              <input #formField type="password" [name]="Password" class="form-control" [ngModel] formControlName="Password">
-            </app-form-field>
-          </td>
-          <th class="form-label">
-            <span class="required">*</span>
-            确认密码:
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'ConfirmPassword'">
-              <!-- <input #formField type="text" [name]="ConfirmPassword" class="form-control" [ngModel] #confirmPassword="ngModel" formControlName="ConfirmPassword" required validateEqual="Password" >
-              <small [hidden]="confirmPassword.valid ||  (confirmPassword.pristine && !f.submitted)">
-                两次输入密码不一致
-              </small> -->
-              <input #formField type="password" [name]="ConfirmPassword" class="form-control" [ngModel] formControlName="ConfirmPassword">
-            </app-form-field>
-          </td>
-        </tr>
       </table>
       <div class="heading">备注</div>
       <input type="text" formControlName="Remark" class="form-control" [ngModel]>
