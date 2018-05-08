@@ -102,7 +102,7 @@ export class EmployeeService {
   }
 
   detail(employeeId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post(`/Employee/GetForModify`, { employeeId }, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Employee/GetForModify`, { EntityId : employeeId }, next, fallback, ModuleType.Basic);
   }
 
   create(employee, next: (data: any) => void, fallback: (error: any) => void) {
