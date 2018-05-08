@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../employee.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
+import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
   selector: 'app-employee-selector',
@@ -17,6 +18,10 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private innerValue: any;
   private onTouched;
   private onChange;
+
+  // 获取模板内的第一个指定组件
+  @ViewChild(SelectComponent)
+  private select1:SelectComponent;
 
   constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
@@ -37,6 +42,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value) {
     this.innerValue = value || 0;
+    this.select1.label = this.innerValue;
   }
 
   registerOnChange(fn) {
@@ -49,6 +55,6 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   handleChange(value) {
     this.innerValue = value;
-    this.onChange(value);
+    this.select1.label = this.innerValue;
   }
 }

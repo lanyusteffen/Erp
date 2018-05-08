@@ -21,6 +21,12 @@ export class SelectComponent {
   get value() {
     return this._currentValue;
   }
+
+  @Input()
+  set label(label) {
+    this._currentValue = this.options.find(option => option.label === label) || {};
+  }
+  
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   handleChange(value) {
