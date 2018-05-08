@@ -18,10 +18,8 @@ export class AuthService {
 
     checkAuthorize(): boolean {
         if (this.authToken != null || this.persistenceAuthToken != null) {
-            console.log(true);
             return true;
         }
-        console.log(false);
         return false;
     }
 }

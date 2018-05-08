@@ -31,8 +31,10 @@ export class EmployeeControlComponent {
 
   @Input()
   set employeeId(employeeId) {
-    this._employeeId = employeeId;
-    this.showPop();
+    if (employeeId !== undefined) {
+      this._employeeId = employeeId;
+      this.showPop();
+    }
   }
 
   listErrorCallBack(err: any): void {
