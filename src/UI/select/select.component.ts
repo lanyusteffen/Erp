@@ -10,24 +10,38 @@ import { Component, Input, Output, ViewEncapsulation, EventEmitter, ChangeDetect
 export class SelectComponent {
 
   private _currentValue = {};
+  private _selectedValue = null;
 
-  @Input() options = [];
+  _options = [];
+
+  @Input()
+  set options(list) {
+    this._options = list;
+    if (this._selectedValue !== null) {
+      this._currentValue = list.find(option => option.value === this._selectedValue) || {};
+      this._selectedValue = null;
+      this.cd.markForCheck();
+    }
+  }
+  get options() {
+    return this._options;
+  }
   @Input() placement = 'bottom';
   @Input() formSelect = false;
+
   @Input()
   set value(value) {
-    this._currentValue = this.options.find(option => option.value === value) || {};
-    this.cd.markForCheck();
+    if (this.options.length > 0) {
+      this._currentValue = this.options.find(option => option.value === value) || {};
+      this._selectedValue = null;
+      this.cd.markForCheck();
+    } else {
+      this._selectedValue = value;
+    }
   }
 
   get value() {
     return this._currentValue;
-  }
-
-  @Input()
-  set label(label) {
-    this._currentValue = this.options.find(option => option.label === label) || {};
-    this.cd.markForCheck();
   }
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();

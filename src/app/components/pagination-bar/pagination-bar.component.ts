@@ -25,7 +25,6 @@ export class PaginationBarComponent {
   }
 
   get total() {
-    console.log(this._total);
     return this._total;
   }
 

@@ -21,7 +21,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private select1: SelectComponent;
+  private selectEmployee: SelectComponent;
 
   constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
@@ -30,7 +30,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
       .all(data => {
         this.list = data.map(item => ({
           label: item.Name,
-          value: item
+          value: item.Id
         }));
       }, (err) => {
         this.alertService.open({
@@ -42,7 +42,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value) {
     this.innerValue = value || 0;
-    this.select1.label = this.innerValue;
+    this.selectEmployee.value = this.innerValue;
   }
 
   registerOnChange(fn) {
@@ -55,6 +55,6 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   handleChange(value) {
     this.innerValue = value;
-    this.select1.label = this.innerValue;
+    this.selectEmployee.value = this.innerValue;
   }
 }
