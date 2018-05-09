@@ -35,12 +35,11 @@ export class LoginComponent implements OnInit {
     private authorizeService: AuthorizeService) { }
 
   errorCallBack(err: any): void {
-    console.log(err);
     this.alertInfo = '登录异常:' + err.statusText;
   }
 
   loginCallBack(data: any): void {
-    this.alertInfo = '登录失败:' + data.ErrorMessages;
+    this.alertInfo = '登录失败:' + data;
   }
 
   login(loginRequest: LoginRequest, isValid: boolean): void {

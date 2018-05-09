@@ -21,7 +21,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private select1:SelectComponent;
+  private select1: SelectComponent;
 
   constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
