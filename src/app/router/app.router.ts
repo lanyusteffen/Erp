@@ -6,6 +6,7 @@ import { AppComponent } from '../app.component';
 import { HomeComponent } from '../modules/home/home.component';
 import { IndexComponent } from '../modules/home/components/index/index.component';
 import { LoginComponent } from '../authorize/login/login.component';
+import { PurchaseOrderNewComponent } from '../modules/purchases/path/order/new/new.component';
 
 export const rootRoutes: Routes = [
     {
@@ -129,8 +130,8 @@ export const rootRoutes: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'purchase/order/new',
-                loadChildren: './modules/purchase/path/order/path/new/new.module#PurchaseOrderNewModule',
+                path: 'purchases/order/new',
+                component: PurchaseOrderNewComponent,
                 canLoad: [AuthGuard]
               },
               {

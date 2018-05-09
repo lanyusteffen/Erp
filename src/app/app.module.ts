@@ -27,6 +27,8 @@ import { AuthorizeModule } from './authorize/authorize.module';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
     TabsComponent,
     TabOutletDirective,
     HomeComponent,
+    PurchaseOrderNewComponent,
     ConfirmComponent,
     IndexComponent,
     PageNotFoundComponent
@@ -47,6 +50,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
     HttpClientModule,
     UIModule,
     AuthorizeModule,
+    SharedModule,
     RouterModule.forRoot(rootRoutes),
     SlimLoadingBarModule.forRoot()
   ],
