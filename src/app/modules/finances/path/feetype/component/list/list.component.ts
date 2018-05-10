@@ -38,8 +38,8 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.feeTypeService.list((err) => {
       this.alertService.open({
-        type: 'success',
-        content: '停用成功！'
+        type: 'danger',
+        content: '绑定费用类型列表失败, ' + err
       });
     });
   }
