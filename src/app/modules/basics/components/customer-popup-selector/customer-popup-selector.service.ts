@@ -5,10 +5,10 @@ import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
-export class ContactsPopupSelectorService {
-  private contactsPopup$ = new Subject<any>();
+export class CustomerPopupSelectorService {
+  private customers$ = new Subject<any>();
   private state = {
-    supplier: [],
+    suppliers: [],
     currentQueryKey: '',
     currentCategory: { Id: null },
     currentPagination: {
@@ -20,5 +20,5 @@ export class ContactsPopupSelectorService {
 
   constructor(private http: HttpService) {}
 
-  get() { return this.contactsPopup$.asObservable(); }
+  get() { return this.customers$.asObservable(); }
 }

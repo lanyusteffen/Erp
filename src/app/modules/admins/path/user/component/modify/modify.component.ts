@@ -41,15 +41,6 @@ export class UserModifyComponent {
     return '修改用户';
   }
 
-  parseEmployee(user) {
-
-    user.Employee = {
-      Id: user.EmployeeId,
-      Name: user.EmployeeName
-    };
-
-    return user;
-  }
 
   listErrorCallBack(err: any): void {
     this.alertService.open({
@@ -62,7 +53,6 @@ export class UserModifyComponent {
     if (this._show) {
       this.userService
         .detail(this.userId, data => {
-          data = this.parseEmployee(data);
           this.form = this.formService.createForm(data);
         }, (err) => {
           this.listErrorCallBack(err);
@@ -83,15 +73,7 @@ export class UserModifyComponent {
     this.onClose.emit();
   }
 
-  initEmployee(user) {
-    user.EmployeeId = user.Employee.Id;
-    user.EmployeeName = user.Employee.Name;
-  }
-
-  onSubmit({ value }) {
-
-    this.initEmployee(value);
-
+  onSubmit({ value }, isValid) {
     this.userService.update(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {

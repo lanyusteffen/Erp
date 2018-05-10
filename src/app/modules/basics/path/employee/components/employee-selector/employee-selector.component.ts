@@ -55,6 +55,6 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   handleChange(value) {
     this.innerValue = value;
-    this.selectEmployee.value = this.innerValue;
+    this.onChange(value);
   }
 }
