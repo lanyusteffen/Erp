@@ -41,21 +41,11 @@ export class UserModifyComponent {
     return '修改用户';
   }
 
-  parseEmployee(user) {
-
-    user.Employee = {
-      Id: user.EmployeeId,
-      Name: user.EmployeeName
-    };
-
-    return user;
-  }
 
   refreshList() {
     if (this._show) {
       this.userService
         .detail(this.userId, data => {
-          data = this.parseEmployee(data);
           this.form = this.formService.createForm(data);
         }, (err) => {
           this.alertService.open({
@@ -77,11 +67,6 @@ export class UserModifyComponent {
 
   handleClose() {
     this.onClose.emit();
-  }
-
-  initEmployee(user) {
-    user.EmployeeId = user.Employee.Id;
-    user.EmployeeName = user.Employee.Name;
   }
 
   onSubmit({ value }, isValid) {
