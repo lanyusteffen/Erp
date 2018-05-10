@@ -84,10 +84,8 @@ export class UserModifyComponent {
     user.EmployeeName = user.Employee.Name;
   }
 
-  onSubmit({ value }) {
-
-    this.initEmployee(value);
-
+  onSubmit({ value }, isValid) {
+    console.log(isValid);
     this.userService.update(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
