@@ -46,6 +46,13 @@ export class UserControlComponent {
     }
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定用户列表失败!' + err
+    });
+  }
+
   parseEmployee(user) {
 
     user.Employee = {
@@ -63,10 +70,7 @@ export class UserControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定用户列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           });
       } else {
         this.userService
@@ -74,10 +78,7 @@ export class UserControlComponent {
             data = this.parseEmployee(data);
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定用户列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           });
       }
     }
@@ -109,10 +110,7 @@ export class UserControlComponent {
       this.userService.create(value, data => {
         if (data.IsValid) {
           this.userService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定用户列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({
@@ -136,10 +134,7 @@ export class UserControlComponent {
       this.userService.update(value, data => {
         if (data.IsValid) {
           this.userService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定用户列表失败, ' + err
-            });
+           this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({

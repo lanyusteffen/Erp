@@ -32,12 +32,16 @@ export class UserActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定用户列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
     this.userService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定用户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -57,10 +61,7 @@ export class UserActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.userService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

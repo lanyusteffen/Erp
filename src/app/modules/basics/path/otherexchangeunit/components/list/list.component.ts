@@ -46,15 +46,19 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定往来单位列表失败!' + err
+    });
+  }
+
   showContact(otherExchangeUnitId) {
     this._showContact = true;
     this.otherExchangeUnitService.contactList(otherExchangeUnitId, data => {
       this.contactList = data;
     }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定往来单位列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -86,10 +90,7 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定往来单位列表失败, ' + err
-      });
+     this.listErrorCallBack(err);
     });
   }
 
@@ -110,10 +111,7 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.otherExchangeUnitService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定往来单位列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

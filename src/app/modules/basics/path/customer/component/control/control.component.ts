@@ -66,6 +66,13 @@ export class CustomerControlComponent {
     }
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定客户列表失败!' + err
+    });
+  }
+
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -83,10 +90,7 @@ export class CustomerControlComponent {
           .detail(this.customerId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '查看客户详情失败, ' + err
-            });
+            this.listErrorCallBack(err);
           });
       }
     }
@@ -112,10 +116,7 @@ export class CustomerControlComponent {
       this.customerService.create(value, data => {
         if (data.IsValid) {
           this.customerService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定客户列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({

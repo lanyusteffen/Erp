@@ -32,12 +32,16 @@ export class RoleActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定角色列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
     this.roleService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定角色列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -57,10 +61,7 @@ export class RoleActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.roleService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

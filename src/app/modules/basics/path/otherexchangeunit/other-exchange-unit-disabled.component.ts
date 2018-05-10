@@ -72,12 +72,16 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
       });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定往来单位列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
     this.otherExchangeUnitService.onSearchDisabled(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定往来单位列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -105,10 +109,7 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
 
   onCategoryChange(selected) {
     this.otherExchangeUnitService.onCategoryChangeDisabled(selected, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定往来单位列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -120,10 +121,7 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.otherExchangeUnitService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定往来单位列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',
@@ -154,10 +152,7 @@ export class OtherExchangeUnitDisabledComponent implements OnInit, OnDestroy {
           .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.otherExchangeUnitService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定往来单位列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

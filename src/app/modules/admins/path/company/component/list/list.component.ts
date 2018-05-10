@@ -35,12 +35,16 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定公司列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.companyService.list((err) => {
-      this.alertService.open({
-        type: 'success',
-        content: '停用成功！'
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -72,15 +76,11 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
   update(id) {
-    console.log(id);
     this.selectedId = id;
     this._showUpdate = true;
   }
@@ -97,10 +97,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.companyService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

@@ -45,23 +45,27 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
     return this.systemConfig;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定客户列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.getSystemConfig();
     this.customerService.listDisabled((err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定客户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -93,10 +97,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定客户列表失败, ' + err
-      });
+     this.listErrorCallBack(err);
     });
   }
 
@@ -108,10 +109,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
           .remove([id], data => {
             if (data.IsValid) {
               this.customerService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定客户列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',
@@ -142,10 +140,7 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.customerService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定客户列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

@@ -108,15 +108,19 @@ export class SupplierControlComponent {
     this.onClose.emit();
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定供应商列表失败!' + err
+    });
+  }
+
   onSubmit({ value }) {
     if (this.type === 'create') {
       this.supplierService.create(value, data => {
         if (data.IsValid) {
           this.supplierService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定供应商列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({
@@ -132,10 +136,7 @@ export class SupplierControlComponent {
       this.supplierService.update(value, data => {
         if (data.IsValid) {
           this.supplierService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定供应商列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({

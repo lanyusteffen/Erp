@@ -32,6 +32,13 @@ export class CustomerActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定客户列表失败!' + err
+    });
+  }
+
   showDisabled() {
     this.tabsService.create({
       name: '停用客户',
@@ -42,10 +49,7 @@ export class CustomerActionsComponent {
 
   onSearch(queryKey) {
     this.customerService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定客户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -57,10 +61,7 @@ export class CustomerActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.customerService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定客户列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

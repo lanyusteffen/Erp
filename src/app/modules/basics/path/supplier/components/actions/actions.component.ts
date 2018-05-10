@@ -40,12 +40,16 @@ export class SupplierActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定供应商列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
     this.supplierService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定供应商列表失败, ' + err
-      });
+     this.listErrorCallBack(err);
     });
   }
 
@@ -57,10 +61,7 @@ export class SupplierActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), ({ IsValid, ErrorMessages }) => {
             if (IsValid) {
               this.supplierService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定供应商列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

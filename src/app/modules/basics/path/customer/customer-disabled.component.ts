@@ -61,7 +61,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.systemConfig = this.getSystemConfig();
@@ -72,12 +72,16 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
       });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定停用列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
     this.customerService.onSearchDisabled(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定客户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -89,10 +93,10 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -105,10 +109,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
 
   onCategoryChange(selected) {
     this.customerService.onCategoryChangeDisabled(selected, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定客户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -120,10 +121,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.customerService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定客户列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',
@@ -137,10 +135,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
               });
             }
           }, err => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定客户列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           });
       }
     });
@@ -158,10 +153,7 @@ export class CustomerDisabledComponent implements OnInit, OnDestroy {
                 content: '还原成功！'
               });
               this.customerService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '还原失败, ' + err
-                });
+                this.listErrorCallBack(err);
               });
             } else {
               this.alertService.open({

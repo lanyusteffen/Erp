@@ -67,6 +67,13 @@ export class OtherExchangeUnitControlComponent {
     }
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定往来单位列表失败!' + err
+    });
+  }
+
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -113,10 +120,7 @@ export class OtherExchangeUnitControlComponent {
       this.otherExchangeUnitService.create(value, data => {
         if (data.IsValid) {
           this.otherExchangeUnitService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定往来单位列表失败, ' + err
-            });
+            this.listErrorCallBack(err)
           }, () => {
             this.onClose.emit();
             this.alertService.open({
@@ -140,10 +144,7 @@ export class OtherExchangeUnitControlComponent {
       this.otherExchangeUnitService.update(value, data => {
         if (data.IsValid) {
           this.otherExchangeUnitService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定往来单位列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({

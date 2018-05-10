@@ -68,15 +68,19 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.selectItems.emit(this.users.filter(item => item.selected));
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定公司列表失败!' + err
+    });
+  }
+
   onPageChange({ current, pageSize }) {
     this.userService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -106,10 +110,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.userService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

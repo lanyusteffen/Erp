@@ -32,12 +32,16 @@ export class OtherExchangeUnitActionsComponent {
     this._show = false;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定往来单位列表失败!' + err
+    });
+  }
+
   onSearch(queryKey) {
     this.otherExchangeUnitService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定往来单位列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -57,10 +61,7 @@ export class OtherExchangeUnitActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.otherExchangeUnitService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定往来单位列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

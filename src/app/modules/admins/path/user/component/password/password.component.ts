@@ -51,6 +51,13 @@ export class UserPasswordComponent {
     return user;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定用户列表失败!' + err
+    });
+  }
+
   refreshList() {
     if (this._show) {
       this.userService
@@ -58,10 +65,7 @@ export class UserPasswordComponent {
           data = this.parseEmployee(data);
           this.form = this.formService.createForm(data);
         }, (err) => {
-          this.alertService.open({
-            type: 'danger',
-            content: '绑定用户列表失败, ' + err
-          });
+         this.listErrorCallBack(err);
         });
     }
   }
@@ -91,10 +95,7 @@ export class UserPasswordComponent {
     this.userService.changePassword(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
-          this.alertService.open({
-            type: 'danger',
-            content: '绑定用户列表失败, ' + err
-          });
+          this.listErrorCallBack(err);
         }, () => {
           this.onClose.emit();
           this.alertService.open({

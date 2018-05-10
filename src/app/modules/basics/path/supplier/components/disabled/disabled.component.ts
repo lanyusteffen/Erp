@@ -55,13 +55,17 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
     return this.systemConfig;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定供应商列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.getSystemConfig();
     this.supplierService.listDisabled((err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定供应商列表失败, ' + err
-      });
+     this.listErrorCallBack(err);
     });
   }
 
@@ -134,10 +138,7 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.supplierService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '绑定供应商列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

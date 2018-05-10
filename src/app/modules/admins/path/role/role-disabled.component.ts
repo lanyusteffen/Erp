@@ -73,6 +73,13 @@ export class RoleDisabledComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定停用列表失败!' + err
+    });
+  }
+
   getSystemConfig(): any {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
@@ -99,10 +106,7 @@ export class RoleDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.roleService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',
@@ -133,10 +137,7 @@ export class RoleDisabledComponent implements OnInit, OnDestroy {
           .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.roleService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

@@ -87,6 +87,13 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定供应商列表失败!' + err
+    });
+  }
+
   update(id) {
     this.selectedId = id;
     this._showUpdate = true;
@@ -104,10 +111,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.supplierService.list((err) => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '绑定供应商列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

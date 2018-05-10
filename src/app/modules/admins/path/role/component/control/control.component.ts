@@ -46,6 +46,13 @@ export class RoleControlComponent {
     }
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定角色列表失败!' + err
+    });
+  }
+
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -53,20 +60,14 @@ export class RoleControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定角色列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           });
       } else {
         this.roleService
           .detail(this.roleId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定角色列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           });
       }
     }
@@ -91,10 +92,7 @@ export class RoleControlComponent {
       this.roleService.create(value, data => {
         if (data.IsValid) {
           this.roleService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定角色列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({
@@ -118,10 +116,7 @@ export class RoleControlComponent {
       this.roleService.update(value, data => {
         if (data.IsValid) {
           this.roleService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定角色列表失败, ' + err
-            });
+           this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({

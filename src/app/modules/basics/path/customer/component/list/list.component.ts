@@ -36,12 +36,16 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定客户列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.customerService.list((err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '获取客户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -88,10 +92,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, err => {
-      this.alertService.open({
-        type: 'danger',
-        content: '获取客户列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -116,10 +117,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
                 content: '停用成功！'
               });
               this.customerService.list(err => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '停用失败, ' + err
-                });
+                this.listErrorCallBack(err);
               });
             } else {
               this.alertService.open({
