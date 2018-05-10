@@ -69,8 +69,7 @@ export class UserModifyComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
-
+  onSubmit({ value }, isValid) {
     this.userService.update(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
