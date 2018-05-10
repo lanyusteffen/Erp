@@ -96,14 +96,7 @@ export class UserControlComponent {
     this.onClose.emit();
   }
 
-  initEmployee(user) {
-    user.EmployeeId = user.Employee.Id;
-    user.EmployeeName = user.Employee.Name;
-  }
-
   onSubmit({ value }) {
-
-    this.initEmployee(value);
 
     if (this.type === 'create') {
       this.userService.create(value, data => {
