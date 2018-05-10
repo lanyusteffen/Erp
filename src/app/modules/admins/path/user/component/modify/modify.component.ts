@@ -85,7 +85,6 @@ export class UserModifyComponent {
   }
 
   onSubmit({ value }, isValid) {
-    console.log(isValid);
     this.userService.update(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
