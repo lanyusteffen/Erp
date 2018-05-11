@@ -1,0 +1,35 @@
+<div class="selector-group">
+  <input type="text" class="form-control" />
+  <span class="addon" (click)="showModal($event)">
+    <i class="iconfont icon-filter"></i>
+  </span>
+</div>
+<app-ui-modal [show]="show" (onClose)="closeModal($event)">
+  <div app-ui-modal-header>
+    选择供应商
+  </div>
+  <div class="modal-body-wrapper">
+    <div class="tabs">
+      <ul class="tabs-list">
+        <li><a href="" (onclick)="showCustomer()">客户</a></li>
+        <li><a href="" (onclick)="showSupplier()">供应商</a></li>
+        <li><a href="" (onclick)="showOther()">其他往来单位</a></li>
+      </ul>
+    </div>
+    <div class="actions">
+      <app-quick-search [placeholder]="'编号、姓名'"></app-quick-search>
+      <div class="more">
+        <a href="">
+          <i class="iconfont icon-refresh"></i>
+        </a>
+      </div>
+    </div>
+    <app-popup-selector-customer></app-popup-selector-customer>
+    <app-popup-selector-supplier></app-popup-selector-supplier>
+    <app-popup-selector-other></app-popup-selector-other>
+  </div>
+  <div app-ui-modal-footer>
+    <app-ui-button [style]="'primary'">确定</app-ui-button>
+    <app-ui-button (click)="closeModal($event)">取消</app-ui-button>
+  </div>
+</app-ui-modal>
