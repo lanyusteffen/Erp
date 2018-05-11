@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" *ngIf="_show">
   <app-category></app-category>
   <div class="table-wrapper">
     <app-ui-table>
@@ -18,13 +18,13 @@
           <td *ngIf="isMultiSelect">
             <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
           </td>
-          <td>1</td>
+          <td>{{item.Code}}</td>
+          <td>{{item.Name}}</td>
+          <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{item.SalePriceLevelDes}}</td>
         </tr>
       </tbody>
     </app-ui-table>

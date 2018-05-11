@@ -11,9 +11,9 @@
   <div class="modal-body-wrapper">
     <div class="tabs">
       <ul class="tabs-list">
-        <li><a href="" (onclick)="showCustomer()">客户</a></li>
-        <li><a href="" (onclick)="showSupplier()">供应商</a></li>
-        <li><a href="" (onclick)="showOther()">其他往来单位</a></li>
+        <li><a [class]="isActive('Customer')" (click)="selectTab('Customer')">客户</a></li>
+        <li><a [class]="isActive('Supplier')" (click)="selectTab('Supplier')">供应商</a></li>
+        <li><a [class]="isActive('Other')" (click)="selectTab('Other')">其他往来单位</a></li>
       </ul>
     </div>
     <div class="actions">
@@ -24,9 +24,15 @@
         </a>
       </div>
     </div>
-    <app-popup-selector-customer></app-popup-selector-customer>
-    <app-popup-selector-supplier></app-popup-selector-supplier>
-    <app-popup-selector-other></app-popup-selector-other>
+    <app-popup-selector-customer
+      [show]="selectedTab === 'Customer'"
+    ></app-popup-selector-customer>
+    <app-popup-selector-supplier
+      [show]="selectedTab === 'Supplier'"
+    ></app-popup-selector-supplier>
+    <app-popup-selector-other
+      [show]="selectedTab === 'Other'"
+    ></app-popup-selector-other>
   </div>
   <div app-ui-modal-footer>
     <app-ui-button [style]="'primary'">确定</app-ui-button>

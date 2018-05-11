@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CustomerPopupSelectorService } from '../popup-selector-client/popup-selector-customer.service';
 import { AlertService } from '../../../../services/alert.service';
 
@@ -9,7 +9,25 @@ import { AlertService } from '../../../../services/alert.service';
 })
 export class PopupSelectorOtherComponent implements OnInit {
 
+  _show: boolean;
   isMultiSelect: boolean;
+
+  get show() {
+    return this._show;
+  }
+
+  @Input()
+  set show(isShow) {
+    this._show = isShow;
+    if (isShow) {
+      this.dataService.listOthers((err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '绑定其他往来单位列表失败!' + err
+        });
+      });
+    }
+  }
 
   constructor(private dataService: CustomerPopupSelectorService,
               private alertService: AlertService) {
@@ -17,11 +35,5 @@ export class PopupSelectorOtherComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataService.listOthers((err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定其他客户列表失败!' + err
-      });
-    });
   }
 }

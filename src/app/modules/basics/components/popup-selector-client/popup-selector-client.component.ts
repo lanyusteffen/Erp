@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CustomerPopupSelectorService } from './popup-selector-customer.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-popup-selector-client',
@@ -9,11 +10,30 @@ import { CustomerPopupSelectorService } from './popup-selector-customer.service'
 })
 
 export class CustomerPopupSelectorComponent implements OnInit {
-  private show = false;
+  @LocalStorage()
+  selectedTab: string;
+  show = false;
+  @Input()
+  set defaultTab(value) {
+    if (value !== null && value !== undefined) {
+      this.selectTab(value);
+    } 
+  }
 
   constructor(
     private dataService: CustomerPopupSelectorService
-  ) { }
+  ) { 
+    if (this.selectedTab === null || this.selectedTab === undefined) {
+      this.selectTab('Supplier');
+    }
+  }
+
+  isActive(tab: string): string {
+    if (tab == this.selectedTab) {
+      return 'active';
+    }
+    return '';
+  }
 
   ngOnInit() { }
 
@@ -25,15 +45,7 @@ export class CustomerPopupSelectorComponent implements OnInit {
     this.show = false;
   }
 
-  showSupplier() {
-
-  }
-
-  showCustomer() {
-
-  }
-
-  showOther() {
-
+  selectTab(tab: string) {
+    this.selectedTab = tab;
   }
 }
