@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
@@ -32,13 +32,6 @@ export class CustomerActionsComponent {
     this._show = false;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定客户列表失败!' + err
-    });
-  }
-
   showDisabled() {
     this.tabsService.create({
       name: '停用客户',
@@ -49,7 +42,7 @@ export class CustomerActionsComponent {
 
   onSearch(queryKey) {
     this.customerService.onSearch(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Customer, err);
     });
   }
 
@@ -61,24 +54,15 @@ export class CustomerActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.customerService.list((err) => {
-               this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Customer, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.alertService.removeSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });

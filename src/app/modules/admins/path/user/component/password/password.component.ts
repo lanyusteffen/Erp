@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../user.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-user-password',
@@ -51,13 +51,6 @@ export class UserPasswordComponent {
     return user;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定用户列表失败!' + err
-    });
-  }
-
   refreshList() {
     if (this._show) {
       this.userService
@@ -65,7 +58,7 @@ export class UserPasswordComponent {
           data = this.parseEmployee(data);
           this.form = this.formService.createForm(data);
         }, (err) => {
-         this.listErrorCallBack(err);
+         this.alertService.listErrorCallBack(ModuleName.User, err);
         });
     }
   }
@@ -83,37 +76,22 @@ export class UserPasswordComponent {
     this.onClose.emit();
   }
 
-  initEmployee(user) {
-    user.EmployeeId = user.Employee.Id;
-    user.EmployeeName = user.Employee.Name;
-  }
 
   onSubmit({ value }) {
-
-    this.initEmployee(value);
 
     this.userService.changePassword(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
-          this.listErrorCallBack(err);
+          this.alertService.listErrorCallBack(ModuleName.User, err);
         }, () => {
           this.onClose.emit();
-          this.alertService.open({
-            type: 'success',
-            content: '修改成功！'
-          });
+          this.alertService.modifySuccess();
         });
       } else {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + data.ErrorMessages
-        });
+        this.alertService.modifyFail(data.ErrorMessages);
       }
     }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '修改失败, ' + err
-      });
+      this.alertService.modifyFail(err);
     });
   }
 

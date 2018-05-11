@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../../user.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
@@ -38,10 +38,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userService.list((err) => {
-      this.alertService.open({
-        type: 'success',
-        content: '停用成功！'
-      });
+      this.alertService.listErrorCallBack(ModuleName.User, err);
     });
   }
 
@@ -68,19 +65,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.selectItems.emit(this.users.filter(item => item.selected));
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定公司列表失败!' + err
-    });
-  }
-
   onPageChange({ current, pageSize }) {
     this.userService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.User, err);
     });
   }
 
@@ -110,24 +100,15 @@ export class UserListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.userService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.User, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '停用成功！'
-                });
+                this.alertService.cancelSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '停用失败, ' + data.ErrorMessages
-              });
+              this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '停用失败, ' + err
-            });
+            this.alertService.cancelFail(err);
           });
       }
     });

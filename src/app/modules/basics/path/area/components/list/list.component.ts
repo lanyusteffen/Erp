@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Subscription } from 'rxjs/Subscription';
 import { AreaService } from '../../area.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-area-list',
@@ -33,17 +33,9 @@ export class AreaListComponent implements OnInit, OnDestroy {
       });
   }
 
-
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定地区列表失败!' + err
-    });
-  }
-
   ngOnInit() {
     this.areaService.list((err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Area, err);
     });
   }
 
@@ -76,7 +68,7 @@ export class AreaListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Area, err);
     });
   }
 
@@ -96,19 +88,13 @@ export class AreaListComponent implements OnInit, OnDestroy {
         this.areaService
           .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '停用成功！'
-              });
+              this.alertService.cancelSuccess();
               this.areaService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Area, err);
               });
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '停用失败！' + err
-            });
+            this.alertService.cancelFail(err);
           });
       }
     });
@@ -121,19 +107,13 @@ export class AreaListComponent implements OnInit, OnDestroy {
         this.areaService
           .remove([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
+              this.alertService.removeSuccess();
               this.areaService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Area, err);
               });
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败！' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });

@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Subscription } from 'rxjs/Subscription';
 import { CompanyService } from '../../company.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
@@ -35,16 +35,9 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       });
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定公司列表失败!' + err
-    });
-  }
-
   ngOnInit() {
     this.companyService.list((err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Company, err);
     });
   }
 
@@ -76,7 +69,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Company, err);
     });
   }
 
@@ -97,24 +90,15 @@ export class CompanyListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.companyService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Company, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '停用成功！'
-                });
+                this.alertService.cancelSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '停用失败, ' + data.ErrorMessages
-              });
+              this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '停用失败, ' + err
-            });
+            this.alertService.cancelFail(err);
           });
       }
     });

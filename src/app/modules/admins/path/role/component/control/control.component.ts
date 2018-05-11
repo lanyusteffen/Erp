@@ -95,22 +95,13 @@ export class RoleControlComponent {
             this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '添加失败, ' + data.ErrorMessages
-          });
+          this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '添加失败, ' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.roleService.update(value, data => {
@@ -119,22 +110,13 @@ export class RoleControlComponent {
            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '修改失败, ' + data.ErrorMessages
-          });
+          this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

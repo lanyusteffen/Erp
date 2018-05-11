@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AreaService } from '../../area.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '@components/tabs/tabs.service';
 
 
@@ -41,16 +41,10 @@ export class AreaActionsComponent {
     this._show = false;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定地区列表失败!' + err
-    });
-  }
 
   onSearch(queryKey) {
     this.areaService.onSearch(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Area, err);
     });
   }
 
@@ -61,19 +55,13 @@ export class AreaActionsComponent {
         this.areaService
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
+              this.alertService.removeSuccess();
               this.areaService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Area, err);
               });
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败！' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });

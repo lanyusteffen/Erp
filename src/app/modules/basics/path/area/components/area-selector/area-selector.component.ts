@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AreaService } from '../../area.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-area-selector',
@@ -28,10 +28,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
           value: item.Id
         }));
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取地区数据失败！' + err
-        });
+        this.alertService.listErrorCallBack(ModuleName.Area, err);
       });
   }
 

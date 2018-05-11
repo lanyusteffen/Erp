@@ -55,7 +55,14 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
-  ) {}
+  ) { }
+
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定费用类型列表失败!' + err
+    });
+  }
 
   ngOnInit() {
     this.systemConfig = this.getSystemConfig();
@@ -63,10 +70,7 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
 
   onSearch(queryKey) {
     this.feeTypeService.onSearchDisabled(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -77,10 +81,10 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
@@ -99,10 +103,7 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.feeTypeService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

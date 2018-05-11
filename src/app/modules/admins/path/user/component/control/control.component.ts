@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../user.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-user-control',
@@ -46,23 +46,6 @@ export class UserControlComponent {
     }
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定用户列表失败!' + err
-    });
-  }
-
-  parseEmployee(user) {
-
-    user.Employee = {
-      Id : user.EmployeeId,
-      Name : user.EmployeeName
-    };
-
-    return user;
-  }
-
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -70,15 +53,14 @@ export class UserControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.User, err);
           });
       } else {
         this.userService
           .detail(this.userId, data => {
-            data = this.parseEmployee(data);
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.User, err);
           });
       }
     }
@@ -103,49 +85,31 @@ export class UserControlComponent {
       this.userService.create(value, data => {
         if (data.IsValid) {
           this.userService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.User, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '添加失败, ' + data.ErrorMessages
-          });
+          this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '添加失败, ' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.userService.update(value, data => {
         if (data.IsValid) {
           this.userService.list((err) => {
-           this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.User, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '修改失败, ' + data.ErrorMessages
-          });
+          this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

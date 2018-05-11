@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 const contractor = {
   Address: null,
@@ -66,13 +66,6 @@ export class CustomerControlComponent {
     }
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定客户列表失败!' + err
-    });
-  }
-
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -80,17 +73,14 @@ export class CustomerControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '新增客户失败, ' + err
-            });
+            this.alertService.addFail(err);
           });
       } else {
         this.customerService
           .detail(this.customerId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Customer, err);
           });
       }
     }
@@ -116,52 +106,31 @@ export class CustomerControlComponent {
       this.customerService.create(value, data => {
         if (data.IsValid) {
           this.customerService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Customer, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '添加失败, ' + data.ErrorMessages
-          });
+          this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '添加失败, ' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.customerService.update(value, data => {
         if (data.IsValid) {
           this.onClose.emit();
           this.customerService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '修改失败, ' + err
-            });
+            this.alertService.modifyFail(err);
           }, () => {
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '修改失败, ' + data.ErrorMessages
-          });
+          this.alertService.modifyFail(data.ErrorMessages);
         }
       }, error => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + error
-        });
+        this.alertService.modifyFail(error);
       });
     }
   }

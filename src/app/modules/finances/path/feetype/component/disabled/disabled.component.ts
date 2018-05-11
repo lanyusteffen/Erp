@@ -45,23 +45,27 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
-      },(err)=>{
+      }, (err) => {
         this.alertService.open({
-          type:'danger',
-          content:'获取系统配置失败'+err
+          type: 'danger',
+          content: '获取系统配置失败' + err
         });
       });
     }
     return this.systemConfig;
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定供应商列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.getSystemConfig();
     this.feeTypeService.listDisabled((err) => {
-      this.alertService.open({
-        type: 'success',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -93,10 +97,7 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.open({
-        type: 'success',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -108,10 +109,7 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
           .remove([id], data => {
             if (data.IsValid) {
               this.feeTypeService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',
@@ -142,10 +140,7 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.feeTypeService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

@@ -35,12 +35,16 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
       });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定费用类型列表失败!' + err
+    });
+  }
+
   ngOnInit() {
     this.feeTypeService.list((err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.listErrorCallBack(err);
     });
   }
 
@@ -96,10 +100,7 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.feeTypeService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',

@@ -46,6 +46,13 @@ export class FeeTypeControlComponent {
     }
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定费用类型列表失败!' + err
+    });
+  }
+
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -55,10 +62,7 @@ export class FeeTypeControlComponent {
           .detail(this.feeTypeId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定费用类型列表失败, ' + err
-            });
+           this.listErrorCallBack(err);
           });
       }
     }
@@ -82,10 +86,7 @@ export class FeeTypeControlComponent {
       this.feeTypeService.create(value, data => {
         if (data.IsValid) {
           this.feeTypeService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定费用类型列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({
@@ -109,10 +110,7 @@ export class FeeTypeControlComponent {
       this.feeTypeService.update(value, data => {
         if (data.IsValid) {
           this.feeTypeService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定费用类型列表失败, ' + err
-            });
+            this.listErrorCallBack(err);
           }, () => {
             this.onClose.emit();
             this.alertService.open({

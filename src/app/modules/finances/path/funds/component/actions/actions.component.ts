@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FundsService } from '../../funds.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class FundsActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService
-  ) {}
+  ) { }
 
   show() {
     this.selectedId = 0;
@@ -34,10 +34,7 @@ export class FundsActionsComponent {
 
   onSearch(queryKey) {
     this.fundsService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定资金账户列表失败, ' + err
-      });
+      this.alertService.listErrorCallBack(ModuleName.Funds, err);
     });
   }
 
@@ -57,27 +54,15 @@ export class FundsActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.fundsService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定资金账户列表失败, ' + err
-                });
+                this.alertService.listErrorCallBack(ModuleName.Funds, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.alertService.cancelSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.alertService.cancelFail(err);
           });
       }
     });

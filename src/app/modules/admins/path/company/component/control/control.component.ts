@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CompanyService } from '../../company.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-company-control',
@@ -46,13 +46,6 @@ export class CompanyControlComponent {
     }
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定公司列表失败!' + err
-    });
-  }
-
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
@@ -60,14 +53,14 @@ export class CompanyControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Company, err);
           });
       } else {
         this.companyService
           .detail(this.companyId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Company, err);
           });
       }
     }
@@ -91,49 +84,31 @@ export class CompanyControlComponent {
       this.companyService.create(value, data => {
         if (data.IsValid) {
           this.companyService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Company, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '添加失败, ' + data.ErrorMessages
-          });
+            this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '添加失败, ' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.companyService.update(value, data => {
         if (data.IsValid) {
           this.companyService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Company, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '修改失败, ' + data.ErrorMessages
-          });
+          this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

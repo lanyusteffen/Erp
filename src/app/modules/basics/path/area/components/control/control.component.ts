@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AreaService } from '../../area.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 
 @Component({
@@ -35,14 +35,6 @@ export class AreaControlComponent {
     this.showPop();
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定地区列表失败!' + err
-    });
-  }
-
-
   get title() {
     return this.type === 'create' ? '新增地区' : '修改地区';
   }
@@ -54,20 +46,14 @@ export class AreaControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '获取地区数据失败！' + err
-            });
+            this.alertService.listErrorCallBack(ModuleName.Area, err);
           });
       } else {
         this.areaService
           .detail(this._areaId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '获取地区数据失败' + err
-            });
+            this.alertService.listErrorCallBack(ModuleName.Area, err);
           });
       }
     }
@@ -98,7 +84,7 @@ export class AreaControlComponent {
         content: option + '成功！'
       });
       this.areaService.list((err) => {
-        this.listErrorCallBack(err);
+        this.alertService.listErrorCallBack(ModuleName.Area, err);
       });
     }
   }
@@ -108,19 +94,13 @@ export class AreaControlComponent {
       this.areaService.create(value, data => {
         this.validate(data, '添加');
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '添加失败' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.areaService.modify(value, data => {
         this.validate(data, '修改');
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

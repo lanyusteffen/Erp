@@ -49,6 +49,13 @@ export class FeeTypeActionsComponent {
     });
   }
 
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定费用类型列表失败!' + err
+    });
+  }
+
   onCancel() {
     this.confirmService.open({
       content: '确认删除吗？',
@@ -57,10 +64,7 @@ export class FeeTypeActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.feeTypeService.list((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+               this.listErrorCallBack(err);
               }, () => {
                 this.alertService.open({
                   type: 'success',
