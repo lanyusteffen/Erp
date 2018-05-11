@@ -29,8 +29,8 @@
       </tbody>
     </app-ui-table>
     <app-pagination-bar
-      [total]="10"
-      [current]="1"
+      [total]="pagination.TotalCount"
+      [current]="pagination.PageIndex"
       (onChange)="onPageChange($event)"
     ></app-pagination-bar>
   </div>

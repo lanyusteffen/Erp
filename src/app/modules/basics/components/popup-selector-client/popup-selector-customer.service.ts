@@ -6,17 +6,13 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class CustomerPopupSelectorService {
 
-  private customers$ = new Subject<any>();
-  private suppliers$ = new Subject<any>();
-  private others$ = new Subject<any>();
-
   private supplierState = {
     suppliers: [],
     currentQueryKey: '',
     currentCategory: { Id: null },
     currentPagination: {
       PageIndex: 1,
-      PageSize: 10,
+      PageSize: 25,
       TotalCount: 0
     }
   };
@@ -27,7 +23,7 @@ export class CustomerPopupSelectorService {
     currentCategory: { Id: null },
     currentPagination: {
       PageIndex: 1,
-      PageSize: 10,
+      PageSize: 25,
       TotalCount: 0
     }
   };
@@ -38,12 +34,12 @@ export class CustomerPopupSelectorService {
     currentCategory: { Id: null },
     currentPagination: {
       PageIndex: 1,
-      PageSize: 10,
+      PageSize: 25,
       TotalCount: 0
     }
   };
 
-  listSupplier(fallback: (error: any) => void, successNotify?: () => void) {
+  listSupplier(next: (data: any) => void, fallback: (error: any) => void) {
     const {
       currentCategory,
       currentQueryKey,
@@ -60,22 +56,15 @@ export class CustomerPopupSelectorService {
       PageIndex,
       PageSize
     }, data => {
-      const nextState = {
+      next({
         ...this.supplierState,
         suppliers: data.CustomerList,
         currentPagination: data.Pagination
-      };
-
-      this.supplierState = nextState;
-      this.suppliers$.next(nextState);
-
-      if (successNotify !== undefined) {
-        successNotify();
-      }
+      });
     }, fallback, ModuleType.Basic);
   }
 
-  listCustomers(fallback: (error: any) => void, successNotify?: () => void) {
+  listCustomers(next: (data: any) => void, fallback: (error: any) => void) {
     const {
       currentCategory,
       currentQueryKey,
@@ -92,22 +81,15 @@ export class CustomerPopupSelectorService {
       PageIndex,
       PageSize
     }, data => {
-      const nextState = {
+      next({
         ...this.customerState,
         customers: data.CustomerList,
         currentPagination: data.Pagination
-      };
-
-      this.customerState = nextState;
-      this.others$.next(nextState);
-
-      if (successNotify !== undefined) {
-        successNotify();
-      }
+      });
     }, fallback, ModuleType.Basic);
   }
 
-  listOthers(fallback: (error: any) => void, successNotify?: () => void) {
+  listOthers(next: (data: any) => void, fallback: (error: any) => void) {
     const {
       currentCategory,
       currentQueryKey,
@@ -124,24 +106,13 @@ export class CustomerPopupSelectorService {
       PageIndex,
       PageSize
     }, data => {
-      const nextState = {
+      next({
         ...this.otherState,
         others: data.CustomerList,
         currentPagination: data.Pagination
-      };
-
-      this.otherState = nextState;
-      this.others$.next(nextState);
-
-      if (successNotify !== undefined) {
-        successNotify();
-      }
+      });
     }, fallback, ModuleType.Basic);
   }
 
   constructor(private http: HttpService) {}
-
-  getCustomers() { return this.customers$.asObservable(); }
-  getSuppliers() { return this.suppliers$.asObservable(); }
-  getOthers() { return this.others$.asObservable(); }
 }

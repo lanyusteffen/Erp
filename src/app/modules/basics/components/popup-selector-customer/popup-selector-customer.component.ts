@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerPopupSelectorService } from '../popup-selector-client/popup-selector-customer.service';
 import { AlertService } from '../../../../services/alert.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-popup-selector-customer',
@@ -9,8 +10,11 @@ import { AlertService } from '../../../../services/alert.service';
 })
 export class PopupSelectorCustomerComponent implements OnInit {
 
+  private customers = <any>[];
+  private pagination = {};
+  private isMultiSelect: boolean;
+
   _show: boolean;
-  isMultiSelect: boolean;
 
   get show() {
     return this._show;
@@ -20,10 +24,13 @@ export class PopupSelectorCustomerComponent implements OnInit {
   set show(isShow) {
     this._show = isShow;
     if (isShow) {
-      this.dataService.listCustomers((err) => {
+      this.dataService.listCustomers(({ customers, currentPagination }) => {
+        this.customers = customers;
+        this.pagination = currentPagination;
+      }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '绑定客户列表列表失败!' + err
+          content: '绑定客户列表失败!' + err
         });
       });
     }
@@ -31,9 +38,11 @@ export class PopupSelectorCustomerComponent implements OnInit {
 
   constructor(private dataService: CustomerPopupSelectorService,
               private alertService: AlertService) {
-
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
   }
 }
