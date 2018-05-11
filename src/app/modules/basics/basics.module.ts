@@ -9,12 +9,9 @@ import { CategoryComponent } from '@components/category/category.component';
 import { CategoryNodeComponent } from '@components/category/category-node.component';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 import { SharedModule } from '@app/shared.module';
-import { CustomerPopupSelectorComponent } from './components/customer-popup-selector/customer-popup-selector.component';
 
 @NgModule({
-  declarations: [
-    CustomerPopupSelectorComponent
-  ],
+  declarations: [],
   imports: [
     UIModule,
     CommonModule,
@@ -23,7 +20,6 @@ import { CustomerPopupSelectorComponent } from './components/customer-popup-sele
     SharedModule
   ],
   exports: [
-    CustomerPopupSelectorComponent
   ]
 })
 

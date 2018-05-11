@@ -7,6 +7,9 @@ import { HomeComponent } from '../modules/home/home.component';
 import { IndexComponent } from '../modules/home/components/index/index.component';
 import { LoginComponent } from '../authorize/login/login.component';
 import { PurchaseOrderNewComponent } from '../modules/purchases/path/order/new/new.component';
+import { PopupSelectorSupplierComponent } from '../modules/basics/components/popup-selector-supplier/popup-selector-supplier.component';
+import { PopupSelectorOtherComponent } from '../modules/basics/components/popup-selector-other/popup-selector-other.component';
+import { PopupSelectorCustomerComponent } from '../modules/basics/components/popup-selector-customer/popup-selector-customer.component';
 
 export const rootRoutes: Routes = [
     {
