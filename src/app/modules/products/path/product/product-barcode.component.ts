@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from './product.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { ConfirmService } from '@services/confirm.service';
 
 @Component({
@@ -45,16 +45,9 @@ export class ProductBarcodeComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定商品条形码列表失败!' + err
-    });
-  }
-
   onSearch(queryKey) {
     this.productService.onSearchBarcode(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Barcode, err);
     });
   }
 

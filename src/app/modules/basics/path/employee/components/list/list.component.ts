@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Subscription } from 'rxjs/Subscription';
 import { EmployeeService } from '../../employee.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 
@@ -48,26 +48,17 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
+        this.alertService.systemConfigFail(err);
       });
     }
     return this.systemConfig;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定停用职员列表失败!' + err
-    });
-  }
 
   ngOnInit() {
     this.getSystemConfig();
     this.employeeService.list((err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Employee, err);
     });
   }
 
@@ -100,7 +91,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Employee, err);
     });
   }
 
@@ -120,19 +111,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.employeeService
           .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '停用成功！'
-              });
+              this.alertService.cancelSuccess();
               this.employeeService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Employee, err);
               });
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '停用失败！' + err
-            });
+            this.alertService.cancelFail(err);
           });
       }
     });
@@ -145,19 +130,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.employeeService
           .cancel([id], data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
+              this.alertService.removeSuccess();
               this.employeeService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Employee, err);
               });
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败！' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });

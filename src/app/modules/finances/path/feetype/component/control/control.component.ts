@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FeeTypeService } from '../../feetype.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-feetype-control',
@@ -46,12 +46,6 @@ export class FeeTypeControlComponent {
     }
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定费用类型列表失败!' + err
-    });
-  }
 
   refreshList() {
     if (this._show) {
@@ -62,7 +56,7 @@ export class FeeTypeControlComponent {
           .detail(this.feeTypeId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-           this.listErrorCallBack(err);
+           this.alertService.getErrorCallBack(ModuleName.FeeType, err);
           });
       }
     }
@@ -86,49 +80,31 @@ export class FeeTypeControlComponent {
       this.feeTypeService.create(value, data => {
         if (data.IsValid) {
           this.feeTypeService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.FeeType, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '添加失败, ' + data.ErrorMessages
-          });
+          this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '添加失败, ' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.feeTypeService.update(value, data => {
         if (data.IsValid) {
           this.feeTypeService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.FeeType, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '修改失败, ' + data.ErrorMessages
-          });
+          this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

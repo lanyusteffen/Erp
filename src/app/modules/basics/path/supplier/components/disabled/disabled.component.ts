@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SupplierService } from '../../supplier.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
 
 @Component({
@@ -46,26 +46,16 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
+        this.alertService.systemConfigFail(err);
       });
     }
     return this.systemConfig;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定供应商列表失败!' + err
-    });
-  }
-
   ngOnInit() {
     this.getSystemConfig();
     this.supplierService.listDisabled((err) => {
-     this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
     });
   }
 
@@ -108,20 +98,13 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
         this.supplierService
           .remove([id], data => {
             if (data.IsValid) {
-
               this.supplierService.listDisabled((err) => {
-
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.alertService.removeSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, () => {
 
@@ -138,24 +121,15 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.supplierService.listDisabled((err) => {
-               this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '还原成功！'
-                });
+                this.alertService.restoreSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
+              this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '还原失败, ' + err
-            });
+            this.alertService.restoreFail(err);
           });
       }
     });

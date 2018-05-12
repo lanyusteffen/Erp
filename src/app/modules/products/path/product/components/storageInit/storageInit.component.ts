@@ -3,7 +3,7 @@ import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName} from '@services/alert.service';
 
 @Component({
   selector: 'app-product-storageInit',
@@ -49,13 +49,6 @@ export class ProductStorageInitComponent {
     this.onClose.emit();
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定期初列表失败!' + err
-    });
-  }
-
 
   @Input()
   set productId(productId) {
@@ -65,7 +58,7 @@ export class ProductStorageInitComponent {
         this.createStorageInitList(data);
         this.form = this.formService.createForm(this._storageInitList);
       }, (err) => {
-        this.listErrorCallBack(err);
+        this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
       });
     }
   }

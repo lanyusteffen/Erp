@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SupplierService } from '../../supplier.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 const contractor = {
   Address: null,
@@ -74,20 +74,14 @@ export class SupplierControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '新增供应商失败, ' + err
-            });
+            this.alertService.getErrorCallBack(ModuleName.Supplier, err);
           });
       } else {
         this.supplierService
           .detail(this.customerId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '查看供应商详情失败, ' + err
-            });
+            this.alertService.getErrorCallBack(ModuleName.Supplier, err);
           });
       }
     }
@@ -108,48 +102,32 @@ export class SupplierControlComponent {
     this.onClose.emit();
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定供应商列表失败!' + err
-    });
-  }
-
   onSubmit({ value }) {
     if (this.type === 'create') {
       this.supplierService.create(value, data => {
         if (data.IsValid) {
           this.supplierService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Supplier, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         }
       }, (err) => {
-
+        this.alertService.addFail(err);
       });
     } else {
       this.supplierService.update(value, data => {
         if (data.IsValid) {
           this.supplierService.list((err) => {
-            this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Supplier, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

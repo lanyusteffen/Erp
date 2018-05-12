@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class OtherExchangeUnitActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService
-  ) {}
+  ) { }
 
   show() {
     this.selectedId = 0;
@@ -32,16 +32,10 @@ export class OtherExchangeUnitActionsComponent {
     this._show = false;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定往来单位列表失败!' + err
-    });
-  }
 
   onSearch(queryKey) {
     this.otherExchangeUnitService.onSearch(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.OtherExchangeUnit, err);
     });
   }
 
@@ -61,24 +55,15 @@ export class OtherExchangeUnitActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.otherExchangeUnitService.list((err) => {
-               this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.OtherExchangeUnit, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.alertService.removeSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });

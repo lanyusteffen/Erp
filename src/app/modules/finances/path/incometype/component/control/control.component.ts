@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IncomeTypeService } from '../../incometype.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-incometype-control',
@@ -48,16 +48,13 @@ export class IncomeTypeControlComponent {
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-          this.form = this.formService.createForm('{"Id":0,"Name":"","Code":""}');
+        this.form = this.formService.createForm('{"Id":0,"Name":"","Code":""}');
       } else {
         this.incomeTypeService
           .detail(this.incomeTypeId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '查看收入类型详情失败, ' + err
-            });
+            this.alertService.getErrorCallBack(ModuleName.IncomeType, err);
           });
       }
     }
@@ -70,7 +67,7 @@ export class IncomeTypeControlComponent {
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
@@ -83,50 +80,29 @@ export class IncomeTypeControlComponent {
       this.incomeTypeService.create(value, data => {
         if (data.IsValid) {
           this.incomeTypeService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定收入类型列表失败, ' + err
-            });
+            this.alertService.listErrorCallBack(ModuleName.IncomeType, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '添加成功！'
-            });
+            this.alertService.addSuccess();
           });
         } else {
-          this.alertService.open({
-            type: 'danger',
-            content: '添加失败, ' + data.ErrorMessages
-          });
+          this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'success',
-          content: '添加失败, ' + err
-        });
+        this.alertService.addFail(err);
       });
     } else {
       this.incomeTypeService.update(value, data => {
         if (data.IsValid) {
           this.incomeTypeService.list((err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '绑定收入类型列表失败, ' + err
-            });
+            this.alertService.listErrorCallBack(ModuleName.IncomeType, err);
           }, () => {
             this.onClose.emit();
-            this.alertService.open({
-              type: 'success',
-              content: '修改成功！'
-            });
+            this.alertService.modifySuccess();
           });
         }
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '修改失败, ' + err
-        });
+        this.alertService.modifyFail(err);
       });
     }
   }

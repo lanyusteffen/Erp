@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../employee.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
@@ -33,10 +33,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
           value: item.Id
         }));
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取职员信息失败' + err
-        });
+        this.alertService.getErrorCallBack(ModuleName.Employee, err);
       });
   }
 

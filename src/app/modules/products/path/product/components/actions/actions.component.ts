@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ProductService } from '../../product.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 import { TabsService } from '@components/tabs/tabs.service';
 
@@ -23,13 +23,6 @@ export class ProductActionsComponent {
     private alertService: AlertService,
     private tabsService: TabsService
   ) { }
-
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定商品列表失败!' + err
-    });
-  }
 
   show() {
     this._show = true;
@@ -58,7 +51,7 @@ export class ProductActionsComponent {
 
   onSearch(queryKey) {
     this.productService.onSearch(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Product, err);
     });
   }
 
@@ -70,19 +63,13 @@ export class ProductActionsComponent {
         this.productService
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
+              this.alertService.removeSuccess();
               this.productService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Product, err);
               });
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'daner',
-              content: '删除失败！' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });
