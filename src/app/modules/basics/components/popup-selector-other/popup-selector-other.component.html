@@ -30,6 +30,7 @@
     </app-ui-table>
     <app-pagination-bar
       [total]="pagination.TotalCount"
+      [options]="_options"
       [current]="pagination.PageIndex"
       (onChange)="onPageChange($event)"
     ></app-pagination-bar>

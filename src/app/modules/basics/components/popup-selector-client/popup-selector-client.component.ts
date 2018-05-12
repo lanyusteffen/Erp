@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { CustomerPopupSelectorService } from './popup-selector-customer.service';
 import { LocalStorage } from 'ngx-webstorage';
 
@@ -17,19 +17,24 @@ export class CustomerPopupSelectorComponent implements OnInit {
   set defaultTab(value) {
     if (value !== null && value !== undefined) {
       this.selectTab(value);
-    } 
+    }
+  }
+
+  @Output()
+  get selectedValue() {
+    return 0;
   }
 
   constructor(
     private dataService: CustomerPopupSelectorService
-  ) { 
+  ) {
     if (this.selectedTab === null || this.selectedTab === undefined) {
       this.selectTab('Supplier');
     }
   }
 
   isActive(tab: string): string {
-    if (tab == this.selectedTab) {
+    if (tab === this.selectedTab) {
       return 'active';
     }
     return '';

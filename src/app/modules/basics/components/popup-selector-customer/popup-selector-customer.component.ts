@@ -1,14 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CustomerPopupSelectorService } from '../popup-selector-client/popup-selector-customer.service';
 import { AlertService } from '../../../../services/alert.service';
 import { Subscription } from 'rxjs/Subscription';
+import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 
 @Component({
   selector: 'app-popup-selector-customer',
   templateUrl: './popup-selector-customer.component.html',
   styleUrls: ['./popup-selector-customer.component.less']
 })
-export class PopupSelectorCustomerComponent implements OnInit {
+export class PopupSelectorCustomerComponent {
+
+  // 获取模板内的第一个指定组件
+  @ViewChild(PaginationBarComponent)
+  private paginationBar: PaginationBarComponent;
 
   private customers = <any>[];
   private pagination = {};
@@ -19,6 +24,10 @@ export class PopupSelectorCustomerComponent implements OnInit {
   get show() {
     return this._show;
   }
+
+  private _options = [
+    { label: '10 条／页', value: 10 }
+  ];
 
   @Input()
   set show(isShow) {
@@ -38,11 +47,5 @@ export class PopupSelectorCustomerComponent implements OnInit {
 
   constructor(private dataService: CustomerPopupSelectorService,
               private alertService: AlertService) {
-  }
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
   }
 }

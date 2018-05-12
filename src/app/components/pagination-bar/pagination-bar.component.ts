@@ -11,11 +11,16 @@ export class PaginationBarComponent {
   private _total = 0;
   private _size = 25;
   private items = 0;
-  private options = [
+  private _options = [
     { label: '25 条／页', value: 25 },
     { label: '50 条／页', value: 50 },
     { label: '100 条／页', value: 100 }
   ];
+
+  @Input()
+  set options(value) {
+    this._options = value;
+  }
 
   @Input() current = 1;
   @Input()

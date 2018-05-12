@@ -12,7 +12,7 @@ export class CustomerPopupSelectorService {
     currentCategory: { Id: null },
     currentPagination: {
       PageIndex: 1,
-      PageSize: 25,
+      PageSize: 10,
       TotalCount: 0
     }
   };
@@ -23,7 +23,7 @@ export class CustomerPopupSelectorService {
     currentCategory: { Id: null },
     currentPagination: {
       PageIndex: 1,
-      PageSize: 25,
+      PageSize: 10,
       TotalCount: 0
     }
   };
@@ -34,7 +34,7 @@ export class CustomerPopupSelectorService {
     currentCategory: { Id: null },
     currentPagination: {
       PageIndex: 1,
-      PageSize: 25,
+      PageSize: 10,
       TotalCount: 0
     }
   };
