@@ -1,12 +1,12 @@
 <div class="selector-group">
-  <input type="text" class="form-control" />
+  <input type="text" [value]="_showLabel" class="form-control" />
   <span class="addon" (click)="showModal($event)">
     <i class="iconfont icon-filter"></i>
   </span>
 </div>
 <app-ui-modal [show]="show" (onClose)="closeModal($event)">
   <div app-ui-modal-header>
-    选择供应商
+    选择客户
   </div>
   <div class="modal-body-wrapper">
     <div class="tabs">
@@ -25,17 +25,23 @@
       </div>
     </div>
     <app-popup-selector-customer
+      (onSelectChanged)="selectChanged($event)"
+      [isMultiSelect]="isMultiSelect"
       [show]="selectedTab === 'Customer'"
     ></app-popup-selector-customer>
     <app-popup-selector-supplier
+      (onSelectChanged)="selectChanged($event)"
+      [isMultiSelect]="isMultiSelect"
       [show]="selectedTab === 'Supplier'"
     ></app-popup-selector-supplier>
     <app-popup-selector-other
+      (onSelectChanged)="selectChanged($event)"
+      [isMultiSelect]="isMultiSelect"
       [show]="selectedTab === 'Other'"
     ></app-popup-selector-other>
   </div>
   <div app-ui-modal-footer>
-    <app-ui-button [style]="'primary'">确定</app-ui-button>
+    <app-ui-button [style]="'primary'" (click)="confirm($event)">确定</app-ui-button>
     <app-ui-button (click)="closeModal($event)">取消</app-ui-button>
   </div>
 </app-ui-modal>

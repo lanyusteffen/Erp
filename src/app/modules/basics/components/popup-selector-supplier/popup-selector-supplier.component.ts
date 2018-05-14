@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { CustomerPopupSelectorService } from '../popup-selector-client/popup-selector-customer.service';
 import { AlertService } from '../../../../services/alert.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -17,17 +17,41 @@ export class PopupSelectorSupplierComponent {
 
   private suppliers = <any>[];
   private pagination = {};
-  private isMultiSelect: boolean;
 
+  _isMultiSelect: boolean;
   _show: boolean;
 
-  get show() {
-    return this._show;
+  @Output() onSelectChanged = new EventEmitter<string>();
+
+  @Input()
+  set isMultiSelect(value) {
+    this._isMultiSelect = value;
   }
 
   private _options = [
     { label: '10 条／页', value: 10 }
   ];
+
+  _selectedItem: any;
+
+  select(item: any) {
+    this.onSelectChanged.emit(item.Name);
+    this._selectedItem = item;
+  }
+
+  @Output()
+  get selectedValue() {
+    return this._selectedItem.Id;
+  }
+
+  @Output()
+  get selectedItem() {
+    return this._selectedItem;
+  }
+
+  get show() {
+    return this._show;
+  }
 
   @Input()
   set show(isShow) {

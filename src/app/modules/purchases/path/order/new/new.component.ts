@@ -8,14 +8,19 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
+
+  private selectedCustomer: any;
+
   constructor(
   ) {}
 
   ngOnInit() {
-
   }
 
   ngOnDestroy() {
+  }
 
+  selectCustomer(item: any): void {
+    this.selectCustomer = item;
   }
 }
