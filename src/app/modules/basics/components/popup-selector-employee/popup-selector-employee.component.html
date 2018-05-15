@@ -1,0 +1,54 @@
+<div class="selector-group">
+  <input type="text" [value]="_showLabel" class="form-control" />
+  <span class="addon" (click)="showModal($event)">
+    <i class="iconfont icon-filter"></i>
+  </span>
+</div>
+<app-ui-modal [show]="show" (onClose)="closeModal($event)">
+  <div app-ui-modal-header>
+    选择职员
+  </div>
+  <div class="modal-body-wrapper">
+    <div class="actions">
+      <app-quick-search [placeholder]="'编号、姓名'"></app-quick-search>
+      <div class="more">
+        <a href="">
+          <i class="iconfont icon-refresh"></i>
+        </a>
+      </div>
+    </div>
+    <div class="content" *ngIf="_show">
+      <div class="table-wrapper">
+        <app-ui-table>
+          <thead>
+            <tr>
+              <th *ngIf="isMultiSelect"></th>
+              <th>职员编号</th>
+              <th>职员名称</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of employees" (click)="select(item)">
+              <td *ngIf="isMultiSelect">
+                <app-ui-checkbox [checked]="item.selected" (onChange)="select(item)"></app-ui-checkbox>
+              </td>
+              <td>{{item.Code}}</td>
+              <td>{{item.Name}}</td>
+            </tr>
+          </tbody>
+        </app-ui-table>
+        <app-pagination-bar
+          [total]="pagination.TotalCount"
+          [options]="_options"
+          [size]="_size"
+          [current]="pagination.PageIndex"
+          (onChange)="onPageChange($event)"
+        ></app-pagination-bar>
+      </div>
+    </div>
+  </div>
+  <div app-ui-modal-footer>
+    <app-ui-button [style]="'primary'" (click)="confirm($event)">确定</app-ui-button>
+    <app-ui-button (click)="closeModal($event)">取消</app-ui-button>
+  </div>
+</app-ui-modal>

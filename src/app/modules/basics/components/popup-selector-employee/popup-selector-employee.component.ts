@@ -1,21 +1,24 @@
-import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { CustomerPopupSelectorService } from '../customer-popup-selector/customer-popup-selector.service';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { PaginationBarComponent } from '../../../../components/pagination-bar/pagination-bar.component';
 import { AlertService } from '../../../../services/alert.service';
-import { Subscription } from 'rxjs/Subscription';
-import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
+import { EmployeePopupSelectService } from './employee-popup-selector.service';
 
 @Component({
-  selector: 'app-popup-selector-supplier',
-  templateUrl: './popup-selector-supplier.component.html',
-  styleUrls: ['./popup-selector-supplier.component.less']
+  selector: 'app-popup-selector-employee',
+  templateUrl: './popup-selector-employee.component.html',
+  styleUrls: ['./popup-selector-employee.component.less'],
+  providers: [EmployeePopupSelectService]
 })
-export class PopupSelectorSupplierComponent {
+export class PopupSelectorEmployeeComponent {
 
-  // 获取模板内的第一个指定组件
+  _showLabel = '';
+
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
 
-  private suppliers = <any>[];
+  @Output() onConfirm = new EventEmitter<any>();
+
+  private employees = <any>[];
   private pagination = {};
 
   _isMultiSelect: boolean;
@@ -55,16 +58,16 @@ export class PopupSelectorSupplierComponent {
   }
 
   onPageChange({ current, pageSize }) {
-    this.dataService.onPageChangeSupplier({
+    this.dataService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    }, ({ suppliers, currentPagination }) => {
-      this.suppliers = suppliers;
+    }, ({ employees, currentPagination }) => {
+      this.employees = employees;
       this.pagination = currentPagination;
     }, (err) => {
       this.alertService.open({
         type: 'danger',
-        content: '绑定供应商列表失败!' + err
+        content: '绑定职员列表失败!' + err
       });
     });
   }
@@ -73,19 +76,32 @@ export class PopupSelectorSupplierComponent {
   set show(isShow) {
     this._show = isShow;
     if (isShow) {
-      this.dataService.listSupplier(({ suppliers, currentPagination }) => {
-        this.suppliers = suppliers;
+      this.dataService.list(({ employees, currentPagination }) => {
+        this.employees = employees;
         this.pagination = currentPagination;
       }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '绑定供应商列表失败!' + err
+          content: '绑定职员列表失败!' + err
         });
       });
     }
   }
 
-  constructor(private dataService: CustomerPopupSelectorService,
+  constructor(private dataService: EmployeePopupSelectService,
               private alertService: AlertService) {
+  }
+
+  showModal() {
+    this.show = true;
+  }
+
+  closeModal() {
+    this.show = false;
+  }
+
+  confirm() {
+    this.onConfirm.emit(this.selectedItem);
+    this.closeModal();
   }
 }

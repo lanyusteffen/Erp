@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
-import { CustomerPopupSelectorService } from './popup-selector-customer.service';
+import { CustomerPopupSelectorService } from './customer-popup-selector.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { FactoryOrValue } from 'rxjs/interfaces';
 import { PopupSelectorCustomerComponent } from '../popup-selector-customer/popup-selector-customer.component';
@@ -7,9 +7,9 @@ import { PopupSelectorSupplierComponent } from '../popup-selector-supplier/popup
 import { PopupSelectorOtherComponent } from '../popup-selector-other/popup-selector-other.component';
 
 @Component({
-  selector: 'app-popup-selector-client',
-  templateUrl: './popup-selector-client.component.html',
-  styleUrls: ['./popup-selector-client.component.less'],
+  selector: 'app-customer-popup-selector',
+  templateUrl: './customer-popup-selector.component.html',
+  styleUrls: ['./customer-popup-selector.component.less'],
   providers: [CustomerPopupSelectorService]
 })
 

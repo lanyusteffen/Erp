@@ -5,7 +5,7 @@
       <label>供应商：</label>
     </div>
     <div class="form-group-control">
-      <app-popup-selector-client (onConfirm)="selectCustomer($event)"></app-popup-selector-client>
+      <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
     </div>
   </div>
   <div class="form-group">
@@ -13,7 +13,7 @@
       <label>采购员：</label>
     </div>
     <div class="form-group-control">
-      <input type="text" class="form-control">
+      <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
     </div>
   </div>
   <div class="form-group">

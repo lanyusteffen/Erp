@@ -10,6 +10,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   private selectedCustomer: any;
+  private selectedEmployee: any;
 
   constructor(
   ) {}
@@ -22,5 +23,9 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   selectCustomer(item: any): void {
     this.selectCustomer = item;
+  }
+
+  selectEmployee(item: any): void {
+    this.selectedEmployee = item;
   }
 }

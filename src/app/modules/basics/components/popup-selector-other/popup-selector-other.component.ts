@@ -1,5 +1,5 @@
 import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { CustomerPopupSelectorService } from '../popup-selector-client/popup-selector-customer.service';
+import { CustomerPopupSelectorService } from '../customer-popup-selector/customer-popup-selector.service';
 import { AlertService } from '../../../../services/alert.service';
 import { Subscription } from 'rxjs/Subscription';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
@@ -31,6 +31,7 @@ export class PopupSelectorOtherComponent {
   private _options = [
     { label: '10 条／页', value: 10 }
   ];
+  private _size = 10;
 
   _selectedItem: any;
 
@@ -51,6 +52,21 @@ export class PopupSelectorOtherComponent {
 
   get show() {
     return this._show;
+  }
+
+  onPageChange({ current, pageSize }) {
+    this.dataService.onPageChangeOther({
+      PageIndex: current,
+      PageSize: pageSize
+    }, ({ others, currentPagination }) => {
+      this.others = others;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定其他往来单位列表失败!' + err
+      });
+    });
   }
 
   @Input()

@@ -4,7 +4,7 @@
     <app-ui-table>
       <thead>
         <tr>
-          <th></th>
+          <th *ngIf="isMultiSelect"></th>
           <th>往来单位编号</th>
           <th>往来单位名称</th>
           <th>应收款</th>
@@ -23,7 +23,6 @@
           <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>
           <td></td>
           <td></td>
-          <td></td>
           <td>{{item.SalePriceLevelDes}}</td>
         </tr>
       </tbody>
@@ -31,6 +30,7 @@
     <app-pagination-bar
       [total]="pagination.TotalCount"
       [options]="_options"
+      [size]="_size"
       [current]="pagination.PageIndex"
       (onChange)="onPageChange($event)"
     ></app-pagination-bar>
