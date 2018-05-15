@@ -161,8 +161,49 @@ export class AlertService {
       case ModuleName.Customer:
         name = '客户';
         break;
+
       case ModuleName.CustomerContact:
         name = '联系人';
+        break;
+
+      case ModuleName.Department:
+        name = '部门';
+        break;
+
+      case ModuleName.Employee:
+        name = '职员';
+        break;
+
+      case ModuleName.OtherExchangeUnit:
+        name = '其他往来单位';
+        break;
+
+      case ModuleName.FeeType:
+        name = '费用类型';
+        break;
+
+      case ModuleName.IncomeType:
+        name = '收入类型';
+        break;
+
+      case ModuleName.Storage:
+        name = '仓库';
+        break;
+
+      case ModuleName.Barcode:
+        name = '条码';
+        break;
+
+      case ModuleName.Product:
+        name = '商品';
+        break;
+
+      case ModuleName.StorageInit:
+        name = '期初';
+        break;
+
+      case ModuleName.Extension:
+        name = '扩展属性';
         break;
     }
 
@@ -176,6 +217,14 @@ export class AlertService {
       content: '绑定' + name + '列表失败!' + err
     });
   }
+
+  getErrorCallBack(moduleName: ModuleName, err: any): void {
+    const name = this.getModuleName(moduleName);
+    this.open({
+      type: 'danger',
+      content: '获取' + name + '数据失败!' + err
+    });
+  }
 }
 
 export enum ModuleName {
@@ -186,5 +235,16 @@ export enum ModuleName {
   User,
   Area,
   Customer,
-  CustomerContact
+  CustomerContact,
+  Department,
+  Employee,
+  OtherExchangeUnit,
+  Supplier,
+  FeeType,
+  IncomeType,
+  Storage,
+  Barcode,
+  Product,
+  StorageInit,
+  Extension
 }

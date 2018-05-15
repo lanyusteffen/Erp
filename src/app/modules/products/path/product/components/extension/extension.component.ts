@@ -3,7 +3,7 @@ import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-product-extension',
@@ -31,13 +31,6 @@ export class ProductExtensionComponent {
     private alertService: AlertService,
     private formService: FormService
   ) {
-  }
-
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定扩展信息失败!' + err
-    });
   }
 
 
@@ -77,7 +70,7 @@ export class ProductExtensionComponent {
 
         this.form = this.formService.createForm(extensions);
       }, (err) => {
-        this.listErrorCallBack(err);
+        this.alertService.listErrorCallBack(ModuleName.Extension, err);
       });
     }
   }

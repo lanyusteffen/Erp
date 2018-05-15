@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Subscription } from 'rxjs/Subscription';
 import { SupplierService } from '../../supplier.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
@@ -87,13 +87,6 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     });
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定供应商列表失败!' + err
-    });
-  }
-
   update(id) {
     this.selectedId = id;
     this._showUpdate = true;
@@ -111,24 +104,15 @@ export class SupplierListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.supplierService.list((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Supplier, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '停用成功！'
-                });
+                this.alertService.cancelSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '停用失败, ' + data.ErrorMessages
-              });
+              this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '停用失败, ' + err
-            });
+            this.alertService.cancelFail(err);
           });
       }
     });

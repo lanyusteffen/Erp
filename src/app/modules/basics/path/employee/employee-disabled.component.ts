@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EmployeeService } from './employee.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { AppService } from '@services/app.service';
 import { ConfirmService } from '@services/confirm.service';
@@ -9,7 +9,6 @@ import { ConfirmService } from '@services/confirm.service';
 @Component({
   selector: 'app-basics-employee-disabled',
   template: `
-  
   <div class="actions">
     <app-quick-search [placeholder]="'输入编号、名称'" (onSearch)="onSearch($event)"></app-quick-search>
     <app-ui-button [style]="'danger'" *ngIf="!systemConfig.IsOpenBill" [disabled]="!selectedItems.length" (click)="restore()">
@@ -23,7 +22,7 @@ import { ConfirmService } from '@services/confirm.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">    
+  <div class="content">
     <app-employee-disabled-list (selectItems)="selectItems($event)"></app-employee-disabled-list>
   </div>
   `,
@@ -68,22 +67,13 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定停用职员列表失败!' + err
-    });
-  }
 
   getSystemConfig(): any {
     if (!this.systemConfig) {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
+        this.alertService.systemConfigFail(err);
       });
     }
     return this.systemConfig;
@@ -91,7 +81,7 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
 
   onSearch(queryKey) {
     this.employeeService.onSearchDisabled(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
     });
   }
 
@@ -111,24 +101,15 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
         this.employeeService
           .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '还原成功！'
-              });
+              this.alertService.restoreSuccess();
               this.employeeService.listDisabled((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
+              this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '还原失败, ' + err
-            });
+            this.alertService.restoreFail(err);
           });
       }
     });
@@ -141,24 +122,15 @@ export class EmployeeDisabledComponent implements OnInit, OnDestroy {
         this.employeeService
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.open({
-                type: 'success',
-                content: '删除成功！'
-              });
+              this.alertService.removeSuccess();
               this.employeeService.listDisabled((err) => {
-                this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });

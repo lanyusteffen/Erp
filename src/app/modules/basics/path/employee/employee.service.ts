@@ -9,7 +9,7 @@ export class EmployeeService {
   private employee$ = new Subject<any>();
 
   private state = {
-    employee: [],
+    employees: [],
     currentQueryKey: '',
     currentEmployee: { Id: null },
     currentPagination: {

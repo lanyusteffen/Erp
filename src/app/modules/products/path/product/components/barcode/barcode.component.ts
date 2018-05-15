@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-product-barcode-list',
@@ -34,16 +34,9 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
   }
 
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定条形码列表失败!' + err
-    });
-  }
-
   ngOnInit() {
     this.productService.listBarcode((err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Barcode, err);
     });
   }
 
@@ -55,19 +48,13 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
     item.BarCode = barcode;
     this.productService.modifyBarCode(item, data => {
       if (data.IsValid) {
-        this.alertService.open({
-          type: 'success',
-          content: '修改条形码成功！'
-        });
+        this.alertService.modifySuccess();
         this.productService.listBarcode((err) => {
-          this.listErrorCallBack(err);
+          this.alertService.listErrorCallBack(ModuleName.Barcode, err);
         });
       }
     }, (err) => {
-      this.alertService.open({
-        type: 'daner',
-        content: '修改条形码失败！'
-      });
+      this.alertService.modifyFail(err);
     });
   }
 }

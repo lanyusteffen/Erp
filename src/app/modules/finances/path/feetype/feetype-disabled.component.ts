@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FeeTypeService } from './feetype.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { AppService } from '@services/app.service';
 
@@ -57,12 +57,6 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) { }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定费用类型列表失败!' + err
-    });
-  }
 
   ngOnInit() {
     this.systemConfig = this.getSystemConfig();
@@ -70,7 +64,7 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
 
   onSearch(queryKey) {
     this.feeTypeService.onSearchDisabled(queryKey, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
     });
   }
 
@@ -82,10 +76,7 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
+        this.alertService.systemConfigFail(err);
       });
     }
     return this.systemConfig;
@@ -103,24 +94,15 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.feeTypeService.listDisabled((err) => {
-               this.listErrorCallBack(err);
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.alertService.removeSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });
@@ -134,27 +116,15 @@ export class FeeTypeDisabledComponent implements OnInit, OnDestroy {
           .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.feeTypeService.listDisabled((err) => {
-                this.alertService.open({
-                  type: 'danger',
-                  content: '绑定费用类型列表失败, ' + err
-                });
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '还原成功！'
-                });
+                this.alertService.restoreSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
+              this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '还原失败, ' + err
-            });
+            this.alertService.restoreFail(err);
           });
       }
     });

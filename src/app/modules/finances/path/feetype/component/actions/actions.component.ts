@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FeeTypeService } from '../../feetype.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
@@ -34,10 +34,7 @@ export class FeeTypeActionsComponent {
 
   onSearch(queryKey) {
     this.feeTypeService.onSearch(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.alertService.listErrorCallBack(ModuleName.FeeType, err);
     });
   }
 
@@ -49,13 +46,6 @@ export class FeeTypeActionsComponent {
     });
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定费用类型列表失败!' + err
-    });
-  }
-
   onCancel() {
     this.confirmService.open({
       content: '确认删除吗？',
@@ -64,24 +54,15 @@ export class FeeTypeActionsComponent {
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.feeTypeService.list((err) => {
-               this.listErrorCallBack(err);
+               this.alertService.listErrorCallBack(ModuleName.FeeType, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.alertService.removeSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.alertService.removeFail(err);
           });
       }
     });
