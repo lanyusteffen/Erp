@@ -60,7 +60,7 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Erp);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -90,7 +90,7 @@ export class ProductService {
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Erp);
   }
 
   listBarcode(fallback: (error: any) => void, successNotify?: () => void) {
