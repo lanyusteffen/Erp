@@ -4,7 +4,7 @@
     <app-ui-table>
       <thead>
         <tr>
-          <th></th>
+          <th *ngIf="isMultiSelect"></th>
           <th>供应商编号</th>
           <th>供应商名称</th>
           <th>应收款</th>
@@ -14,14 +14,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of suppliers">
+        <tr *ngFor="let item of suppliers" (click)="select(item)">
           <td *ngIf="isMultiSelect">
-            <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+            <app-ui-checkbox [checked]="item.selected" (onChange)="select(item)"></app-ui-checkbox>
           </td>
           <td>{{item.Code}}</td>
           <td>{{item.Name}}</td>
           <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>
-          <td></td>
           <td></td>
           <td></td>
           <td>{{item.SalePriceLevelDes}}</td>
@@ -30,6 +29,8 @@
     </app-ui-table>
     <app-pagination-bar
       [total]="pagination.TotalCount"
+      [options]="_options"
+      [size]="_size"
       [current]="pagination.PageIndex"
       (onChange)="onPageChange($event)"
     ></app-pagination-bar>

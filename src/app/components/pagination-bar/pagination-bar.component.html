@@ -14,7 +14,7 @@
   ></app-ui-pagination>
   <app-ui-select
     class="per-page"
-    [options]="options"
+    [options]="_options"
     [value]="_size"
     [placement]="'top'"
     (onChange)="handleSizeChange($event)"
