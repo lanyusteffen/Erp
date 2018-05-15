@@ -144,7 +144,7 @@ export class CustomerPopupSelectorService {
         PageIndex,
         PageSize
       }
-    } = this.supplierState;
+    } = this.customerState;
 
     return this.http.post('/Customer/GetListPaged', {
       QueryKey: currentQueryKey,

@@ -1,5 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
+import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 
 @Component({
   selector: 'app-purchase-order-new',
@@ -8,6 +10,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
+
+  @ViewChild(PopupSelectorEmployeeComponent)
+  private popupSelectorEmployee: PopupSelectorEmployeeComponent;
+
+  @ViewChild(CustomerPopupSelectorComponent)
+  private customerPopupSeletor: CustomerPopupSelectorComponent;
 
   private selectedCustomer: any;
   private selectedEmployee: any;
@@ -23,6 +31,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   selectCustomer(item: any): void {
     this.selectCustomer = item;
+    this.popupSelectorEmployee.unSelect();
   }
 
   selectEmployee(item: any): void {

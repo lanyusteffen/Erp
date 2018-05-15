@@ -11,7 +11,6 @@ import { PaginationBarComponent } from '@components/pagination-bar/pagination-ba
 })
 export class PopupSelectorOtherComponent {
 
-  // 获取模板内的第一个指定组件
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
 
@@ -20,6 +19,11 @@ export class PopupSelectorOtherComponent {
 
   _isMultiSelect: boolean;
   _show: boolean;
+  _size = 10;
+  _selectedItem: any;
+  _options = [
+    { label: '10 条／页', value: 10 }
+  ];
 
   @Output() onSelectChanged = new EventEmitter<string>();
 
@@ -28,45 +32,9 @@ export class PopupSelectorOtherComponent {
     this._isMultiSelect = value;
   }
 
-  private _options = [
-    { label: '10 条／页', value: 10 }
-  ];
-  private _size = 10;
-
-  _selectedItem: any;
-
-  select(item: any) {
-    this.onSelectChanged.emit(item.Name);
-    this._selectedItem = item;
-  }
-
-  @Output()
-  get selectedValue() {
-    return this._selectedItem.Id;
-  }
-
   @Output()
   get selectedItem() {
     return this._selectedItem;
-  }
-
-  get show() {
-    return this._show;
-  }
-
-  onPageChange({ current, pageSize }) {
-    this.dataService.onPageChangeOther({
-      PageIndex: current,
-      PageSize: pageSize
-    }, ({ others, currentPagination }) => {
-      this.others = others;
-      this.pagination = currentPagination;
-    }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定其他往来单位列表失败!' + err
-      });
-    });
   }
 
   @Input()
@@ -83,6 +51,35 @@ export class PopupSelectorOtherComponent {
         });
       });
     }
+  }
+
+  select(item: any) {
+    this._selectedItem = item;
+  }
+
+  selectConfirm(item: any) {
+    this.onSelectChanged.emit(item.Name);
+    this._selectedItem = item;
+  }
+
+  unSelect() {
+    this._selectedItem = null;
+    this.onSelectChanged.emit('');
+  }
+
+  onPageChange({ current, pageSize }) {
+    this.dataService.onPageChangeOther({
+      PageIndex: current,
+      PageSize: pageSize
+    }, ({ others, currentPagination }) => {
+      this.others = others;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定其他往来单位列表失败!' + err
+      });
+    });
   }
 
   constructor(private dataService: CustomerPopupSelectorService,

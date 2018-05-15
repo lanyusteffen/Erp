@@ -13,10 +13,15 @@ import { PopupSelectorOtherComponent } from '../popup-selector-other/popup-selec
   providers: [CustomerPopupSelectorService]
 })
 
-export class CustomerPopupSelectorComponent implements OnInit {
+export class CustomerPopupSelectorComponent {
+
   @LocalStorage()
   selectedTab: string;
-  show = false;
+
+  _show = false;
+  _showLabel = '';
+  _isMultiSelect = false;
+
   @Input()
   set defaultTab(value) {
     if (value !== null && value !== undefined) {
@@ -24,46 +29,20 @@ export class CustomerPopupSelectorComponent implements OnInit {
     }
   }
 
-  _showLabel = '';
+  @ViewChild(PopupSelectorCustomerComponent)
+  private popupSelectorCustomer: PopupSelectorCustomerComponent;
+
+  @ViewChild(PopupSelectorSupplierComponent)
+  private popupSelectorSupplier: PopupSelectorSupplierComponent;
+
+  @ViewChild(PopupSelectorOtherComponent)
+  private popupSelectorOther: PopupSelectorOtherComponent;
 
   @Output() onConfirm = new EventEmitter<any>();
-
-   // 获取模板内的第一个指定组件
-   @ViewChild(PopupSelectorCustomerComponent)
-   private popupSelectorCustomer: PopupSelectorCustomerComponent;
-
-   @ViewChild(PopupSelectorSupplierComponent)
-   private popupSelectorSupplier: PopupSelectorSupplierComponent;
-
-   @ViewChild(PopupSelectorOtherComponent)
-   private popupSelectorOther: PopupSelectorOtherComponent;
-
-  _isMultiSelect = false;
 
   @Input()
   set isMultiSelect(value) {
     this._isMultiSelect = value;
-  }
-
-  get isMultiSelect() {
-    return this._isMultiSelect;
-  }
-
-  selectChanged(label: string) {
-    this._showLabel = label;
-  }
-
-  @Output()
-  get selectedValue() {
-    if (this.selectedTab === 'Supplier') {
-      return this.popupSelectorSupplier.selectedValue;
-    } else if (this.selectedTab === 'Customer') {
-      return this.popupSelectorCustomer.selectedValue;
-    } else if (this.selectedTab === 'Other') {
-      return this.popupSelectorOther.selectedValue;
-    } else {
-      return null;
-    }
   }
 
   @Output()
@@ -79,12 +58,33 @@ export class CustomerPopupSelectorComponent implements OnInit {
     }
   }
 
-  constructor(
-    private dataService: CustomerPopupSelectorService
-  ) {
-    if (this.selectedTab === null || this.selectedTab === undefined) {
-      this.selectTab('Supplier');
-    }
+  selectChanged(label: string) {
+    this._showLabel = label;
+  }
+
+  unSelect() {
+    this._showLabel = '';
+    this.popupSelectorCustomer.unSelect();
+    this.popupSelectorOther.unSelect();
+    this.popupSelectorSupplier.unSelect();
+  }
+
+  showModal() {
+    this._show = true;
+  }
+
+  closeModal() {
+    this._show = false;
+  }
+
+  confirm() {
+    this._showLabel = this.selectedItem.Name;
+    this.onConfirm.emit(this.selectedItem);
+    this.closeModal();
+  }
+
+  selectTab(tab: string) {
+    this.selectedTab = tab;
   }
 
   isActive(tab: string): string {
@@ -94,22 +94,11 @@ export class CustomerPopupSelectorComponent implements OnInit {
     return '';
   }
 
-  ngOnInit() { }
-
-  showModal() {
-    this.show = true;
-  }
-
-  closeModal() {
-    this.show = false;
-  }
-
-  confirm() {
-    this.onConfirm.emit(this.selectedItem);
-    this.closeModal();
-  }
-
-  selectTab(tab: string) {
-    this.selectedTab = tab;
+  constructor(
+    private dataService: CustomerPopupSelectorService
+  ) {
+    if (this.selectedTab === null || this.selectedTab === undefined) {
+      this.selectTab('Supplier');
+    }
   }
 }

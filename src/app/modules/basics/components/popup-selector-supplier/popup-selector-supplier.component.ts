@@ -11,7 +11,6 @@ import { PaginationBarComponent } from '@components/pagination-bar/pagination-ba
 })
 export class PopupSelectorSupplierComponent {
 
-  // 获取模板内的第一个指定组件
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
 
@@ -20,6 +19,12 @@ export class PopupSelectorSupplierComponent {
 
   _isMultiSelect: boolean;
   _show: boolean;
+  _selectedItem: any;
+  _size = 10;
+
+  _options = [
+    { label: '10 条／页', value: 10 }
+  ];
 
   @Output() onSelectChanged = new EventEmitter<string>();
 
@@ -28,45 +33,9 @@ export class PopupSelectorSupplierComponent {
     this._isMultiSelect = value;
   }
 
-  private _options = [
-    { label: '10 条／页', value: 10 }
-  ];
-  private _size = 10;
-
-  _selectedItem: any;
-
-  select(item: any) {
-    this.onSelectChanged.emit(item.Name);
-    this._selectedItem = item;
-  }
-
-  @Output()
-  get selectedValue() {
-    return this._selectedItem.Id;
-  }
-
   @Output()
   get selectedItem() {
     return this._selectedItem;
-  }
-
-  get show() {
-    return this._show;
-  }
-
-  onPageChange({ current, pageSize }) {
-    this.dataService.onPageChangeSupplier({
-      PageIndex: current,
-      PageSize: pageSize
-    }, ({ suppliers, currentPagination }) => {
-      this.suppliers = suppliers;
-      this.pagination = currentPagination;
-    }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定供应商列表失败!' + err
-      });
-    });
   }
 
   @Input()
@@ -83,6 +52,35 @@ export class PopupSelectorSupplierComponent {
         });
       });
     }
+  }
+
+  select(item: any) {
+    this._selectedItem = item;
+  }
+
+  selectConfirm(item: any) {
+    this.onSelectChanged.emit(item.Name);
+    this._selectedItem = item;
+  }
+
+  unSelect() {
+    this._selectedItem = null;
+    this.onSelectChanged.emit('');
+  }
+
+  onPageChange({ current, pageSize }) {
+    this.dataService.onPageChangeSupplier({
+      PageIndex: current,
+      PageSize: pageSize
+    }, ({ suppliers, currentPagination }) => {
+      this.suppliers = suppliers;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定供应商列表失败!' + err
+      });
+    });
   }
 
   constructor(private dataService: CustomerPopupSelectorService,

@@ -11,8 +11,6 @@ import { EmployeePopupSelectService } from './employee-popup-selector.service';
 })
 export class PopupSelectorEmployeeComponent {
 
-  _showLabel = '';
-
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
 
@@ -21,55 +19,20 @@ export class PopupSelectorEmployeeComponent {
   private employees = <any>[];
   private pagination = {};
 
+  _showLabel = '';
   _isMultiSelect: boolean;
   _show: boolean;
+  _size = 10;
+  _selectedItem: any;
+  _options = [
+    { label: '10 条／页', value: 10 }
+  ];
 
   @Output() onSelectChanged = new EventEmitter<string>();
 
   @Input()
   set isMultiSelect(value) {
     this._isMultiSelect = value;
-  }
-
-  private _options = [
-    { label: '10 条／页', value: 10 }
-  ];
-  private _size = 10;
-
-  _selectedItem: any;
-
-  select(item: any) {
-    this.onSelectChanged.emit(item.Name);
-    this._selectedItem = item;
-  }
-
-  @Output()
-  get selectedValue() {
-    return this._selectedItem.Id;
-  }
-
-  @Output()
-  get selectedItem() {
-    return this._selectedItem;
-  }
-
-  get show() {
-    return this._show;
-  }
-
-  onPageChange({ current, pageSize }) {
-    this.dataService.onPageChange({
-      PageIndex: current,
-      PageSize: pageSize
-    }, ({ employees, currentPagination }) => {
-      this.employees = employees;
-      this.pagination = currentPagination;
-    }, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定职员列表失败!' + err
-      });
-    });
   }
 
   @Input()
@@ -88,8 +51,21 @@ export class PopupSelectorEmployeeComponent {
     }
   }
 
-  constructor(private dataService: EmployeePopupSelectService,
-              private alertService: AlertService) {
+  @Output()
+  get selectedItem() {
+    return this._selectedItem;
+  }
+
+  select(item: any) {
+    this.onSelectChanged.emit(item.Name);
+    this._selectedItem = item;
+    this._showLabel = item.Name;
+  }
+
+  unSelect() {
+    this._selectedItem = null;
+    this._showLabel = '';
+    this.onSelectChanged.emit(null);
   }
 
   showModal() {
@@ -103,5 +79,24 @@ export class PopupSelectorEmployeeComponent {
   confirm() {
     this.onConfirm.emit(this.selectedItem);
     this.closeModal();
+  }
+
+  onPageChange({ current, pageSize }) {
+    this.dataService.onPageChange({
+      PageIndex: current,
+      PageSize: pageSize
+    }, ({ employees, currentPagination }) => {
+      this.employees = employees;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定职员列表失败!' + err
+      });
+    });
+  }
+
+  constructor(private dataService: EmployeePopupSelectService,
+              private alertService: AlertService) {
   }
 }
