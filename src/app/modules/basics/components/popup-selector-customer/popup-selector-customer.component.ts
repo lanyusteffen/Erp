@@ -18,7 +18,6 @@ export class PopupSelectorCustomerComponent {
   private customers = <any>[];
   private pagination = {};
 
-  _isMultiSelect: boolean;
   _show: boolean;
   _size = 10;
   _selectedItem: any;
@@ -27,11 +26,6 @@ export class PopupSelectorCustomerComponent {
   ];
 
   @Output() onSelectChanged = new EventEmitter<string>();
-
-  @Input()
-  set isMultiSelect(value) {
-    this._isMultiSelect = value;
-  }
 
   @Output()
   get selectedItem() {
@@ -42,7 +36,7 @@ export class PopupSelectorCustomerComponent {
   set show(isShow) {
     this._show = isShow;
     if (isShow) {
-      this.dataService.listCustomers(({ customers, currentPagination }) => {
+      this.dataService.listCustomer(({ customers, currentPagination }) => {
         this.customers = customers;
         this.pagination = currentPagination;
       }, (err) => {
@@ -59,8 +53,8 @@ export class PopupSelectorCustomerComponent {
   }
 
   selectConfirm(item: any) {
+    this.select(item);
     this.onSelectChanged.emit(item.Name);
-    this._selectedItem = item;
   }
 
   unSelect() {
@@ -73,6 +67,18 @@ export class PopupSelectorCustomerComponent {
       PageIndex: current,
       PageSize: pageSize
     }, ({ customers, currentPagination }) => {
+      this.customers = customers;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败!' + err
+      });
+    });
+  }
+
+  onSearch(queryKey) {
+    this.dataService.onSearchCustomer(queryKey, ({ customers, currentPagination }) => {
       this.customers = customers;
       this.pagination = currentPagination;
     }, (err) => {

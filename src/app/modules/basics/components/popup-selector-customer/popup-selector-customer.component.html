@@ -4,7 +4,6 @@
     <app-ui-table>
       <thead>
         <tr>
-          <th *ngIf="isMultiSelect"></th>
           <th>客户编号</th>
           <th>客户名称</th>
           <th>应收款</th>
@@ -14,10 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of customers" (dbclick)="selectConfirm(item)" (click)="select(item)">
-          <td *ngIf="isMultiSelect">
-            <app-ui-checkbox [checked]="item.selected" (dbclick)="selectConfirm(item)" (click)="select(item)" (onChange)="select(item)"></app-ui-checkbox>
-          </td>
+        <tr *ngFor="let item of customers" (dblclick)="selectConfirm(item)" (click)="select(item)">
           <td>{{item.Code}}</td>
           <td>{{item.Name}}</td>
           <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>

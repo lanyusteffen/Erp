@@ -20,20 +20,12 @@ export class PopupSelectorEmployeeComponent {
   private pagination = {};
 
   _showLabel = '';
-  _isMultiSelect: boolean;
   _show: boolean;
   _size = 10;
   _selectedItem: any;
   _options = [
     { label: '10 条／页', value: 10 }
   ];
-
-  @Output() onSelectChanged = new EventEmitter<string>();
-
-  @Input()
-  set isMultiSelect(value) {
-    this._isMultiSelect = value;
-  }
 
   @Input()
   set show(isShow) {
@@ -57,15 +49,18 @@ export class PopupSelectorEmployeeComponent {
   }
 
   select(item: any) {
-    this.onSelectChanged.emit(item.Name);
+    this._selectedItem = item;
+  }
+
+  selectConfirm(item: any) {
     this._selectedItem = item;
     this._showLabel = item.Name;
+    this.closeModal();
   }
 
   unSelect() {
     this._selectedItem = null;
     this._showLabel = '';
-    this.onSelectChanged.emit(null);
   }
 
   showModal() {
@@ -77,7 +72,10 @@ export class PopupSelectorEmployeeComponent {
   }
 
   confirm() {
-    this.onConfirm.emit(this.selectedItem);
+    if (this.selectedItem !== undefined) {
+      this.onConfirm.emit(this.selectedItem);
+      this._showLabel = this.selectedItem.Name;
+    }
     this.closeModal();
   }
 
@@ -86,6 +84,18 @@ export class PopupSelectorEmployeeComponent {
       PageIndex: current,
       PageSize: pageSize
     }, ({ employees, currentPagination }) => {
+      this.employees = employees;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定职员列表失败!' + err
+      });
+    });
+  }
+
+  onSearch(queryKey) {
+    this.dataService.onSearch(queryKey, ({ employees, currentPagination }) => {
       this.employees = employees;
       this.pagination = currentPagination;
     }, (err) => {

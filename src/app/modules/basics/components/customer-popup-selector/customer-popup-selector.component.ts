@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { CustomerPopupSelectorService } from './customer-popup-selector.service';
 import { LocalStorage } from 'ngx-webstorage';
-import { FactoryOrValue } from 'rxjs/interfaces';
 import { PopupSelectorCustomerComponent } from '../popup-selector-customer/popup-selector-customer.component';
 import { PopupSelectorSupplierComponent } from '../popup-selector-supplier/popup-selector-supplier.component';
 import { PopupSelectorOtherComponent } from '../popup-selector-other/popup-selector-other.component';
@@ -20,7 +19,6 @@ export class CustomerPopupSelectorComponent {
 
   _show = false;
   _showLabel = '';
-  _isMultiSelect = false;
 
   @Input()
   set defaultTab(value) {
@@ -40,11 +38,6 @@ export class CustomerPopupSelectorComponent {
 
   @Output() onConfirm = new EventEmitter<any>();
 
-  @Input()
-  set isMultiSelect(value) {
-    this._isMultiSelect = value;
-  }
-
   @Output()
   get selectedItem() {
     if (this.selectedTab === 'Supplier') {
@@ -60,6 +53,8 @@ export class CustomerPopupSelectorComponent {
 
   selectChanged(label: string) {
     this._showLabel = label;
+    this.onConfirm.emit(this.selectedItem);
+    this.closeModal();
   }
 
   unSelect() {
@@ -81,6 +76,17 @@ export class CustomerPopupSelectorComponent {
     this._showLabel = this.selectedItem.Name;
     this.onConfirm.emit(this.selectedItem);
     this.closeModal();
+  }
+
+  onSearch(queryKey) {
+    this.dataService.changeStateQueryKey(queryKey);
+    if (this.selectedTab === 'Supplier') {
+      this.popupSelectorSupplier.onSearch(queryKey);
+    } else if (this.selectedTab === 'Customer') {
+      this.popupSelectorCustomer.onSearch(queryKey);
+    } else if (this.selectedTab === 'Other') {
+      this.popupSelectorOther.onSearch(queryKey);
+    }
   }
 
   selectTab(tab: string) {

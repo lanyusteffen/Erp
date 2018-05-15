@@ -22,8 +22,8 @@ export class EmployeePopupSelectService {
             currentEmployee,
             currentQueryKey,
             currentPagination: {
-            PageIndex,
-            PageSize
+                PageIndex,
+                PageSize
             }
         } = this.state;
 
@@ -42,6 +42,21 @@ export class EmployeePopupSelectService {
         }, fallback, ModuleType.Basic);
     }
 
+    onSearch(queryKey, next: (data: any) => void, fallback: (error: any) => void) {
+
+        const nextState = {
+            ...this.state,
+            currentQueryKey: queryKey,
+            currentPagination: {
+                ...this.state.currentPagination,
+                PageIndex: 1
+            }
+        };
+
+        this.state = nextState;
+        this.list(next, fallback);
+    }
+
     onPageChange(pagination, next: (data: any) => void, fallback: (error: any) => void) {
 
         const nextState = {
@@ -53,30 +68,8 @@ export class EmployeePopupSelectService {
         };
 
         this.state = nextState;
-
-        const {
-          currentEmployee,
-          currentQueryKey,
-          currentPagination: {
-            PageIndex,
-            PageSize
-          }
-        } = this.state;
-
-        return this.http.post('/Employee/GetListPaged', {
-            QueryKey: currentQueryKey,
-            EmployeeId: currentEmployee.Id,
-            Status: 1,
-            PageIndex,
-            PageSize
-        }, data => {
-          next({
-            ...this.state,
-            employees: data.EmployeeList,
-            currentPagination: data.Pagination
-          });
-        }, fallback, ModuleType.Basic);
-      }
+        this.list(next, fallback);
+    }
 
     constructor(private http: HttpService) {}
 }

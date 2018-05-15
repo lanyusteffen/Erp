@@ -17,7 +17,6 @@ export class PopupSelectorSupplierComponent {
   private suppliers = <any>[];
   private pagination = {};
 
-  _isMultiSelect: boolean;
   _show: boolean;
   _selectedItem: any;
   _size = 10;
@@ -27,11 +26,6 @@ export class PopupSelectorSupplierComponent {
   ];
 
   @Output() onSelectChanged = new EventEmitter<string>();
-
-  @Input()
-  set isMultiSelect(value) {
-    this._isMultiSelect = value;
-  }
 
   @Output()
   get selectedItem() {
@@ -59,8 +53,8 @@ export class PopupSelectorSupplierComponent {
   }
 
   selectConfirm(item: any) {
+    this.select(item);
     this.onSelectChanged.emit(item.Name);
-    this._selectedItem = item;
   }
 
   unSelect() {
@@ -73,6 +67,18 @@ export class PopupSelectorSupplierComponent {
       PageIndex: current,
       PageSize: pageSize
     }, ({ suppliers, currentPagination }) => {
+      this.suppliers = suppliers;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定供应商列表失败!' + err
+      });
+    });
+  }
+
+  onSearch(queryKey) {
+    this.dataService.onSearchSupplier(queryKey, ({ suppliers, currentPagination }) => {
       this.suppliers = suppliers;
       this.pagination = currentPagination;
     }, (err) => {

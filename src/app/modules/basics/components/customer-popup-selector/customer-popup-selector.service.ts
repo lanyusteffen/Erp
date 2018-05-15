@@ -39,7 +39,50 @@ export class CustomerPopupSelectorService {
     }
   };
 
+  changeStateQueryKey(queryKey: string) {
+    this.changeCustomerStateQueryKey(queryKey);
+    this.changeOtherStateQueryKey(queryKey);
+    this.changeSupplierStateQueryKey(queryKey);
+  }
+
+  private changeSupplierStateQueryKey(queryKey: string) {
+    const nextState = {
+      ...this.supplierState,
+      currentQueryKey: queryKey,
+      currentPagination: {
+        ...this.supplierState.currentPagination,
+        PageIndex: 1
+      }
+    };
+    this.supplierState = nextState;
+  }
+
+  private changeCustomerStateQueryKey(queryKey: string) {
+    const nextState = {
+      ...this.customerState,
+      currentQueryKey: queryKey,
+      currentPagination: {
+        ...this.customerState.currentPagination,
+        PageIndex: 1
+      }
+    };
+    this.customerState = nextState;
+  }
+
+  private changeOtherStateQueryKey(queryKey: string) {
+    const nextState = {
+      ...this.otherState,
+      currentQueryKey: queryKey,
+      currentPagination: {
+        ...this.otherState.currentPagination,
+        PageIndex: 1
+      }
+    };
+    this.otherState = nextState;
+  }
+
   listSupplier(next: (data: any) => void, fallback: (error: any) => void) {
+
     const {
       currentCategory,
       currentQueryKey,
@@ -76,31 +119,27 @@ export class CustomerPopupSelectorService {
 
     this.supplierState = nextState;
 
-    const {
-      currentCategory,
-      currentQueryKey,
-      currentPagination: {
-        PageIndex,
-        PageSize
-      }
-    } = this.supplierState;
-
-    return this.http.post('/Customer/GetListPaged', {
-      QueryKey: currentQueryKey,
-      CustomerCategoryId: currentCategory.Id,
-      CustomerType: 'Supplier',
-      PageIndex,
-      PageSize
-    }, data => {
-      next({
-        ...this.supplierState,
-        suppliers: data.CustomerList,
-        currentPagination: data.Pagination
-      });
-    }, fallback, ModuleType.Basic);
+    this.listSupplier(next, fallback);
   }
 
-  listCustomers(next: (data: any) => void, fallback: (error: any) => void) {
+  onSearchSupplier(queryKey, next: (data: any) => void, fallback: (error: any) => void) {
+    this.listSupplier(next, fallback);
+  }
+
+  onCategoryChangeSupplier(selected, next: (data: any) => void, fallback: (error: any) => void) {
+
+    const nextState = {
+      ...this.supplierState,
+      currentCategory: selected
+    };
+
+    this.supplierState = nextState;
+
+    this.listSupplier(next, fallback);
+  }
+
+  listCustomer(next: (data: any) => void, fallback: (error: any) => void) {
+
     const {
       currentCategory,
       currentQueryKey,
@@ -137,31 +176,26 @@ export class CustomerPopupSelectorService {
 
     this.customerState = nextState;
 
-    const {
-      currentCategory,
-      currentQueryKey,
-      currentPagination: {
-        PageIndex,
-        PageSize
-      }
-    } = this.customerState;
-
-    return this.http.post('/Customer/GetListPaged', {
-      QueryKey: currentQueryKey,
-      CustomerCategoryId: currentCategory.Id,
-      CustomerType: 'Customer',
-      PageIndex,
-      PageSize
-    }, data => {
-      next({
-        ...this.customerState,
-        customers: data.CustomerList,
-        currentPagination: data.Pagination
-      });
-    }, fallback, ModuleType.Basic);
+    this.listCustomer(next, fallback);
   }
 
-  listOthers(next: (data: any) => void, fallback: (error: any) => void) {
+  onSearchCustomer(queryKey, next: (data: any) => void, fallback: (error: any) => void) {
+    this.listCustomer(next, fallback);
+  }
+
+  onCategoryChangeCustomer(selected, next: (data: any) => void, fallback: (error: any) => void) {
+
+    const nextState = {
+      ...this.customerState,
+      currentCategory: selected
+    };
+
+    this.customerState = nextState;
+
+    this.listCustomer(next, fallback);
+  }
+
+  listOther(next: (data: any) => void, fallback: (error: any) => void) {
     const {
       currentCategory,
       currentQueryKey,
@@ -198,28 +232,23 @@ export class CustomerPopupSelectorService {
 
     this.otherState = nextState;
 
-    const {
-      currentCategory,
-      currentQueryKey,
-      currentPagination: {
-        PageIndex,
-        PageSize
-      }
-    } = this.otherState;
+    this.listOther(next, fallback);
+  }
 
-    return this.http.post('/Customer/GetListPaged', {
-      QueryKey: currentQueryKey,
-      CustomerCategoryId: currentCategory.Id,
-      CustomerType: 'Other',
-      PageIndex,
-      PageSize
-    }, data => {
-      next({
-        ...this.otherState,
-        others: data.CustomerList,
-        currentPagination: data.Pagination
-      });
-    }, fallback, ModuleType.Basic);
+  onSearchOther(queryKey, next: (data: any) => void, fallback: (error: any) => void) {
+    this.listOther(next, fallback);
+  }
+
+  onCategoryChangeOther(selected, next: (data: any) => void, fallback: (error: any) => void) {
+
+    const nextState = {
+      ...this.otherState,
+      currentCategory: selected
+    };
+
+    this.otherState = nextState;
+
+    this.listOther(next, fallback);
   }
 
   constructor(private http: HttpService) {}
