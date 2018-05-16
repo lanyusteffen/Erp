@@ -29,6 +29,8 @@ import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
 import { SharedModule } from './shared.module';
+import { DepartmentModule } from './modules/basics/path/department/department.module';
+import { DepartmentSelectorComponent } from './modules/basics/path/department/components/department-selector/department-selector.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { SharedModule } from './shared.module';
     BrowserModule,
     CommonModule,
     HttpClientModule,
+    DepartmentModule,
     UIModule,
     AuthorizeModule,
     SharedModule,
