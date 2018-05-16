@@ -77,6 +77,18 @@ export class PopupSelectorCustomerComponent {
     });
   }
 
+  onCategoryChange(selected) {
+    this.dataService.onCategoryChangeCustomer(selected, ({ customers, currentPagination }) => {
+      this.customers = customers;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定客户列表失败!' + err
+      });
+    });
+  }
+
   onSearch(queryKey) {
     this.dataService.onSearchCustomer(queryKey, ({ customers, currentPagination }) => {
       this.customers = customers;

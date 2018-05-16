@@ -1,5 +1,5 @@
 <div class="content" *ngIf="_show">
-  <app-category></app-category>
+  <app-category [categoryType]="'Customer'" resourceType="''" (onchange)="onCategoryChange($event)"></app-category>
   <div class="table-wrapper">
     <app-ui-table>
       <thead>

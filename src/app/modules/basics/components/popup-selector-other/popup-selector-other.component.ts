@@ -76,6 +76,18 @@ export class PopupSelectorOtherComponent {
     });
   }
 
+  onCategoryChange(selected) {
+    this.dataService.onCategoryChangeOther(selected, ({ others, currentPagination }) => {
+      this.others = others;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定其他往来单位列表失败!' + err
+      });
+    });
+  }
+
   onSearch(queryKey) {
     this.dataService.onSearchOther(queryKey, ({ others, currentPagination }) => {
       this.others = others;

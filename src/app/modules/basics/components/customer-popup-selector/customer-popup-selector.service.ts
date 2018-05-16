@@ -45,6 +45,42 @@ export class CustomerPopupSelectorService {
     this.changeSupplierStateQueryKey(queryKey);
   }
 
+  private changeCategorySupplierState(selected) {
+    const nextState = {
+      ...this.supplierState,
+      currentCategory: selected,
+      currentPagination: {
+        ...this.supplierState.currentPagination,
+        PageIndex: 1
+      }
+    };
+    this.supplierState = nextState;
+  }
+
+  private changeCategoryCustomerState(selected) {
+    const nextState = {
+      ...this.customerState,
+      currentCategory: selected,
+      currentPagination: {
+        ...this.customerState.currentPagination,
+        PageIndex: 1
+      }
+    };
+    this.customerState = nextState;
+  }
+
+  private changeCategoryOtherState(selected) {
+    const nextState = {
+      ...this.otherState,
+      currentCategory: selected,
+      currentPagination: {
+        ...this.otherState.currentPagination,
+        PageIndex: 1
+      }
+    };
+    this.otherState = nextState;
+  }
+
   private changeSupplierStateQueryKey(queryKey: string) {
     const nextState = {
       ...this.supplierState,
@@ -128,13 +164,7 @@ export class CustomerPopupSelectorService {
 
   onCategoryChangeSupplier(selected, next: (data: any) => void, fallback: (error: any) => void) {
 
-    const nextState = {
-      ...this.supplierState,
-      currentCategory: selected
-    };
-
-    this.supplierState = nextState;
-
+    this.changeCategorySupplierState(selected);
     this.listSupplier(next, fallback);
   }
 
@@ -185,13 +215,7 @@ export class CustomerPopupSelectorService {
 
   onCategoryChangeCustomer(selected, next: (data: any) => void, fallback: (error: any) => void) {
 
-    const nextState = {
-      ...this.customerState,
-      currentCategory: selected
-    };
-
-    this.customerState = nextState;
-
+    this.changeCategoryCustomerState(selected);
     this.listCustomer(next, fallback);
   }
 
@@ -241,13 +265,7 @@ export class CustomerPopupSelectorService {
 
   onCategoryChangeOther(selected, next: (data: any) => void, fallback: (error: any) => void) {
 
-    const nextState = {
-      ...this.otherState,
-      currentCategory: selected
-    };
-
-    this.otherState = nextState;
-
+    this.changeCategoryOtherState(selected);
     this.listOther(next, fallback);
   }
 

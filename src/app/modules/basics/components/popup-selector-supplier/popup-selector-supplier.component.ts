@@ -77,6 +77,18 @@ export class PopupSelectorSupplierComponent {
     });
   }
 
+  onCategoryChange(selected) {
+    this.dataService.onCategoryChangeSupplier(selected, ({ suppliers, currentPagination }) => {
+      this.suppliers = suppliers;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定供应商列表失败!' + err
+      });
+    });
+  }
+
   onSearch(queryKey) {
     this.dataService.onSearchSupplier(queryKey, ({ suppliers, currentPagination }) => {
       this.suppliers = suppliers;
