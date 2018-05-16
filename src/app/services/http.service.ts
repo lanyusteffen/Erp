@@ -79,7 +79,7 @@ export class HttpService {
         break;
 
       case ModuleType.Erp:
-        modulePath = 'Erp/api';
+        modulePath = 'Webadmin/api';
         break;
     }
 
