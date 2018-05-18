@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ContentChild, AfterContentInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ContentChild, AfterContentInit, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
 import { ErrorService } from '@services/error.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.less']
 })
-export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit {
+export class FormFieldComponent implements OnInit, OnDestroy {
   private error = false;
   private errorMessage = '';
   private subscription: Subscription;
@@ -17,6 +17,7 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit {
   @Input()
   set validError(value) {
     if (value !== null && value !== undefined && value !== '') {
+      console.log('validError');
       this.error = true;
       this.errorMessage = value;
     }
@@ -36,14 +37,19 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit {
       //   this.errorMessage = errorItem.ErrorMessage;
       // }
     });
-  }
-
-  ngAfterContentInit() {
-    this._render.listen(this.child.nativeElement, 'change', () => {
-       this.error = false;
-       this.errorMessage = null;
+    this._render.listen(this.child.nativeElement, 'focus', () => {
+        console.log('focus');
+        this.error = false;
+        this.errorMessage = null;
     });
   }
+
+  // ngAfterContentInit() {
+  //   this._render.listen(this.child.nativeElement, 'change', () => {
+  //      this.error = false;
+  //      this.errorMessage = null;
+  //   });
+  // }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
