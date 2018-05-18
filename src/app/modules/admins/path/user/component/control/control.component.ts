@@ -12,7 +12,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 })
 
 export class UserControlComponent {
-  private form = new FormGroup({});
+  private controlForm = new FormGroup({});
   private _show = false;
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -51,14 +51,14 @@ export class UserControlComponent {
       if (this.type === 'create') {
         this.userService
           .newOne(data => {
-            this.form = this.formService.createForm(data);
+            this.controlForm = this.formService.createForm(data);
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.User, err);
           });
       } else {
         this.userService
           .detail(this.userId, data => {
-            this.form = this.formService.createForm(data);
+            this.controlForm = this.formService.createForm(data);
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.User, err);
           });
@@ -73,7 +73,7 @@ export class UserControlComponent {
     private alertService: AlertService
   ) { }
 
-  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
+  get formReady(): boolean { return !!Object.keys(this.controlForm.controls).length; }
 
   handleClose() {
     this.onClose.emit();

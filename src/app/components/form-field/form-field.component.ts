@@ -14,25 +14,34 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit {
 
   @Input() name: string;
 
+  @Input()
+  set validError(value) {
+    if (value !== null && value !== undefined && value !== '') {
+      this.error = true;
+      this.errorMessage = value;
+    }
+  }
+
   @ContentChild('formField') child;
 
   constructor(private errorService: ErrorService, private _render: Renderer2) {}
 
   ngOnInit() {
     this.subscription = this.errorService.get().subscribe(errors => {
-      const errorItem = errors.find(item => item.PropertyName === this.name);
 
-      this.error = !!errorItem;
+      // const errorItem = errors.find(item => item.PropertyName === this.name);
+      // this.error = !!errorItem;
 
-      if (this.error) {
-        this.errorMessage = errorItem.ErrorMessage;
-      }
+      // if (this.error) {
+      //   this.errorMessage = errorItem.ErrorMessage;
+      // }
     });
   }
 
   ngAfterContentInit() {
     this._render.listen(this.child.nativeElement, 'change', () => {
-      this.errorService.remove(this.name);
+       this.error = false;
+       this.errorMessage = null;
     });
   }
 
