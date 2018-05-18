@@ -48,7 +48,7 @@ export class UserService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Admin);
+    }, fallback, ModuleType.Webadmin);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -78,7 +78,7 @@ export class UserService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Admin);
+    }, fallback, ModuleType.Webadmin);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
