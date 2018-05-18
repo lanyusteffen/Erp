@@ -78,7 +78,7 @@ export class HttpService {
         modulePath = 'Sale/api';
         break;
 
-      case ModuleType.Erp:
+      case ModuleType.Webadmin:
         modulePath = 'Webadmin/api';
         break;
     }
@@ -141,5 +141,5 @@ export enum ModuleType {
   Sale,
   Purchase,
   Inventory,
-  Erp
+  Webadmin
 }
