@@ -17,11 +17,13 @@ export class SelectComponent {
   @Input()
   set options(list) {
     this._options = list;
-    if (this._selectedValue !== null) {
-      this._currentValue = list.find(option => option.value === this._selectedValue) || {};
-      this._selectedValue = null;
-      this.cd.markForCheck();
+    if (this._selectedValue === null || this._selectedValue === undefined) {
+      this._currentValue = this.options[0];
+    } else {
+      this._currentValue = this.options.find(option => option.value === this._selectedValue) || {};
     }
+    this._selectedValue = null;
+    this.cd.markForCheck();
   }
   get options() {
     return this._options;

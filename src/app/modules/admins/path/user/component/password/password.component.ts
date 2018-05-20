@@ -68,7 +68,7 @@ export class UserPasswordComponent implements OnInit {
     }
   }
 
-  checkOldPassword() {
+  checkOldPassword(evt) {
     if (this.passwordForm.controls.CurrentPassword.errors !== null &&
       this.passwordForm.controls.CurrentPassword.errors.rangeLength) {
       this.childFieldCurrentPassword.validError = '密码需要至少6-20位字符或数字!';

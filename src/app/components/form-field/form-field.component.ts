@@ -17,7 +17,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
   @Input()
   set validError(value) {
     if (value !== null && value !== undefined && value !== '') {
-      console.log('validError');
       this.error = true;
       this.errorMessage = value;
     }
@@ -38,18 +37,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
       // }
     });
     this._render.listen(this.child.nativeElement, 'focus', () => {
-        console.log('focus');
         this.error = false;
         this.errorMessage = null;
     });
   }
-
-  // ngAfterContentInit() {
-  //   this._render.listen(this.child.nativeElement, 'change', () => {
-  //      this.error = false;
-  //      this.errorMessage = null;
-  //   });
-  // }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
