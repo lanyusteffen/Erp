@@ -108,12 +108,12 @@ export class HttpService {
     this.http.post(this.getAbsoluteUrl(url, moduleType), postData,
       { headers: headers, observe: 'body', params: this.parseParams(params) })
       .subscribe(
-      data => {
-        next(data);
-      },
-      err => {
-        this.checkAuthenticateResponse(err, fallback);
-      }
+        data => {
+          next(data);
+        },
+        err => {
+          this.checkAuthenticateResponse(err, fallback);
+        }
       );
   }
 
@@ -123,12 +123,12 @@ export class HttpService {
     const headers = this.addRequestHeader(headerDict);
     this.http.get(this.getAbsoluteUrl(url, moduleType), { headers: headers, observe: 'body', params: this.parseParams(params) })
       .subscribe(
-      data => {
-        next(data);
-      },
-      err => {
-        this.checkAuthenticateResponse(err, fallback);
-      }
+        data => {
+          next(data);
+        },
+        err => {
+          this.checkAuthenticateResponse(err, fallback);
+        }
       );
   }
 }

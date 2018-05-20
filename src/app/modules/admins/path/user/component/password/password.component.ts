@@ -105,7 +105,10 @@ export class UserPasswordComponent implements OnInit {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     this.userService.changePassword(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
@@ -114,8 +117,6 @@ export class UserPasswordComponent implements OnInit {
           this.onClose.emit();
           this.alertService.modifySuccess();
         });
-      } else {
-        this.alertService.modifyFail(data.ErrorMessages);
       }
     }, (err) => {
       this.alertService.modifyFail(err);

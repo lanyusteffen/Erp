@@ -10,13 +10,8 @@ export class ErrorService {
 
   constructor() {}
 
-  set(errors) {
-    this.errors = errors;
-    this.error$.next(this.errors);
-  }
-
-  remove(name) {
-    this.errors = this.errors.filter(item => item.PropertyName !== name);
+  setErrorItems(errorItems) {
+    this.errors = errorItems;
     this.error$.next(this.errors);
   }
 
@@ -29,18 +24,19 @@ export class ErrorService {
     return this.error$.asObservable();
   }
 
-  getFormValidationErrors(validForm: FormGroup) {
-
+  getControlErrors(validForm: FormGroup): { [id: string]: any; } {
+    const controlErrorDict: { [id: string]: any; } = {};
     Object.keys(validForm.controls).forEach(key => {
-
       const controlErrors: ValidationErrors = validForm.get(key).errors;
-
       if (controlErrors != null) {
-
           Object.keys(controlErrors).forEach(error => {
-
+            console.log('Key control: ' + key + ', keyError: ' + error + ', err value: ', controlErrors[error]);
+            if (controlErrors[error]) {
+              controlErrorDict[key] = error;
+            }
           });
       }
     });
+    return controlErrorDict;
   }
 }

@@ -54,9 +54,8 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
 
           const { body } = event;
 
-          if (typeof body.IsValid !== 'undefined' && !body.IsValid && body.ErrorProperty !== 'IsAlter') {
-            this.errorService.set(body.Errors.ErrorItems);
-          } else if (body.ErrorProperty === 'IsAlter') {
+          if (typeof body.IsValid !== 'undefined' && !body.IsValid) {
+            this.errorService.setErrorItems(body.Errors.ErrorItems);
             this.alertService.open({
               type: 'danger',
               content: body.ErrorMessages
