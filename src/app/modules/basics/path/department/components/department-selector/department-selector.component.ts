@@ -52,6 +52,8 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
 
   handleChange(value) {
     this.innerValue = value;
-    this.onChange(value);
+    if (this.onChange) {
+      this.onChange(value);
+    }
   }
 }
