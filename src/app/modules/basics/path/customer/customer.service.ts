@@ -63,10 +63,10 @@ export class CustomerService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { currentCategory } = this.state;
 
-    return this.http.get('/Customer/GetForNew', next, fallback, ModuleType.Basic, {
+    return this.http.post('/Customer/GetForNew', {
       customerType: 'Customer',
       customerCategoryId: currentCategory.Id
-    });
+    }, next, fallback, ModuleType.Basic);
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {

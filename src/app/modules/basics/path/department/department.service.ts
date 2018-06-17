@@ -99,10 +99,11 @@ export class DepartmentService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    const {} = this.state;
+    const { currentCategory } = this.state;
 
-    return this.http.get('/Department/GetForNew', next, fallback, ModuleType.Basic, {
-    });
+    return this.http.post('/Department/GetForNew', {
+      categoryId: currentCategory.Id == null ? 0 : currentCategory.Id
+    }, next, fallback, ModuleType.Basic);
   }
 
   detail(departmentId, next: (data: any) => void, fallback: (error: any) => void) {
