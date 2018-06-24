@@ -1,0 +1,27 @@
+{
+    "Employee-GetList": [
+        {
+            "Id": 1,
+            "Name": "辜强"
+        },
+        {
+            "Id": 2,
+            "Name": "兰宇"
+        }
+    ],
+    "User-Login": {
+        "ValidationErrorList": {
+            "ErrorItems": [],
+            "IsValid": true
+        },
+        
+        "IsValid": true,
+        "ErrorMessages": "",
+        "RedirectUrl": null,
+        "EntityId": null,
+        "Token": "O31apN+N+myJuQRgsvWP97uZ/wWl/rGfcX+tzSXZ03VgRWeKktzi2sC7J0hVazQEfPrpUbkMFppb2UZs1LIe0LDXTgAGYCLNPQJ5WRvVc5pI/a0GH5Tu42nkO8FcxojyogxjP14wGRIcqlo4uDFwu6i4FAht/PbWmXo5Z3R8KF7vk0v2u7IrGmmHJOWE3uaR",
+        "RedirectController": null,
+        "RedirectArea": null,
+        "RedirectAction": null
+    }
+}
