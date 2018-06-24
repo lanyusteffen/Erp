@@ -28,7 +28,7 @@ export class AreaService {
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Area/GetAll', next, fallback, ModuleType.Basic);
+    return this.http.get('/Area/GetList', next, fallback, ModuleType.Basic);
   }
 
   get() { return this.area$.asObservable(); }
