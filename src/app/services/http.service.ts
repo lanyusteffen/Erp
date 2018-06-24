@@ -48,38 +48,71 @@ export class HttpService {
       return url;
     }
     let modulePath = '';
+    const crossSupport = (<any>settings).CrossSupport;
     switch (moduleType) {
 
       case ModuleType.Admin:
-        modulePath = 'Admin/api';
+        if (crossSupport) {
+          modulePath = 'Admin/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
 
       case ModuleType.Basic:
-        modulePath = 'Basic/api';
+        if (crossSupport) {
+          modulePath = 'Basic/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
 
       case ModuleType.Finance:
-        modulePath = 'Finance/api';
+        if (crossSupport) {
+          modulePath = 'Finance/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
 
       case ModuleType.Inventory:
-        modulePath = 'Inventory/api';
+        if (crossSupport) {
+          modulePath = 'Inventory/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
 
       case ModuleType.Product:
-        modulePath = 'Product/api';
+        if (crossSupport) {
+          modulePath = 'Product/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
 
       case ModuleType.Purchase:
-        modulePath = 'Purchase/api';
+        if (crossSupport) {
+          modulePath = 'Purchase/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
 
       case ModuleType.Sale:
+      if (crossSupport) {
         modulePath = 'Sale/api';
+      } else {
+        modulePath = 'api';
+      }
         break;
 
       case ModuleType.Webadmin:
-        modulePath = 'Webadmin/api';
+        if (crossSupport) {
+          modulePath = 'Webadmin/api';
+        } else {
+          modulePath = 'api';
+        }
         break;
     }
 
