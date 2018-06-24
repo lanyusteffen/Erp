@@ -135,25 +135,30 @@ export class HttpService {
   }
 
   public post(url: string, postData: any, next: (data: any) => void,
-    fallback: (error: any) => void, moduleType: ModuleType,
-    params?: Object, dict?: { [key: string]: string | string[]; }): void {
-    const headers = this.addRequestHeader(dict);
-    this.http.post(this.getAbsoluteUrl(url, moduleType), postData,
+      fallback: (error: any) => void, moduleType: ModuleType,
+      params?: Object, dict?: { [key: string]: string | string[]; }): void {
+      const jsonServerOn = (<any>settings).JsonServerOn;
+      if (jsonServerOn) {
+        this.get(url, next, fallback, moduleType, params, dict);
+        return;
+      }
+      const headers = this.addRequestHeader(dict);
+      this.http.post(this.getAbsoluteUrl(url, moduleType), postData,
       { headers: headers, observe: 'body', params: this.parseParams(params) })
-      .subscribe(
-        data => {
-          next(data);
-        },
-        err => {
-          this.checkAuthenticateResponse(err, fallback);
-        }
-      );
+        .subscribe(
+          data => {
+            next(data);
+          },
+          err => {
+            this.checkAuthenticateResponse(err, fallback);
+          }
+        );
   }
 
   public get(url: string, next: (value: any) => void,
     fallback: (error: any) => void, moduleType: ModuleType,
-    params?: Object, headerDict?: { [key: string]: string | string[]; }): void {
-    const headers = this.addRequestHeader(headerDict);
+    params?: Object, dict?: { [key: string]: string | string[]; }): void {
+    const headers = this.addRequestHeader(dict);
     this.http.get(this.getAbsoluteUrl(url, moduleType), { headers: headers, observe: 'body', params: this.parseParams(params) })
       .subscribe(
         data => {
