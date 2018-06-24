@@ -24,7 +24,7 @@ export class EmployeeService {
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/employee/GetAll', {}, next, fallback, ModuleType.Basic);
+    return this.http.post('/employee/GetList', {}, next, fallback, ModuleType.Basic);
   }
 
   get() { return this.employee$.asObservable(); }

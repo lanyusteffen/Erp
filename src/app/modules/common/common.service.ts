@@ -11,6 +11,6 @@ export class CommonService {
   constructor(private http: HttpService) { }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/SalePriceLevel/GetAll', next, fallback, ModuleType.Basic);
+    return this.http.get('/SalePriceLevel/GetList', next, fallback, ModuleType.Basic);
   }
 }

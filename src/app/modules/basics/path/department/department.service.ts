@@ -16,7 +16,7 @@ export class DepartmentService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -29,7 +29,7 @@ export class DepartmentService {
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Department/GetAll', next, fallback, ModuleType.Basic);
+    return this.http.get('/Department/GetList', next, fallback, ModuleType.Basic);
   }
 
   dropdownlist(next: (data: any) => void, fallback: (error: any) => void) {
@@ -51,14 +51,13 @@ export class DepartmentService {
     return this.http.post('/Department/GetListPaged', {
       QueryKey: currentQueryKey,
       DepartmentCategoryId: currentCategory.Id,
-      Status: 1,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         departments: data.DepartmentList,
-        currentPagination: data.Pagination
+        currentPagination: data.DepartmentPageQueryReq
       };
 
       this.state = nextState;
@@ -81,14 +80,13 @@ export class DepartmentService {
     return this.http.post('/Department/GetListPaged', {
       QueryKey: currentQueryKey,
       DepartmentCategoryId: currentCategory.Id,
-      Status: -99,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         departments: data.DepartmentList,
-        currentPagination: data.Pagination
+        currentPagination: data.DepartmentPageQueryReq
       };
 
       this.state = nextState;
