@@ -8,7 +8,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "mock": "json-server /home/stelylan/AngularProjects/plan-ready/Erp/src/app/mock/employee.json --port 8087 --routes /home/stelylan/AngularProjects/plan-ready/Erp/src/app/mock/routes.json",
+    "mockdev": "npm run mock & npm run start"
   },
   "private": true,
   "dependencies": {
