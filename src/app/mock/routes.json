@@ -1,4 +1,4 @@
 {
-  "/Employee/GetList": "/Employee-GetList",
-  "/User/Login": "/User-Login"
+  "/api/Employee/GetList": "/Employee-GetList",
+  "/api/User/Login": "/User-Login"
 }
