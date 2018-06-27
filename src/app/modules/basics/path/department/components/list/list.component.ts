@@ -36,6 +36,7 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private appService: AppService
   ) {
+    this.systemConfig = this.getSystemConfig();
     this.subscription = this.departmentService
       .get()
       .subscribe(({ departments, currentPagination }) => {

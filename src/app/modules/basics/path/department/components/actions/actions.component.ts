@@ -23,7 +23,7 @@ export class DepartmentActionsComponent {
   }
 
   get category() {
-    return this._category;
+      return this._category;
   }
 
   constructor(
