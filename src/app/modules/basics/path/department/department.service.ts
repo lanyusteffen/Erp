@@ -77,7 +77,7 @@ export class DepartmentService {
       }
     } = this.state;
 
-    return this.http.post('/Department/GetListPaged', {
+    return this.http.post('/Department/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       DepartmentCategoryId: currentCategory.Id,
       PageIndex,
