@@ -105,7 +105,7 @@ export class DepartmentService {
   }
 
   detail(departmentId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Department/GetForModify?departmentId=${departmentId}`, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Department/GetForModify`, { EntityId: departmentId }, next, fallback, ModuleType.Basic);
   }
 
   create(department, next: (data: any) => void, fallback: (error: any) => void) {

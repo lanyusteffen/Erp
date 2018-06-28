@@ -51,7 +51,7 @@ export class DepartmentControlComponent {
       if (this.type === 'create') {
         this.departmentService
           .newOne(data => {
-            data.CategoryId = this._category.Id;
+            data.CategoryId = this._category === null || this._category === undefined ? 0 : this._category.Id;
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.getErrorCallBack(ModuleName.Department, err);
@@ -83,7 +83,13 @@ export class DepartmentControlComponent {
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
-  get categoryName(): String { return this.category ? this.category.Name : this.form.get('CategoryName').value; }
+  get categoryName(): String {
+    if (this.category != null) {
+      return this.category.Name;
+    } else {
+      return this.form.get('CategoryName') != null ? this.form.get('CategoryName').value : '';
+    }
+  }
 
   handleClose() {
     this.onClose.emit();
