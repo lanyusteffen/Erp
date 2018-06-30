@@ -15,7 +15,7 @@ export class EmployeeService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -47,7 +47,6 @@ export class EmployeeService {
 
     return this.http.post('/Employee/GetListPaged', {
       QueryKey: currentQueryKey,
-      EmployeeId: currentEmployee.Id,
       Status: 1,
       PageIndex,
       PageSize
@@ -55,14 +54,14 @@ export class EmployeeService {
       const nextState = {
         ...this.state,
         employees: data.EmployeeList,
-        currentPagination: data.Pagination
+        currentPagination: data.EmployeePageQueryReq
       };
 
       this.state = nextState;
       this.employee$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Webadmin);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -75,24 +74,23 @@ export class EmployeeService {
       }
     } = this.state;
 
-    return this.http.post('/Employee/GetListPaged', {
+    return this.http.post('/Employee/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       EmployeeId: currentEmployee.Id,
-      Status: -99,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         employees: data.EmployeeList,
-        currentPagination: data.Pagination
+        currentPagination: data.EmployeePageQueryReq
       };
 
       this.state = nextState;
       this.employee$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Webadmin);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {

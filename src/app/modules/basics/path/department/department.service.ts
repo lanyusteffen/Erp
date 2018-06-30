@@ -33,7 +33,7 @@ export class DepartmentService {
   }
 
   dropdownlist(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Department/GetDropdownList', next, fallback, ModuleType.Basic);
+    return this.http.post('/Department/GetSimpleList', {}, next, fallback, ModuleType.Basic);
   }
 
   get() { return this.department$.asObservable(); }
