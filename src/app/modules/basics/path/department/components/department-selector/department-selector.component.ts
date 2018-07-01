@@ -18,28 +18,47 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
   private innerValue: any;
   private onTouched;
   private onChange;
+  private dataInitialized = false;
+  private isInitialValue = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectEmployee: SelectComponent;
+  private selectDepartment: SelectComponent;
 
   constructor(private departmentService: DepartmentService, private alertService: AlertService) {  }
 
   ngOnInit() {
+    if (!this.dataInitialized && this.isInitialValue) {
+      this.bindListData(null);
+    }
+  }
+
+  bindListData(next: () => void): void {
     this.departmentService
       .dropdownlist(data => {
         this.list = data.map(item => ({
           label: item.Name,
           value: item.Id
         }));
+        if (next !== null) {
+          next();
+        }
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Employee, err);
       });
   }
 
   writeValue(value) {
-    this.innerValue = value || 0;
-    this.selectEmployee.value = this.innerValue;
+    if (!this.dataInitialized) {
+      this.dataInitialized = true;
+      this.bindListData(() => {
+        this.innerValue = value || 0;
+        this.selectDepartment.value = this.innerValue;
+      });
+    } else {
+      this.innerValue = value || 0;
+      this.selectDepartment.value = this.innerValue;
+    }
   }
 
   registerOnChange(fn) {

@@ -18,6 +18,8 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private innerValue: any;
   private onTouched;
   private onChange;
+  private dataInitialized = false;
+  private isInitialValue = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
@@ -26,20 +28,38 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
   ngOnInit() {
+    if (!this.dataInitialized && this.isInitialValue) {
+      this.bindListData(null);
+    }
+  }
+
+  bindListData(next: () => void): void {
     this.employeeService
-      .all(data => {
-        this.list = data.map(item => ({
-          label: item.Name,
-          value: item.Id
-        }));
-      }, (err) => {
-        this.alertService.getErrorCallBack(ModuleName.Employee, err);
-      });
+    .all(data => {
+      this.list = data.map(item => ({
+        label: item.Name,
+        value: item.Id
+      }));
+      if (next !== null) {
+        next();
+      }
+    }, (err) => {
+      this.alertService.getErrorCallBack(ModuleName.Employee, err);
+    });
   }
 
   writeValue(value) {
-    this.innerValue = value || 0;
-    this.selectEmployee.value = this.innerValue;
+    this.isInitialValue = true;
+    if (!this.dataInitialized) {
+      this.dataInitialized = true;
+      this.bindListData(() => {
+        this.innerValue = value || 0;
+        this.selectEmployee.value = this.innerValue;
+      });
+    } else {
+      this.innerValue = value || 0;
+      this.selectEmployee.value = this.innerValue;
+    }
   }
 
   registerOnChange(fn) {

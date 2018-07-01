@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AreaService } from '../../area.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
   selector: 'app-area-selector',
@@ -17,23 +18,47 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   private innerValue: any;
   private onTouched;
   private onChange;
+  private dataInitialized = false;
+  private isInitialValue = false;
+
+  // 获取模板内的第一个指定组件
+  @ViewChild(SelectComponent)
+  private selectArea: SelectComponent;
 
   constructor(private areaService: AreaService, private alertService: AlertService) { }
 
   ngOnInit() {
+    if (!this.dataInitialized && this.isInitialValue) {
+      this.bindListData(null);
+    }
+  }
+
+  bindListData(next: () => void): void {
     this.areaService
-      .all(data => {
-        this.list = data.map(item => ({
-          label: item.Name,
-          value: item.Id
-        }));
-      }, (err) => {
-        this.alertService.listErrorCallBack(ModuleName.Area, err);
-      });
+    .all(data => {
+      this.list = data.map(item => ({
+        label: item.Name,
+        value: item.Id
+      }));
+      if (next !== null) {
+        next();
+      }
+    }, (err) => {
+      this.alertService.listErrorCallBack(ModuleName.Area, err);
+    });
   }
 
   writeValue(value) {
-    this.innerValue = value || 0;
+    if (!this.dataInitialized) {
+      this.dataInitialized = true;
+      this.bindListData(() => {
+        this.innerValue = value || 0;
+        this.selectArea.value = this.innerValue;
+      });
+    } else {
+      this.innerValue = value || 0;
+      this.selectArea.value = this.innerValue;
+    }
   }
 
   registerOnChange(fn) {
