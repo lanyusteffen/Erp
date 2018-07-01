@@ -13,7 +13,7 @@ export class SupplierService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -41,7 +41,7 @@ export class SupplierService {
       const nextState = {
         ...this.state,
         suppliers: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       };
 
       this.state = nextState;
@@ -50,7 +50,7 @@ export class SupplierService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Webadmin);
   }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
@@ -73,7 +73,7 @@ export class SupplierService {
       const nextState = {
         ...this.state,
         suppliers: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       };
 
       this.state = nextState;
@@ -82,13 +82,11 @@ export class SupplierService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Webadmin);
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', next, fallback, ModuleType.Basic, {
-      customerId
-    });
+    return this.http.post('/CustomerContractor/GetList',{CustomerId:customerId}, next, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -101,7 +99,7 @@ export class SupplierService {
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Customer/GetForModify`,{EntityId:customerId}, next, fallback, ModuleType.Basic);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
@@ -114,7 +112,7 @@ export class SupplierService {
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
-      customerIdList
+      EntityIdList:customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
@@ -186,13 +184,13 @@ export class SupplierService {
 
   remove(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Remove', {
-      customerIdList
+      EntityIdList:customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
   restore(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Restore', {
-      customerIdList
+      EntityIdList:customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 }

@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-category-node',
   template: `
-    <li *ngFor="let item of categories" [class.active]="selected.Id === item.Id">
+    <li *ngFor="let item of categories" [class.active]="selected!=undefined && item!=undefined && selected.Id === item.Id">
       <span class="iconfont icon-more"></span>
       <span class="iconfont icon-form"></span>
       <a (click)="handleSelect(item)">{{item.Name}}</a>

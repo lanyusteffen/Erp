@@ -14,7 +14,7 @@ export class OtherExchangeUnitService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -42,7 +42,7 @@ export class OtherExchangeUnitService {
       const nextState = {
         ...this.state,
         otherExchangeUnits: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       };
 
       this.state = nextState;
@@ -51,7 +51,7 @@ export class OtherExchangeUnitService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Webadmin);
   }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
@@ -74,7 +74,7 @@ export class OtherExchangeUnitService {
       const nextState = {
         ...this.state,
         otherExchangeUnits: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       };
 
       this.state = nextState;
@@ -83,13 +83,11 @@ export class OtherExchangeUnitService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Webadmin);
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/CustomerContractor/GetList', next, fallback, ModuleType.Basic, {
-      customerId
-    });
+    return this.http.post('/CustomerContractor/GetList',{CustomerId:customerId}, next, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -102,7 +100,7 @@ export class OtherExchangeUnitService {
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Customer/GetForModify?customerId=${customerId}`, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Customer/GetForModify`,{EntityId:customerId}, next, fallback, ModuleType.Basic);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
@@ -115,7 +113,7 @@ export class OtherExchangeUnitService {
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
-      customerIdList
+      EntityIdList:customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
@@ -187,13 +185,13 @@ export class OtherExchangeUnitService {
 
   remove(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Remove', {
-      customerIdList
+      EntityIdList:customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
   restore(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Restore', {
-      customerIdList
+      EntityIdList:customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 }

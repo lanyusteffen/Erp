@@ -13,8 +13,11 @@ import { TabsService } from '@components/tabs/tabs.service';
 export class SupplierActionsComponent {
   private _show = false;
   private selectedId: number;
+  private _category: any;
+  private selectCategory: any;
+
   @Input() selectedItems = <any>[];
-  @Input() category;
+
 
   constructor(
     private supplierService: SupplierService,
@@ -25,7 +28,16 @@ export class SupplierActionsComponent {
 
   show() {
     this.selectedId = 0;
+    this.selectCategory = this.category;
     this._show = true;
+  }
+  
+  @Input() set category(category) {
+    this._category = category;
+  }
+
+  get category() {
+      return this._category;
   }
 
   showDisabled() {
@@ -38,6 +50,7 @@ export class SupplierActionsComponent {
 
   close() {
     this._show = false;
+    this.selectedId = -1;
   }
 
   onSearch(queryKey) {
