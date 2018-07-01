@@ -34,6 +34,8 @@ export class OtherExchangeUnitControlComponent {
   private contactList = [{}, {}, {}];
   private form = new FormGroup({});
   private _show = false;
+  private _category:any;
+
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
 
@@ -52,6 +54,17 @@ export class OtherExchangeUnitControlComponent {
   get customerId() {
     return this._customerId;
   }
+
+  
+  @Input()
+  set category(category) {
+    this._category = category;
+  }
+
+  get category() {
+    return this._category;
+  }
+
 
   @Input()
   set customerId(customerId) {
@@ -72,6 +85,9 @@ export class OtherExchangeUnitControlComponent {
       if (this.type === 'create') {
         this.otherExchangeUnitService
           .newOne(data => {
+            data.CustomerCategoryName = this._category === null || this._category === undefined ? '' : this._category.Name;
+            data.CategoryId = this._category === null || this._category === undefined ? 0 : this._category.Id;
+            data.CustomerType=3;
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.getErrorCallBack(ModuleName.OtherExchangeUnit, err);

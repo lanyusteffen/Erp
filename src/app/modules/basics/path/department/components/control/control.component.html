@@ -13,17 +13,6 @@
             <input #formField type="hidden" [ngModel] formControlName = "CategoryId">
             {{categoryName}}
           </td>
-        </tr>
-        <tr>
-          <th class="form-label">
-            <span class="required">*</span>
-            部门编号：
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'Code'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
-            </app-form-field>
-          </td>
           <th>
             <span class="required">*</span>
             部门名称：

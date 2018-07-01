@@ -7,19 +7,8 @@
       <table class="form">
         <tr>
           <th class="form-label">所属分类：</th>
-          <td class="form-control-group" colspan="3">
-            {{categoryName}}
-          </td>
-        </tr>
-        <tr>
-          <th class="form-label">
-            <span class="required">*</span>
-            往来单位编号：
-          </th>
           <td class="form-control-group">
-            <app-form-field [name]="'Code'">
-             <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
-            </app-form-field>
+            {{categoryName}}
           </td>
           <th>
             <span class="required">*</span>

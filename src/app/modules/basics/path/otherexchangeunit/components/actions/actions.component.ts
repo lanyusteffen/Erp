@@ -15,6 +15,7 @@ export class OtherExchangeUnitActionsComponent {
   private selectedId: number;
   @Input() selectedItems = <any>[];
   @Input() category;
+  @Input() selectCategory:any;
 
   constructor(
     private otherExchangeUnitService: OtherExchangeUnitService,
@@ -25,11 +26,13 @@ export class OtherExchangeUnitActionsComponent {
 
   show() {
     this.selectedId = 0;
+    this.selectCategory = this.category;
     this._show = true;
   }
 
   close() {
     this._show = false;
+    this.selectedId =-1;
   }
 
 

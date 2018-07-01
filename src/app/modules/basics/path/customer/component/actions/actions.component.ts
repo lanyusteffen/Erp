@@ -15,6 +15,7 @@ export class CustomerActionsComponent {
   private selectedId: number;
   @Input() selectedItems = <any>[];
   @Input() category;
+  @Input() selectCategory:any;
 
   constructor(
     private customerService: CustomerService,
@@ -24,12 +25,14 @@ export class CustomerActionsComponent {
   ) {}
 
   show() {
-    this.selectedId = 0;
+    this.selectedId = 0;    
+    this.selectCategory = this.category;
     this._show = true;
   }
 
   close() {
     this._show = false;
+    this.selectedId = -1;
   }
 
   showDisabled() {
