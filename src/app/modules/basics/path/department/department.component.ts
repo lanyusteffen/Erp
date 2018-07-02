@@ -1,18 +1,19 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { DepartmentService } from './department.service';
-
 import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-basics-department',
   template: `
-    <app-department-actions [selectedItems]="selectedItems"  [category]="selectCategory"></app-department-actions> 
+    <app-department-actions [selectedItems]="selectedItems"  [category]="selectCategory"></app-department-actions>
     <div class="content">
-    <app-category  [categoryType]="'Department'" [resourceType]="''" (onChange)="onCategoryChange($event)"
-    ></app-category>
-    <app-department-list (selectItems)="selectItems($event)"></app-department-list>
+      <app-category
+        [categoryType]="'Department'"
+        [resourceType]="''"
+        (onChange)="onCategoryChange($event)"
+      ></app-category>
+      <app-department-list (selectItems)="selectItems($event)"></app-department-list>
     </div>
   `,
   styles: [`
@@ -30,10 +31,10 @@ import { AlertService } from '@services/alert.service';
 })
 
 export class DepartmentComponent implements OnInit, OnDestroy {
+
   private selectedItems = <any>[];
   private subscription: Subscription;
-  private selectCategory: any;
-
+  private selectedCategory: any;
 
   constructor(
     private departmentService: DepartmentService,
@@ -43,7 +44,9 @@ export class DepartmentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.departmentService
-      .get().subscribe(({ }) => {
+      .get()
+      .subscribe(({ currentCategory }) => {
+        this.selectedCategory = currentCategory;
       });
   }
 
@@ -55,18 +58,12 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     this.selectedItems = selected;
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定停用仓库列表失败!' + err
-    });
-  }
-
   onCategoryChange(selected) {
-
-    this.selectCategory = selected;
     this.departmentService.onCategoryChange(selected, (err) => {
-      this.listErrorCallBack(err);
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定部门列表失败, ' + err
+      });
     });
   }
 }

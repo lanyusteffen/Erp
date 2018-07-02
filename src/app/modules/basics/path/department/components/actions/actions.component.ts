@@ -50,6 +50,7 @@ export class DepartmentActionsComponent {
 
   close() {
     this._show = false;
+    this.selectedId = -1;
   }
 
   onSearch(queryKey) {

@@ -28,8 +28,8 @@ export const rootRoutes: Routes = [
         component: HomeComponent,
         children: [
               {
-                path: 'index',
-                canLoad: [ AuthGuard],
+                path: '',
+                canLoad: [AuthGuard],
                 component: IndexComponent
               },
               {

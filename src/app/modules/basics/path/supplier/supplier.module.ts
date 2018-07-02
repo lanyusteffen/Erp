@@ -9,7 +9,6 @@ import { SupplierListComponent } from './components/list/list.component';
 import { SupplierActionsComponent } from './components/actions/actions.component';
 import { SupplierControlComponent } from './components/control/control.component';
 import { SupplierService } from './supplier.service';
-import { FormService } from '@services/form.service';
 
 import { EmployeeModule } from '../employee/employee.module';
 import { AreaModule } from '../area/area.module';

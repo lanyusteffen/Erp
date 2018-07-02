@@ -18,6 +18,13 @@ export class SupplierActionsComponent {
 
   @Input() selectedItems = <any>[];
 
+  @Input() set category(category) {
+    this._category = category;
+  }
+
+  get category() {
+      return this._category;
+  }
 
   constructor(
     private supplierService: SupplierService,
@@ -30,14 +37,6 @@ export class SupplierActionsComponent {
     this.selectedId = 0;
     this.selectCategory = this.category;
     this._show = true;
-  }
-  
-  @Input() set category(category) {
-    this._category = category;
-  }
-
-  get category() {
-      return this._category;
   }
 
   showDisabled() {
