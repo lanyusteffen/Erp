@@ -15,7 +15,7 @@ export class AreaService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -45,14 +45,13 @@ export class AreaService {
 
     return this.http.post('/Area/GetListPaged', {
       QueryKey: currentQueryKey,
-      Status: 1,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         areas: data.AreaList,
-        currentPagination: data.Pagination
+        currentPagination: data.AreaPageQueryReq
       };
 
       this.state = nextState;
@@ -72,16 +71,15 @@ export class AreaService {
       }
     } = this.state;
 
-    return this.http.post('/Area/GetListPaged', {
+    return this.http.post('/Area/GetCancelListPaged', {
       QueryKey: currentQueryKey,
-      Status: -99,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         areas: data.AreaList,
-        currentPagination: data.Pagination
+        currentPagination: data.AreaPageQueryReq
       };
 
       this.state = nextState;
@@ -94,13 +92,11 @@ export class AreaService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { areaParentId } = this.state;
 
-    return this.http.get('/Area/GetForNew', next, fallback, ModuleType.Basic, {
-      areaParentId
-    });
+    return this.http.post('/Area/GetForNew', { EntityId: areaParentId }, next, fallback, ModuleType.Basic);
   }
 
   detail(areaId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Area/GetForModify?areaId=${areaId}`, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Area/GetForModify`, { EntityId: areaId }, next, fallback, ModuleType.Basic);
   }
 
   create(area, next: (data: any) => void, fallback: (error: any) => void) {
