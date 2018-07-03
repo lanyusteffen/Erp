@@ -30,6 +30,7 @@ export class CompanyActionsComponent {
 
   close() {
     this._show = false;
+    this.selectedId = -1;
   }
 
   onSearch(queryKey) {

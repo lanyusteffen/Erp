@@ -86,7 +86,7 @@ export class SupplierService {
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/CustomerContractor/GetList',{CustomerId:customerId}, next, fallback, ModuleType.Basic);
+    return this.http.post('/CustomerContractor/GetList', { CustomerId: customerId }, next, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -99,7 +99,7 @@ export class SupplierService {
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post(`/Customer/GetForModify`,{EntityId:customerId}, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Customer/GetForModify`, { EntityId: customerId }, next, fallback, ModuleType.Basic);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
@@ -112,7 +112,7 @@ export class SupplierService {
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
-      EntityIdList:customerIdList
+      EntityIdList: customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
@@ -184,13 +184,13 @@ export class SupplierService {
 
   remove(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Remove', {
-      EntityIdList:customerIdList
+      EntityIdList: customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
   restore(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Restore', {
-      EntityIdList:customerIdList
+      EntityIdList: customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 }

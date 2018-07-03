@@ -13,7 +13,7 @@ export class CompanyService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -34,12 +34,11 @@ export class CompanyService {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize,
-      Status: 1
     }, data => {
       const nextState = {
         ...this.state,
-        companys: data.List,
-        currentPagination: data.Pagination
+        companys: data.CompanyList,
+        currentPagination: data.CompanyPageQueryReq
       };
 
       this.state = nextState;
@@ -60,16 +59,15 @@ export class CompanyService {
       }
     } = this.state;
 
-    return this.http.post('/Company/GetListPaged', {
+    return this.http.post('/Company/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize,
-      Status: -1
+      PageSize
     }, data => {
       const nextState = {
         ...this.state,
-        companys: data.List,
-        currentPagination: data.Pagination
+        companys: data.CompanyList,
+        currentPagination: data.CompanyPageQueryReq
       };
 
       this.state = nextState;
