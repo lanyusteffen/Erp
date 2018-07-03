@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SupplierService } from './supplier.service';
-import { AlertService } from '../../../../services/alert.service';
+import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-basics-supplier',
@@ -31,8 +31,9 @@ import { AlertService } from '../../../../services/alert.service';
 })
 
 export class SupplierComponent implements OnInit, OnDestroy {
+
   private selectedItems = <any>[];
-  private category;
+  private selectedCategory: any;
   private subscription: Subscription;
 
   constructor(
@@ -44,7 +45,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     this.subscription = this.supplierService
       .get()
       .subscribe(({ currentCategory }) => {
-        this.category = currentCategory;
+        this.selectedCategory = currentCategory;
       });
   }
 
