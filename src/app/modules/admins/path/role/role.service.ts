@@ -13,7 +13,7 @@ export class RoleService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -34,12 +34,11 @@ export class RoleService {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize,
-      Status: 1
     }, data => {
       const nextState = {
         ...this.state,
-        roles: data.List,
-        currentPagination: data.Pagination
+        roles: data.RoleList,
+        currentPagination: data.RolePageQueryReq
       };
 
       this.state = nextState;
@@ -60,16 +59,15 @@ export class RoleService {
       }
     } = this.state;
 
-    return this.http.post('/Role/GetListPaged', {
+    return this.http.post('/Role/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize,
-      Status: -99
+      PageSize
     }, data => {
       const nextState = {
         ...this.state,
-        roles: data.List,
-        currentPagination: data.Pagination
+        roles: data.RoleList,
+        currentPagination: data.RolePageQueryReq
       };
 
       this.state = nextState;
