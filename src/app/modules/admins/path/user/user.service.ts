@@ -13,7 +13,7 @@ export class UserService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -33,13 +33,12 @@ export class UserService {
     return this.http.post('/User/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize,
-      Status: 1
+      PageSize
     }, data => {
       const nextState = {
         ...this.state,
         users: data.UserList,
-        currentPagination: data.Pagination
+        currentPagination: data.UserPageQueryReq
       };
 
       this.state = nextState;
@@ -60,16 +59,15 @@ export class UserService {
       }
     } = this.state;
 
-    return this.http.post('/User/GetListPaged', {
+    return this.http.post('/User/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize,
-      Status: -99
+      PageSize
     }, data => {
       const nextState = {
         ...this.state,
         users: data.UserList,
-        currentPagination: data.Pagination
+        currentPagination: data.UserPageQueryReq
       };
 
       this.state = nextState;
