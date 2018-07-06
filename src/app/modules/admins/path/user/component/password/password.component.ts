@@ -46,19 +46,12 @@ export class UserPasswordComponent implements OnInit {
 
   @Input()
   set userId(userId) {
+    console.log(userId);
     this._userId = userId;
   }
 
   getTitle(): string {
     return '修改用户';
-  }
-
-  parseEmployee(user) {
-    user.Employee = {
-      Id: user.EmployeeId,
-      Name: user.EmployeeName
-    };
-    return user;
   }
 
   checkPasswordConsistent() {
@@ -109,6 +102,9 @@ export class UserPasswordComponent implements OnInit {
     if (!isValid) {
       return;
     }
+
+    value.Id = this._userId;
+
     this.userService.changePassword(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
