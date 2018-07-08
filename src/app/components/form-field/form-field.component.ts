@@ -28,20 +28,21 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.errorService.get().subscribe(errors => {
-
-      const errorItem = errors.find(item => item.PropertyName === this.name);
-      this.error = !!errorItem;
-
-      if (this.error) {
-        this.errorMessage = errorItem.ErrorMessage;
-      }
-    });
+    this.subscription = this.errorService.get().subscribe(errors => this.updateErrorMessage(errors));
 
     this._render.listen(this.child.nativeElement, 'focus', () => {
         this.error = false;
         this.errorMessage = null;
     });
+  }
+
+  updateErrorMessage(errors: any) {
+    const errorItem = errors.find(item => item.PropertyName === this.name);
+    this.error = !!errorItem;
+
+    if (this.error) {
+      this.errorMessage = errorItem.ErrorMessage;
+    }
   }
 
   ngOnDestroy() {
