@@ -15,7 +15,7 @@ export class ProductService {
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      TotalCount: 0
+      ItemCount: 0
     }
   };
 
@@ -43,17 +43,16 @@ export class ProductService {
       }
     } = this.state;
 
-    return this.http.post('/Product/GetProductListPaged', {
+    return this.http.post('/Product/GetListPaged', {
       QueryKey: currentQueryKey,
       ProductCategoryId: currentCategory.Id,
-      Status: 1,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         products: data.ProductList,
-        currentPagination: data.Pagination
+        currentPagination: data.ProductPageQueryReq
       };
 
       this.state = nextState;
@@ -76,14 +75,13 @@ export class ProductService {
     return this.http.post('/Product/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       ProductCategoryId: currentCategory.Id,
-      Status: -99,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
         products: data.ProductList,
-        currentPagination: data.Pagination
+        currentPagination: data.ProductPageQueryReq
       };
 
       this.state = nextState;
