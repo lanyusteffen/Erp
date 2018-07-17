@@ -1,33 +1,33 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
+
 import { SupplierComponent } from './supplier.component';
 import { SupplierListComponent } from './components/list/list.component';
 import { SupplierActionsComponent } from './components/actions/actions.component';
 import { SupplierControlComponent } from './components/control/control.component';
+import { SupplierDisabledComponent } from './supplier-disabled.component';
+import { SupplierDisabledListComponent } from './components/disabled/disabled.component';
+
 import { SupplierService } from './supplier.service';
+import { FormService } from '@services/form.service';
 
 import { EmployeeModule } from '../employee/employee.module';
 import { AreaModule } from '../area/area.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
-
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: SupplierComponent, outlet: 'basics-supplier'
-  }
-];
+import { SupplierRoutingModule } from './supplier.router';
 
 @NgModule({
   declarations: [
     SupplierComponent,
     SupplierListComponent,
     SupplierActionsComponent,
-    SupplierControlComponent
+    SupplierControlComponent,
+    SupplierDisabledComponent,
+    SupplierDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -38,9 +38,9 @@ export const ROUTES: Routes = [
     AreaModule,
     AppCommonModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    SupplierRoutingModule
   ],
-  providers: [SupplierService]
+  providers: [ SupplierService ]
 })
 
 export class SupplierModule { }

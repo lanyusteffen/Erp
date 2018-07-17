@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.checkAuthorize()) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/index']);
     } else {
       this.router.navigate(['/authorize/login']);
     }

@@ -18,8 +18,8 @@ export class MenuComponent {
         {
           name: '采购订单管理',
           subMenu: [
-            { name: '新增采购订单', link: '/home/purchases/order/new' },
-            { name: '采购订单历史', link: '/home/purchases/order/list' }
+            { name: '新增采购订单', link: '/purchases/order/new' },
+            { name: '采购订单历史', link: '/purchases/order/list' }
           ]
         }
       ]
@@ -31,9 +31,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/home/product' },
-            { name: '价格管理表', link: '/home/product' },
-            { name: '商品套餐', link: '/home/product' }
+            { name: '商品信息', link: '/products' },
+            { name: '价格管理表', link: '/products' },
+            { name: '商品套餐', link: '/products' }
           ]
         }
       ]
@@ -45,9 +45,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/home/product' },
-            { name: '价格管理表', link: '/home/product' },
-            { name: '商品套餐', link: '/home/product' }
+            { name: '商品信息', link: '/products' },
+            { name: '价格管理表', link: '/products' },
+            { name: '商品套餐', link: '/products' }
           ]
         }
       ]
@@ -59,9 +59,9 @@ export class MenuComponent {
         {
           name: '基础资料',
           subMenu: [
-            { name: '资金账户', link: '/home/finances/funds', outlet: 'finances-funds' },
-            { name: '费用类型', link: '/home/finances/feetype', outlet: 'finances-feetype' },
-            { name: '收入类型', link: '/home/finances/incometype', outlet: 'finances-incometype' }
+            { name: '资金账户', link: '/home/finances/funds' },
+            { name: '费用类型', link: '/home/finances/feetype' },
+            { name: '收入类型', link: '/home/finances/incometype' }
           ]
         }
       ]
@@ -87,27 +87,26 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/home/products/product', outlet: 'products-product' },
-            { name: '价格管理表', link: '/home/product' },
-            { name: '商品套餐', link: '/home/product' }
+            { name: '商品信息', link: '/products/product' },
+            { name: '价格管理表', link: '/product' },
+            { name: '商品套餐', link: '/product' }
           ]
         },
         {
           name: '往来单位',
           subMenu: [
-            { name: '供应商', link: '/home/basics/supplier', outlet: 'basics-supplier' },
-            { name: '客户', link: '/home/basics/customer', outlet: 'basics-customer' },
-            { name: '其他往来单位', link: '/home/basics/otherexchangeunit',
-                outlet: 'basics-otherexchangeunit' },
-            { name: '地区信息', link: '/home/basics/area', outlet: 'basics-area' },
+            { name: '供应商', link: '/basics/supplier' },
+            { name: '客户', link: '/basics/customer' },
+            { name: '其他往来单位', link: '/basics/otherexchangeunit' },
+            { name: '地区信息', link: '/basics/area' },
           ]
         },
         {
           name: '公司内部组织',
           subMenu: [
-            { name: '部门信息', link: '/home/basics/department', outlet: 'basics-department' },
-            { name: '仓库信息', link: '/home/products/storage', outlet: 'products-storage' },
-            { name: '内部职员', link: '/home/basics/employee', outlet: 'basics-employee' }
+            { name: '部门信息', link: '/basics/department' },
+            { name: '仓库信息', link: '/products/storage' },
+            { name: '内部职员', link: '/basics/employee' }
           ]
         }
       ]
@@ -119,9 +118,9 @@ export class MenuComponent {
         {
           name: '系统设置',
           subMenu: [
-            { name: '公司管理', link: '/home/admins/company', outlet: 'admin-company' },
-            { name: '用户管理', link: '/home/admins/user', outlet: 'admin-user' },
-            { name: '角色管理', link: '/home/admins/role', outlet: 'admin-role' }
+            { name: '公司管理', link: '/admins/company' },
+            { name: '用户管理', link: '/admins/user' },
+            { name: '角色管理', link: '/admins/role' }
           ]
         }
       ]

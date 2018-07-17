@@ -6,14 +6,12 @@ export interface Tab {
   id: number;
   name: string;
   link: string;
-  outlet: string;
 }
 
 const homeTab = {
   id: 1,
   name: '首页',
-  link: '/home',
-  outlet: 'home'
+  link: '/home/index'
 };
 
 @Injectable()
@@ -67,7 +65,7 @@ export class TabsService {
   clear() {
     this.id = 1;
     for (let i = 0; i < this.tabs.length; i++) {
-      if (i == 0) {
+      if (i === 0) {
         continue;
       }
       this.tabs.splice(i, 1);

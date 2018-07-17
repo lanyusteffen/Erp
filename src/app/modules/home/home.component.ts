@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tabs = this.tabsService.all();
-    this.router.navigate(['/home']);
   }
 
   ngOnDestroy() {

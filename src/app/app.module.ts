@@ -20,7 +20,7 @@ import { ErrorService } from './services/error.service';
 import { ConfirmService } from './services/confirm.service';
 
 import { HttpExtensionInterceptor } from './interceptors/http.interceptor.extension';
-import { rootRoutes } from './router/app.router';
+import { AppRoutingModule } from './app.router';
 import { HomeComponent } from './modules/home/home.component';
 import { IndexComponent } from './modules/home/components/index/index.component';
 import { AuthorizeModule } from './authorize/authorize.module';
@@ -54,7 +54,7 @@ import { DepartmentSelectorComponent } from './modules/basics/path/department/co
     UIModule,
     AuthorizeModule,
     SharedModule,
-    RouterModule.forRoot(rootRoutes),
+    AppRoutingModule,
     SlimLoadingBarModule.forRoot()
   ],
   providers: [{
