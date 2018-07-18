@@ -1,15 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './services/auth-guard.service';
 import { PageNotFoundComponent } from './page-not-found.component';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './modules/home/home.component';
 import { IndexComponent } from './modules/home/components/index/index.component';
 import { LoginComponent } from './authorize/login/login.component';
 import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
-import { PopupSelectorSupplierComponent } from './modules/basics/components/popup-selector-supplier/popup-selector-supplier.component';
-import { PopupSelectorOtherComponent } from './modules/basics/components/popup-selector-other/popup-selector-other.component';
-import { PopupSelectorCustomerComponent } from './modules/basics/components/popup-selector-customer/popup-selector-customer.component';
 
 export const ROUTES: Routes = [
     {
@@ -104,13 +101,8 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'products/product/barcode',
-                loadChildren: './modules/products/path/product/product-barcode.module#ProductBarcodeModule',
-                canLoad: [AuthGuard]
-              },
-              {
-                path: 'purchases/order/new',
-                component: PurchaseOrderNewComponent,
+                path: 'purchases/order',
+                loadChildren: './modules/purchases/path/order/order.module#PurchaseOrderModule',
                 canLoad: [AuthGuard]
               }
         ]

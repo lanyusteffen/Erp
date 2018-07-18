@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
-export class OrderService {
+export class PurchaseOrderService {
   private area$ = new Subject<any>();
 
   private state = {

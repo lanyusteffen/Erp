@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
@@ -27,10 +26,8 @@ import { AuthorizeModule } from './authorize/authorize.module';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './page-not-found.component';
-import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
 import { SharedModule } from './shared.module';
 import { DepartmentModule } from './modules/basics/path/department/department.module';
-import { DepartmentSelectorComponent } from './modules/basics/path/department/components/department-selector/department-selector.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +38,6 @@ import { DepartmentSelectorComponent } from './modules/basics/path/department/co
     TabsComponent,
     TabOutletDirective,
     HomeComponent,
-    PurchaseOrderNewComponent,
     ConfirmComponent,
     IndexComponent,
     PageNotFoundComponent

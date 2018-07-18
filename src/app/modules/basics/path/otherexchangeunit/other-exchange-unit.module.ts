@@ -14,8 +14,8 @@ import { OtherExchangeUnitDisabledListComponent } from './components/disabled/di
 import { OtherExchangeUnitService } from './other-exchange-unit.service';
 import { FormService } from '@services/form.service';
 
-import { EmployeeModule } from '../employee/employee.module';
-import { AreaModule } from '../area/area.module';
+import { EmployeeSharedModule } from '../employee/employee-shared.module';
+import { AreaSharedModule } from '../area/area-shared.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { OtherExchangeUnitRoutingModule } from './other-exchange-unit.router';
@@ -34,8 +34,8 @@ import { OtherExchangeUnitRoutingModule } from './other-exchange-unit.router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    EmployeeModule,
-    AreaModule,
+    EmployeeSharedModule,
+    AreaSharedModule,
     AppCommonModule,
     SharedModule,
     OtherExchangeUnitRoutingModule

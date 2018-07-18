@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
+
 import { RoleComponent } from './role.component';
 import { RoleListComponent } from './component/list/list.component';
 import { RoleActionsComponent } from './component/actions/actions.component';
@@ -16,7 +16,7 @@ import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
-import { EmployeeModule } from '../../../basics/path/employee/employee.module';
+import { EmployeeSharedModule } from '../../../basics/path/employee/employee-shared.module';
 import { RoleRoutingModule } from './role.router';
 
 @NgModule({
@@ -34,7 +34,7 @@ import { RoleRoutingModule } from './role.router';
     FormsModule,
     ReactiveFormsModule,
     AppCommonModule,
-    EmployeeModule,
+    EmployeeSharedModule,
     SharedModule,
     RoleRoutingModule
   ],

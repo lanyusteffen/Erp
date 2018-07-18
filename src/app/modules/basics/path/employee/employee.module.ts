@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
+
 import { EmployeeComponent } from './employee.component';
 import { EmployeeListComponent } from './components/list/list.component';
 import { EmployeeSelectorComponent } from './components/employee-selector/employee-selector.component';
@@ -15,10 +15,10 @@ import { EmployeeDisabledListComponent } from './components/disabled/disabled.co
 import { EmployeeService } from './employee.service';
 import { FormService } from '@services/form.service';
 
-import { DepartmentModule } from '../department/department.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { EmployeeRoutingModule } from './employee.router';
+import { DepartmentSharedModule } from '../department/department-shared.module';
 
 @NgModule({
   declarations: [
@@ -36,13 +36,13 @@ import { EmployeeRoutingModule } from './employee.router';
     UIModule,
     CommonModule,
     FormsModule,
-    DepartmentModule,
+    DepartmentSharedModule,
     ReactiveFormsModule,
     AppCommonModule,
     SharedModule,
     EmployeeRoutingModule
   ],
-  exports: [ EmployeeSelectorComponent, EmployeeListComponent ],
+  exports: [ EmployeeSelectorComponent ],
   providers: [ EmployeeService ]
 })
 

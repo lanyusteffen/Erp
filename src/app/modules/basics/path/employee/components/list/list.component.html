@@ -24,8 +24,8 @@
           </td>
           <td>
             <a (click)="update(item.Id)">修改</a>
-            <a class="text-danger" *ngIf="!systemConfig.IsOpenBill&&!item.IsUsed" (click)="onRemove(item.Id)">删除</a>
-            <a class="text-danger" *ngIf="!item.IsUsed" (click)="onCancel(item.Id)">停用</a>
+            <a class="text-danger" (click)="onRemove(item.Id)">删除</a>
+            <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
           </td>
           <td>{{item.Code}}</td>
           <td>{{item.Name}}</td>

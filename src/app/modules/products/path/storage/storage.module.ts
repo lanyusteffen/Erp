@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -9,6 +8,8 @@ import { StorageComponent } from './storage.component';
 import { StorageListComponent } from './components/list/list.component';
 import { StorageActionsComponent } from './components/actions/actions.component';
 import { StorageControlComponent } from './components/control/control.component';
+import { StorageDisabledComponent } from './storage-disabled.component';
+import { StorageDisabledListComponent } from './components/disabled/disabled.component';
 
 import { StorageService } from './storage.service';
 import { FormService } from '@services/form.service';
@@ -16,8 +17,6 @@ import { FormService } from '@services/form.service';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { StorageRoutingModule } from './storage.router';
-import { StorageDisabledComponent } from './storage-disabled.component';
-import { StorageDisabledListComponent } from './components/disabled/disabled.component';
 
 @NgModule({
   declarations: [

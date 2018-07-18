@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -22,7 +21,6 @@ import { DepartmentRoutingModule } from './department.router';
 
 @NgModule({
   declarations: [
-    DepartmentSelectorComponent,
     DepartmentComponent,
     DepartmentActionsComponent,
     DepartmentControlComponent,
@@ -39,8 +37,8 @@ import { DepartmentRoutingModule } from './department.router';
     SharedModule,
     DepartmentRoutingModule
   ],
-  exports: [ DepartmentSelectorComponent ],
   providers: [ DepartmentService ]
 })
 
-export class DepartmentModule { }
+export class DepartmentModule {
+}

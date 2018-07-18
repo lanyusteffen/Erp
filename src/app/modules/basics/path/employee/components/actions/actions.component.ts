@@ -32,7 +32,7 @@ export class EmployeeActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用职员',
-      link: '/home/basics/employee/disabled',
+      link: '/basics/employee/disabled',
       outlet: 'basics-employee-disabled'
     });
   }

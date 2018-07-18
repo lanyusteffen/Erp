@@ -14,8 +14,8 @@ import { SupplierDisabledListComponent } from './components/disabled/disabled.co
 import { SupplierService } from './supplier.service';
 import { FormService } from '@services/form.service';
 
-import { EmployeeModule } from '../employee/employee.module';
-import { AreaModule } from '../area/area.module';
+import { EmployeeSharedModule } from '../employee/employee-shared.module';
+import { AreaSharedModule } from '../area/area-shared.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { SupplierRoutingModule } from './supplier.router';
@@ -34,8 +34,8 @@ import { SupplierRoutingModule } from './supplier.router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    EmployeeModule,
-    AreaModule,
+    EmployeeSharedModule,
+    AreaSharedModule,
     AppCommonModule,
     SharedModule,
     SupplierRoutingModule

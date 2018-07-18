@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -19,7 +18,7 @@ import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
-import { EmployeeModule } from '../../../basics/path/employee/employee.module';
+import { EmployeeSharedModule } from '../../../basics/path/employee/employee-shared.module';
 import { UserRoutingModule } from './user.router';
 
 @NgModule({
@@ -39,7 +38,7 @@ import { UserRoutingModule } from './user.router';
     FormsModule,
     ReactiveFormsModule,
     AppCommonModule,
-    EmployeeModule,
+    EmployeeSharedModule,
     SharedModule,
     UserRoutingModule
   ],
