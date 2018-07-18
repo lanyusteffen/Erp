@@ -8,25 +8,25 @@ import { RoleComponent } from './role.component';
 import { RoleListComponent } from './component/list/list.component';
 import { RoleActionsComponent } from './component/actions/actions.component';
 import { RoleControlComponent } from './component/control/control.component';
+import { RoleDisabledComponent } from './role-disabled.component';
+import { RoleDisabledListComponent } from './component/disabled/disabled.component';
+
 import { RoleService } from './role.service';
 import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 import { EmployeeModule } from '../../../basics/path/employee/employee.module';
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: RoleComponent, outlet: 'admin-role'
-  }
-];
+import { RoleRoutingModule } from './role.router';
 
 @NgModule({
   declarations: [
     RoleComponent,
     RoleListComponent,
     RoleActionsComponent,
-    RoleControlComponent
+    RoleControlComponent,
+    RoleDisabledComponent,
+    RoleDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -36,9 +36,9 @@ export const ROUTES: Routes = [
     AppCommonModule,
     EmployeeModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    RoleRoutingModule
   ],
-  providers: [RoleService]
+  providers: [ RoleService ]
 })
 
 export class RoleModule {}

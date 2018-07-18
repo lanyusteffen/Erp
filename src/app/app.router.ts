@@ -30,12 +30,42 @@ export const ROUTES: Routes = [
         children: [
               {
                 path: 'home/index',
-                canLoad: [AuthGuard],
+                canActivate: [AuthGuard],
                 component: IndexComponent
               },
               {
-                path: 'basics/supplier',
-                loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule',
+                path: 'admins/company',
+                loadChildren: './modules/admins/path/company/company.module#CompanyModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'admins/user',
+                loadChildren: './modules/admins/path/user/user.module#UserModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'admins/role',
+                loadChildren: './modules/admins/path/role/role.module#RoleModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'basics/area',
+                loadChildren: './modules/basics/path/area/area.module#AreaModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'basics/customer',
+                loadChildren: './modules/basics/path/customer/customer.module#CustomerModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'basics/department',
+                loadChildren: './modules/basics/path/department/department.module#DepartmentModule',
+                canLoad: [AuthGuard]
+              },
+              {
+                path: 'basics/employee',
+                loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule',
                 canLoad: [AuthGuard]
               },
               {
@@ -44,8 +74,8 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'basics/customer',
-                loadChildren: './modules/basics/path/customer/customer.module#CustomerModule',
+                path: 'basics/supplier',
+                loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule',
                 canLoad: [AuthGuard]
               },
               {
@@ -64,28 +94,8 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'basics/employee',
-                loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule',
-                canLoad: [AuthGuard]
-              },
-              {
-                path: 'basics/department',
-                loadChildren: './modules/basics/path/department/department.module#DepartmentModule',
-                canLoad: [AuthGuard]
-              },
-              {
-                path: 'basics/area',
-                loadChildren: './modules/basics/path/area/area.module#AreaModule',
-                canLoad: [AuthGuard]
-              },
-              {
                 path: 'products/storage',
                 loadChildren: './modules/products/path/storage/storage.module#StorageModule',
-                canLoad: [AuthGuard]
-              },
-              {
-                path: 'purchases/order/new',
-                component: PurchaseOrderNewComponent,
                 canLoad: [AuthGuard]
               },
               {
@@ -99,18 +109,8 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'admins/company',
-                loadChildren: './modules/admins/path/company/company.module#CompanyModule',
-                canLoad: [AuthGuard]
-              },
-              {
-                path: 'admins/user',
-                loadChildren: './modules/admins/path/user/user.module#UserModule',
-                canLoad: [AuthGuard]
-              },
-              {
-                path: 'admins/role',
-                loadChildren: './modules/admins/path/role/role.module#RoleModule',
+                path: 'purchases/order/new',
+                component: PurchaseOrderNewComponent,
                 canLoad: [AuthGuard]
               }
         ]

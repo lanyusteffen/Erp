@@ -59,9 +59,9 @@ export class MenuComponent {
         {
           name: '基础资料',
           subMenu: [
-            { name: '资金账户', link: '/home/finances/funds' },
-            { name: '费用类型', link: '/home/finances/feetype' },
-            { name: '收入类型', link: '/home/finances/incometype' }
+            { name: '资金账户', link: '/finances/funds' },
+            { name: '费用类型', link: '/finances/feetype' },
+            { name: '收入类型', link: '/finances/incometype' }
           ]
         }
       ]
@@ -73,9 +73,9 @@ export class MenuComponent {
         {
           name: '商品管理',
           subMenu: [
-            { name: '商品信息', link: '/home/product' },
-            { name: '价格管理表', link: '/home/product' },
-            { name: '商品套餐', link: '/home/product' }
+            { name: '商品信息', link: '/product' },
+            { name: '价格管理表', link: '/product' },
+            { name: '商品套餐', link: '/product' }
           ]
         }
       ]
@@ -130,8 +130,7 @@ export class MenuComponent {
   createTab(menu) {
     this.tabsService.create({
       name: menu.name,
-      link: menu.link,
-      outlet: menu.outlet
+      link: menu.link
     });
   }
 }

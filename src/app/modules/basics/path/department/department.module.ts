@@ -4,22 +4,21 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
+
 import { DepartmentSelectorComponent } from './components/department-selector/department-selector.component';
 import { DepartmentComponent } from './department.component';
 import { DepartmentActionsComponent } from './components/actions/actions.component';
 import { DepartmentListComponent } from './components/list/list.component';
 import { DepartmentControlComponent } from './components/control/control.component';
+import { DepartmentDisabledComponent } from './department-disabled.component';
+import { DepartmentDisabledListComponent } from './components/disabled/disabled.component';
+
 import { DepartmentService } from './department.service';
+import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: DepartmentComponent, outlet: 'basics-department'
-  }
-];
-
+import { DepartmentRoutingModule } from './department.router';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,9 @@ export const ROUTES: Routes = [
     DepartmentComponent,
     DepartmentActionsComponent,
     DepartmentControlComponent,
-    DepartmentListComponent
+    DepartmentListComponent,
+    DepartmentDisabledComponent,
+    DepartmentDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -36,10 +37,10 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     AppCommonModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    DepartmentRoutingModule
   ],
-  exports: [DepartmentSelectorComponent],
-  providers: [DepartmentService]
+  exports: [ DepartmentSelectorComponent ],
+  providers: [ DepartmentService ]
 })
 
 export class DepartmentModule { }

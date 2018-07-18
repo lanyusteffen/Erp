@@ -5,19 +5,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
-import { StorageService } from './storage.service';
 import { StorageComponent } from './storage.component';
 import { StorageListComponent } from './components/list/list.component';
 import { StorageActionsComponent } from './components/actions/actions.component';
 import { StorageControlComponent } from './components/control/control.component';
+
+import { StorageService } from './storage.service';
+import { FormService } from '@services/form.service';
+
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: StorageComponent, outlet: 'products-storage'
-  }
-];
+import { StorageRoutingModule } from './storage.router';
+import { StorageDisabledComponent } from './storage-disabled.component';
+import { StorageDisabledListComponent } from './components/disabled/disabled.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,8 @@ export const ROUTES: Routes = [
     StorageListComponent,
     StorageActionsComponent,
     StorageControlComponent,
+    StorageDisabledComponent,
+    StorageDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -33,10 +35,11 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     AppCommonModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    StorageRoutingModule
   ],
   exports: [],
-  providers: [StorageService]
+  providers: [ StorageService ]
 })
 
-export class StorageModule { }
+export class StorageModule {
+}

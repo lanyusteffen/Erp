@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
-import { ProductService } from './product.service';
 import { ProductComponent } from './product.component';
 import { ProductExtensionComponent } from './components/extension/extension.component';
 import { ProductUnitComponent } from './components/unit/unit.component';
 import { ProductStorageInitComponent } from './components/storageInit/storageInit.component';
 import { ProductListComponent } from './components/list/list.component';
 import { ProductActionsComponent } from './components/actions/actions.component';
-import { AppCommonModule } from '@modules/common/common.module';
-import { SharedModule} from '@app/shared.module';
+import { ProductDisabledComponent } from './product-disabled.component';
+import { ProductDisabledListComponent } from './components/disabled/disabled.component';
 
-export const ROUTES: Routes = [
-  {
-    path: '', component: ProductComponent, outlet: 'products-product'
-  }
-];
+import { ProductService } from './product.service';
+import { FormService } from '@services/form.service';
+
+import { AppCommonModule } from '@modules/common/common.module';
+import { SharedModule } from '@app/shared.module';
+import { ProductRoutingModule } from './product.router';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,9 @@ export const ROUTES: Routes = [
     ProductActionsComponent,
     ProductExtensionComponent,
     ProductStorageInitComponent,
-    ProductUnitComponent
+    ProductUnitComponent,
+    ProductDisabledComponent,
+    ProductDisabledListComponent
  ],
   imports: [
     UIModule,
@@ -37,10 +39,11 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     AppCommonModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    ProductRoutingModule
   ],
   exports: [],
-  providers: [ProductService]
+  providers: [ ProductService ]
 })
 
-export class ProductModule {}
+export class ProductModule {
+}

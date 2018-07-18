@@ -4,24 +4,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
+
 import { UserComponent } from './user.component';
 import { UserListComponent } from './component/list/list.component';
 import { UserActionsComponent } from './component/actions/actions.component';
 import { UserControlComponent } from './component/control/control.component';
 import { UserModifyComponent } from './component/modify/modify.component';
 import { UserPasswordComponent } from './component/password/password.component';
+import { UserDisabledComponent } from './user-disabled.component';
+import { UserDisabledListComponent } from './component/disabled/disabled.component';
+
 import { UserService } from './user.service';
 import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 import { EmployeeModule } from '../../../basics/path/employee/employee.module';
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: UserComponent, outlet: 'admin-user'
-  }
-];
+import { UserRoutingModule } from './user.router';
 
 @NgModule({
   declarations: [
@@ -30,7 +29,9 @@ export const ROUTES: Routes = [
     UserActionsComponent,
     UserControlComponent,
     UserModifyComponent,
-    UserPasswordComponent
+    UserPasswordComponent,
+    UserDisabledComponent,
+    UserDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -40,9 +41,9 @@ export const ROUTES: Routes = [
     AppCommonModule,
     EmployeeModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    UserRoutingModule
   ],
-  providers: [UserService]
+  providers: [ UserService ]
 })
 
 export class UserModule {}

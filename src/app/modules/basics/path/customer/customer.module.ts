@@ -8,6 +8,9 @@ import { CustomerComponent } from './customer.component';
 import { CustomerListComponent } from './component/list/list.component';
 import { CustomerActionsComponent } from './component/actions/actions.component';
 import { CustomerControlComponent } from './component/control/control.component';
+import { CustomerDisabledComponent } from './customer-disabled.component';
+import { CustomerDisabledListComponent } from './component/disabled/disabled.component';
+
 import { CustomerService } from './customer.service';
 import { FormService } from '@services/form.service';
 
@@ -15,19 +18,16 @@ import { EmployeeModule } from '../employee/employee.module';
 import { AreaModule } from '../area/area.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: CustomerComponent, outlet: 'basics-customer'
-  }
-];
+import { CustomerRoutingModule } from './customer.router';
 
 @NgModule({
   declarations: [
     CustomerComponent,
     CustomerListComponent,
     CustomerActionsComponent,
-    CustomerControlComponent
+    CustomerControlComponent,
+    CustomerDisabledComponent,
+    CustomerDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -38,9 +38,9 @@ export const ROUTES: Routes = [
     AreaModule,
     AppCommonModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    CustomerRoutingModule
   ],
-  providers: [CustomerService]
+  providers: [ CustomerService ]
 })
 
 export class CustomerModule {}

@@ -9,19 +9,16 @@ import { EmployeeListComponent } from './components/list/list.component';
 import { EmployeeSelectorComponent } from './components/employee-selector/employee-selector.component';
 import { EmployeeActionsComponent } from './components/actions/actions.component';
 import { EmployeeControlComponent } from './components/control/control.component';
-import { QuickSearchComponent } from '@components/quick-search/quick-search.component';
+import { EmployeeDisabledComponent } from './employee-disabled.component';
+import { EmployeeDisabledListComponent } from './components/disabled/disabled.component';
+
 import { EmployeeService } from './employee.service';
 import { FormService } from '@services/form.service';
 
 import { DepartmentModule } from '../department/department.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
-
-export const ROUTES: Routes = [
-  {
-    path: '', component: EmployeeComponent, outlet: 'basics-employee'
-  }
-];
+import { EmployeeRoutingModule } from './employee.router';
 
 @NgModule({
   declarations: [
@@ -29,7 +26,11 @@ export const ROUTES: Routes = [
     EmployeeListComponent,
     EmployeeComponent,
     EmployeeActionsComponent,
-    EmployeeControlComponent
+    EmployeeControlComponent,
+    EmployeeComponent,
+    EmployeeListComponent,
+    EmployeeDisabledComponent,
+    EmployeeDisabledListComponent
   ],
   imports: [
     UIModule,
@@ -39,10 +40,10 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     AppCommonModule,
     SharedModule,
-    RouterModule.forChild(ROUTES)
+    EmployeeRoutingModule
   ],
-  exports: [EmployeeSelectorComponent, EmployeeListComponent],
-  providers: [EmployeeService]
+  exports: [ EmployeeSelectorComponent, EmployeeListComponent ],
+  providers: [ EmployeeService ]
 })
 
 export class EmployeeModule { }
