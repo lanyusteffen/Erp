@@ -41,7 +41,7 @@
         </tr>
       </tbody>
     </app-ui-table>
-    <app-pagination-bar [total]="pagination.TotalCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
+    <app-pagination-bar [total]="pagination.ItemCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
     <app-product-extension
     [productId]="extendProductId"
     [show]="_showUpdate"

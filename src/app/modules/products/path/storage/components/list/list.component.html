@@ -31,6 +31,6 @@
       </tr>
     </tbody>
   </app-ui-table>
-  <app-pagination-bar [total]="pagination.TotalCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
+  <app-pagination-bar [total]="pagination.ItemCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
   <app-storage-control [type]="'update'" [storageId]="selectedId" [show]="_showUpdate" (onClose)="closeUpdate()"></app-storage-control>
 </div>

@@ -4,7 +4,7 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 
 import { TabsService } from '@components/tabs/tabs.service';
-import { Router } from '../../product.router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-actions',
@@ -35,17 +35,16 @@ export class ProductActionsComponent {
     this.tabsService.create({
       name: '停用商品',
       link: '/products/product/disabled',
-      outlet: 'products-product-disabled'
     });
-    this.router.nagigate('/products/product/disabled');
+    this.router.navigate(['/products/product/disabled']);
   }
 
   onShowBarcode() {
     this.tabsService.create({
       name: '商品条形码',
       link: '/products/product/barcode',
-      outlet: 'products-product-barcode'
     });
+    this.router.navigate(['/products/product/barcode']);
   }
 
   close() {

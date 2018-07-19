@@ -3,6 +3,7 @@ import { SupplierService } from '../../supplier.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '@components/tabs/tabs.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-supplier-actions',
@@ -30,7 +31,8 @@ export class SupplierActionsComponent {
     private supplierService: SupplierService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private tabsService: TabsService
+    private tabsService: TabsService,
+    private router: Router
   ) {}
 
   show() {
@@ -42,9 +44,9 @@ export class SupplierActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用供应商',
-      link: '/basics/supplier/disabled',
-      outlet: 'basics-supplier-disabled'
+      link: '/basics/supplier/disabled'
     });
+    this.router.navigate(['/basics/supplier/disabled']);
   }
 
   close() {

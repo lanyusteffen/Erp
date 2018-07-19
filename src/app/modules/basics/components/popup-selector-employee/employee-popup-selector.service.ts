@@ -37,7 +37,7 @@ export class EmployeePopupSelectService {
             next({
                 ...this.state,
                 employees: data.EmployeeList,
-                currentPagination: data.Pagination
+                currentPagination: data.EmployeePageQueryReq
             });
         }, fallback, ModuleType.Basic);
     }
