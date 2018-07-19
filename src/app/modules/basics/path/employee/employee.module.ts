@@ -22,7 +22,6 @@ import { DepartmentSharedModule } from '../department/department-shared.module';
 
 @NgModule({
   declarations: [
-    EmployeeSelectorComponent,
     EmployeeListComponent,
     EmployeeComponent,
     EmployeeActionsComponent,
@@ -42,7 +41,6 @@ import { DepartmentSharedModule } from '../department/department-shared.module';
     SharedModule,
     EmployeeRoutingModule
   ],
-  exports: [ EmployeeSelectorComponent ],
   providers: [ EmployeeService ]
 })
 

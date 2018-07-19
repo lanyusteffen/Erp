@@ -138,7 +138,7 @@ export class CustomerPopupSelectorService {
       next({
         ...this.supplierState,
         suppliers: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       });
     }, fallback, ModuleType.Basic);
   }
@@ -189,7 +189,7 @@ export class CustomerPopupSelectorService {
       next({
         ...this.customerState,
         customers: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       });
     }, fallback, ModuleType.Basic);
   }
@@ -239,7 +239,7 @@ export class CustomerPopupSelectorService {
       next({
         ...this.otherState,
         others: data.CustomerList,
-        currentPagination: data.Pagination
+        currentPagination: data.CustomerPageQueryReq
       });
     }, fallback, ModuleType.Basic);
   }
