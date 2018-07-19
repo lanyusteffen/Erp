@@ -6,6 +6,6 @@ export class AppService {
   constructor(private http: HttpService) { }
 
   getSystemConfig(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/SystemConfig/GetForModify', { CompanyId: 1 }, next, fallback, ModuleType.Admin);
+    return this.http.post('/SystemConfig/Get', { CompanyId: 1 }, next, fallback, ModuleType.Webadmin);
   }
 }

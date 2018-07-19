@@ -45,7 +45,7 @@ export class OtherExchangeUnitActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用往来单位',
-      link: '/home/basics/otherexchangeunit/disabled',
+      link: '/basics/otherexchangeunit/disabled',
       outlet: 'basics-otherexchangeunit-disabled'
     });
   }

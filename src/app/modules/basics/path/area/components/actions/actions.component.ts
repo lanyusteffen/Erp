@@ -32,7 +32,7 @@ export class AreaActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用地区',
-      link: '/home/basics/area/disabled',
+      link: '/basics/area/disabled',
       outlet: 'basics-area-disabled'
     });
   }

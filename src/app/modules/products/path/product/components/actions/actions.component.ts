@@ -4,6 +4,7 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 
 import { TabsService } from '@components/tabs/tabs.service';
+import { Router } from '../../product.router';
 
 @Component({
   selector: 'app-product-actions',
@@ -21,7 +22,8 @@ export class ProductActionsComponent {
     private productService: ProductService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private tabsService: TabsService
+    private tabsService: TabsService,
+    private router: Router
   ) { }
 
   show() {
@@ -32,15 +34,16 @@ export class ProductActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用商品',
-      link: '/home/products/product/disabled',
+      link: '/products/product/disabled',
       outlet: 'products-product-disabled'
     });
+    this.router.nagigate('/products/product/disabled');
   }
 
   onShowBarcode() {
     this.tabsService.create({
       name: '商品条形码',
-      link: '/home/products/product/barcode',
+      link: '/products/product/barcode',
       outlet: 'products-product-barcode'
     });
   }

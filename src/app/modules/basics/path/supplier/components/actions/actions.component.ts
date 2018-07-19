@@ -42,7 +42,7 @@ export class SupplierActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用供应商',
-      link: '/home/basics/supplier/disabled',
+      link: '/basics/supplier/disabled',
       outlet: 'basics-supplier-disabled'
     });
   }
