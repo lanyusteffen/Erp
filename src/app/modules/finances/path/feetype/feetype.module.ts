@@ -15,7 +15,6 @@ import { FeeTypeDisabledListComponent } from './component/disabled/disabled.comp
 import { FeeTypeService } from './feetype.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 import { FeeTypeRoutingModule } from './feetype.router';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
@@ -34,7 +33,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     FeeTypeRoutingModule
   ],

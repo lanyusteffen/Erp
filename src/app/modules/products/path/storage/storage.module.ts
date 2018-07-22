@@ -14,7 +14,6 @@ import { StorageDisabledListComponent } from './components/disabled/disabled.com
 import { StorageService } from './storage.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { StorageRoutingModule } from './storage.router';
 
@@ -32,7 +31,6 @@ import { StorageRoutingModule } from './storage.router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     StorageRoutingModule
   ],

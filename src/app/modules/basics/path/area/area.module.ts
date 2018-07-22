@@ -15,7 +15,6 @@ import { AreaDisabledListComponent } from './components/disabled/disabled.compon
 import { AreaService } from './area.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { AreaRoutingModule } from './area.router';
 
@@ -35,7 +34,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     AreaRoutingModule
   ],

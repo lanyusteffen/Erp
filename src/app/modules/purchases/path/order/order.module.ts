@@ -9,7 +9,6 @@ import { PurchaseOrderNewComponent } from './new/new.component';
 import { PurchaseOrderService } from './order.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { PurchaseOrderRoutingModule } from './order.router';
 import { DepartmentSharedModule } from '../../../basics/components/department-shared.module';
@@ -24,7 +23,6 @@ import { DepartmentSharedModule } from '../../../basics/components/department-sh
         FormsModule,
         ReactiveFormsModule,
         DepartmentSharedModule,
-        AppCommonModule,
         SharedModule,
         PurchaseOrderRoutingModule
     ],

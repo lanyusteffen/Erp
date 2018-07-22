@@ -15,7 +15,6 @@ import { EmployeeDisabledListComponent } from './components/disabled/disabled.co
 import { EmployeeService } from './employee.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { EmployeeRoutingModule } from './employee.router';
 import { DepartmentSharedModule } from '../../components/department-shared.module';
@@ -39,7 +38,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     FormsModule,
     DepartmentSharedModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     EmployeeRoutingModule
   ],

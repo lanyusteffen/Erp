@@ -15,7 +15,6 @@ import { RoleDisabledListComponent } from './component/disabled/disabled.compone
 import { RoleService } from './role.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 import { EmployeeSharedModule } from '../../../basics/components/employee-shared.module';
 import { RoleRoutingModule } from './role.router';
@@ -35,7 +34,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     EmployeeSharedModule,
     SharedModule,
     RoleRoutingModule

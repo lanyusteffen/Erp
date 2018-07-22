@@ -15,7 +15,6 @@ import { IncomeTypeDisabledListComponent } from './component/disabled/disabled.c
 import { IncomeTypeService } from './incometype.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { IncomeTypeRoutingModule } from './incometype.router';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
@@ -34,7 +33,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     IncomeTypeRoutingModule
   ],

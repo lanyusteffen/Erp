@@ -17,7 +17,6 @@ import { UserDisabledListComponent } from './component/disabled/disabled.compone
 import { UserService } from './user.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 import { EmployeeSharedModule } from '../../../basics/components/employee-shared.module';
 import { UserRoutingModule } from './user.router';
@@ -40,7 +39,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     EmployeeSharedModule,
     SharedModule,
     UserRoutingModule

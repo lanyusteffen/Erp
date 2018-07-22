@@ -15,7 +15,6 @@ import { DepartmentDisabledListComponent } from './components/disabled/disabled.
 import { DepartmentService } from './department.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { DepartmentRoutingModule } from './department.router';
 
@@ -35,7 +34,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     DepartmentRoutingModule
   ],

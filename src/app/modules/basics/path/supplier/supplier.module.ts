@@ -17,7 +17,6 @@ import { FormService } from '@services/form.service';
 
 import { EmployeeSharedModule } from '../../components/employee-shared.module';
 import { AreaSharedModule } from '../../components/area-shared.module';
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { SupplierRoutingModule } from './supplier.router';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
@@ -38,7 +37,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     ReactiveFormsModule,
     EmployeeSharedModule,
     AreaSharedModule,
-    AppCommonModule,
     SharedModule,
     SupplierRoutingModule
   ],

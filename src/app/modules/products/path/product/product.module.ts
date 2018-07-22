@@ -16,7 +16,6 @@ import { ProductDisabledListComponent } from './components/disabled/disabled.com
 import { ProductService } from './product.service';
 import { FormService } from '@services/form.service';
 
-import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { ProductRoutingModule } from './product.router';
 
@@ -36,7 +35,6 @@ import { ProductRoutingModule } from './product.router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
     SharedModule,
     ProductRoutingModule
   ],
