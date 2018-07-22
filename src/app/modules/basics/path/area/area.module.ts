@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '@UI/ui.module';
 
@@ -18,6 +19,8 @@ import { FormService } from '@services/form.service';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { AreaRoutingModule } from './area.router';
+
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ import { AreaRoutingModule } from './area.router';
     SharedModule,
     AreaRoutingModule
   ],
-  providers: [ AreaService ]
+  providers: [ AreaService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
 })
 
 export class AreaModule {

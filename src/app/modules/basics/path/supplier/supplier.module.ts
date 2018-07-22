@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '@UI/ui.module';
 
@@ -19,6 +20,7 @@ import { AreaSharedModule } from '../area/area-shared.module';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { SupplierRoutingModule } from './supplier.router';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { SupplierRoutingModule } from './supplier.router';
     SharedModule,
     SupplierRoutingModule
   ],
-  providers: [ SupplierService ]
+  providers: [ SupplierService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
 })
 
 export class SupplierModule { }

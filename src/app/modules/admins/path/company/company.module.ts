@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '@UI/ui.module';
 
@@ -17,6 +18,7 @@ import { FormService } from '@services/form.service';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
 import { CompanyRoutingModule } from './company.router';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,7 @@ import { CompanyRoutingModule } from './company.router';
     SharedModule,
     CompanyRoutingModule
   ],
-  providers: [ CompanyService ]
+  providers: [ CompanyService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
 })
 
 export class CompanyModule {}

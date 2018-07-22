@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '../UI/ui.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,7 @@ import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SharedModule } from './shared.module';
 import { DepartmentModule } from './modules/basics/path/department/department.module';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,10 @@ import { DepartmentModule } from './modules/basics/path/department/department.mo
     provide: HTTP_INTERCEPTORS,
     useClass: HttpExtensionInterceptor,
     multi: true
-  }, HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService],
+  }, {
+    provide: RouteReuseStrategy,
+    useClass: SimpleReuseStrategy },
+  HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService ],
   bootstrap: [AppComponent]
 })
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Router } from '@angular/router';
 
 export interface Tab {
   id: number;
@@ -19,6 +20,8 @@ export class TabsService {
   private tabs$ = new Subject<any>();
   id = 1;
   tabs: Tab[] = [homeTab];
+
+  constructor(private router: Router) {}
 
   all() {
     return this.tabs;
@@ -57,9 +60,10 @@ export class TabsService {
       }
     }
     this.tabs$.next(this.tabs);
-    // while (this.tabs.length <= removeIndex) {
-    //   --removeIndex;
-    // }
+    while (this.tabs.length <= removeIndex) {
+      --removeIndex;
+    }
+    this.router.navigate([this.tabs[removeIndex].link]);
   }
 
   clear() {

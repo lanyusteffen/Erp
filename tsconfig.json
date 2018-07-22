@@ -23,7 +23,8 @@
       "@directives/*": ["./app/directives/*"],
       "@services/*": ["./app/services/*"],
       "@pipes/*": ["./app/pipes/*"],
-      "@components/*": ["./app/components/*"]
+      "@components/*": ["./app/components/*"],
+      "@strategies/*": ["./app/strategies/*"]
     }
   }
 }

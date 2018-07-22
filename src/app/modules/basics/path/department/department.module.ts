@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '@UI/ui.module';
 
-import { DepartmentSelectorComponent } from './components/department-selector/department-selector.component';
 import { DepartmentComponent } from './department.component';
 import { DepartmentActionsComponent } from './components/actions/actions.component';
 import { DepartmentListComponent } from './components/list/list.component';
@@ -18,6 +18,8 @@ import { FormService } from '@services/form.service';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { DepartmentRoutingModule } from './department.router';
+
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,7 @@ import { DepartmentRoutingModule } from './department.router';
     SharedModule,
     DepartmentRoutingModule
   ],
-  providers: [ DepartmentService ]
+  providers: [ DepartmentService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
 })
 
 export class DepartmentModule {

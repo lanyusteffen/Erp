@@ -23,25 +23,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private loading: boolean;
 
   constructor(
-    private router: Router,
     private tabsService: TabsService,
     private alertService: AlertService,
-    private confirmService: ConfirmService,
-    private _router: Router,
-    private _loadingBar: SlimLoadingBarService
+    private confirmService: ConfirmService
   ) {
-
-    this.routeSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this._loadingBar.start();
-      } else if (event instanceof NavigationEnd ||
-        event instanceof NavigationCancel ||
-        event instanceof NavigationError) {
-        this._loadingBar.complete();
-      }
-    }, (error: any) => {
-      this._loadingBar.complete();
-    });
 
     this.subscription = this.tabsService
       .get()
