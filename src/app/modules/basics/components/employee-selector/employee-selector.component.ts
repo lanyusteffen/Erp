@@ -1,19 +1,19 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DepartmentService } from '../../department.service';
+import { EmployeeService } from '../../path/employee/employee.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
-  selector: 'app-department-selector',
-  templateUrl: './department-selector.component.html',
-  styleUrls: ['./department-selector.component.less'],
+  selector: 'app-employee-selector',
+  templateUrl: './employee-selector.component.html',
+  styleUrls: ['./employee-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: DepartmentSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: EmployeeSelectorComponent, multi: true }
   ]
 })
 
-export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor {
+export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;
@@ -23,9 +23,9 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectDepartment: SelectComponent;
+  private selectEmployee: SelectComponent;
 
-  constructor(private departmentService: DepartmentService, private alertService: AlertService) {  }
+  constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
   ngOnInit() {
     if (!this.dataInitialized && this.isInitialValue) {
@@ -34,30 +34,31 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
   }
 
   bindListData(next: () => void): void {
-    this.departmentService
-      .dropdownlist(data => {
-        this.list = data.map(item => ({
-          label: item.Name,
-          value: item.Id
-        }));
-        if (next !== null) {
-          next();
-        }
-      }, (err) => {
-        this.alertService.getErrorCallBack(ModuleName.Employee, err);
-      });
+    this.employeeService
+    .all(data => {
+      this.list = data.map(item => ({
+        label: item.Name,
+        value: item.Id
+      }));
+      if (next !== null) {
+        next();
+      }
+    }, (err) => {
+      this.alertService.getErrorCallBack(ModuleName.Employee, err);
+    });
   }
 
   writeValue(value) {
+    this.isInitialValue = true;
     if (!this.dataInitialized) {
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || 0;
-        this.selectDepartment.value = this.innerValue;
+        this.selectEmployee.value = this.innerValue;
       });
     } else {
       this.innerValue = value || 0;
-      this.selectDepartment.value = this.innerValue;
+      this.selectEmployee.value = this.innerValue;
     }
   }
 
@@ -71,8 +72,6 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
 
   handleChange(value) {
     this.innerValue = value;
-    if (this.onChange) {
-      this.onChange(value);
-    }
+    this.onChange(value);
   }
 }

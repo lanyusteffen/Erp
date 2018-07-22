@@ -1,19 +1,19 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AreaService } from '../../area.service';
+import { DepartmentService } from '../../path/department/department.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
-  selector: 'app-area-selector',
-  templateUrl: './area-selector.component.html',
-  styleUrls: ['./area-selector.component.less'],
+  selector: 'app-department-selector',
+  templateUrl: './department-selector.component.html',
+  styleUrls: ['./department-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: AreaSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: DepartmentSelectorComponent, multi: true }
   ]
 })
 
-export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
+export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;
@@ -23,9 +23,9 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectArea: SelectComponent;
+  private selectDepartment: SelectComponent;
 
-  constructor(private areaService: AreaService, private alertService: AlertService) { }
+  constructor(private departmentService: DepartmentService, private alertService: AlertService) {  }
 
   ngOnInit() {
     if (!this.dataInitialized && this.isInitialValue) {
@@ -34,18 +34,18 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   bindListData(next: () => void): void {
-    this.areaService
-    .all(data => {
-      this.list = data.map(item => ({
-        label: item.Name,
-        value: item.Id
-      }));
-      if (next !== null) {
-        next();
-      }
-    }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Area, err);
-    });
+    this.departmentService
+      .dropdownlist(data => {
+        this.list = data.map(item => ({
+          label: item.Name,
+          value: item.Id
+        }));
+        if (next !== null) {
+          next();
+        }
+      }, (err) => {
+        this.alertService.getErrorCallBack(ModuleName.Employee, err);
+      });
   }
 
   writeValue(value) {
@@ -53,11 +53,11 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || 0;
-        this.selectArea.value = this.innerValue;
+        this.selectDepartment.value = this.innerValue;
       });
     } else {
       this.innerValue = value || 0;
-      this.selectArea.value = this.innerValue;
+      this.selectDepartment.value = this.innerValue;
     }
   }
 
@@ -71,6 +71,8 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
 
   handleChange(value) {
     this.innerValue = value;
-    this.onChange(value);
+    if (this.onChange) {
+      this.onChange(value);
+    }
   }
 }

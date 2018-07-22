@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UIModule } from '@UI/ui.module';
-import { AreaSelectorComponent } from './components/area-selector/area-selector.component';
-import { AreaService } from './area.service';
+import { AreaSelectorComponent } from './area-selector/area-selector.component';
+import { AreaService } from '../path/area/area.service';
 
 @NgModule({
   declarations: [

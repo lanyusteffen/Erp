@@ -18,7 +18,7 @@ import { FormService } from '@services/form.service';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { EmployeeRoutingModule } from './employee.router';
-import { DepartmentSharedModule } from '../department/department-shared.module';
+import { DepartmentSharedModule } from '../../components/department-shared.module';
 
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 

@@ -1,4 +1,5 @@
 import { Subscription } from 'rxjs/Subscription';
+import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
@@ -19,6 +20,9 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   private selectedCustomer: any;
   private selectedEmployee: any;
+  private form = new FormGroup({});
+
+  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
   constructor(
   ) {}
@@ -36,5 +40,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   selectEmployee(item: any): void {
     this.selectedEmployee = item;
+  }
+
+  onSubmit({ value }) {
+    if (value.Id === 0) {
+    } else {
+    }
   }
 }

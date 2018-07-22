@@ -6,7 +6,7 @@ import { AlertService } from '@services/alert.service';
 @Component({
   selector: 'app-basics-employee',
   template: `
-  <app-employee-actions [selectedItems]="selectedItems" ></app-employee-actions>
+  <app-employee-actions [selectedItems]="selectedItems"></app-employee-actions>
   <div class="content">
     <app-employee-list (selectItems)="selectItems($event)"></app-employee-list>
   </div>
@@ -50,7 +50,6 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       content: '绑定职员列表失败!' + err
     });
   }
-
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

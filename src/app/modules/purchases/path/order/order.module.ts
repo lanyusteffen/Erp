@@ -12,7 +12,7 @@ import { FormService } from '@services/form.service';
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule } from '@app/shared.module';
 import { PurchaseOrderRoutingModule } from './order.router';
-import { DepartmentSharedModule } from '../../../basics/path/department/department-shared.module';
+import { DepartmentSharedModule } from '../../../basics/components/department-shared.module';
 
 @NgModule({
     declarations: [

@@ -28,7 +28,6 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SharedModule } from './shared.module';
-import { DepartmentModule } from './modules/basics/path/department/department.module';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
@@ -48,7 +47,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     BrowserModule,
     CommonModule,
     HttpClientModule,
-    DepartmentModule,
     UIModule,
     AuthorizeModule,
     SharedModule,

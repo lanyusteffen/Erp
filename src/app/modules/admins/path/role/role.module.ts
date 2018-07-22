@@ -17,7 +17,7 @@ import { FormService } from '@services/form.service';
 
 import { AppCommonModule } from '@modules/common/common.module';
 import { SharedModule} from '@app/shared.module';
-import { EmployeeSharedModule } from '../../../basics/path/employee/employee-shared.module';
+import { EmployeeSharedModule } from '../../../basics/components/employee-shared.module';
 import { RoleRoutingModule } from './role.router';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 

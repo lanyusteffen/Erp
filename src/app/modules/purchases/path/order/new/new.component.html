@@ -1,53 +1,47 @@
-<div class="actions">
-  <div class="form-group">
-    <div class="form-group-label">
-      <span class="required">*</span>
-      <label>供应商：</label>
-    </div>
-    <div class="form-group-control">
-      <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-group-label">
-      <label>采购员：</label>
-    </div>
-    <div class="form-group-control">
-      <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-group-label">
-      <label>采购部门：</label>
-    </div>
-    <div class="form-group-control">
-      <app-department-selector></app-department-selector>
-    </div>
-  </div>
-  <div class="more">
-    <div>
-      <div class="form-group">
-        <div class="form-group-label">
-          <span class="required">*</span>
-          <label>采购时间：</label>
-        </div>
-        <div class="form-group-control">
-          <input type="text" class="form-control">
-        </div>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+  <div class="actions">
+    <div class="form-group">
+      <div class="form-group-label">
+        <span class="required">*</span>
+        <label>供应商：</label>
       </div>
-      <div class="form-group">
-        <div class="form-group-label">
-          <label>单据编号：</label>
-        </div>
-        <div class="form-group-control">
-          123123
+      <div class="form-group-control">
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>采购员：</label>
+      </div>
+      <div class="form-group-control">
+        <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>采购部门：</label>
+      </div>
+      <div class="form-group-control">
+        <app-department-selector formControlName="DepartmentId" ngModel></app-department-selector>
+      </div>
+    </div>
+    <div class="more">
+      <div>
+        <div class="form-group">
+          <div class="form-group-label">
+            <span class="required">*</span>
+            <label>采购时间：</label>
+          </div>
+          <div class="form-group-control">
+            <input type="text" class="form-control">
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="more-actions">
-  <app-ui-button [style]="'primary'">
-    导入
-  </app-ui-button>
-</div>
+  <div class="more-actions">
+    <app-ui-button [style]="'primary'">
+      导入
+    </app-ui-button>
+  </div>
+</form>

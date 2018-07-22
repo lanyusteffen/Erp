@@ -65,7 +65,6 @@ export class EmployeeControlComponent {
     return this.type === 'create' ? '新增职员' : '修改职员';
   }
 
-
   constructor(
     private employeeService: EmployeeService,
     private formService: FormService,

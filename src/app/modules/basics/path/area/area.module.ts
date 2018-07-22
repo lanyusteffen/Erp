@@ -5,7 +5,6 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '@UI/ui.module';
 
-import { AreaSelectorComponent } from './components/area-selector/area-selector.component';
 import { AreaComponent } from './area.component';
 import { AreaListComponent } from './components/list/list.component';
 import { AreaActionsComponent } from './components/actions/actions.component';
