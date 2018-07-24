@@ -9,7 +9,6 @@ import { ConfirmService } from '@services/confirm.service';
 @Component({
   selector: 'app-basics-area-disabled',
   template: `
-
   <div class="actions">
     <app-quick-search [placeholder]="'输入编号、名称'" (onSearch)="onSearch($event)"></app-quick-search>
     <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="restore()">
