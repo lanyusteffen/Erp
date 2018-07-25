@@ -10,11 +10,6 @@ import { CardComponent } from '@components/card/card.component';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 import { FormFieldComponent } from '@components/form-field/form-field.component';
 import { StringAddonPipe } from '@pipes/string-addon.pipe';
-import { CustomerPopupSelectorComponent } from './modules/basics/components/customer-popup-selector/customer-popup-selector.component';
-import { PopupSelectorEmployeeComponent } from './modules/basics/components/popup-selector-employee/popup-selector-employee.component';
-import { PopupSelectorCustomerComponent } from './modules/basics/components/popup-selector-customer/popup-selector-customer.component';
-import { PopupSelectorOtherComponent } from './modules/basics/components/popup-selector-other/popup-selector-other.component';
-import { PopupSelectorSupplierComponent } from './modules/basics/components/popup-selector-supplier/popup-selector-supplier.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +19,7 @@ import { PopupSelectorSupplierComponent } from './modules/basics/components/popu
     CardComponent,
     PaginationBarComponent,
     FormFieldComponent,
-    StringAddonPipe,
-    CustomerPopupSelectorComponent,
-    PopupSelectorCustomerComponent,
-    PopupSelectorOtherComponent,
-    PopupSelectorSupplierComponent,
-    PopupSelectorEmployeeComponent
+    StringAddonPipe
   ],
   imports: [
     UIModule,
@@ -42,12 +32,7 @@ import { PopupSelectorSupplierComponent } from './modules/basics/components/popu
     CardComponent,
     PaginationBarComponent,
     FormFieldComponent,
-    StringAddonPipe,
-    CustomerPopupSelectorComponent,
-    PopupSelectorEmployeeComponent,
-    PopupSelectorCustomerComponent,
-    PopupSelectorOtherComponent,
-    PopupSelectorSupplierComponent
+    StringAddonPipe
   ]
 })
 

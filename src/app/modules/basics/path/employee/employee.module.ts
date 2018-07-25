@@ -17,7 +17,7 @@ import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { EmployeeRoutingModule } from './employee.router';
-import { DepartmentSharedModule } from '../../components/department-shared.module';
+import { BasicsSharedModule } from '../../components/basics.shared.module';
 
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
@@ -36,7 +36,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     UIModule,
     CommonModule,
     FormsModule,
-    DepartmentSharedModule,
+    BasicsSharedModule,
     ReactiveFormsModule,
     SharedModule,
     EmployeeRoutingModule

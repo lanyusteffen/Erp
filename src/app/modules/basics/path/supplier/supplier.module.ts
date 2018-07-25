@@ -15,8 +15,7 @@ import { SupplierDisabledListComponent } from './components/disabled/disabled.co
 import { SupplierService } from './supplier.service';
 import { FormService } from '@services/form.service';
 
-import { EmployeeSharedModule } from '../../components/employee-shared.module';
-import { AreaSharedModule } from '../../components/area-shared.module';
+import { BasicsSharedModule } from '../../components/basics.shared.module';
 import { SharedModule } from '@app/shared.module';
 import { SupplierRoutingModule } from './supplier.router';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
@@ -35,8 +34,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    EmployeeSharedModule,
-    AreaSharedModule,
+    BasicsSharedModule,
     SharedModule,
     SupplierRoutingModule
   ],

@@ -103,10 +103,10 @@ export const ROUTES: Routes = [
                 path: 'purchases/order',
                 loadChildren: './modules/purchases/path/order/order.module#PurchaseOrderModule',
                 canLoad: [AuthGuard]
-              }
+              },
+              { path: '**', component: PageNotFoundComponent }
         ]
     },
-    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

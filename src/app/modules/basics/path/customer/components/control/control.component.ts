@@ -34,7 +34,7 @@ export class CustomerControlComponent {
   private contactList = [{}, {}, {}];
   private form = new FormGroup({});
   private _show = false;
-  private _category :any;
+  private _category: any;
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
@@ -53,7 +53,6 @@ export class CustomerControlComponent {
     return this._customerId;
   }
 
-  
   @Input()
   set category(category) {
     this._category = category;
@@ -85,7 +84,7 @@ export class CustomerControlComponent {
           .newOne(data => {
             data.CustomerCategoryName = this._category === null || this._category === undefined ? '' : this._category.Name;
             data.CategoryId = this._category === null || this._category === undefined ? 0 : this._category.Id;
-            data.CustomerType=2;
+            data.CustomerType = 2;
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.addFail(err);

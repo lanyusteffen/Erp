@@ -38,7 +38,6 @@ export class SupplierControlComponent {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
-
   get show() {
     return this._show;
   }
@@ -85,7 +84,7 @@ export class SupplierControlComponent {
           .newOne(data => {
             data.CustomerCategoryName = this._category === null || this._category === undefined ? '' : this._category.Name;
             data.CategoryId = this._category === null || this._category === undefined ? 0 : this._category.Id;
-            data.CustomerType=1;
+            data.CustomerType = 1;
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.getErrorCallBack(ModuleName.Supplier, err);
