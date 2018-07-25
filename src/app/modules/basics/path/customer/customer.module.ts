@@ -6,11 +6,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { CustomerComponent } from './customer.component';
-import { CustomerListComponent } from './component/list/list.component';
-import { CustomerActionsComponent } from './component/actions/actions.component';
-import { CustomerControlComponent } from './component/control/control.component';
+import { CustomerListComponent } from './components/list/list.component';
+import { CustomerActionsComponent } from './components/actions/actions.component';
+import { CustomerControlComponent } from './components/control/control.component';
 import { CustomerDisabledComponent } from './customer-disabled.component';
-import { CustomerDisabledListComponent } from './component/disabled/disabled.component';
+import { CustomerDisabledListComponent } from './components/disabled/disabled.component';
 
 import { CustomerService } from './customer.service';
 import { FormService } from '@services/form.service';
