@@ -6,11 +6,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { IncomeTypeComponent } from './incometype.component';
-import { IncomeTypeListComponent } from './component/list/list.component';
-import { IncomeTypeActionsComponent } from './component/actions/actions.component';
-import { IncomeTypeControlComponent } from './component/control/control.component';
+import { IncomeTypeListComponent } from './components/list/list.component';
+import { IncomeTypeActionsComponent } from './components/actions/actions.component';
+import { IncomeTypeControlComponent } from './components/control/control.component';
 import { IncomeTypeDisabledComponent } from './incometype-disabled.component';
-import { IncomeTypeDisabledListComponent } from './component/disabled/disabled.component';
+import { IncomeTypeDisabledListComponent } from './components/disabled/disabled.component';
 
 import { IncomeTypeService } from './incometype.service';
 import { FormService } from '@services/form.service';
