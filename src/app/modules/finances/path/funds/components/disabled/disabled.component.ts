@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { FeeTypeService } from '../../feetype.service';
+import { FundsService } from '../../funds.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
 
 @Component({
-  selector: 'app-feetype-disabled-list',
+  selector: 'app-funds-disabled-list',
   templateUrl: './disabled.component.html',
   styleUrls: ['./disabled.component.less'],
   providers: [
@@ -15,8 +15,8 @@ import { AppService } from '@services/app.service';
   ]
 })
 
-export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
-  private feeTypes = <any>[];
+export class FundsDisabledListComponent implements OnInit, OnDestroy {
+  private funds = <any>[];
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
@@ -28,15 +28,15 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private feeTypeService: FeeTypeService,
+    private fundsService: FundsService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService
   ) {
-    this.subscription = this.feeTypeService
+    this.subscription = this.fundsService
       .get()
-      .subscribe(({ feeTypes, currentPagination }) => {
-        this.feeTypes = feeTypes;
+      .subscribe(({ funds, currentPagination }) => {
+        this.funds = funds;
         this.pagination = currentPagination;
       });
   }
@@ -52,11 +52,10 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     return this.systemConfig;
   }
 
-
   ngOnInit() {
     this.getSystemConfig();
-    this.feeTypeService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    this.fundsService.listDisabled((err) => {
+      this.alertService.listErrorCallBack(ModuleName.Funds, err);
     });
   }
 
@@ -66,29 +65,29 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.feeTypes = this.feeTypes.map(item => ({
+    this.funds = this.funds.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.feeTypes : []);
+    this.selectItems.emit(this.allSelected ? this.funds : []);
 
   }
 
   select(evt, selectedItem) {
-    this.feeTypes = this.feeTypes.map(item => ({
+    this.funds = this.funds.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.feeTypes.every(item => item.selected);
-    this.selectItems.emit(this.feeTypes.filter(item => item.selected));
+    this.allSelected = this.funds.every(item => item.selected);
+    this.selectItems.emit(this.funds.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
-    this.feeTypeService.onPageChangeDisabled({
+    this.fundsService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+      this.alertService.listErrorCallBack(ModuleName.Funds, err);
     });
   }
 
@@ -96,11 +95,11 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.feeTypeService
+        this.fundsService
           .remove([id], data => {
             if (data.IsValid) {
-              this.feeTypeService.listDisabled((err) => {
-                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+              this.fundsService.listDisabled((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Funds, err);
               }, () => {
                 this.alertService.removeSuccess();
               });
@@ -118,11 +117,11 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
-        this.feeTypeService
+        this.fundsService
           .restore([id], data => {
             if (data.IsValid) {
-              this.feeTypeService.listDisabled((err) => {
-                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+              this.fundsService.listDisabled((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Funds, err);
               }, () => {
                 this.alertService.restoreSuccess();
               });

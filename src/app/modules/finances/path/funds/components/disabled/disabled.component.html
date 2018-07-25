@@ -8,11 +8,13 @@
         <th>操作</th>
         <th>收入编号</th>
         <th>收入名称</th>
+        <th>账户详情</th>
+        <th>起初余额</th>
         <th>备注</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of feeTypes">
+      <tr *ngFor="let item of funds">
         <td>
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
@@ -22,6 +24,8 @@
         </td>
         <td>{{item.Code}}</td>
         <td>{{item.Name}}</td>
+        <td>{{item.AccountInfo}}</td>
+        <td>{{item.InitBalance}}</td>
         <td>{{item.Remark}}</td>
       </tr>
     </tbody>

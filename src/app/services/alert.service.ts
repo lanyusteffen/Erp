@@ -178,7 +178,7 @@ export class AlertService {
         name = '其他往来单位';
         break;
 
-      case ModuleName.FeeType:
+      case ModuleName.feetype:
         name = '费用类型';
         break;
 
@@ -204,6 +204,18 @@ export class AlertService {
 
       case ModuleName.Extension:
         name = '扩展属性';
+        break;
+
+      case ModuleName.SystemUnit:
+        name = '系统单位';
+        break;
+
+      case ModuleName.OtherIncome:
+        name = '其他收入类型';
+        break;
+
+      case ModuleName.FundsAccount:
+        name = '银行账户';
         break;
     }
 
@@ -240,11 +252,14 @@ export enum ModuleName {
   Employee,
   OtherExchangeUnit,
   Supplier,
-  FeeType,
+  feetype,
   IncomeType,
   Storage,
   Barcode,
   Product,
   StorageInit,
-  Extension
+  Extension,
+  SystemUnit,
+  OtherIncome,
+  FundsAccount
 }

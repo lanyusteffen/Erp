@@ -6,11 +6,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { FundsComponent } from './funds.component';
-import { FundsListComponent } from './component/list/list.component';
-import { FundsActionsComponent } from './component/actions/actions.component';
-import { FundsControlComponent } from './component/control/control.component';
+import { FundsListComponent } from './components/list/list.component';
+import { FundsActionsComponent } from './components/actions/actions.component';
+import { FundsControlComponent } from './components/control/control.component';
 import { FundsDisabledComponent } from './funds-disabled.component';
-import { FundsDisabledListComponent } from './component/disabled/disabled.component';
+import { FundsDisabledListComponent } from './components/disabled/disabled.component';
 
 import { FundsService } from './funds.service';
 import { FormService } from '@services/form.service';

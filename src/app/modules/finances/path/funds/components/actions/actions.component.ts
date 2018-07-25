@@ -1,23 +1,23 @@
 import { Component, Input } from '@angular/core';
-import { CompanyService } from '../../company.service';
+import { FundsService } from '../../funds.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
-  selector: 'app-company-actions',
+  selector: 'app-funds-actions',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.less']
 })
 
-export class CompanyActionsComponent {
+export class FundsActionsComponent {
   private _show = false;
   private selectedId: number;
   @Input() selectedItems = <any>[];
   @Input() category;
 
   constructor(
-    private companyService: CompanyService,
+    private fundsService: FundsService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService
@@ -30,20 +30,19 @@ export class CompanyActionsComponent {
 
   close() {
     this._show = false;
-    this.selectedId = -1;
   }
 
   onSearch(queryKey) {
-    this.companyService.onSearch(queryKey, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    this.fundsService.onSearch(queryKey, (err) => {
+      this.alertService.listErrorCallBack(ModuleName.Funds, err);
     });
   }
 
   showDisabled() {
     this.tabsService.create({
-      name: '停用公司',
-      link: '/home/admins/company/disabled',
-      outlet: 'admins-company-disabled'
+      name: '停用资金账户',
+      link: '/home/finances/funds/disabled',
+      outlet: 'finances-funds-disabled'
     });
   }
 
@@ -51,19 +50,19 @@ export class CompanyActionsComponent {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
-        this.companyService
+        this.fundsService
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.companyService.list((err) => {
-                this.alertService.listErrorCallBack(ModuleName.Company, err);
+              this.fundsService.list((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Funds, err);
               }, () => {
-                this.alertService.removeSuccess();
+                this.alertService.cancelSuccess();
               });
             } else {
-              this.alertService.removeFail(data.ErrorMessages);
+              this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.removeFail(err);
+            this.alertService.cancelFail(err);
           });
       }
     });

@@ -6,11 +6,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { RoleComponent } from './role.component';
-import { RoleListComponent } from './component/list/list.component';
-import { RoleActionsComponent } from './component/actions/actions.component';
-import { RoleControlComponent } from './component/control/control.component';
+import { RoleListComponent } from './components/list/list.component';
+import { RoleActionsComponent } from './components/actions/actions.component';
+import { RoleControlComponent } from './components/control/control.component';
 import { RoleDisabledComponent } from './role-disabled.component';
-import { RoleDisabledListComponent } from './component/disabled/disabled.component';
+import { RoleDisabledListComponent } from './components/disabled/disabled.component';
 
 import { RoleService } from './role.service';
 import { FormService } from '@services/form.service';

@@ -6,11 +6,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { CompanyComponent } from './company.component';
-import { CompanyListComponent } from './component/list/list.component';
-import { CompanyActionsComponent } from './component/actions/actions.component';
-import { CompanyControlComponent } from './component/control/control.component';
+import { CompanyListComponent } from './components/list/list.component';
+import { CompanyActionsComponent } from './components/actions/actions.component';
+import { CompanyControlComponent } from './components/control/control.component';
 import { CompanyDisabledComponent } from './company-disabled.component';
-import { CompanyDisabledListComponent } from './component/disabled/disabled.component';
+import { CompanyDisabledListComponent } from './components/disabled/disabled.component';
 
 import { CompanyService } from './company.service';
 import { FormService } from '@services/form.service';

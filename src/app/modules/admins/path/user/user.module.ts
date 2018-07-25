@@ -6,13 +6,13 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { UserComponent } from './user.component';
-import { UserListComponent } from './component/list/list.component';
-import { UserActionsComponent } from './component/actions/actions.component';
-import { UserControlComponent } from './component/control/control.component';
-import { UserModifyComponent } from './component/modify/modify.component';
-import { UserPasswordComponent } from './component/password/password.component';
+import { UserListComponent } from './components/list/list.component';
+import { UserActionsComponent } from './components/actions/actions.component';
+import { UserControlComponent } from './components/control/control.component';
+import { UserModifyComponent } from './components/modify/modify.component';
+import { UserPasswordComponent } from './components/password/password.component';
 import { UserDisabledComponent } from './user-disabled.component';
-import { UserDisabledListComponent } from './component/disabled/disabled.component';
+import { UserDisabledListComponent } from './components/disabled/disabled.component';
 
 import { UserService } from './user.service';
 import { FormService } from '@services/form.service';

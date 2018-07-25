@@ -30,7 +30,7 @@ export class IncomeTypeService {
       }
     } = this.state;
 
-    return this.http.post('/FeeType/GetCancelListPaged', {
+    return this.http.post('/feetype/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       BlanceType: 'Income',
       PageIndex,
@@ -60,7 +60,7 @@ export class IncomeTypeService {
       }
     } = this.state;
 
-    return this.http.post('/FeeType/GetListPaged', {
+    return this.http.post('/feetype/GetListPaged', {
       QueryKey: currentQueryKey,
       BlanceType: 'Income',
       PageIndex,
@@ -82,27 +82,27 @@ export class IncomeTypeService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/FeeType/GetForModify', next, fallback, ModuleType.Basic);
+    return this.http.get('/feetype/GetForModify', next, fallback, ModuleType.Basic);
   }
 
   detail(feeTypeId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/FeeType/GetForModify?feeTypeId=${feeTypeId}`, next, fallback, ModuleType.Basic);
+    return this.http.get(`/feetype/GetForModify?feeTypeId=${feeTypeId}`, next, fallback, ModuleType.Basic);
   }
 
-  create(feeType, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/New', {
-      feeType
+  create(feetype, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/feetype/New', {
+      feetype
     }, next, fallback, ModuleType.Basic);
   }
 
-  update(feeType, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/Modify', {
-      feeType
+  update(feetype, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/feetype/Modify', {
+      feetype
     }, next, fallback, ModuleType.Basic);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/Cancel', {
+    return this.http.post('/feetype/Cancel', {
       entityIdList
     }, next, fallback, ModuleType.Basic);
   }
@@ -155,13 +155,13 @@ export class IncomeTypeService {
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/Remove', {
+    return this.http.post('/feetype/Remove', {
       entityIdList
     }, next, fallback, ModuleType.Basic);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/FeeType/Restore', {
+    return this.http.post('/feetype/Restore', {
       entityIdList
     }, next, fallback, ModuleType.Basic);
   }
