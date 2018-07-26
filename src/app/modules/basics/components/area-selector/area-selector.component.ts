@@ -19,7 +19,9 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
   private dataInitialized = false;
-  private isInitialValue = false;
+
+  @Input()
+  private isEditing = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
@@ -28,7 +30,7 @@ export class AreaSelectorComponent implements OnInit, ControlValueAccessor {
   constructor(private areaService: AreaService, private alertService: AlertService) { }
 
   ngOnInit() {
-    if (!this.dataInitialized && this.isInitialValue) {
+    if (!this.dataInitialized && !this.isEditing) {
       this.bindListData(null);
     }
   }

@@ -19,7 +19,9 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   private onTouched;
   private onChange;
   private dataInitialized = false;
-  private isInitialValue = false;
+
+  @Input()
+  private isEditing = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
@@ -28,7 +30,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
 
   ngOnInit() {
-    if (!this.dataInitialized && this.isInitialValue) {
+    if (!this.dataInitialized && !this.isEditing) {
       this.bindListData(null);
     }
   }
@@ -49,7 +51,6 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value) {
-    this.isInitialValue = true;
     if (!this.dataInitialized) {
       this.dataInitialized = true;
       this.bindListData(() => {
