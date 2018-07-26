@@ -12,6 +12,8 @@ import { ProductListComponent } from './components/list/list.component';
 import { ProductActionsComponent } from './components/actions/actions.component';
 import { ProductDisabledComponent } from './product-disabled.component';
 import { ProductDisabledListComponent } from './components/disabled/disabled.component';
+import { ProductBarcodeComponent } from './product-barcode.component';
+import { ProductBarcodeListComponent } from './components/barcode/barcode.component';
 
 import { ProductService } from './product.service';
 import { FormService } from '@services/form.service';
@@ -28,7 +30,9 @@ import { ProductRoutingModule } from './product.router';
     ProductStorageInitComponent,
     ProductUnitComponent,
     ProductDisabledComponent,
-    ProductDisabledListComponent
+    ProductDisabledListComponent,
+    ProductBarcodeComponent,
+    ProductBarcodeListComponent
  ],
   imports: [
     UIModule,
