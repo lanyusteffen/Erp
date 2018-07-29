@@ -110,32 +110,32 @@ export class ProductService {
       const nextState = {
         ...this.state,
         barcodes: data.ProductBarCodeList,
-        currentPagination: data.Pagination
+        currentPagination: data.ProductBarCodePageQueryReq
       };
 
       this.state = nextState;
       this.product$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Product);
   }
 
   productExtensions(entityId, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/GetProducExtendList', {
       entityId
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   getStorageDetailList(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/ProductStorageInit/GetStorageDetailList?productId=' + productId, next, fallback, ModuleType.Basic);
+    return this.http.get('/ProductStorageInit/GetStorageDetailList?productId=' + productId, next, fallback, ModuleType.Product);
   }
 
   getStorageDetailSkuList(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/ProductStorageInit/GetStorageDetailSkuList?productId=' + productId, next, fallback, ModuleType.Basic);
+    return this.http.get('/ProductStorageInit/GetStorageDetailSkuList?productId=' + productId, next, fallback, ModuleType.Product);
   }
 
   getStorageDetailProductUnitList(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/ProductStorageInit/GetStorageDetailProductUnitList=' + productId, next, fallback, ModuleType.Basic);
+    return this.http.get('/ProductStorageInit/GetStorageDetailProductUnitList=' + productId, next, fallback, ModuleType.Product);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -196,6 +196,19 @@ export class ProductService {
 
     this.state = nextState;
     this.list(fallback, successNotify);
+  }
+
+  onBarCodePageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {
+    const nextState = {
+      ...this.state,
+      currentPagination: {
+        ...this.state.currentPagination,
+        ...pagination
+      }
+    };
+
+    this.state = nextState;
+    this.listBarcode(fallback, successNotify);
   }
 
   onSearch(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
