@@ -22,7 +22,7 @@
         <label>采购部门：</label>
       </div>
       <div class="form-group-control">
-        <app-department-selector [isEditing]="false" ngModel></app-department-selector>
+        <app-department-selector [isEditing]="false"></app-department-selector>
       </div>
     </div>
     <div class="more">
@@ -33,15 +33,20 @@
             <label>采购时间：</label>
           </div>
           <div class="form-group-control">
-            <dp-date-picker [(ngModel)]="selectedDate" theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="more-actions">
+  <div class="actions">
     <app-ui-button [style]="'primary'">
       导入
     </app-ui-button>
+    <div class="more">
+      <app-ui-checkbox [checked]="false" [inline]="false">启用折扣</app-ui-checkbox>
+      <span>&nbsp;&nbsp;</span>
+      <app-ui-checkbox [checked]="false" [inline]="false">启用税率</app-ui-checkbox>
+    </div>
   </div>
 </form>
