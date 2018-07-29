@@ -20,8 +20,7 @@
         "prefix": "app",
         "styles": [
           "less/app.less",
-          "../node_modules/ng2-slim-loading-bar/style.css",
-          "assets/theme/default/laydate.css"
+          "../node_modules/ng2-slim-loading-bar/style.css"
         ],
         "stylePreprocessorOptions": {
           "includePaths": [
@@ -29,9 +28,7 @@
             "UI"
           ]
         },
-        "scripts": [
-          "assets/laydate.js"
-        ],
+        "scripts": [],
         "environmentSource": "environments/environment.ts",
         "environments": {
           "dev": "environments/environment.ts",

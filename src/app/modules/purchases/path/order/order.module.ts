@@ -12,6 +12,7 @@ import { FormService } from '@services/form.service';
 import { SharedModule } from '@app/shared.module';
 import { PurchaseOrderRoutingModule } from './order.router';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
+import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,11 @@ import { BasicsSharedModule } from '../../../basics/components/basics.shared.mod
         ReactiveFormsModule,
         BasicsSharedModule,
         SharedModule,
+        DpDatePickerModule,
         PurchaseOrderRoutingModule
+    ],
+    entryComponents: [
+        DatePickerComponent
     ],
     providers: [ PurchaseOrderService ]
 })
