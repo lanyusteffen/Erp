@@ -4,7 +4,6 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 
-declare let laydate;
 @Component({
   selector: 'app-purchase-order-new',
   templateUrl: './new.component.html',
@@ -30,10 +29,6 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    laydate.render({
-      elem: '#selPurchaseTime',
-      format: 'yyyy-MM-dd'
-    });
   }
 
   ngOnDestroy() {
