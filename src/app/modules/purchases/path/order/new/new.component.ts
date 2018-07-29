@@ -3,6 +3,7 @@ import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
+import { IDatePickerConfig } from 'ng2-date-picker';
 
 @Component({
   selector: 'app-purchase-order-new',
@@ -21,6 +22,10 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   private selectedCustomer: any;
   private selectedEmployee: any;
   private form = new FormGroup({});
+  private datePickerConfig: IDatePickerConfig = {
+    locale: 'zh-cn',
+    format: 'YYYY-MM-DD'
+  };
 
   // get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
   get formReady(): boolean { return true; }
