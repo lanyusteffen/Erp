@@ -22,7 +22,7 @@ export class FundsAccountActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService,
-	private router: Router
+    private router: Router
   ) { }
 
   show() {
@@ -35,7 +35,7 @@ export class FundsAccountActionsComponent {
       name: '停用银行账户',
       link: '/finances/fundsaccount/disabled'
     });
-	this.router.navigate(['/finances/fundsaccount/disabled']);
+    this.router.navigate(['/finances/fundsaccount/disabled']);
   }
 
   close() {

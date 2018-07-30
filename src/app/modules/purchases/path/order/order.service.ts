@@ -6,10 +6,10 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class PurchaseOrderService {
-  private area$ = new Subject<any>();
+  private purchase$ = new Subject<any>();
 
   private state = {
-    area: [],
+    purchases: [],
     currentQueryKey: '',
     areaParentId: 0,
     currentPagination: {
@@ -28,38 +28,36 @@ export class PurchaseOrderService {
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Area/GetAll', next, fallback, ModuleType.Basic);
+    return this.http.get('/Purchase/GetAll', next, fallback, ModuleType.Purchase);
   }
 
-  get() { return this.area$.asObservable(); }
+  get() { return this.purchase$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
-      areaParentId,
       currentPagination: {
         PageIndex,
         PageSize
       }
     } = this.state;
 
-    return this.http.post('/Area/GetListPaged', {
+    return this.http.post('/Purchase/GetListPaged', {
       QueryKey: currentQueryKey,
-      Status: 1,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
-        areas: data.AreaList,
+        purchases: data.PurchaseList,
         currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.area$.next(nextState);
+      this.purchase$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Purchase);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -72,62 +70,52 @@ export class PurchaseOrderService {
       }
     } = this.state;
 
-    return this.http.post('/Area/GetListPaged', {
+    return this.http.post('/Purchase/GetCancelListPaged', {
       QueryKey: currentQueryKey,
-      Status: -99,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
-        areas: data.AreaList,
+        purchases: data.PurchaseList,
         currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.area$.next(nextState);
+      this.purchase$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Purchase);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    const { areaParentId } = this.state;
-
-    return this.http.get('/Area/GetForNew', next, fallback, ModuleType.Basic, {
-      areaParentId
-    });
+    return this.http.post('/Purchase/GetForNew', {}, next, fallback, ModuleType.Purchase);
   }
 
-  detail(areaId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Area/GetForModify?areaId=${areaId}`, next, fallback, ModuleType.Basic);
-  }
-
-  create(area, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/New', area, next, fallback, ModuleType.Basic);
+  create(purchase, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Purchase/New', purchase, next, fallback, ModuleType.Purchase);
   }
 
   modify(area, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/Modify', area, next, fallback, ModuleType.Basic);
+    return this.http.post('/Purchase/Modify', area, next, fallback, ModuleType.Purchase);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/Cancel', {
+    return this.http.post('/Purchase/Cancel', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Purchase);
   }
 
-
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/Remove', {
+    return this.http.post('/Purchase/Remove', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Purchase);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Area/Restore', {
+    return this.http.post('/Purchase/Restore', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Purchase);
   }
 
   onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {

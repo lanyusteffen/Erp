@@ -14,7 +14,6 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
 
     /** 表示对所有路由允许复用 如果你有路由不想利用可以在这加一些业务逻辑判断 */
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
-
         return true;
     }
 
@@ -27,11 +26,15 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
     /** 若 path 在缓存中有的都认为允许还原路由 */
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
 
-        return !!SimpleReuseStrategy.handlers[this.getRouteUrl(route)];
+        return !!route.routeConfig && !!SimpleReuseStrategy.handlers[this.getRouteUrl(route)];
     }
 
     /** 从缓存中获取快照，若无则返回nul */
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
+
+        if (!route.routeConfig) {
+            return null;
+        }
 
         if (!SimpleReuseStrategy.handlers[this.getRouteUrl(route)]) {
             return null;
@@ -50,6 +53,6 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
     /** 使用route的path作为快照的key */
     getRouteUrl(route: ActivatedRouteSnapshot) {
         const path = route['_routerState'].url.replace(/\//g, '_');
-        return path;
+        return path + '_' + route.routeConfig.loadChildren;
     }
 }

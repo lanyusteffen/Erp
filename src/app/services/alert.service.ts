@@ -217,6 +217,10 @@ export class AlertService {
       case ModuleName.FundsAccount:
         name = '银行账户';
         break;
+
+      case ModuleName.Purchase:
+        name = '采购订单';
+        break;
     }
 
     return name;
@@ -261,5 +265,6 @@ export enum ModuleName {
   Extension,
   SystemUnit,
   OtherIncome,
-  FundsAccount
+  FundsAccount,
+  Purchase
 }

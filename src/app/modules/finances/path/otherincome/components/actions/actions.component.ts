@@ -22,7 +22,7 @@ export class OtherIncomeActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService,
-	private router: Router
+    private router: Router
   ) { }
 
   show() {
@@ -35,7 +35,7 @@ export class OtherIncomeActionsComponent {
       name: '停用其他收入',
       link: '/finances/otherincome/disabled'
     });
-	this.router.navigate(['/finances/otherincome/disabled']);
+    this.router.navigate(['/finances/otherincome/disabled']);
   }
 
   close() {

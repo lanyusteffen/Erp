@@ -4,11 +4,15 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
+import { PurchaseOrderService } from '../order.service';
+import { FormService } from '@services/form.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-purchase-order-new',
   templateUrl: './new.component.html',
-  styleUrls: ['./new.component.less']
+  styleUrls: ['./new.component.less'],
+  providers: [FormService]
 })
 
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
@@ -27,13 +31,17 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     format: 'YYYY-MM-DD'
   };
 
-  // get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
-  get formReady(): boolean { return true; }
+  get purchaseItemList(): FormArray { return this.form.get('PurchaseItemList') as FormArray; }
+  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
   constructor(
+    private purchaseOrderService: PurchaseOrderService,
+    private formService: FormService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
+    this.newOne();
   }
 
   ngOnDestroy() {
@@ -52,5 +60,14 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     if (value.Id === 0) {
     } else {
     }
+  }
+
+  newOne() {
+    this.purchaseOrderService
+      .newOne(data => {
+        this.form = this.formService.createForm(data);
+      }, (err) => {
+        this.alertService.getErrorCallBack(ModuleName.Purchase, err);
+      });
   }
 }

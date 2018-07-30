@@ -6,7 +6,7 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="SupplierId" [ngModel]></app-customer-popup-selector>
       </div>
     </div>
     <div class="form-group">
@@ -14,7 +14,7 @@
         <label>采购员：</label>
       </div>
       <div class="form-group-control">
-        <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
+        <app-popup-selector-employee (onConfirm)="selectEmployee($event)" formControlName="EmployeeId" [ngModel]></app-popup-selector-employee>
       </div>
     </div>
     <div class="form-group">
@@ -22,7 +22,7 @@
         <label>采购部门：</label>
       </div>
       <div class="form-group-control">
-        <app-department-selector [isEditing]="false"></app-department-selector>
+        <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
       </div>
     </div>
     <div class="more">
@@ -33,7 +33,7 @@
             <label>采购时间：</label>
           </div>
           <div class="form-group-control">
-            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="PurchaseTime" [ngModel]></dp-date-picker> 
           </div>
         </div>
       </div>
@@ -45,8 +45,38 @@
     </app-ui-button>
     <div class="more">
       <app-ui-checkbox [checked]="false" [inline]="false">启用折扣</app-ui-checkbox>
-      <span>&nbsp;&nbsp;</span>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
       <app-ui-checkbox [checked]="false" [inline]="false">启用税率</app-ui-checkbox>
     </div>
   </div>
+  <app-ui-table>
+    <thead>
+      <th>操作</th>
+      <th><span class="required">*</span>商品</th>
+      <th>规格型号</th>
+      <th>单位</th>
+      <th>颜色</th>
+      <th>尺码</th>
+      <th><span class="required">*</span>采购数量(批量设置))</th>
+      <th>采购单价(批量设置)</th>
+      <th>采购金额</th>
+      <th><span class="required">*</span>仓库</th>
+    </thead>
+    <tbody formArrayName="ItemList">
+      <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">
+        <td>
+          <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
+          <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
+        </td>
+        <td><input type="text" formControlName="Name" class="form-control" [ngModel]></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="text" formControlName="Quanlity" class="form-control" [ngModel]></td>
+        <td><input type="text" formControlName="Price" class="form-control" [ngModel]></td>
+        <td><input type="text" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
+      </tr>
+    </tbody>
+  </app-ui-table>
 </form>
