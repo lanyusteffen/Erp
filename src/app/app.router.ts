@@ -75,8 +75,8 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'finances/incometype',
-                loadChildren: './modules/finances/path/incometype/incometype.module#IncomeTypeModule',
+                path: 'finances/otherincome',
+                loadChildren: './modules/finances/path/otherincome/otherincome.module#OtherIncomeModule',
                 canLoad: [AuthGuard]
               },
               {
@@ -85,8 +85,8 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'finances/funds',
-                loadChildren: './modules/finances/path/funds/funds.module#FundsModule',
+                path: 'finances/fundsaccount',
+                loadChildren: './modules/finances/path/fundsaccount/fundsaccount.module#FundsAccountModule',
                 canLoad: [AuthGuard]
               },
               {

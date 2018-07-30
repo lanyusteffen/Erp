@@ -59,9 +59,9 @@ export class MenuComponent {
         {
           name: '基础资料',
           subMenu: [
-            { name: '资金账户', link: '/finances/funds' },
+            { name: '资金账户', link: '/finances/fundsaccount' },
             { name: '费用类型', link: '/finances/feetype' },
-            { name: '收入类型', link: '/finances/incometype' }
+            { name: '收入类型', link: '/finances/otherincome' }
           ]
         }
       ]

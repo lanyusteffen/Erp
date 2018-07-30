@@ -57,4 +57,13 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
       this.alertService.modifyFail(err);
     });
   }
+
+  onBarCodePageChange({ current, pageSize }) {
+    this.productService.onBarCodePageChange({
+      PageIndex: current,
+      PageSize: pageSize
+    }, (err) => {
+      this.alertService.listErrorCallBack(ModuleName.Product, err);
+    });
+  }
 }
