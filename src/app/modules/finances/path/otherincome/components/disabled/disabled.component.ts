@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { OtherIncomeService } from '../../otherincome.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { LocalStorage } from 'ngx-webstorage';
+import { AppService } from '@services/app.service';
 
 @Component({
   selector: 'app-otherincome-disabled-list',
@@ -17,14 +19,17 @@ export class OtherIncomeDisabledListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
-  private systemConfig: boolean;
+
+  @LocalStorage()
+  systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private otherIncomeService: OtherIncomeService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService: AppService
   ) {
     this.subscription = this.otherIncomeService
       .get()
@@ -34,7 +39,19 @@ export class OtherIncomeDisabledListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig((data) => {
+        this.systemConfig = data;
+      }, (err) => {
+        this.alertService.systemConfigFail(err);
+      });
+    }
+    return this.systemConfig;
+  }
+
   ngOnInit() {
+    this.getSystemConfig();
     this.otherIncomeService.listDisabled((err) => {
       this.alertService.listErrorCallBack(ModuleName.Cancel, err);
     });

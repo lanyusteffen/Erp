@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { FundsAccountService } from '../../fundsaccount.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { LocalStorage } from 'ngx-webstorage';
+import { AppService } from '@services/app.service';
 
 @Component({
   selector: 'app-fundsaccount-disabled-list',
@@ -17,14 +19,16 @@ export class FundsAccountDisabledListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
-  private systemConfig: boolean;
-
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
+
+  @LocalStorage()
+  systemConfig: any;
 
   constructor(
     private fundsAccountService: FundsAccountService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private appService: AppService
   ) {
     this.subscription = this.fundsAccountService
       .get()
@@ -34,7 +38,20 @@ export class FundsAccountDisabledListComponent implements OnInit, OnDestroy {
       });
   }
 
+  getSystemConfig(): any {
+    if (!this.systemConfig) {
+      this.appService.getSystemConfig((data) => {
+        this.systemConfig = data;
+      }, (err) => {
+        this.alertService.systemConfigFail(err);
+      });
+    }
+    return this.systemConfig;
+  }
+
+
   ngOnInit() {
+    this.getSystemConfig();
     this.fundsAccountService.listDisabled((err) => {
       this.alertService.listErrorCallBack(ModuleName.Cancel, err);
     });
