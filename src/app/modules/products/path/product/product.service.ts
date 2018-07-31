@@ -120,23 +120,22 @@ export class ProductService {
     }, fallback, ModuleType.Product);
   }
 
-  productExtensions(entityId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Product/GetProducExtendList', {
-      entityId
+  productExtensions(productId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Product/GetForModify', {
+      EntityId : productId
+    }, next, fallback, ModuleType.Webadmin);
+  }
+
+  getProductUnitList(productId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/ProductUnit/GetList', {
+      ProductId: productId
     }, next, fallback, ModuleType.Product);
   }
 
   getStorageDetailList(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/ProductStorageInit/GetStorageDetailList?productId=' + productId, next, fallback, ModuleType.Product);
+    return this.http.post('/StorageDetail/GetList', { productId }, next, fallback, ModuleType.Product);
   }
 
-  getStorageDetailSkuList(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/ProductStorageInit/GetStorageDetailSkuList?productId=' + productId, next, fallback, ModuleType.Product);
-  }
-
-  getStorageDetailProductUnitList(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/ProductStorageInit/GetStorageDetailProductUnitList=' + productId, next, fallback, ModuleType.Product);
-  }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { } = this.state;

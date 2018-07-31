@@ -60,9 +60,9 @@ export class ProductUnitComponent {
   set productId(productId) {
     this._productId = productId;
     if (this.show) {
-      this.productService.detail(productId, data => {
-        this._productUnitList = data.ProductUnitList;
-        this.form = this.formService.createForm(data.ProductUnitList);
+      this.productService.getProductUnitList(productId, data => {
+        this._productUnitList = data;
+        this.form = this.formService.createForm(data);
       }, (err) => {
         this.listErrorCallBack(err);
       });

@@ -54,6 +54,7 @@ export class ProductExtensionComponent {
 
   handleClose() {
     this.onClose.emit();
+    this._productId = 0;
   }
 
   @Input()
