@@ -62,16 +62,6 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
             });
           }
         }
-      }, (err: any) => {
-
-        if (this._loadingBar.visible) {
-          this._loadingBar.complete();
-        }
-
-        this.alertService.open({
-          type: 'danger',
-          content: '网络异常!'
-        });
       });
   }
 }

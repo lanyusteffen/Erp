@@ -13,12 +13,9 @@ import { FundsAccountDisabledComponent } from './fundsaccount-disabled.component
 import { FundsAccountDisabledListComponent } from './components/disabled/disabled.component';
 
 import { FundsAccountService } from './fundsaccount.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { FundsAccountRoutingModule } from './fundsaccount.router';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +34,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     FundsAccountRoutingModule
   ],
-  providers: [ FundsAccountService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ FundsAccountService ]
 })
 
 export class FundsAccountModule {

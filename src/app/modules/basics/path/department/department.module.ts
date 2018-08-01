@@ -13,12 +13,9 @@ import { DepartmentDisabledComponent } from './department-disabled.component';
 import { DepartmentDisabledListComponent } from './components/disabled/disabled.component';
 
 import { DepartmentService } from './department.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { DepartmentRoutingModule } from './department.router';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +34,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     DepartmentRoutingModule
   ],
-  providers: [ DepartmentService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ DepartmentService ]
 })
 
 export class DepartmentModule {

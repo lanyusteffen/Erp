@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import * as settings from '../../assets/appsettings.json';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { Observable } from '../../../node_modules/rxjs/Observable';
 
 @Injectable()
 export class HttpService {
 
   constructor(private http: HttpClient,
-    private router: Router, private authservice: AuthService) { }
+    private router: Router,
+    private authservice: AuthService
+  ) { }
 
   private addRequestHeader(dict?: { [key: string]: string | string[]; }): HttpHeaders {
 
@@ -121,8 +124,8 @@ export class HttpService {
   }
 
   checkAuthenticateResponse(err: any, fallback: (error: any) => void) {
-    if (err instanceof Response) {
-      const resp = err as Response;
+    if (err instanceof HttpErrorResponse) {
+      const resp = err as HttpErrorResponse;
       if (resp.status === 401) {
         this.authservice.logout();
         this.router.navigate(['/authorize/login']);
@@ -130,7 +133,7 @@ export class HttpService {
         fallback(err);
       }
     } else {
-      fallback(err);
+      Observable.throw(err);
     }
   }
 
@@ -149,7 +152,7 @@ export class HttpService {
           data => {
             next(data);
           },
-          err => {
+          (err: HttpErrorResponse) => {
             this.checkAuthenticateResponse(err, fallback);
           }
         );
@@ -164,7 +167,7 @@ export class HttpService {
         data => {
           next(data);
         },
-        err => {
+        (err: HttpErrorResponse) => {
           this.checkAuthenticateResponse(err, fallback);
         }
       );

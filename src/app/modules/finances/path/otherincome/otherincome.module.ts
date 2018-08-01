@@ -13,12 +13,9 @@ import { OtherIncomeDisabledComponent } from './otherincome-disabled.component';
 import { OtherIncomeDisabledListComponent } from './components/disabled/disabled.component';
 
 import { OtherIncomeService } from './otherincome.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { OtherIncomeRoutingModule } from './otherincome.router';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +34,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     OtherIncomeRoutingModule
   ],
-  providers: [ OtherIncomeService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ OtherIncomeService ]
 })
 
 export class OtherIncomeModule {

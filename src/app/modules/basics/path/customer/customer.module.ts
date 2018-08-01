@@ -13,13 +13,10 @@ import { CustomerDisabledComponent } from './customer-disabled.component';
 import { CustomerDisabledListComponent } from './components/disabled/disabled.component';
 
 import { CustomerService } from './customer.service';
-import { FormService } from '@services/form.service';
 
 import { BasicsSharedModule } from '../../components/basics.shared.module';
 import { SharedModule} from '@app/shared.module';
 import { CustomerRoutingModule } from './customer.router';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -39,7 +36,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     CustomerRoutingModule
   ],
-  providers: [ CustomerService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ CustomerService ]
 })
 
 export class CustomerModule {

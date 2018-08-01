@@ -13,12 +13,9 @@ import { AreaDisabledComponent } from './area-disabled.component';
 import { AreaDisabledListComponent } from './components/disabled/disabled.component';
 
 import { AreaService } from './area.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { AreaRoutingModule } from './area.router';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +34,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     AreaRoutingModule
   ],
-  providers: [ AreaService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ AreaService]
 })
 
 export class AreaModule {

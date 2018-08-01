@@ -13,13 +13,10 @@ import { EmployeeDisabledComponent } from './employee-disabled.component';
 import { EmployeeDisabledListComponent } from './components/disabled/disabled.component';
 
 import { EmployeeService } from './employee.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { EmployeeRoutingModule } from './employee.router';
 import { BasicsSharedModule } from '../../components/basics.shared.module';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -41,7 +38,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     EmployeeRoutingModule
   ],
-  providers: [ EmployeeService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ EmployeeService ]
 })
 
 export class EmployeeModule { }

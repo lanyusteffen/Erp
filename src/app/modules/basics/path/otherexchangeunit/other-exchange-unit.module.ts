@@ -13,13 +13,10 @@ import { OtherExchangeUnitDisabledComponent } from './other-exchange-unit-disabl
 import { OtherExchangeUnitDisabledListComponent } from './components/disabled/disabled.component';
 
 import { OtherExchangeUnitService } from './other-exchange-unit.service';
-import { FormService } from '@services/form.service';
 
 import { BasicsSharedModule } from '../../components/basics.shared.module';
 import { SharedModule } from '@app/shared.module';
 import { OtherExchangeUnitRoutingModule } from './other-exchange-unit.router';
-
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -39,7 +36,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     SharedModule,
     OtherExchangeUnitRoutingModule
   ],
-  providers: [ OtherExchangeUnitService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [ OtherExchangeUnitService ]
 })
 
 export class OtherExchangeUnitModule {

@@ -16,7 +16,6 @@ import { ProductBarcodeComponent } from './product-barcode.component';
 import { ProductBarcodeListComponent } from './components/barcode/barcode.component';
 
 import { ProductService } from './product.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule } from '@app/shared.module';
 import { ProductRoutingModule } from './product.router';
