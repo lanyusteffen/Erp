@@ -45,6 +45,11 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
+                path: 'admins/systemconfig',
+                loadChildren: './modules/admins/path/systemconfig/systemconfig.module#SystemConfigModule',
+                canLoad: [AuthGuard]
+              },
+              {
                 path: 'basics/area',
                 loadChildren: './modules/basics/path/area/area.module#AreaModule',
                 canLoad: [AuthGuard]

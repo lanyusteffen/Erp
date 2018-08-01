@@ -1,0 +1,21 @@
+<div class="actions">
+  <app-ui-button [style]="'primary'" type="submit">
+    <i class="iconfont icon-save"></i>
+    开账
+  </app-ui-button>
+</div>
+<div class="table-wrapper">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+    <table class="form">
+      <tr>
+        <th class="form-label">
+          <span class="required">*</span>
+          启用日期
+        </th>
+        <td class="form-control-group">
+          <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="EnableTime" [ngModel]></dp-date-picker>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

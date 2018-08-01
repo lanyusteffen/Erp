@@ -120,7 +120,8 @@ export class MenuComponent {
           subMenu: [
             { name: '公司管理', link: '/admins/company' },
             { name: '用户管理', link: '/admins/user' },
-            { name: '角色管理', link: '/admins/role' }
+            { name: '角色管理', link: '/admins/role' },
+            { name: '系统配置', link: '/admins/systemconfig' }
           ]
         }
       ]
