@@ -11,12 +11,12 @@ export class AuthService {
 
     public redirectUrl: string;
 
-    logout(): void {
+    public logout(): void {
         this.authToken = null;
         this.persistenceAuthToken = null;
     }
 
-    checkAuthorize(): boolean {
+    public checkAuthorize(): boolean {
         if (this.authToken != null || this.persistenceAuthToken != null) {
             return true;
         }

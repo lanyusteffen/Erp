@@ -1,5 +1,6 @@
-import { RouteReuseStrategy, DefaultUrlSerializer, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
-import { flattenStyles } from '../../../node_modules/@angular/platform-browser/src/dom/dom_renderer';
+import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+import { LocalStorage, SessionStorage } from 'ngx-webstorage';
+import { AuthService } from '@services/auth.service';
 
 export class SimpleReuseStrategy implements RouteReuseStrategy {
 
@@ -7,12 +8,8 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
 
     private static waitDelete: string;
 
-    public static deleteRouteSnapshot(name: string): void {
-        if (SimpleReuseStrategy.handlers[name]) {
-            delete SimpleReuseStrategy.handlers[name];
-        } else {
-            SimpleReuseStrategy.waitDelete = name;
-        }
+    public static deleteRouteSnapshot(): void {
+        SimpleReuseStrategy.handlers = {};
     }
 
     /** 表示对所有路由允许复用 如果你有路由不想利用可以在这加一些业务逻辑判断 */
