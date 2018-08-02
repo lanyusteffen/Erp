@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
 <div class="actions">
   <app-ui-button [style]="'primary'" type="submit">
     <i class="iconfont icon-save"></i>
@@ -14,7 +14,6 @@
           启用日期
         </th>
         <td class="form-control-group">
-          <input formControlName = "EnableTime" [ngModel]/>
           <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="EnableTime" [ngModel]></dp-date-picker>
         </td>
       </tr>

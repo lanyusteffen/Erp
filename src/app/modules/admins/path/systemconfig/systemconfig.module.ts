@@ -27,6 +27,9 @@ import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
     SystemConfigRoutingModule,
     DpDatePickerModule
   ],
+  entryComponents: [
+    DatePickerComponent
+  ],
   providers: [ SystemConfigService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
 })
 

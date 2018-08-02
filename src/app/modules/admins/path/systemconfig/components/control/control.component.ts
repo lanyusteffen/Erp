@@ -25,29 +25,25 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
     };
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
+    get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
     constructor(
         private systemConfigService: SystemConfigService,
         private alertService: AlertService,
-        private formService: FormService,
-        private fb: FormBuilder
+        private formService: FormService
     ) {
 
     }
 
     ngOnInit() {
-        this.systemConfig = {
-            EnableTime: ['']
-        };
-        this.form = this.fb.group(this.systemConfig);
         this.systemConfigService.detail(
             (data) => {
-                this.systemConfig = data;
-                this.form = this.formService.createForm(this.systemConfig);
+                this.form = this.formService.createForm(data);
+                this.type = 'Update';
             }, (e) => {
                 this.systemConfigService.newOne((data) => {
-                    this.systemConfig = data;
-                    this.form = this.formService.createForm(this.systemConfig);
+                    this.form = this.formService.createForm(data);
+                    this.type = 'create';
                 }, null);
             }
         );
