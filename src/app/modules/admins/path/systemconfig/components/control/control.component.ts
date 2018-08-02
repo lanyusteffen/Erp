@@ -14,6 +14,7 @@ import { IDatePickerConfig } from 'ng2-date-picker';
 })
 
 export class SystemConfigControlComponent implements OnInit, OnDestroy {
+
     private form = new FormGroup({});
     private type: string;
     private subscription: Subscription;
@@ -21,34 +22,43 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
     private datePickerConfig: IDatePickerConfig = {
         locale: 'zh-cn',
         format: 'YYYY-MM-DD'
-      };
+    };
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private systemConfigService: SystemConfigService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private formService: FormService,
+        private fb: FormBuilder
     ) {
-        this.subscription = this.systemConfigService
-            .get()
-            .subscribe();
+
     }
 
     ngOnInit() {
+        this.systemConfig = {
+            EnableTime: ['']
+        };
+        this.form = this.fb.group(this.systemConfig);
         this.systemConfigService.detail(
             (data) => {
                 this.systemConfig = data;
+                this.form = this.formService.createForm(this.systemConfig);
             }, (e) => {
-                this.systemConfigService.newOne((data) => { this.systemConfig = data; }, null);
+                this.systemConfigService.newOne((data) => {
+                    this.systemConfig = data;
+                    this.form = this.formService.createForm(this.systemConfig);
+                }, null);
             }
         );
+
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
 
-    
+
     handleClose() {
         this.onClose.emit();
     }
