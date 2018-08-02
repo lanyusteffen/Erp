@@ -63,7 +63,7 @@
       <th><span class="required">*</span>仓库</th>
     </thead>
     <tbody formArrayName="ItemList">
-      <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">
+      <tr *ngFor="let item of purchaseItemList; index as i">
         <td>
           <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>

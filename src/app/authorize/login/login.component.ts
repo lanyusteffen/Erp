@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
         } else {
           this.authToken = data.Token;
         }
-        SimpleReuseStrategy.deleteRouteSnapshot();
         this.router.navigate(['/home/index']);
       } else {
         this.loginCallBack(data.ErrorMessages);
