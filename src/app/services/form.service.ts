@@ -15,7 +15,6 @@ export class FormService {
         formGroup[key] = fields[key];
       }
     }
-
     return this.fb.group(formGroup);
   }
 }
