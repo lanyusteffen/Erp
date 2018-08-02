@@ -21,7 +21,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
     private systemConfig: any;
     private datePickerConfig: IDatePickerConfig = {
         locale: 'zh-cn',
-        format: 'YYYY-MM-DD'
+        format: 'YYYY-MM-DD HH:mm:ss'
     };
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
