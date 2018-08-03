@@ -59,7 +59,12 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
         this.onClose.emit();
     }
 
-    onSubmit({ value }) {
+    onOpenBill({ value }) {
+        value.IsEnabled = true;
+        this.save({ value });
+    }
+
+    save({ value }) {
         if (this.type === 'create') {
             this.systemConfigService.create(value, data => {
                 if (data.IsValid) {
@@ -81,6 +86,10 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
                 this.alertService.modifyFail(err);
             });
         }
+    }
+
+    onSubmit({ value }) {
+        this.save({ value });
     }
 }
 

@@ -1,12 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
-<div class="actions">
-  <app-ui-button [style]="'primary'" type="submit">
-    <i class="iconfont icon-save"></i>
-    开账
-  </app-ui-button>
-</div>
-<div class="table-wrapper">
-  
+  <div class="actions">
+    <app-ui-button [style]="'primary'" type="submit">
+      <i class="iconfont icon-save"></i>
+      保存
+    </app-ui-button>
+  </div>
+  <div class="table-wrapper">
+    <div class="heading">
+      基本信息
+    </div>
     <table class="form">
       <tr>
         <th class="form-label">
@@ -14,9 +16,28 @@
           启用日期
         </th>
         <td class="form-control-group">
-          <dp-date-picker theme="dp-material" monthFormat="yyyy-MM-dd" mode="day" [config]="datePickerConfig" formControlName="EnableTime" [ngModel]></dp-date-picker>
-        </td>
+          <dp-date-picker theme="dp-material" monthFormat="yyyy-MM-dd" mode="day" [config]="datePickerConfig" formControlName="EnableTime"
+            [ngModel]></dp-date-picker>
+          <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+            <i class="iconfont icon-add"></i>
+            开账
+          </app-ui-button>
+        </td>        
       </tr>
     </table>
-</div>
+    <div class="heading">
+      采购设置
+    </div>
+    <table class="form">
+      <tr>
+        <th class="form-label">
+          <span class="required">*</span>
+          价格设置
+        </th>
+        <td class="form-control-group">
+          <input #formField type="text" class="form-control" [ngModel] formControlName="PurchasePriceRule">
+        </td>        
+      </tr>
+    </table>
+  </div>
 </form>
