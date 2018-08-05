@@ -2,28 +2,33 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { PaginationBarComponent } from '../../../../components/pagination-bar/pagination-bar.component';
 import { AlertService } from '../../../../services/alert.service';
 import { EmployeePopupSelectService } from './employee-popup-selector.service';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-popup-selector-employee',
   templateUrl: './popup-selector-employee.component.html',
   styleUrls: ['./popup-selector-employee.component.less'],
-  providers: [EmployeePopupSelectService]
+  providers: [ EmployeePopupSelectService,
+    { provide: NG_VALUE_ACCESSOR, useExisting: PopupSelectorEmployeeComponent, multi: true }
+  ]
 })
-export class PopupSelectorEmployeeComponent {
+export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
 
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
 
   @Output() onConfirm = new EventEmitter<any>();
 
+  private innerValue: any;
+  private onTouched = null;
+  private onChange = null;
   private employees = <any>[];
   private pagination = {};
-
-  _showLabel = '';
-  _show: boolean;
-  _size = 10;
-  _selectedItem: any;
-  _options = [
+  private _showLabel = '';
+  private _show: boolean;
+  private _size = 10;
+  private _selectedItem: any;
+  private _options = [
     { label: '10 条／页', value: 10 }
   ];
 
@@ -108,5 +113,32 @@ export class PopupSelectorEmployeeComponent {
 
   constructor(private dataService: EmployeePopupSelectService,
               private alertService: AlertService) {
+  }
+
+  writeValue(value) {
+    this.innerValue = value || 0;
+    if (this.innerValue > 0) {
+      this.dataService.getEmployee(this.innerValue, (data) => {
+        this._showLabel = data.Name;
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '获取职员信息失败!' + err
+        });
+      });
+    }
+  }
+
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  handleChange(value) {
+    this.innerValue = value;
+    this.onChange(value);
   }
 }

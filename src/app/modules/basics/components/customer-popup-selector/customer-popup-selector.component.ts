@@ -1,24 +1,31 @@
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { CustomerPopupSelectorService } from './customer-popup-selector.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PopupSelectorCustomerComponent } from '../popup-selector-customer/popup-selector-customer.component';
 import { PopupSelectorSupplierComponent } from '../popup-selector-supplier/popup-selector-supplier.component';
 import { PopupSelectorOtherComponent } from '../popup-selector-other/popup-selector-other.component';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-customer-popup-selector',
   templateUrl: './customer-popup-selector.component.html',
   styleUrls: ['./customer-popup-selector.component.less'],
-  providers: [CustomerPopupSelectorService]
+  providers: [ CustomerPopupSelectorService ,
+      { provide: NG_VALUE_ACCESSOR, useExisting: CustomerPopupSelectorComponent, multi: true }
+  ]
 })
 
-export class CustomerPopupSelectorComponent {
+export class CustomerPopupSelectorComponent implements OnInit, ControlValueAccessor {
 
   @LocalStorage()
   selectedTab: string;
 
-  _show = false;
-  _showLabel = '';
+  private innerValue: any;
+  private onTouched = null;
+  private onChange = null;
+  private _show = false;
+  private _showLabel = '';
 
   @Input()
   set defaultTab(value) {
@@ -101,10 +108,41 @@ export class CustomerPopupSelectorComponent {
   }
 
   constructor(
-    private dataService: CustomerPopupSelectorService
+    private dataService: CustomerPopupSelectorService,
+    private alertService: AlertService
   ) {
+  }
+
+  ngOnInit() {
     if (this.selectedTab === null || this.selectedTab === undefined) {
       this.selectTab('Supplier');
     }
+  }
+
+  writeValue(value) {
+    this.innerValue = value || 0;
+    if (this.innerValue > 0) {
+      // this.dataService.getEmployee(this.innerValue, (data) => {
+      //   this._showLabel = data.Name;
+      // }, (err) => {
+      //   this.alertService.open({
+      //     type: 'danger',
+      //     content: '获取职员信息失败!' + err
+      //   });
+      // });
+    }
+  }
+
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  handleChange(value) {
+    this.innerValue = value;
+    this.onChange(value);
   }
 }

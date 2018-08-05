@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class PurchaseOrderService {
   private purchase$ = new Subject<any>();
+  private purchaseDisabled$ = new Subject<any>();
 
   private state = {
     purchases: [],
@@ -82,7 +83,7 @@ export class PurchaseOrderService {
       };
 
       this.state = nextState;
-      this.purchase$.next(nextState);
+      this.purchaseDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
     }, fallback, ModuleType.Purchase);

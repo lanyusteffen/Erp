@@ -71,5 +71,9 @@ export class EmployeePopupSelectService {
         this.list(next, fallback);
     }
 
+    getEmployee(employeeId, next: (data: any) => void, fallback: (error: any) => void) {
+        return this.http.post(`/Employee/GetForModify`, { EntityId : employeeId }, next, fallback, ModuleType.Basic);
+    }
+
     constructor(private http: HttpService) {}
 }
