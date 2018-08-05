@@ -1,0 +1,5 @@
+<label class="radio" [ngClass]="{'checked': checked, 'inline': inline}">
+    <input type="radio" [name] ="radioName" [value]="value" (change)="handleChange($event)" />
+    <i class="iconfont icon-selected" for="name"></i>
+    <ng-content></ng-content>
+  </label>

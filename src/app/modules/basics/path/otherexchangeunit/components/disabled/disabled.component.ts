@@ -42,21 +42,20 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.otherExchangeUnitService.listDisabled((err) => {
+        this.alertService.listErrorCallBack(ModuleName.Cancel, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.otherExchangeUnitService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
-    });
+   
   }
 
   ngOnDestroy() {

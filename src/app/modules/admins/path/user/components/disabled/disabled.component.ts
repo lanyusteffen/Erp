@@ -42,21 +42,19 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.userService.listDisabled((err) => {
+       this.alertService.listErrorCallBack(ModuleName.User, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.userService.listDisabled((err) => {
-     this.alertService.listErrorCallBack(ModuleName.User, err);
-    });
   }
 
   ngOnDestroy() {

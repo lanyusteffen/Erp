@@ -18,6 +18,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
     private form = new FormGroup({});
     private type: string;
     private subscription: Subscription;
+    private radioChecked = false;
     private systemConfig: any;
     private datePickerConfig: IDatePickerConfig = {
         locale: 'zh-cn',
@@ -25,6 +26,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
     };
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
+
     get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
     constructor(
@@ -32,7 +34,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private formService: FormService
     ) {
-
+    this.subscription = this.systemConfigService.get().subscribe();
     }
 
     ngOnInit() {
@@ -50,8 +52,13 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(){
         this.subscription.unsubscribe();
+    }
+
+    select(evt) {
+        console.log(evt.target)
+        this.radioChecked = evt.target.value;
     }
 
 
