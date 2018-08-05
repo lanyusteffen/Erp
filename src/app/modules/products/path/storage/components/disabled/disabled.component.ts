@@ -33,7 +33,7 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.storageService
-      .get()
+      .getDisabled()
       .subscribe(({ storages, currentPagination }) => {
         this.storages = storages;
         this.pagination = currentPagination;
@@ -53,7 +53,7 @@ export class StorageDisabledListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getSystemConfig();    
+    this.getSystemConfig();
   }
 
   ngOnDestroy() {
