@@ -42,21 +42,19 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.companyService.listDisabled((err) => {
+        this.alertService.listErrorCallBack(ModuleName.Company, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
   ngOnInit() {
-    this.getSystemConfig();
-    this.companyService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Company, err);
-    });
+    this.getSystemConfig();    
   }
 
   ngOnDestroy() {

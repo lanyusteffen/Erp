@@ -42,21 +42,20 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.roleService.listDisabled((err) => {
+        this.alertService.listErrorCallBack(ModuleName.Role, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.roleService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Role, err);
-    });
+   
   }
 
   ngOnDestroy() {

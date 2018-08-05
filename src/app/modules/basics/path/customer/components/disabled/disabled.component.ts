@@ -42,21 +42,19 @@ export class CustomerDisabledListComponent implements OnInit, OnDestroy {
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.customerService.listDisabled((err) => {
+        this.alertService.listErrorCallBack(ModuleName.Cancel, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
   ngOnInit() {
-    this.getSystemConfig();
-    this.customerService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
-    });
+    this.getSystemConfig();    
   }
 
   ngOnDestroy() {

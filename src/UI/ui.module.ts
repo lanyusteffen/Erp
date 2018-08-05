@@ -10,6 +10,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SelectComponent } from './select/select.component';
 import { AlertComponent } from './alert/alert.component';
 import { ModalComponent } from './modal/modal.component';
+import { RadioComponent } from './radio/radio.component'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ModalComponent } from './modal/modal.component';
     DropdownComponent,
     TableComponent,
     PaginationComponent,
+    RadioComponent,
     CheckboxComponent,
     SelectComponent,
     AlertComponent,
@@ -32,6 +34,7 @@ import { ModalComponent } from './modal/modal.component';
     TableComponent,
     PaginationComponent,
     CheckboxComponent,
+    RadioComponent,
     SelectComponent,
     AlertComponent,
     ModalComponent

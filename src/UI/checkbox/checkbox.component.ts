@@ -13,6 +13,7 @@ export class CheckboxComponent {
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   handleChange(evt) {
+    console.log(this.checked);
     this.onChange.emit(evt);
   }
 }

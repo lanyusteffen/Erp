@@ -45,21 +45,20 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.departmentService.listDisabled((err) => {
+        this.alertService.listErrorCallBack(ModuleName.Department, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
   ngOnInit() {
     this.getSystemConfig();
-    this.departmentService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Department, err);
-    });
+   
   }
 
   ngOnDestroy() {

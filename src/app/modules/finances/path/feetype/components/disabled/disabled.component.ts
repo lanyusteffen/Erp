@@ -42,22 +42,20 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
   }
 
   getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.feeTypeService.listDisabled((err) => {
+        this.alertService.listErrorCallBack(ModuleName.Cancel, err);
       });
-    }
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+    });
     return this.systemConfig;
   }
 
 
   ngOnInit() {
-    this.getSystemConfig();
-    this.feeTypeService.listDisabled((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
-    });
+    this.getSystemConfig();    
   }
 
   ngOnDestroy() {
