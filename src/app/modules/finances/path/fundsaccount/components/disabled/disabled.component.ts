@@ -31,7 +31,7 @@ export class FundsAccountDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.fundsAccountService
-      .get()
+      .getDisabled()
       .subscribe(({ fundsAccounts, currentPagination }) => {
         this.fundsAccounts = fundsAccounts;
         this.pagination = currentPagination;

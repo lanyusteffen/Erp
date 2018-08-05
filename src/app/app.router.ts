@@ -30,6 +30,12 @@ import { RoleDisabledComponent } from './modules/admins/path/role/role-disabled.
 import { RoleComponent } from './modules/admins/path/role/role.component';
 import { SystemConfigComponent } from './modules/admins/path/systemconfig/systemconfig.component';
 import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
+import { ProductComponent } from './modules/products/path/product/product.component';
+import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
+import { StorageComponent } from './modules/products/path/storage/storage.component';
+import { StorageDisabledComponent } from './modules/products/path/storage/storage-disabled.component';
+import { SystemUnitComponent } from './modules/products/path/systemunit/systemunit.component';
+import { SystemUnitDisabledComponent } from './modules/products/path/systemunit/systemunit-disabled.component';
 
 export const ROUTES: Routes = [
     {
@@ -180,13 +186,33 @@ export const ROUTES: Routes = [
               },
               {
                 path: 'products/storage',
-                loadChildren: './modules/products/path/storage/storage.module#StorageModule',
-                canLoad: [AuthGuard]
+                component: StorageComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'products/storage/disabled',
+                component: StorageDisabledComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'products/systemunit',
+                component: SystemUnitComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'products/systemunit/disabled',
+                component: SystemUnitDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'products/product',
-                loadChildren: './modules/products/path/product/product.module#ProductModule',
-                canLoad: [AuthGuard]
+                component: ProductComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'products/product/disabled',
+                component: ProductDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'purchases/order/new',

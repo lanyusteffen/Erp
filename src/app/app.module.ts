@@ -117,6 +117,32 @@ import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 import { PurchaseOrderService } from './modules/purchases/path/order/order.service';
 import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
 
+import { ProductComponent } from './modules/products/path/product/product.component';
+import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
+import { SystemUnitComponent } from './modules/products/path/systemunit/systemunit.component';
+import { SystemUnitDisabledComponent } from './modules/products/path/systemunit/systemunit-disabled.component';
+import { StorageComponent } from './modules/products/path/storage/storage.component';
+import { StorageDisabledComponent } from './modules/products/path/storage/storage-disabled.component';
+import { ProductService } from './modules/products/path/product/product.service';
+import { StorageService } from './modules/products/path/storage/storage.service';
+import { SystemUnitService } from './modules/products/path/systemunit/systemunit.service';
+import { SystemUnitActionsComponent } from './modules/products/path/systemunit/components/actions/actions.component';
+import { SystemUnitControlComponent } from './modules/products/path/systemunit/components/control/control.component';
+import { SystemUnitDisabledListComponent } from './modules/products/path/systemunit/components/disabled/disabled.component';
+import { SystemUnitListComponent } from './modules/products/path/systemunit/components/list/list.component';
+import { ProductActionsComponent } from './modules/products/path/product/components/actions/actions.component';
+import { ProductBarcodeComponent } from './modules/products/path/product/product-barcode.component';
+import { ProductBarcodeListComponent } from './modules/products/path/product/components/barcode/barcode.component';
+import { ProductDisabledListComponent } from './modules/products/path/product/components/disabled/disabled.component';
+import { ProductExtensionComponent } from './modules/products/path/product/components/extension/extension.component';
+import { ProductListComponent } from './modules/products/path/product/components/list/list.component';
+import { ProductStorageInitComponent } from './modules/products/path/product/components/storageInit/storageInit.component';
+import { StorageActionsComponent } from './modules/products/path/storage/components/actions/actions.component';
+import { StorageControlComponent } from './modules/products/path/storage/components/control/control.component';
+import { StorageDisabledListComponent } from './modules/products/path/storage/components/disabled/disabled.component';
+import { StorageListComponent } from './modules/products/path/storage/components/list/list.component';
+import { ProductUnitComponent } from './modules/products/path/product/components/unit/unit.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -204,7 +230,29 @@ import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/ne
     RoleDisabledListComponent,
     SystemConfigComponent,
     SystemConfigControlComponent,
-    PurchaseOrderNewComponent
+    PurchaseOrderNewComponent,
+    SystemUnitComponent,
+    SystemUnitDisabledComponent,
+    SystemUnitActionsComponent,
+    SystemUnitControlComponent,
+    SystemUnitDisabledListComponent,
+    SystemUnitListComponent,
+    ProductActionsComponent,
+    ProductBarcodeComponent,
+    ProductBarcodeListComponent,
+    ProductComponent,
+    ProductDisabledComponent,
+    ProductDisabledListComponent,
+    ProductExtensionComponent,
+    ProductListComponent,
+    ProductStorageInitComponent,
+    StorageActionsComponent,
+    StorageComponent,
+    StorageControlComponent,
+    StorageDisabledComponent,
+    StorageDisabledListComponent,
+    StorageListComponent,
+    ProductUnitComponent,
   ],
   imports: [
     BrowserModule,
@@ -229,14 +277,15 @@ import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/ne
     multi: true
   }, {
     provide: RouteReuseStrategy,
-    useClass: SimpleReuseStrategy },
+    useClass: SimpleReuseStrategy
+  },
 
     FundsAccountService, OtherIncomeService, FeeTypeService,
     SystemConfigService, CompanyService, UserService, RoleService,
     AreaService, CustomerService, DepartmentService, EmployeeService, OtherExchangeUnitService, SupplierService,
     PurchaseOrderService,
-
-  HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService ],
+    ProductService, SystemUnitService, StorageService,
+    HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 

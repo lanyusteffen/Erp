@@ -9,7 +9,6 @@ import { ConfirmService } from '@services/confirm.service';
 @Component({
   selector: 'app-basics-product-disabled',
   template: `
-  
   <div class="actions">
     <app-quick-search [placeholder]="'输入商品编号、名称、规格型号、品牌'" (onSearch)="onSearch($event)"></app-quick-search>
     <app-ui-button [style]="'danger'" *ngIf="!systemConfig.IsOpenBill" [disabled]="!selectedItems.length" (click)="restore()">
@@ -25,7 +24,7 @@ import { ConfirmService } from '@services/confirm.service';
   </div>
   <div class="content">
     <app-category  [categoryType]="'Product'" [resourceType]="''" (onChange)="onCategoryChange($event)"
-  ></app-category>    
+  ></app-category>
     <app-product-disabled-list (selectItems)="selectItems($event)"></app-product-disabled-list>
   </div>
   `,
@@ -73,7 +72,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
 
     this.systemConfig = this.getSystemConfig();
     this.subscription = this.productService
-      .get()
+      .getDisabled()
       .subscribe();
   }
 
@@ -82,10 +81,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
       this.appService.getSystemConfig((data) => {
         this.systemConfig = data;
       }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
+        this.alertService.systemConfigFail(err);
       });
     }
     return this.systemConfig;
@@ -93,7 +89,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
 
   onSearch(queryKey) {
     this.productService.onSearchDisabled(queryKey, (err) => {
-      this.listErrorCallBack(err)
+      this.listErrorCallBack(err);
     });
   }
 
@@ -118,7 +114,7 @@ export class ProductDisabledComponent implements OnInit, OnDestroy {
                 content: '还原成功！'
               });
               this.productService.listDisabled((err) => {
-                this.listErrorCallBack(err)
+                this.listErrorCallBack(err);
               });
             } else {
               this.alertService.open({

@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class StorageService {
   private storage$ = new Subject<any>();
+  private storageDisabled$ = new Subject<any>();
 
   private state = {
     storage: [],
@@ -27,6 +28,8 @@ export class StorageService {
   }
 
   get() { return this.storage$.asObservable(); }
+
+  getDisabled() { return this.storageDisabled$.asObservable(); }
 
   succeessNotifyCallback(successNotify?): void {
     if (successNotify !== undefined) {
@@ -85,7 +88,7 @@ export class StorageService {
       };
 
       this.state = nextState;
-      this.storage$.next(nextState);
+      this.storageDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
 
