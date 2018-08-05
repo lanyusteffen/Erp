@@ -115,6 +115,7 @@ import { UserModifyComponent } from './modules/admins/path/user/components/modif
 import { UserPasswordComponent } from './modules/admins/path/user/components/password/password.component';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 import { PurchaseOrderService } from './modules/purchases/path/order/order.service';
+import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
 
 @NgModule({
   declarations: [
@@ -202,7 +203,8 @@ import { PurchaseOrderService } from './modules/purchases/path/order/order.servi
     RoleDisabledComponent,
     RoleDisabledListComponent,
     SystemConfigComponent,
-    SystemConfigControlComponent
+    SystemConfigControlComponent,
+    PurchaseOrderNewComponent
   ],
   imports: [
     BrowserModule,
