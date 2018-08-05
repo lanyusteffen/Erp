@@ -13,7 +13,6 @@ import { CompanyDisabledComponent } from './company-disabled.component';
 import { CompanyDisabledListComponent } from './components/disabled/disabled.component';
 
 import { CompanyService } from './company.service';
-import { FormService } from '@services/form.service';
 
 import { SharedModule} from '@app/shared.module';
 import { CompanyRoutingModule } from './company.router';

@@ -6,6 +6,30 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './modules/home/home.component';
 import { IndexComponent } from './modules/home/components/index/index.component';
 import { LoginComponent } from './authorize/login/login.component';
+import { OtherIncomeComponent } from './modules/finances/path/otherincome/otherincome.component';
+import { OtherIncomeDisabledComponent } from './modules/finances/path/otherincome/otherincome-disabled.component';
+import { FundsAccountComponent } from './modules/finances/path/fundsaccount/fundsaccount.component';
+import { FundsAccountDisabledComponent } from './modules/finances/path/fundsaccount/fundsaccount-disabled.component';
+import { FeeTypeComponent } from './modules/finances/path/feetype/feetype.component';
+import { FeeTypeDisabledComponent } from './modules/finances/path/feetype/feetype-disabled.component';
+import { AreaComponent } from './modules/basics/path/area/area.component';
+import { AreaDisabledComponent } from './modules/basics/path/area/area-disabled.component';
+import { CustomerComponent } from './modules/basics/path/customer/customer.component';
+import { CustomerDisabledComponent } from './modules/basics/path/customer/customer-disabled.component';
+import { DepartmentComponent } from './modules/basics/path/department/department.component';
+import { DepartmentDisabledComponent } from './modules/basics/path/department/department-disabled.component';
+import { EmployeeComponent } from './modules/basics/path/employee/employee.component';
+import { EmployeeDisabledComponent } from './modules/basics/path/employee/employee-disabled.component';
+import { SupplierDisabledComponent } from './modules/basics/path/supplier/supplier-disabled.component';
+import { SupplierComponent } from './modules/basics/path/supplier/supplier.component';
+import { CompanyComponent } from './modules/admins/path/company/company.component';
+import { CompanyDisabledComponent } from './modules/admins/path/company/company-disabled.component';
+import { UserComponent } from './modules/admins/path/user/user.component';
+import { UserDisabledComponent } from './modules/admins/path/user/user-disabled.component';
+import { RoleDisabledComponent } from './modules/admins/path/role/role-disabled.component';
+import { RoleComponent } from './modules/admins/path/role/role.component';
+import { SystemConfigComponent } from './modules/admins/path/systemconfig/systemconfig.component';
+import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
 
 export const ROUTES: Routes = [
     {
@@ -31,68 +55,128 @@ export const ROUTES: Routes = [
               },
               {
                 path: 'admins/company',
-                loadChildren: './modules/admins/path/company/company.module#CompanyModule',
-                canLoad: [AuthGuard]
+                component: CompanyComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'admins/company/disabled',
+                component: CompanyDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'admins/user',
-                loadChildren: './modules/admins/path/user/user.module#UserModule',
-                canLoad: [AuthGuard]
+                component: UserComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'admins/user/disabled',
+                component: UserDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'admins/role',
-                loadChildren: './modules/admins/path/role/role.module#RoleModule',
-                canLoad: [AuthGuard]
+                component: RoleComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'admins/role/disabled',
+                component: RoleDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'admins/systemconfig',
-                loadChildren: './modules/admins/path/systemconfig/systemconfig.module#SystemConfigModule',
-                canLoad: [AuthGuard]
+                component: SystemConfigComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'basics/area',
-                loadChildren: './modules/basics/path/area/area.module#AreaModule',
-                canLoad: [AuthGuard]
+                component: AreaComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'basics/area/disabled',
+                component: AreaDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'basics/customer',
-                loadChildren: './modules/basics/path/customer/customer.module#CustomerModule',
-                canLoad: [AuthGuard]
+                component: CustomerComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'basics/customer/disabled',
+                component: CustomerDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'basics/department',
-                loadChildren: './modules/basics/path/department/department.module#DepartmentModule',
-                canLoad: [AuthGuard]
+                component: DepartmentComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'basics/department/disabled',
+                component: DepartmentDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'basics/employee',
-                loadChildren: './modules/basics/path/employee/employee.module#EmployeeModule',
-                canLoad: [AuthGuard]
+                component: EmployeeComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'basics/employee/disabled',
+                component: EmployeeDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'basics/otherexchangeunit',
-                loadChildren: './modules/basics/path/otherexchangeunit/other-exchange-unit.module#OtherExchangeUnitModule',
-                canLoad: [AuthGuard]
+                component: OtherIncomeComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'basics/otherexchangeunit/disabled',
+                component: OtherIncomeDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'basics/supplier',
-                loadChildren: './modules/basics/path/supplier/supplier.module#SupplierModule',
-                canLoad: [AuthGuard]
+                component: SupplierComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'basics/supplier/disabled',
+                component: SupplierDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'finances/otherincome',
-                loadChildren: './modules/finances/path/otherincome/otherincome.module#OtherIncomeModule',
-                canLoad: [AuthGuard]
+                component: OtherIncomeComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'finances/otherincome/disabled',
+                component: OtherIncomeDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'finances/feetype',
-                loadChildren: './modules/finances/path/feetype/feetype.module#FeeTypeModule',
-                canLoad: [AuthGuard]
+                component: FeeTypeComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'finances/feetype/disabled',
+                component: FeeTypeDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'finances/fundsaccount',
-                loadChildren: './modules/finances/path/fundsaccount/fundsaccount.module#FundsAccountModule',
-                canLoad: [AuthGuard]
+                component: FundsAccountComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'finances/fundsaccount/disabled',
+                component: FundsAccountDisabledComponent,
+                canActivate: [AuthGuard]
               },
               {
                 path: 'products/storage',
@@ -105,9 +189,9 @@ export const ROUTES: Routes = [
                 canLoad: [AuthGuard]
               },
               {
-                path: 'purchases/order',
-                loadChildren: './modules/purchases/path/order/order.module#PurchaseOrderModule',
-                canLoad: [AuthGuard]
+                path: 'purchases/order/new',
+                component: PurchaseOrderNewComponent,
+                canActivate: [AuthGuard]
               },
               { path: '**', component: PageNotFoundComponent }
         ]

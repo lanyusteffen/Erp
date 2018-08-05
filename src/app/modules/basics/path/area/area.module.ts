@@ -34,7 +34,7 @@ import { AreaRoutingModule } from './area.router';
     SharedModule,
     AreaRoutingModule
   ],
-  providers: [ AreaService]
+  providers: [ AreaService ]
 })
 
 export class AreaModule {

@@ -1,85 +1,52 @@
-import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
-import { Injectable } from '../../../node_modules/@angular/core';
+import { RouteReuseStrategy, DefaultUrlSerializer, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
 
-interface IRouteConfigData {
-    reuse: boolean;
-}
-
-interface ICachedRoute {
-    handle: DetachedRouteHandle;
-    data: IRouteConfigData;
-}
-
-@Injectable()
 export class SimpleReuseStrategy implements RouteReuseStrategy {
 
-    private routeCache = new Map<string, ICachedRoute>();
+    public static handlers: { [key: string]: DetachedRouteHandle } = {};
+    private static waitDelete: string;
 
-    shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        return future.routeConfig === curr.routeConfig;
-    }
-
-    shouldDetach(route: ActivatedRouteSnapshot): boolean {
-        const data = this.getRouteData(route);
-        return data && data.reuse;
-    }
-
-    store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-        const url = this.getFullRouteUrl(route);
-        const data = this.getRouteData(route);
-        this.routeCache.set(url, { handle, data });
-        this.addRedirectsRecursively(route);
-    }
-
-    shouldAttach(route: ActivatedRouteSnapshot): boolean {
-        const url = this.getFullRouteUrl(route);
-        return this.routeCache.has(url);
-    }
-
-    retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-        const url = this.getFullRouteUrl(route);
-        const data = this.getRouteData(route);
-        return data && data.reuse && this.routeCache.has(url)
-        ? this.routeCache.get(url).handle
-        : null;
-    }
-
-    private addRedirectsRecursively(route: ActivatedRouteSnapshot): void {
-        const config = route.routeConfig;
-        if (config) {
-        if (!config.loadChildren) {
-            const routeFirstChild = route.firstChild;
-            const routeFirstChildUrl = routeFirstChild
-            ? this.getRouteUrlPaths(routeFirstChild).join('/')
-            : '';
-            const childConfigs = config.children;
-            if (childConfigs) {
-            const childConfigWithRedirect = childConfigs.find(c => c.path === '' && !!c.redirectTo);
-            if (childConfigWithRedirect) {
-                childConfigWithRedirect.redirectTo = routeFirstChildUrl;
-            }
-            }
-        }
-        route.children.forEach(childRoute => this.addRedirectsRecursively(childRoute));
+    public static deleteRouteSnapshot(name: string): void {
+        if (SimpleReuseStrategy.handlers[name]) {
+            delete SimpleReuseStrategy.handlers[name];
+        } else {
+            SimpleReuseStrategy.waitDelete = name;
         }
     }
 
-    private getFullRouteUrl(route: ActivatedRouteSnapshot): string {
-        return this.getFullRouteUrlPaths(route).filter(Boolean).join('/');
+    /** 表示对所有路由允许复用 如果你有路由不想利用可以在这加一些业务逻辑判断 */
+    public shouldDetach(route: ActivatedRouteSnapshot): boolean {
+        return true;
     }
 
-    private getFullRouteUrlPaths(route: ActivatedRouteSnapshot): string[] {
-        const paths = this.getRouteUrlPaths(route);
-        return route.parent
-        ? [ ...this.getFullRouteUrlPaths(route.parent), ...paths ]
-        : paths;
+    /** 当路由离开时会触发。按path作为key存储路由快照&组件当前实例对象 */
+    public store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
+        SimpleReuseStrategy.handlers[this.getRouteUrl(route)] = handle;
     }
 
-    private getRouteUrlPaths(route: ActivatedRouteSnapshot): string[] {
-        return route.url.map(urlSegment => urlSegment.path);
+    /** 若 path 在缓存中有的都认为允许还原路由 */
+    public shouldAttach(route: ActivatedRouteSnapshot): boolean {
+
+        return !!SimpleReuseStrategy.handlers[this.getRouteUrl(route)];
     }
 
-    private getRouteData(route: ActivatedRouteSnapshot): IRouteConfigData {
-        return route.routeConfig && route.routeConfig.data as IRouteConfigData;
+    /** 从缓存中获取快照，若无则返回null */
+    public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
+
+        if (!route.routeConfig) {
+            return null;
+        }
+
+        return SimpleReuseStrategy.handlers[this.getRouteUrl(route)];
+    }
+
+    /** 进入路由触发，判断是否同一路由 */
+    public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+        return future.routeConfig === curr.routeConfig &&
+            JSON.stringify(future.params) === JSON.stringify(curr.params);
+    }
+
+    private getRouteUrl(route: ActivatedRouteSnapshot) {
+        const path = route['_routerState'].url.replace(/\//g, '_');
+        return path;
     }
 }
