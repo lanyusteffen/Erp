@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { LocalStorage } from 'ngx-webstorage';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ export class HeaderComponent {
 
   logoff(): void {
     this.authService.logout();
+    SimpleReuseStrategy.clear();
     this.router.navigate(['/authorize/login']);
   }
 }

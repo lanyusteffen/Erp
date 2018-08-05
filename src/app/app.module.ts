@@ -227,9 +227,8 @@ import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/ne
     provide: HTTP_INTERCEPTORS,
     useClass: HttpExtensionInterceptor,
     multi: true
-  }, {
-    provide: RouteReuseStrategy,
-    useClass: SimpleReuseStrategy },
+  },
+    { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy },
 
     FundsAccountService, OtherIncomeService, FeeTypeService,
     SystemConfigService, CompanyService, UserService, RoleService,

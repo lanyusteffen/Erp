@@ -10,10 +10,15 @@ import {
     Route
 } from '@angular/router';
 import { AuthService } from './auth.service';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+      private authService: AuthService,
+      private router: Router
+    ) {
+    }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
@@ -42,6 +47,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     //   queryParams: { 'return': sessionId },
     //   fragment: 'anchor'
     };
+
+    SimpleReuseStrategy.clear();
 
     // Navigate to the login page with extras
     this.router.navigate(['/authorize/login'], navigationExtras);

@@ -73,6 +73,7 @@ export class TabsService {
         continue;
       }
       this.tabs.splice(i, 1);
+      --i;
     }
     this.tabs$.next(this.tabs);
   }

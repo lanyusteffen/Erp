@@ -3,8 +3,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { TabsService, Tab } from '../../components/tabs/tabs.service';
 import { AlertService } from '../../services/alert.service';
 import { ConfirmService } from '../../services/confirm.service';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
-import { NavigationStart, NavigationCancel, NavigationError, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +15,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private alertSubscription: Subscription;
   private confirmSubScription: Subscription;
-  private routeSubscription: Subscription;
   private alert = null;
   private confirm = null;
   private loading: boolean;
@@ -55,7 +52,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.alertSubscription.unsubscribe();
     this.confirmSubScription.unsubscribe();
-    this.routeSubscription.unsubscribe();
   }
 
   handleCloseAlert() {
