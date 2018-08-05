@@ -34,7 +34,7 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.feeTypeService
-      .get()
+      .getDisabled()
       .subscribe(({ feeTypes, currentPagination }) => {
         this.feeTypes = feeTypes;
         this.pagination = currentPagination;

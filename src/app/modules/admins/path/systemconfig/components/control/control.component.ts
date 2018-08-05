@@ -34,7 +34,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private formService: FormService
     ) {
-
+    this.subscription = this.systemConfigService.get().subscribe();
     }
 
     ngOnInit() {
@@ -50,6 +50,10 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
             }
         );
 
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     select(evt) {
