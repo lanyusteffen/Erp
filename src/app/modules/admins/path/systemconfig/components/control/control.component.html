@@ -35,9 +35,8 @@
           价格设置
         </th>
         <td class="form-control-group">
-          <app-ui-radio  (onChange)="select($event,value)" [radioName] = "'test'" [value]="1"  [checked]="radioChecked === 1" ></app-ui-radio>
-          <app-ui-radio  (onChange)="select($event,value)" [radioName] = "'test'" [value]="2"  [checked]="radioChecked === 2" ></app-ui-radio>
-          <app-ui-radio  (onChange)="select($event,value)" [radioName] = "'test'" [value]="3"  [checked]="radioChecked === 3" ></app-ui-radio>          
+          <app-ui-radio  [radioName] = "'test'" [value]="1" formControlName="PurchasePriceRule" [label]="'采购单价默认读取商品信息预设采购价'"  [ngModel]></app-ui-radio>
+          <app-ui-radio  [radioName] = "'test'" [value]="2" formControlName="PurchasePriceRule" [label]="'采购单价默认读取供应商最近一次采购价'"  [ngModel]></app-ui-radio>        
         </td>        
       </tr>
     </table>

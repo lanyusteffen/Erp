@@ -1,5 +1,6 @@
-<label class="radio" [ngClass]="{'checked': checked, 'inline': inline}">
-    <input type="radio" [name] ="radioName" [value]="value" (change)="handleChange($event)" />
-    <i class="iconfont icon-selected" for="name"></i>
+<label class="radio" [ngClass]="{'checked': rb.checked, 'inline': inline}" >
+    <input id="rb" #rb type="radio" [attr.name]="radioName" [attr.value]="value" [checked]="checked" (click)="handleClick()"/>
+    <i class="iconfont icon-selected"></i>   
+    <label for="radioName" *ngIf="label" (click)="handleClick()">{{label}}</label>
     <ng-content></ng-content>
-  </label>
+</label>

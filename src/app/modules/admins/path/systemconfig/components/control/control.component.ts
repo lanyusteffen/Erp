@@ -56,12 +56,6 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    select(evt) {
-        console.log(evt.target)
-        this.radioChecked = evt.target.value;
-    }
-
-
     handleClose() {
         this.onClose.emit();
     }
