@@ -59,11 +59,12 @@ export class TabsService {
         break;
       }
     }
-    this.tabs$.next(this.tabs);
-    while (this.tabs.length < removeIndex) {
+    while (this.tabs.length <= removeIndex) {
       --removeIndex;
     }
-    this.router.navigate([this.tabs[removeIndex].link]);
+    this.tabs$.next(this.tabs);
+
+    return this.tabs[removeIndex].link;
   }
 
   clear() {

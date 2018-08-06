@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TabsService, Tab } from './tabs.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -12,7 +13,9 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
   tabs: Tab[];
   subscription: Subscription;
 
-  constructor(private tabService: TabsService) {
+  constructor(
+      private tabService: TabsService,
+      private router: Router) {
     this.tabs = this.tabService.all();
   }
 
@@ -24,7 +27,8 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
 
   closeTab(event: Event, tab: Tab) {
     event.preventDefault();
-    this.tabService.remove(tab);
+    const link = this.tabService.remove(tab);
+    this.router.navigate(link);
   }
 
   clearAll() {
