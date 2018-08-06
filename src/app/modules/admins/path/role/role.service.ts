@@ -7,6 +7,8 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class RoleService {
   private roles$ = new Subject<any>();
+  private rolesDisabled$ = new Subject<any>();
+
   private state = {
     roles: [],
     currentQueryKey: '',
@@ -20,6 +22,8 @@ export class RoleService {
   constructor(private http: HttpService) { }
 
   get() { return this.roles$.asObservable(); }
+
+  getDisabled() { return this.rolesDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -71,7 +75,7 @@ export class RoleService {
       };
 
       this.state = nextState;
-      this.roles$.next(nextState);
+      this.rolesDisabled$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();

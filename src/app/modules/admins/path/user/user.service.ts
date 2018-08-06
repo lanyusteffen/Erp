@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class UserService {
   private users$ = new Subject<any>();
+  private userDisabled$ = new Subject<any>();
   private state = {
     users: [],
     currentQueryKey: '',
@@ -20,6 +21,8 @@ export class UserService {
   constructor(private http: HttpService) { }
 
   get() { return this.users$.asObservable(); }
+
+  getDisabled() { return this.userDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -71,7 +74,7 @@ export class UserService {
       };
 
       this.state = nextState;
-      this.users$.next(nextState);
+      this.userDisabled$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();

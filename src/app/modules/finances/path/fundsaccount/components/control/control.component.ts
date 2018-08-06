@@ -35,7 +35,7 @@ export class FundsAccountControlComponent {
   }
 
   get title() {
-    return this.type === 'create' ? '新增银行账户' : '修改银行账户';
+    return this.type === 'create' ? '新增资金账户' : '修改资金账户';
   }
 
   private showPop(): void {

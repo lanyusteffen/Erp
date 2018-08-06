@@ -33,7 +33,7 @@ export class ProductDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.productService
-      .get()
+      .getDisabled()
       .subscribe(({ products, currentPagination }) => {
         this.products = products;
         this.pagination = currentPagination;

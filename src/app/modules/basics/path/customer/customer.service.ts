@@ -7,6 +7,8 @@ import { AppService } from '@services/app.service';
 @Injectable()
 export class CustomerService {
   private customers$ = new Subject<any>();
+  private customersDisabled$ = new Subject<any>();
+
   private state = {
     customers: [],
     currentQueryKey: '',
@@ -21,6 +23,8 @@ export class CustomerService {
   constructor(private http: HttpService) { }
 
   get() { return this.customers$.asObservable(); }
+
+  getDisabled() { return this.customersDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -55,7 +59,7 @@ export class CustomerService {
   }
 
   contactList(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/CustomerContractor/GetList',{CustomerId:customerId}, next, fallback, ModuleType.Basic);
+    return this.http.post('/CustomerContractor/GetList', { CustomerId: customerId }, next, fallback, ModuleType.Basic);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -68,7 +72,7 @@ export class CustomerService {
   }
 
   detail(customerId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post(`/Customer/GetForModify`,{EntityId:customerId}, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Customer/GetForModify`, { EntityId: customerId }, next, fallback, ModuleType.Basic);
   }
 
   create(customer, next: (data: any) => void, fallback: (error: any) => void) {
@@ -121,13 +125,13 @@ export class CustomerService {
 
   cancel(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Cancel', {
-      EntityIdList:customerIdList
+      EntityIdList: customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 
   restore(customerIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Customer/Restore', {
-      EntityIdList:customerIdList
+      EntityIdList: customerIdList
     }, next, fallback, ModuleType.Basic);
   }
 

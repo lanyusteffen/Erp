@@ -55,7 +55,7 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.getSystemConfig();    
+    this.getSystemConfig();
   }
 
   ngOnDestroy() {

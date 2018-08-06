@@ -32,7 +32,7 @@ export class FundsAccountActionsComponent {
 
   showDisabled() {
     this.tabsService.create({
-      name: '停用银行账户',
+      name: '停用资金账户',
       link: '/finances/fundsaccount/disabled'
     });
     this.router.navigate(['/finances/fundsaccount/disabled']);

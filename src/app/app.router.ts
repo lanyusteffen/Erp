@@ -31,6 +31,7 @@ import { RoleComponent } from './modules/admins/path/role/role.component';
 import { SystemConfigComponent } from './modules/admins/path/systemconfig/systemconfig.component';
 import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
 import { ProductComponent } from './modules/products/path/product/product.component';
+import { ProductBarcodeComponent } from './modules/products/path/product/product-barcode.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
 import { StorageComponent } from './modules/products/path/storage/storage.component';
 import { StorageDisabledComponent } from './modules/products/path/storage/storage-disabled.component';
@@ -212,6 +213,11 @@ export const ROUTES: Routes = [
               {
                 path: 'products/product/disabled',
                 component: ProductDisabledComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'products/product/barcode',
+                component: ProductBarcodeComponent,
                 canActivate: [AuthGuard]
               },
               {
