@@ -34,7 +34,7 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.roleService
-      .get()
+      .getDisabled()
       .subscribe(({ roles, currentPagination }) => {
         this.roles = roles;
         this.pagination = currentPagination;

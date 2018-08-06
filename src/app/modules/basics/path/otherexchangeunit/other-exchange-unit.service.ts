@@ -7,6 +7,8 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class OtherExchangeUnitService {
   private otherExchangeUnits$ = new Subject<any>();
+  private otherExchangeUnitsDisabled$ = new Subject<any>();
+
   private state = {
     otherExchangeUnits: [],
     currentQueryKey: '',
@@ -21,6 +23,8 @@ export class OtherExchangeUnitService {
   constructor(private http: HttpService) { }
 
   get() { return this.otherExchangeUnits$.asObservable(); }
+
+  getDisabled() { return this.otherExchangeUnitsDisabled$.asObservable(); }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -46,7 +50,7 @@ export class OtherExchangeUnitService {
       };
 
       this.state = nextState;
-      this.otherExchangeUnits$.next(nextState);
+      this.otherExchangeUnitsDisabled$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();

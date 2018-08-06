@@ -27,7 +27,7 @@ export class AreaDisabledListComponent implements OnInit, OnDestroy {
     private alertService: AlertService
   ) {
     this.subscription = this.areaService
-      .get()
+      .getDisabled()
       .subscribe(({ areas, currentPagination }) => {
         this.areas = areas;
         this.pagination = currentPagination;

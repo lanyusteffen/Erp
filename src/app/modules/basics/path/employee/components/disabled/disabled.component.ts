@@ -33,7 +33,7 @@ export class EmployeeDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.employeeService
-      .get()
+      .getDisabled()
       .subscribe(({ employees, currentPagination }) => {
         this.employees = employees;
         this.pagination = currentPagination;

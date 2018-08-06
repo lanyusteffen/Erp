@@ -34,7 +34,7 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.userService
-      .get()
+      .getDisabled()
       .subscribe(({ users, currentPagination }) => {
         this.users = users;
         this.pagination = currentPagination;

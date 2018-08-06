@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class AreaService {
   private area$ = new Subject<any>();
+  private areaDisabled$ = new Subject<any>();
 
   private state = {
     area: [],
@@ -32,6 +33,8 @@ export class AreaService {
   }
 
   get() { return this.area$.asObservable(); }
+
+  getDisabled() { return this.areaDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -83,7 +86,7 @@ export class AreaService {
       };
 
       this.state = nextState;
-      this.area$.next(nextState);
+      this.areaDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
     }, fallback, ModuleType.Basic);

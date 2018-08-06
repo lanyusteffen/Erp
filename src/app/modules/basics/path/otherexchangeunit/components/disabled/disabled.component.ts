@@ -34,7 +34,7 @@ export class OtherExchangeUnitDisabledListComponent implements OnInit, OnDestroy
     private appService: AppService
   ) {
     this.subscription = this.otherExchangeUnitService
-      .get()
+      .getDisabled()
       .subscribe(({ otherExchangeUnits, currentPagination }) => {
         this.otherExchangeUnits = otherExchangeUnits;
         this.pagination = currentPagination;

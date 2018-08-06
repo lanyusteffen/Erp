@@ -34,7 +34,7 @@ export class SupplierDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.supplierService
-      .get()
+      .getDisabled()
       .subscribe(({ suppliers, currentPagination }) => {
         this.suppliers = suppliers;
         this.pagination = currentPagination;

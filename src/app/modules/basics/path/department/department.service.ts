@@ -8,6 +8,7 @@ import { ModuleType } from '../../../../services/http.service';
 @Injectable()
 export class DepartmentService {
   private department$ = new Subject<any>();
+  private departmentDisabled$ = new Subject<any>();
 
   private state = {
     department: [],
@@ -37,6 +38,8 @@ export class DepartmentService {
   }
 
   get() { return this.department$.asObservable(); }
+
+  getDisabled() { return this.departmentDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -90,7 +93,7 @@ export class DepartmentService {
       };
 
       this.state = nextState;
-      this.department$.next(nextState);
+      this.departmentDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
     }, fallback, ModuleType.Basic);

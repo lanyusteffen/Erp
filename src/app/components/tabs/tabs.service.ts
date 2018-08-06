@@ -21,7 +21,7 @@ export class TabsService {
   id = 1;
   tabs: Tab[] = [homeTab];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   all() {
     return this.tabs;

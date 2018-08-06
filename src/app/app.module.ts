@@ -275,15 +275,8 @@ import { ProductUnitComponent } from './modules/products/path/product/components
     provide: HTTP_INTERCEPTORS,
     useClass: HttpExtensionInterceptor,
     multi: true
-<<<<<<< HEAD
   },
     { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy },
-=======
-  }, {
-    provide: RouteReuseStrategy,
-    useClass: SimpleReuseStrategy
-  },
->>>>>>> d2e187da3855ba45bc1279d9a3b865f4ec2c0139
 
     FundsAccountService, OtherIncomeService, FeeTypeService,
     SystemConfigService, CompanyService, UserService, RoleService,

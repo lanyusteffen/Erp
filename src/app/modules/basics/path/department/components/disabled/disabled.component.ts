@@ -37,7 +37,7 @@ export class DepartmentDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
     this.subscription = this.departmentService
-      .get()
+      .getDisabled()
       .subscribe(({ departments, currentPagination }) => {
         this.departments = departments;
         this.pagination = currentPagination;
