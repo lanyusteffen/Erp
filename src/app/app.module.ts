@@ -283,6 +283,7 @@ import { ProductUnitComponent } from './modules/products/path/product/components
     AreaService, CustomerService, DepartmentService, EmployeeService, OtherExchangeUnitService, SupplierService,
     PurchaseOrderService,
     ProductService, SystemUnitService, StorageService,
+
     HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })

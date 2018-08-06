@@ -60,7 +60,7 @@ export class TabsService {
       }
     }
     this.tabs$.next(this.tabs);
-    while (this.tabs.length <= removeIndex) {
+    while (this.tabs.length < removeIndex) {
       --removeIndex;
     }
     this.router.navigate([this.tabs[removeIndex].link]);
