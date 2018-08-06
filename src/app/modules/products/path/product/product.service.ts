@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 export class ProductService {
   private product$ = new Subject<any>();
   private productDisabled$ = new Subject<any>();
+  private productBarcode$ = new Subject<any>();
 
   private state = {
     product: [],
@@ -29,6 +30,8 @@ export class ProductService {
   get() { return this.product$.asObservable(); }
 
   getDisabled() { return this.productDisabled$.asObservable(); }
+
+  getBarcode() { return this.productBarcode$.asObservable(); }
 
   succeessNotifyCallback(successNotify?): void {
     if (successNotify !== undefined) {
@@ -117,7 +120,7 @@ export class ProductService {
       };
 
       this.state = nextState;
-      this.product$.next(nextState);
+      this.productBarcode$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
     }, fallback, ModuleType.Product);
@@ -125,7 +128,7 @@ export class ProductService {
 
   productExtensions(productId, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/GetForModify', {
-      EntityId : productId
+      EntityId: productId
     }, next, fallback, ModuleType.Webadmin);
   }
 

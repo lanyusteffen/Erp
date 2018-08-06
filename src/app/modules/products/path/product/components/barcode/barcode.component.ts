@@ -26,7 +26,7 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
     private alertService: AlertService
   ) {
     this.subscription = this.productService
-      .get()
+      .getBarcode()
       .subscribe(({ barcodes, currentPagination }) => {
         this.barcodes = barcodes;
         this.pagination = currentPagination;

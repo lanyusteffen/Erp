@@ -253,6 +253,7 @@ import { ProductUnitComponent } from './modules/products/path/product/components
     StorageDisabledListComponent,
     StorageListComponent,
     ProductUnitComponent,
+    ProductBarcodeListComponent
   ],
   imports: [
     BrowserModule,
