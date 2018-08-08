@@ -35,8 +35,19 @@
           价格设置
         </th>
         <td class="form-control-group">
-          <app-ui-radio  [radioName] = "'test'" [value]="1" formControlName="PurchasePriceRule" [label]="'采购单价默认读取商品信息预设采购价'"  [ngModel]></app-ui-radio>
-          <app-ui-radio  [radioName] = "'test'" [value]="2" formControlName="PurchasePriceRule" [label]="'采购单价默认读取供应商最近一次采购价'"  [ngModel]></app-ui-radio>        
+          <app-ui-radio  [radioName] = "'PurchasePriceRule'" [value]="1" formControlName="PurchasePriceRule" [label]="'采购单价默认读取商品信息预设采购价'"  [ngModel]></app-ui-radio>
+          <app-ui-radio  [radioName] = "'PurchasePriceRule'" [value]="2" formControlName="PurchasePriceRule" [label]="'采购单价默认读取供应商最近一次采购价'"  [ngModel]></app-ui-radio>        
+        </td>        
+      </tr>
+      <tr>
+        <th class="form-label">
+          <span class="required">*</span>
+          税率折扣设置
+        </th>
+        <td class="form-control-group">
+          
+          <app-ui-checkbox [checked]="PurchaseDiscountRateRule" formControlName="PurchaseDiscountRateRule"  [ngModel]>折扣率默认读取客户最近一次折扣率</app-ui-checkbox>
+          <app-ui-checkbox [checked]="PurchaseTaxRateRule"  [ngModel]>税率默认读取客户最近一次税率</app-ui-checkbox>        
         </td>        
       </tr>
     </table>

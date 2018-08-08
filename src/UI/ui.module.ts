@@ -10,7 +10,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SelectComponent } from './select/select.component';
 import { AlertComponent } from './alert/alert.component';
 import { ModalComponent } from './modal/modal.component';
-import { RadioComponent } from './radio/radio.component'
+import { RadioComponent } from './radio/radio.component';
 
 @NgModule({
   declarations: [

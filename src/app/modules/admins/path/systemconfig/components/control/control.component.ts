@@ -34,7 +34,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private formService: FormService
     ) {
-    this.subscription = this.systemConfigService.get().subscribe();
+        this.subscription = this.systemConfigService.get().subscribe();
     }
 
     ngOnInit() {
@@ -52,7 +52,7 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.subscription.unsubscribe();
     }
 
@@ -91,6 +91,10 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
 
     onSubmit({ value }) {
         this.save({ value });
+    }
+
+    select(evt) {
+
     }
 }
 

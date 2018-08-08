@@ -55,7 +55,7 @@ export class RadioComponent implements ControlValueAccessor {
     }
 
     select() {
-        if(this.checked){
+        if (this.checked) {
             this.inputViewChild.nativeElement.checked = !this.inputViewChild.nativeElement.checked;
             this.checked = !this.checked;
             if (this.checked) {
@@ -64,6 +64,6 @@ export class RadioComponent implements ControlValueAccessor {
                 this.onModelChange(null);
             }
             this.pRadioChange.emit(null);
-        }        
+        }
     }
 }
