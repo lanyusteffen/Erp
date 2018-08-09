@@ -55,15 +55,11 @@ export class RadioComponent implements ControlValueAccessor {
     }
 
     select() {
-        if (this.checked) {
-            this.inputViewChild.nativeElement.checked = !this.inputViewChild.nativeElement.checked;
+        if (!this.checked) {
             this.checked = !this.checked;
-            if (this.checked) {
-                this.onModelChange(this.value); // 同步view value 和 model value
-            } else {
-                this.onModelChange(null);
-            }
-            this.pRadioChange.emit(null);
+            this.inputViewChild.nativeElement.checked = !this.inputViewChild.nativeElement.checked;
         }
+        this.onModelChange(this.value); // 同步view value 和 model value
+        this.pRadioChange.emit(this.value);
     }
 }

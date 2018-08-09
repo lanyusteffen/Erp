@@ -53,6 +53,7 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   select() {
+    this.onModelChange(this.checked);
     this.pRadioChange.emit(this.checked);
   }
 }
