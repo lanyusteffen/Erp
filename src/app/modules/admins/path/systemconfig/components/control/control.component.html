@@ -12,7 +12,6 @@
     <table class="form">
       <tr>
         <th class="form-label">
-          <span class="required">*</span>
           启用日期
         </th>
         <td class="form-control-group">
@@ -22,7 +21,7 @@
             <i class="iconfont icon-add"></i>
             开账
           </app-ui-button>
-        </td>        
+        </td>
       </tr>
     </table>
     <div class="heading">
@@ -31,24 +30,67 @@
     <table class="form">
       <tr>
         <th class="form-label">
-          <span class="required">*</span>
           价格设置
         </th>
         <td class="form-control-group">
-          <app-ui-radio  [radioName] = "'PurchasePriceRule'" [value]="1" formControlName="PurchasePriceRule" [label]="'采购单价默认读取商品信息预设采购价'"  [ngModel]></app-ui-radio>
-          <app-ui-radio  [radioName] = "'PurchasePriceRule'" [value]="2" formControlName="PurchasePriceRule" [label]="'采购单价默认读取供应商最近一次采购价'"  [ngModel]></app-ui-radio>        
-        </td>        
+          <app-ui-radio [radioName]="'PurchasePriceRule'" [value]="1" formControlName="PurchasePriceRule" [label]="'采购单价默认读取商品信息预设采购价'"
+            [ngModel]></app-ui-radio>
+          <app-ui-radio [radioName]="'PurchasePriceRule'" [value]="2" formControlName="PurchasePriceRule" [label]="'采购单价默认读取供应商最近一次采购价'"
+            [ngModel]></app-ui-radio>
+        </td>
       </tr>
       <tr>
         <th class="form-label">
-          <span class="required">*</span>
           税率折扣设置
         </th>
         <td class="form-control-group">
-          
-          <app-ui-checkbox [checked]="PurchaseDiscountRateRule" formControlName="PurchaseDiscountRateRule"  [ngModel]>折扣率默认读取客户最近一次折扣率</app-ui-checkbox>
-          <app-ui-checkbox [checked]="PurchaseTaxRateRule"  [ngModel]>税率默认读取客户最近一次税率</app-ui-checkbox>        
-        </td>        
+          <app-ui-checkbox [checked]="PurchaseDiscountRateRule" formControlName="PurchaseDiscountRateRule" [ngModel]>折扣率默认读取客户最近一次折扣率</app-ui-checkbox>
+          <app-ui-checkbox [checked]="PurchaseTaxRateRule" formControlName="PurchaseTaxRateRule" [ngModel]>税率默认读取客户最近一次税率</app-ui-checkbox>
+        </td>
+      </tr>
+    </table>
+    <div class="heading">
+      销售设置
+    </div>
+    <table class="form">
+      <tr>
+        <th class="form-label">
+          价格设置
+        </th>
+        <td class="form-control-group">
+          <app-ui-radio [radioName]="'SalePriceRule'" [value]="1" formControlName="SalePriceRule" [label]="'销售单价默认读取商品信息预设销售价'" [ngModel]></app-ui-radio>
+          <app-ui-radio [radioName]="'SalePriceRule'" [value]="2" formControlName="SalePriceRule" [label]="'销售单价默认读取供应商最近一次销售价'" [ngModel]></app-ui-radio>
+        </td>
+      </tr>
+      <tr>
+        <th class="form-label">
+
+        </th>
+        <td class="form-control-group">
+          <app-ui-checkbox [checked]="SalePriceAllowLowGoodsPrePrice" formControlName="SalePriceAllowLowGoodsPrePrice" [ngModel]>销售单价低于商品信息最低预设售价，则不允许保存单据</app-ui-checkbox>
+        </td>
+      </tr>
+      <tr>
+        <th class="form-label">
+          税率折扣设置
+        </th>
+        <td class="form-control-group">
+          <app-ui-checkbox [checked]="SaleDiscountRateRule" formControlName="SaleDiscountRateRule" [ngModel]>折扣率默认读取客户最近一次折扣率</app-ui-checkbox>
+          <app-ui-checkbox [checked]="PurchaseTaxRateRule" formControlName="SaleTaxRateRule" [ngModel]>税率默认读取客户最近一次税率</app-ui-checkbox>
+        </td>
+      </tr>
+    </table>
+    <div class="heading">
+      库存设置
+    </div>
+    <table class="form">
+      <tr>
+        <th class="form-label">
+          负库存状态
+        </th>
+        <td class="form-control-group">
+          <app-ui-checkbox [checked]="InventoryIsNagative" formControlName="InventoryIsNagative" [ngModel]>允许库存数量为负数</app-ui-checkbox>
+        </td>
       </tr>
     </table>
   </div>
