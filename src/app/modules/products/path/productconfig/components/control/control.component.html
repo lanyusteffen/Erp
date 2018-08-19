@@ -1,0 +1,50 @@
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <div class="actions">
+        <app-ui-button [style]="'primary'" type="submit">
+            <i class="iconfont icon-save"></i>
+            保存
+        </app-ui-button>
+    </div>
+    <div class="table-wrapper">
+        <div class="heading">
+            商品sku管理（适合服装等行业）
+        </div>
+        <table class="form">
+            <tr>
+                <th class="form-label">
+                    <app-ui-checkbox [checked]="'IsOpenPropertyName1'" formControlName="IsOpenPropertyName1" [ngModel]>启用属性1</app-ui-checkbox>
+                </th>
+                <td class="form-control-group">
+                    <app-form-field [name]="'PropertyName1'">
+                        <input #formField type="text" class="form-control" [ngModel] formControlName="PropertyName1">
+                    </app-form-field>
+                    <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+                        <i class="iconfont icon-add"></i>
+                        颜色设置
+                    </app-ui-button>
+                </td>
+                <th class="form-label">
+                    <app-ui-checkbox [checked]="'IsOpenPropertyName2'" formControlName="IsOpenPropertyName2" [ngModel]>启用属性2</app-ui-checkbox>
+                </th>
+                <td class="form-control-group">
+                    <app-form-field [name]="'PropertyName2'">
+                        <input #formField type="text" class="form-control" [ngModel] formControlName="PropertyName2">
+                    </app-form-field>
+                    <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+                        <i class="iconfont icon-add"></i>
+                        尺码设置
+                    </app-ui-button>
+                </td>
+            </tr>
+        </table>
+        <div class="heading">
+            计量单位管理
+        </div>
+        <div>
+            <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+                <i class="iconfont icon-add"></i>
+                计量单位设置
+            </app-ui-button>
+        </div>
+    </div>
+</form>

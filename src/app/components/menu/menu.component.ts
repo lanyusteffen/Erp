@@ -88,6 +88,7 @@ export class MenuComponent {
           name: '商品管理',
           subMenu: [
             { name: '商品信息', link: '/products/product' },
+            { name: '商品配置', link: '/products/productconfig' },
             { name: '价格管理表', link: '/product' },
             { name: '商品套餐', link: '/product' }
           ]

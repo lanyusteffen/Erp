@@ -12,7 +12,7 @@ import { AlertService } from '@services/alert.service';
   providers: [FormService]
 })
 
-export class ProductUnitComponent {
+export class UnitComponent {
   private products = <any>[];
   private selectedId: number;
   private _showUpdate = false;

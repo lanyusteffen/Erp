@@ -1,6 +1,7 @@
 import { Injectable, } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { ProductColorActionsComponent } from '../modules/products/path/productcolor/components/actions/actions.component';
 
 @Injectable()
 export class AlertService {
@@ -221,6 +222,22 @@ export class AlertService {
       case ModuleName.Purchase:
         name = '采购订单';
         break;
+
+      case ModuleName.ProductColor:
+        name = '商品颜色';
+        break;
+
+      case ModuleName.ProductSize:
+        name = '商品尺寸';
+        break;
+
+      case ModuleName.ProductUnit:
+        name = '商品单位';
+        break;
+
+      case ModuleName.ProductConfig:
+        name = '商品设置';
+        break;
     }
 
     return name;
@@ -266,5 +283,9 @@ export enum ModuleName {
   SystemUnit,
   OtherIncome,
   FundsAccount,
-  Purchase
+  Purchase,
+  ProductColor,
+  ProductSize,
+  ProductUnit,
+  ProductConfig
 }

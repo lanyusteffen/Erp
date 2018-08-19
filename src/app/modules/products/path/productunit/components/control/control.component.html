@@ -1,0 +1,248 @@
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
+        <div class="card-content">
+            <div class="heading">
+                基本信息
+            </div>
+            <table class="form">
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        单位名称：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'Name'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        单位类型（基础单位、单位1）：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'UnitType'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="UnitType">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        单位倍量：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'UnitTime'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="UnitTime">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        系统单位Id：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'SystemUnitId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="SystemUnitId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        商品Id：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ProductId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ProductId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        商品编号：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ProductCode'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ProductCode">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        条形码：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'BarCode'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="BarCode">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        预计采购价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PrePurchasePrice'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PrePurchasePrice">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        1级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel1'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel1">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        2级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel2'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel2">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        3级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel3'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel3">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        4级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel4'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel4">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        5级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel5'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel5">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        6级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel6'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel6">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        7级售价：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'PriceLevel7'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="PriceLevel7">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        显示顺序：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'SortIndex'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="SortIndex">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        备注：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'Remark'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="Remark">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        货品Id：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'GoodsId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="GoodsId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        数据来源用户Id(MemberId或AdminId)：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'SourceUserId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="SourceUserId">
+                        </app-form-field>
+                    </td>
+                </tr>
+               
+            </table>
+        </div>
+        <div app-card-footer>
+            <app-ui-button [style]="'primary'" type="submit">
+                保存
+            </app-ui-button>
+            <app-ui-button (click)="handleClose()">
+                取消
+            </app-ui-button>
+        </div>
+    </app-card>
+</form>
