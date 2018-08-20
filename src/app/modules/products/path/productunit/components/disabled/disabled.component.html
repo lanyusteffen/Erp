@@ -1,0 +1,100 @@
+﻿<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+
+			 <th>单位名称</th>
+
+			 <th>单位类型（基础单位、单位1）</th>
+
+			 <th>单位倍量</th>
+
+			 <th>系统单位Id</th>
+
+			 <th>商品Id</th>
+
+			 <th>商品编号</th>
+
+			 <th>条形码</th>
+
+			 <th>预计采购价</th>
+
+			 <th>1级售价</th>
+
+			 <th>2级售价</th>
+
+			 <th>3级售价</th>
+
+			 <th>4级售价</th>
+
+			 <th>5级售价</th>
+
+			 <th>6级售价</th>
+
+			 <th>7级售价</th>
+
+			 <th>显示顺序</th>
+
+			 <th>备注</th>
+
+			 <th>货品Id</th>
+
+			 <th>数据来源用户Id(MemberId或AdminId)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of productUnits">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a (click)="restore(item.Id)">还原</a>
+          <a class="text-danger" *ngIf="!item.IsUsed" (click)="delete(item.Id)">删除</a>
+        </td>
+
+			 <td>{{item.Name}}</td>
+
+			 <td>{{item.UnitType}}</td>
+
+			 <td>{{item.UnitTime}}</td>
+
+			 <td>{{item.SystemUnitId}}</td>
+
+			 <td>{{item.ProductId}}</td>
+
+			 <td>{{item.ProductCode}}</td>
+
+			 <td>{{item.BarCode}}</td>
+
+			 <td>{{item.PrePurchasePrice}}</td>
+
+			 <td>{{item.PriceLevel1}}</td>
+
+			 <td>{{item.PriceLevel2}}</td>
+
+			 <td>{{item.PriceLevel3}}</td>
+
+			 <td>{{item.PriceLevel4}}</td>
+
+			 <td>{{item.PriceLevel5}}</td>
+
+			 <td>{{item.PriceLevel6}}</td>
+
+			 <td>{{item.PriceLevel7}}</td>
+
+			 <td>{{item.SortIndex}}</td>
+
+			 <td>{{item.Remark}}</td>
+
+			 <td>{{item.GoodsId}}</td>
+
+			 <td>{{item.SourceUserId}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar [total]="pagination.ItemCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
+</div>

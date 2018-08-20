@@ -6,7 +6,7 @@ import { UIModule } from '@UI/ui.module';
 
 import { ProductComponent } from './product.component';
 import { ProductExtensionComponent } from './components/extension/extension.component';
-import { ProductUnitComponent } from './components/unit/unit.component';
+import { UnitComponent } from './components/unit/unit.component';
 import { ProductStorageInitComponent } from './components/storageInit/storageInit.component';
 import { ProductListComponent } from './components/list/list.component';
 import { ProductActionsComponent } from './components/actions/actions.component';
@@ -27,7 +27,7 @@ import { ProductRoutingModule } from './product.router';
     ProductActionsComponent,
     ProductExtensionComponent,
     ProductStorageInitComponent,
-    ProductUnitComponent,
+    UnitComponent,
     ProductDisabledComponent,
     ProductDisabledListComponent,
     ProductBarcodeComponent,

@@ -141,7 +141,36 @@ import { StorageActionsComponent } from './modules/products/path/storage/compone
 import { StorageControlComponent } from './modules/products/path/storage/components/control/control.component';
 import { StorageDisabledListComponent } from './modules/products/path/storage/components/disabled/disabled.component';
 import { StorageListComponent } from './modules/products/path/storage/components/list/list.component';
-import { ProductUnitComponent } from './modules/products/path/product/components/unit/unit.component';
+import { UnitComponent } from './modules/products/path/product/components/unit/unit.component';
+
+import { ProductColorComponent } from './modules/products/path/productcolor/productcolor.component';
+import { ProductColorListComponent } from './modules/products/path/productcolor/components/list/list.component';
+import { ProductColorControlComponent } from './modules/products/path/productcolor/components/control/control.component';
+import { ProductColorActionsComponent } from './modules/products/path/productcolor/components/actions/actions.component';
+import { ProductColorDisabledComponent } from './modules/products/path/productcolor/productcolor-disabled.component';
+import { ProductColorDisabledListComponent } from './modules/products/path/productcolor/components/disabled/disabled.component';
+
+import { ProductSizeComponent } from './modules/products/path/productsize/productsize.component';
+import { ProductSizeListComponent } from './modules/products/path/productsize/components/list/list.component';
+import { ProductSizeControlComponent } from './modules/products/path/productsize/components/control/control.component';
+import { ProductSizeActionsComponent } from './modules/products/path/productsize/components/actions/actions.component';
+import { ProductSizeDisabledComponent } from './modules/products/path/productsize/productsize-disabled.component';
+import { ProductSizeDisabledListComponent } from './modules/products/path/productsize/components/disabled/disabled.component';
+
+import { ProductUnitComponent } from './modules/products/path/productunit/productunit.component';
+import { ProductUnitListComponent } from './modules/products/path/productunit/components/list/list.component';
+import { ProductUnitControlComponent } from './modules/products/path/productunit/components/control/control.component';
+import { ProductUnitActionsComponent } from './modules/products/path/productunit/components/actions/actions.component';
+import { ProductUnitDisabledComponent } from './modules/products/path/productunit/productunit-disabled.component';
+import { ProductUnitDisabledListComponent } from './modules/products/path/productunit/components/disabled/disabled.component';
+
+import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
+import { ProductConfigControlComponent } from './modules/products/path/productconfig/components/control/control.component';
+
+import { ProductColorService } from './modules/products/path/productcolor/productcolor.service';
+import { ProductSizeService } from './modules/products/path/productsize/productsize.service';
+import { ProductUnitService } from './modules/products/path/productunit/productunit.service';
+import { ProductConfigService } from './modules/products/path/productconfig/productconfig.service';
 
 @NgModule({
   declarations: [
@@ -252,8 +281,32 @@ import { ProductUnitComponent } from './modules/products/path/product/components
     StorageDisabledComponent,
     StorageDisabledListComponent,
     StorageListComponent,
+    UnitComponent,
+    ProductBarcodeListComponent,
+    ProductColorComponent,
+    ProductColorListComponent,
+
+    ProductColorControlComponent,
+    ProductColorActionsComponent,
+    ProductColorDisabledComponent,
+    ProductColorDisabledListComponent,
+
+    ProductSizeComponent,
+    ProductSizeListComponent,
+    ProductSizeControlComponent,
+    ProductSizeActionsComponent,
+    ProductSizeDisabledComponent,
+    ProductSizeDisabledListComponent,
+
     ProductUnitComponent,
-    ProductBarcodeListComponent
+    ProductUnitListComponent,
+    ProductUnitControlComponent,
+    ProductUnitActionsComponent,
+    ProductUnitDisabledComponent,
+    ProductUnitDisabledListComponent,
+
+    ProductConfigComponent,
+    ProductConfigControlComponent
   ],
   imports: [
     BrowserModule,
@@ -277,14 +330,14 @@ import { ProductUnitComponent } from './modules/products/path/product/components
     useClass: HttpExtensionInterceptor,
     multi: true
   },
-    { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy },
+  { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy },
 
     FundsAccountService, OtherIncomeService, FeeTypeService,
     SystemConfigService, CompanyService, UserService, RoleService,
     AreaService, CustomerService, DepartmentService, EmployeeService, OtherExchangeUnitService, SupplierService,
     PurchaseOrderService,
     ProductService, SystemUnitService, StorageService,
-
+    ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
     HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,68 @@
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
+        <div class="card-content">
+            <div class="heading">
+                基本信息
+            </div>
+            <table class="form">
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        名称：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'Name'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        货品Id：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'GoodsId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="GoodsId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        数据来源用户Id：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'SourceUserId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="SourceUserId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        显示顺序：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'SortIndex'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="SortIndex">
+                        </app-form-field>
+                    </td>
+                </tr>
+               
+            </table>
+        </div>
+        <div app-card-footer>
+            <app-ui-button [style]="'primary'" type="submit">
+                保存
+            </app-ui-button>
+            <app-ui-button (click)="handleClose()">
+                取消
+            </app-ui-button>
+        </div>
+    </app-card>
+</form>

@@ -221,6 +221,18 @@ export class AlertService {
       case ModuleName.Purchase:
         name = '采购订单';
         break;
+
+        case ModuleName.ProductColor:
+        name = '商品颜色';
+        break;
+
+        case ModuleName.ProductSize:
+        name = '商品尺寸';
+        break;
+
+        case ModuleName.ProductUnit:
+        name = '商品单位';
+        break;
     }
 
     return name;
@@ -266,5 +278,8 @@ export enum ModuleName {
   SystemUnit,
   OtherIncome,
   FundsAccount,
-  Purchase
+  Purchase,
+  ProductColor,
+  ProductSize,
+  ProductUnit
 }
