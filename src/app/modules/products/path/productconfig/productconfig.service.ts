@@ -23,7 +23,7 @@ export class ProductConfigService {
         return this.http.post('/ProductConfig/GetForModify', {}, data => {
             next(data);
             this.productconfig$.next(data);
-        }, fallback, ModuleType.Product);
+        }, fallback, ModuleType.Webadmin);
     }
 
     create(user, next: (data: any) => void, fallback: (error: any) => void) {
