@@ -77,9 +77,9 @@ export class ProductConfigControlComponent implements OnInit, OnDestroy {
     openUnit() {
         this.tabsService.create({
             name: '商品单位',
-            link: '/products/productunit',
+            link: '/products/systemunit',
         });
-        this.router.navigate(['/products/productunit']);
+        this.router.navigate(['/products/systemunit']);
     }
 
     save({ value }) {

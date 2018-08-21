@@ -119,17 +119,11 @@ import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/ne
 
 import { ProductComponent } from './modules/products/path/product/product.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
-import { SystemUnitComponent } from './modules/products/path/systemunit/systemunit.component';
-import { SystemUnitDisabledComponent } from './modules/products/path/systemunit/systemunit-disabled.component';
 import { StorageComponent } from './modules/products/path/storage/storage.component';
 import { StorageDisabledComponent } from './modules/products/path/storage/storage-disabled.component';
 import { ProductService } from './modules/products/path/product/product.service';
 import { StorageService } from './modules/products/path/storage/storage.service';
 import { SystemUnitService } from './modules/products/path/systemunit/systemunit.service';
-import { SystemUnitActionsComponent } from './modules/products/path/systemunit/components/actions/actions.component';
-import { SystemUnitControlComponent } from './modules/products/path/systemunit/components/control/control.component';
-import { SystemUnitDisabledListComponent } from './modules/products/path/systemunit/components/disabled/disabled.component';
-import { SystemUnitListComponent } from './modules/products/path/systemunit/components/list/list.component';
 import { ProductActionsComponent } from './modules/products/path/product/components/actions/actions.component';
 import { ProductBarcodeComponent } from './modules/products/path/product/product-barcode.component';
 import { ProductBarcodeListComponent } from './modules/products/path/product/components/barcode/barcode.component';
@@ -163,6 +157,13 @@ import { ProductUnitControlComponent } from './modules/products/path/productunit
 import { ProductUnitActionsComponent } from './modules/products/path/productunit/components/actions/actions.component';
 import { ProductUnitDisabledComponent } from './modules/products/path/productunit/productunit-disabled.component';
 import { ProductUnitDisabledListComponent } from './modules/products/path/productunit/components/disabled/disabled.component';
+
+import { SystemUnitComponent } from './modules/products/path/systemunit/systemunit.component';
+import { SystemUnitListComponent } from './modules/products/path/systemunit/components/list/list.component';
+import { SystemUnitControlComponent } from './modules/products/path/systemunit/components/control/control.component';
+import { SystemUnitActionsComponent } from './modules/products/path/systemunit/components/actions/actions.component';
+import { SystemUnitDisabledComponent } from './modules/products/path/systemunit/systemunit-disabled.component';
+import { SystemUnitDisabledListComponent } from './modules/products/path/systemunit/components/disabled/disabled.component';
 
 import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
 import { ProductConfigControlComponent } from './modules/products/path/productconfig/components/control/control.component';
