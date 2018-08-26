@@ -7,7 +7,6 @@ import { UIModule } from '@UI/ui.module';
 
 import { ProductConfigComponent } from './productconfig.component';
 import { ProductConfigControlComponent } from './components/control/control.component';
-
 import { ProductConfigService } from './productconfig.service';
 import { SharedModule } from '@app/shared.module';
 import { ProductConfigRoutingModule } from './productconfig.router';

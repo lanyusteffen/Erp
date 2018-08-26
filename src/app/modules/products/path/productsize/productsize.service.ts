@@ -34,6 +34,8 @@ export class ProductSizeService {
 
   get() { return this.productSize$.asObservable(); }
 
+  getDisabled() { return this.productSizeDisabled$.asObservable(); }
+
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,

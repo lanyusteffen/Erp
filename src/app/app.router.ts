@@ -37,13 +37,13 @@ import { StorageComponent } from './modules/products/path/storage/storage.compon
 import { StorageDisabledComponent } from './modules/products/path/storage/storage-disabled.component';
 import { SystemUnitComponent } from './modules/products/path/systemunit/systemunit.component';
 import { SystemUnitDisabledComponent } from './modules/products/path/systemunit/systemunit-disabled.component';
-import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
+import { ProductUnitComponent } from './modules/products/path/productunit/productunit.component';
+import { ProductUnitDisabledComponent } from './modules/products/path/productunit/productunit-disabled.component';
 import { ProductColorComponent } from './modules/products/path/productcolor/productcolor.component';
 import { ProductColorDisabledComponent } from './modules/products/path/productcolor/productcolor-disabled.component';
 import { ProductSizeComponent } from './modules/products/path/productsize/productsize.component';
 import { ProductSizeDisabledComponent } from './modules/products/path/productsize/productsize-disabled.component';
-import { ProductUnitComponent } from './modules/products/path/productunit/productunit.component';
-import { ProductUnitDisabledComponent } from './modules/products/path/productunit/productunit-disabled.component';
+import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
 
 export const ROUTES: Routes = [
     {
@@ -213,6 +213,11 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuard]
               },
               {
+                path: 'products/productconfig',
+                component: ProductConfigComponent,
+                canActivate: [AuthGuard]
+              },
+              {
                 path: 'products/productcolor',
                 component: ProductColorComponent,
                 canActivate: [AuthGuard]
@@ -240,11 +245,6 @@ export const ROUTES: Routes = [
               {
                 path: 'products/productunit/disabled',
                 component: ProductUnitDisabledComponent,
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'products/productconfig',
-                component: ProductConfigComponent,
                 canActivate: [AuthGuard]
               },
               {

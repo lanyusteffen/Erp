@@ -34,6 +34,8 @@ export class ProductColorService {
 
   get() { return this.productColor$.asObservable(); }
 
+  getDisabled() { return this.productColorDisabled$.asObservable(); }
+
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,

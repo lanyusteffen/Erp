@@ -3,10 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductConfigService } from './productconfig.service';
 
 @Component({
-  selector: 'app-product-productconfig',
+  selector: 'app-products-productconfig',
   template: `
     <div class="content">
-      <app-productconfig-control></app-productconfig-control>
+     <app-productconfig-control></app-productconfig-control>
     </div>
   `,
   styles: [`
@@ -28,11 +28,15 @@ export class ProductConfigComponent implements OnInit, OnDestroy {
 
   constructor(
     private productConfigService: ProductConfigService
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
 
   ngOnDestroy() {
+  }
+
+  selectItems(selected) {
+    this.selectedItems = selected;
   }
 }

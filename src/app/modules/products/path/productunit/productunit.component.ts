@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductUnitService } from './productunit.service';
 
 @Component({
-  selector: 'app-products-productunit',
+  selector: 'app-finances-productunit',
   template: `
     <app-productunit-actions [selectedItems]="selectedItems"></app-productunit-actions>
     <div class="content">

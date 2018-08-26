@@ -27,7 +27,7 @@ export class ProductColorDisabledListComponent implements OnInit, OnDestroy {
     private alertService: AlertService
   ) {
     this.subscription = this.productColorService
-      .get()
+      .getDisabled()
       .subscribe(({ productColors, currentPagination }) => {
         this.productColors = productColors;
         this.pagination = currentPagination;

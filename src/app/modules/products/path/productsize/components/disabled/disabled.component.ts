@@ -27,7 +27,7 @@ export class ProductSizeDisabledListComponent implements OnInit, OnDestroy {
     private alertService: AlertService
   ) {
     this.subscription = this.productSizeService
-      .get()
+      .getDisabled()
       .subscribe(({ productSizes, currentPagination }) => {
         this.productSizes = productSizes;
         this.pagination = currentPagination;

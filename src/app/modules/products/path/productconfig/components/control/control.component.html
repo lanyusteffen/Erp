@@ -7,7 +7,7 @@
     </div>
     <div class="table-wrapper">
         <div class="heading">
-            商品sku管理（适合服装等行业）
+            商品sku管理 （适合服装等行业）
         </div>
         <table class="form">
             <tr>
@@ -15,22 +15,23 @@
                     <app-ui-checkbox [checked]="'IsOpenPropertyName1'" formControlName="IsOpenPropertyName1" [ngModel]>启用属性1</app-ui-checkbox>
                 </th>
                 <td class="form-control-group">
-                    <app-form-field [name]="'PropertyName1'">
+                    <app-form-field [name]="'Name'">
                         <input #formField type="text" class="form-control" [ngModel] formControlName="PropertyName1">
                     </app-form-field>
-                    <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+                    <app-ui-button [style]="'primary'" (click)="openProperty(1)">
                         <i class="iconfont icon-add"></i>
                         颜色设置
                     </app-ui-button>
                 </td>
                 <th class="form-label">
                     <app-ui-checkbox [checked]="'IsOpenPropertyName2'" formControlName="IsOpenPropertyName2" [ngModel]>启用属性2</app-ui-checkbox>
+
                 </th>
                 <td class="form-control-group">
-                    <app-form-field [name]="'PropertyName2'">
+                    <app-form-field [name]="'Name'">
                         <input #formField type="text" class="form-control" [ngModel] formControlName="PropertyName2">
                     </app-form-field>
-                    <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+                    <app-ui-button [style]="'primary'" (click)="openProperty(2)">
                         <i class="iconfont icon-add"></i>
                         尺码设置
                     </app-ui-button>
@@ -41,7 +42,7 @@
             计量单位管理
         </div>
         <div>
-            <app-ui-button [style]="'primary'" (click)="onOpenBill(form)">
+            <app-ui-button [style]="'primary'" (click)="openUnit()">
                 <i class="iconfont icon-add"></i>
                 计量单位设置
             </app-ui-button>

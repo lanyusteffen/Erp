@@ -34,9 +34,10 @@ export class CheckboxComponent implements ControlValueAccessor {
   writeValue(obj: any): void {
 
     if (this.inputViewChild.nativeElement) {
-      this.inputViewChild.nativeElement.checked = this.checked;
+      this.inputViewChild.nativeElement.checked = obj;
+      this.checked = obj;
     }
-    this.cd.markForCheck();
+      this.cd.markForCheck();
   }
   registerOnChange(fn: any): void {
     this.onModelChange = fn;
@@ -49,11 +50,12 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   handleChange(evt) {
-    this.select();
+    this.select(evt);
   }
 
-  select() {
+  select(evt) {
     this.onModelChange(this.checked);
     this.pRadioChange.emit(this.checked);
+    this.onChange.emit(evt);
   }
 }

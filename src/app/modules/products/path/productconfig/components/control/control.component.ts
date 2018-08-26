@@ -4,25 +4,22 @@ import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { Subscription } from 'rxjs/Subscription';
-import { IDatePickerConfig } from 'ng2-date-picker';
+import { TabsService } from '@components/tabs/tabs.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-productconfig-control',
-  templateUrl: './control.component.html',
-  styleUrls: ['./control.component.less'],
-  providers: [FormService]
+    selector: 'app-productconfig-control',
+    templateUrl: './control.component.html',
+    styleUrls: ['./control.component.less'],
+    providers: [FormService]
 })
 
 export class ProductConfigControlComponent implements OnInit, OnDestroy {
-  private form = new FormGroup({});
+    private form = new FormGroup({});
     private type: string;
     private subscription: Subscription;
     private radioChecked = false;
-    private systemConfig: any;
-    private datePickerConfig: IDatePickerConfig = {
-        locale: 'zh-cn',
-        format: 'YYYY-MM-DD HH:mm:ss'
-    };
+    private productConfig: any;
 
     @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -31,7 +28,9 @@ export class ProductConfigControlComponent implements OnInit, OnDestroy {
     constructor(
         private productConfigService: ProductConfigService,
         private alertService: AlertService,
-        private formService: FormService
+        private formService: FormService,
+        private tabsService: TabsService,
+        private router: Router
     ) {
         this.subscription = this.productConfigService.get().subscribe();
     }
@@ -59,9 +58,28 @@ export class ProductConfigControlComponent implements OnInit, OnDestroy {
         this.onClose.emit();
     }
 
-    onOpenBill({ value }) {
-        value.IsEnabled = true;
-        this.save({ value });
+    openProperty(type) {
+        if (type === 1) {
+            this.tabsService.create({
+                name: '商品颜色',
+                link: '/products/productcolor',
+            });
+            this.router.navigate(['/products/productcolor']);
+        } else {
+            this.tabsService.create({
+                name: '商品尺寸',
+                link: '/products/productsize',
+            });
+            this.router.navigate(['/products/productsize']);
+        }
+    }
+
+    openUnit() {
+        this.tabsService.create({
+            name: '商品单位',
+            link: '/products/systemunit',
+        });
+        this.router.navigate(['/products/systemunit']);
     }
 
     save({ value }) {
@@ -90,5 +108,9 @@ export class ProductConfigControlComponent implements OnInit, OnDestroy {
 
     onSubmit({ value }) {
         this.save({ value });
+    }
+
+    select(evt) {
+
     }
 }

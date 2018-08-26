@@ -22,7 +22,7 @@ export class ProductColorActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService,
-	private router: Router
+    private router: Router
   ) { }
 
   show() {
@@ -35,7 +35,7 @@ export class ProductColorActionsComponent {
       name: '停用商品颜色',
       link: '/products/productcolor/disabled'
     });
-	this.router.navigate(['/products/productcolor/disabled']);
+    this.router.navigate(['/products/productcolor/disabled']);
   }
 
   close() {
