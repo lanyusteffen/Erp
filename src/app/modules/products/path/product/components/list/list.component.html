@@ -57,4 +57,10 @@
     [show]="_showStorageInitUpdate"
     (onClose)="closeStorageInit()"
   ></app-product-storageInit>
+  <app-product-control 
+  [type]="'update'"
+  [show]="_showUpdate"
+  [productId]="selectedId"
+  (onClose)="closeUpdate()"
+  ></app-product-control>
   </div>

@@ -27,4 +27,8 @@
       </app-ui-button>
     </div>
   </div>
-  
+  <app-product-control 
+  [show]="_show"
+  [productId]="selectedId"
+  (onClose)="close()"
+  ></app-product-control>

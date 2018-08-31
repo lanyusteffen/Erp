@@ -173,6 +173,8 @@ import { ProductSizeService } from './modules/products/path/productsize/products
 import { ProductUnitService } from './modules/products/path/productunit/productunit.service';
 import { ProductConfigService } from './modules/products/path/productconfig/productconfig.service';
 
+import { ProductControlComponent } from './modules/products/path/product/components/control/control.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -307,7 +309,9 @@ import { ProductConfigService } from './modules/products/path/productconfig/prod
     ProductUnitDisabledListComponent,
 
     ProductConfigComponent,
-    ProductConfigControlComponent
+    ProductConfigControlComponent,
+
+    ProductControlComponent
   ],
   imports: [
     BrowserModule,

@@ -146,23 +146,25 @@ export class ProductService {
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { } = this.state;
 
-    return this.http.get('/Product/GetForNew', next, fallback, ModuleType.Basic);
+    return this.http.post('/Product/GetForNew', {}, next, fallback, ModuleType.Product);
   }
 
   detail(productId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Product/GetForModify?productId=${productId}`, next, fallback, ModuleType.Basic);
+    return this.http.post(`/Product/GetForModify`, {
+      EntityId: productId
+    }, next, fallback, ModuleType.Product);
   }
 
   create(product, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/New', {
       product
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   modify(product, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Modify', {
       product
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   modifyBarCode(product, next: (data: any) => void, fallback: (error: any) => void) {
@@ -175,19 +177,19 @@ export class ProductService {
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Cancel', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Remove', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Product/Restore', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {

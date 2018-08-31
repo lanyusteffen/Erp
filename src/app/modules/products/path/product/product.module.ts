@@ -14,6 +14,7 @@ import { ProductDisabledComponent } from './product-disabled.component';
 import { ProductDisabledListComponent } from './components/disabled/disabled.component';
 import { ProductBarcodeComponent } from './product-barcode.component';
 import { ProductBarcodeListComponent } from './components/barcode/barcode.component';
+import { ProductControlComponent } from './components/control/control.component';
 
 import { ProductService } from './product.service';
 
@@ -31,7 +32,8 @@ import { ProductRoutingModule } from './product.router';
     ProductDisabledComponent,
     ProductDisabledListComponent,
     ProductBarcodeComponent,
-    ProductBarcodeListComponent
+    ProductBarcodeListComponent,
+    ProductControlComponent
  ],
   imports: [
     UIModule,

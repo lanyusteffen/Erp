@@ -1,0 +1,144 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady" name="loginForm">
+  <app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
+    <div class="card-content">
+      <div class="heading">
+        基本信息
+      </div>
+      <table class="form">
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            商品编号:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Code'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            商品名称:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Name'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+            </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            规格型号:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Spec'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Spec">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            重量:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Weight'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Weight">
+            </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            品牌:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'BrandName'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="BrandName">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            产地:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'ProductionPlace'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="ProductionPlace">
+            </app-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="card-content">
+      <div class="heading">
+        扩展属性
+      </div>
+      <div class="form-control-group property" formArrayName="ProductColorActionRequests">
+        <div class="propertybox" *ngFor="let productColor of productColorList.controls">
+          <app-ui-checkbox [checked]="productColor.value.IsSelected" (onChange)="select($event, productColor.value)"></app-ui-checkbox>{{productColor.value.Name}}
+        </div>
+      </div>
+      <div class="form-control-group property" formArrayName="ProductSizeActionRequests">
+        <div class="propertybox" *ngFor="let productSize of productSizeList.controls">
+          <app-ui-checkbox [checked]="productSize.value.IsSelected" (onChange)="select($event, productSize.value)"></app-ui-checkbox>{{productSize.value.Name}}
+        </div>
+      </div>
+      <table class="form">
+        <thead>
+          <th>序号</th>
+          <th>操作</th>
+          <th>颜色</th>
+          <th>尺码</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of goods">
+            <td>{{item.Index}}</td>
+            <td>
+              <a class="text-danger" (click)="onRemove(item.Index)">删除</a>
+            </td>
+            <td>{{item.ProductColor}}</td>
+            <td>{{item.ProductSize}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-content">
+      <div class="heading">
+        单位价格
+      </div>
+      <table class="form">
+        <thead>
+          <th>单位类型</th>
+          <th>计量单位</th>
+          <th>单位倍量</th>
+          <th>预设采购价</th>
+          <th>1级售价</th>
+          <th>2级售价</th>
+          <th>3级售价</th>
+          <th>4级售价</th>
+          <th>5级售价</th>
+        </thead>
+        <tbody formArrayName="ProductUnitList">
+          <tr *ngFor="let item of productUnitList.controls; index as i" [formGroupName]="i">
+            <td>{{item.value.UnitTypeName}}</td>
+            <td><input type="text" formControlName="Name" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="UnitTime" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="PrePurchasePrice" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="PriceLevel1" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="PriceLevel2" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="PriceLevel3" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="PriceLevel4" class="form-control" [ngModel]></td>
+            <td><input type="text" formControlName="PriceLevel5" class="form-control" [ngModel]></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+    <div class="card-content">
+      <div class="heading">备注</div>
+      <input type="text" formControlName="Remark" class="form-control" [ngModel]>
+    </div>
+    <div app-card-footer>
+      <app-ui-button [style]="'primary'" type="submit">
+        保存
+      </app-ui-button>
+      <app-ui-button (click)="handleClose()">
+        取消
+      </app-ui-button>
+    </div>
+  </app-card>
+</form>
