@@ -84,14 +84,14 @@
           <th>颜色</th>
           <th>尺码</th>
         </thead>
-        <tbody>
-          <tr *ngFor="let item of goods">
-            <td>{{item.Index}}</td>
+        <tbody formArrayName="GoodsActionRequests">
+          <tr *ngFor="let item of goodsList.controls, index as i">
+            <td>{{i}}</td>
             <td>
-              <a class="text-danger" (click)="onRemove(item.Index)">删除</a>
+              <a class="text-danger" (click)="onRemove(item.value.Index)">删除</a>
             </td>
-            <td>{{item.ProductColor}}</td>
-            <td>{{item.ProductSize}}</td>
+            <td>{{item.value.ProductColorValue}}</td>
+            <td>{{item.value.ProductSizeValue}}</td>
           </tr>
         </tbody>
       </table>
@@ -115,7 +115,7 @@
         <tbody formArrayName="ProductUnitList">
           <tr *ngFor="let item of productUnitList.controls; index as i" [formGroupName]="i">
             <td>{{item.value.UnitTypeName}}</td>
-            <td><input type="text" formControlName="Name" class="form-control" [ngModel]></td>
+            <td><app-systemunit-selector formControlName="SystemUnitId" [ngModel]></app-systemunit-selector></td>
             <td><input type="text" formControlName="UnitTime" class="form-control" [ngModel]></td>
             <td><input type="text" formControlName="PrePurchasePrice" class="form-control" [ngModel]></td>
             <td><input type="text" formControlName="PriceLevel1" class="form-control" [ngModel]></td>

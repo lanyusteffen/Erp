@@ -14,6 +14,8 @@ import { AlertService } from '@services/alert.service';
 export class ProductControlComponent {
   private form = new FormGroup({});
   private _show = false;
+  private _productColors = new Array();
+  private _productSizes = new Array();
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
@@ -36,6 +38,10 @@ export class ProductControlComponent {
   set productId(productId) {
     this._productId = productId;
     this.refreshList();
+    if (this._productId > 0) {
+      this.selectColor(null, null);
+      this.selectSize(null, null);
+    }
   }
 
   getTitle(): string {
@@ -47,8 +53,146 @@ export class ProductControlComponent {
   }
 
   select(evt, selectedItem) {
+    this.createGoods(evt, selectedItem);
   }
 
+  createGoods(evt, selectedItem): void {
+    this.selectColor(evt, selectedItem);
+    this.selectSize(evt, selectedItem);
+
+    const goodsList = <FormArray>this.form.controls['GoodsActionRequests'];
+    var length = goodsList.length;
+    for (var i = 0; i < length; i++) {
+      goodsList.removeAt(0);
+    }
+
+    if (this._productColors.length > 0 && this._productSizes.length > 0) {
+      var index = 0;
+      this._productColors.map(color => {
+        this._productSizes.map(size => {
+          var goods = {
+            Index: index++,
+            ProductColorId: color.Id,
+            ProductColorValue: color.Name,
+            ProductSizeId: size.Id,
+            ProductSizeValue: size.Name
+          }
+          goodsList.insert(goodsList.length, this.fb.group(goods));
+        });
+      });
+
+    } else if (this._productColors.length > 0) {
+      var index = 0;
+      this._productColors.map(color => {
+        var goods = {
+          Index: index++,
+          ProductColorId: color.Id,
+          ProductColorValue: color.Name
+        }
+        goodsList.insert(goodsList.length, this.fb.group(goods));
+
+      });
+
+    } else if (this._productSizes.length > 0) {
+      var index = 0;
+      this._productSizes.map(size => {
+        var goods = {
+          Index: index++,
+          ProductSizeId: size.Id,
+          ProductSizeValue: size.Name
+        }
+        goodsList.insert(goodsList.length, this.fb.group(goods));
+      });
+    }
+  }
+
+  selectColor(evt, selectedItem): void {
+    var productColorList = this.form.get('ProductColorActionRequests').value;
+    if (evt == null) {
+      productColorList.map(item => {
+        if (item.IsSelected && !this.isContainer(this._productColors, item)) {
+          this._productColors.push(item);
+        }
+      });
+    } else {
+      productColorList.map(item => {
+        if (item.Name == selectedItem.Name) {
+          item.IsSelected = evt.target.checked;
+          if (evt.target.checked && !this.isContainer(this._productColors, item)) {
+            this._productColors.push(item);
+          }
+          else {
+            for (var i = 0; i < this._productColors.length; i++) {
+              if (this._productColors[i].Name == selectedItem.Name) {
+                this._productColors.splice(i, 1);
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  selectSize(evt, selectedItem): void {
+    var productSizeList = this.form.get('ProductSizeActionRequests').value;
+    if (evt == null) {
+      productSizeList.map(item => {
+        if (item.IsSelected && !this.isContainer(this._productSizes, item)) {
+          this._productSizes.push(item);
+        }
+      });
+    } else {
+      productSizeList.map(item => {
+        if (item.Name == selectedItem.Name) {
+          item.IsSelected = evt.target.checked;
+          if (evt.target.checked && !this.isContainer(this._productSizes, item)) {
+            this._productSizes.push(item);
+          }
+          else {
+            for (var i = 0; i < this._productSizes.length; i++) {
+              if (this._productSizes[i].Name == selectedItem.Name) {
+                this._productSizes.splice(i, 1);
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  isContainer(arr: any, item: any): boolean {
+
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].Id == item.Id) {
+        return true;
+      }
+    }
+    return false;
+
+  }
+
+  onRemove(index: number): void {
+    const goodsList = <FormArray>this.form.controls['GoodsActionRequests'];
+
+    var _goodsList = new Array();
+
+    for (var i = 0; i < goodsList.length; i++) {
+      _goodsList.push(goodsList.controls[i]);
+    }
+    _goodsList.splice(index, 1);
+
+    var length = goodsList.length;
+    for (var i = 0; i < length; i++) {
+      goodsList.removeAt(0);
+    }
+
+    var j = 0;
+    for (var j = 0; j < _goodsList.length; j++) {
+      _goodsList[j].value.Index = j;
+      goodsList.insert(j, _goodsList[j]);
+    }
+
+  }
 
   listErrorCallBack(err: any): void {
     this.alertService.open({
@@ -86,8 +230,9 @@ export class ProductControlComponent {
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
   get productColorList(): FormArray { return this.form.get('ProductColorActionRequests') as FormArray; }
-  get productSizeList(): FormArray { return this.form.get('ProductSizeActionRequests') as FormArray; }  
+  get productSizeList(): FormArray { return this.form.get('ProductSizeActionRequests') as FormArray; }
   get productUnitList(): FormArray { return this.form.get('ProductUnitList') as FormArray; }
+  get goodsList(): FormArray { return this.form.get('GoodsActionRequests') as FormArray; }
 
 
   handleClose() {
