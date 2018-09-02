@@ -90,7 +90,7 @@ export class PurchaseOrderService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Purchase/GetForNew', {}, next, fallback, ModuleType.Purchase);
+    return this.http.post('/Purchase/GetForNew', {}, next, fallback, ModuleType.Webadmin);
   }
 
   create(purchase, next: (data: any) => void, fallback: (error: any) => void) {

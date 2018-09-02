@@ -48,7 +48,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   private form = new FormGroup({});
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
-    format: 'YYYY-MM-DD'
+    format: 'YYYY-MM-DD HH:mm:ss'
   };
 
   get purchaseItemList(): FormArray { return this.form.get('ItemList') as FormArray; }

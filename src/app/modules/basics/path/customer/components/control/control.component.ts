@@ -31,7 +31,6 @@ const contractor = {
 })
 
 export class CustomerControlComponent {
-  private contactList = [{}, {}, {}];
   private form = new FormGroup({});
   private _show = false;
   private _category: any;

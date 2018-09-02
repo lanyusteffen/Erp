@@ -44,12 +44,12 @@
       导入
     </app-ui-button>
     <div class="more">
-      <app-ui-checkbox [checked]="IsOpenDiscount" [ngModel] [inline]="false">启用折扣</app-ui-checkbox>
+      <app-ui-checkbox formControlName="IsOpenDiscount" [inline]="false" [ngModel]>启用折扣</app-ui-checkbox>
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <app-ui-checkbox [checked]="IsOpenTax" [inline]="false">启用税率</app-ui-checkbox>
+      <app-ui-checkbox formControlName="IsOpenTax" [inline]="false" [ngModel]>启用税率</app-ui-checkbox>
     </div>
   </div>
-  <!-- <app-ui-table>
+  <app-ui-table>
     <thead>
       <th>操作</th>
       <th><span class="required">*</span>商品</th>
@@ -63,7 +63,7 @@
       <th><span class="required">*</span>仓库</th>
     </thead>
     <tbody formArrayName="ItemList">
-      <tr *ngFor="let item of purchaseItemList.controls; index as i">
+      <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">
         <td>
           <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
@@ -86,5 +86,5 @@
         <td><input type="text" formControlName="StorageId" class="form-control" [ngModel]></td>
       </tr>
     </tbody>
-  </app-ui-table> -->
+  </app-ui-table>
 </form>
