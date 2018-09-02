@@ -8,6 +8,26 @@ import { PurchaseOrderService } from '../order.service';
 import { FormService } from '@services/form.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 
+const purchaseItem = {
+  PurchaseId: null,
+  PurchaseCode: null,
+  GoodsId: 0,
+  ProductId: 0,
+  Quanlity: null,
+  Price: null,
+  DiscountRate: null,
+  DiscountAmount: 0,
+  AfterDiscountAmount: false,
+  TaxRate: true,
+  TaxAmount: null,
+  AfterTaxAmount: null,
+  StorageId: null,
+  ProductUnitId: null,
+  PurchaseAmount: 0,
+  StorageInQuanlity: null,
+  UnitTime: null,
+};
+
 @Component({
   selector: 'app-purchase-order-new',
   templateUrl: './new.component.html',
@@ -31,12 +51,13 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     format: 'YYYY-MM-DD'
   };
 
-  get purchaseItemList(): FormArray { return this.form.get('PurchaseItemList') as FormArray; }
+  get purchaseItemList(): FormArray { return this.form.get('ItemList') as FormArray; }
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
   constructor(
     private purchaseOrderService: PurchaseOrderService,
     private formService: FormService,
+    private fb: FormBuilder,
     private alertService: AlertService
   ) {}
 
@@ -69,5 +90,17 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Purchase, err);
       });
+  }
+
+  addPurchaseItem(idx) {
+
+    const control = <FormArray>this.form.controls['ItemList'];
+    control.insert(idx + 1, this.fb.group(purchaseItem));
+  }
+
+  removePurchaseItem(idx) {
+
+    const control = <FormArray>this.form.controls['ItemList'];
+    control.removeAt(idx);
   }
 }

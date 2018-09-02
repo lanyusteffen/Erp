@@ -31,6 +31,7 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }
@@ -46,7 +47,7 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
           next();
         }
       }, (err) => {
-        this.alertService.getErrorCallBack(ModuleName.Employee, err);
+        this.alertService.getErrorCallBack(ModuleName.Department, err);
       });
   }
 
@@ -54,11 +55,11 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
     if (!this.dataInitialized) {
       this.dataInitialized = true;
       this.bindListData(() => {
-        this.innerValue = value || 0;
+        this.innerValue = value || -1;
         this.selectDepartment.value = this.innerValue;
       });
     } else {
-      this.innerValue = value || 0;
+      this.innerValue = value || -1;
       this.selectDepartment.value = this.innerValue;
     }
   }

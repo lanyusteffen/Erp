@@ -4,6 +4,12 @@
     <span class="caret"></span>
   </button>
   <ul #menu app-ui-dropdown-menu>
+    <li>
+      <a
+        [class.active]="_currentValue.value === _defaultValue"
+        (click)="handleChange(_defaultValue)"
+      >{{_defaultText}}</a>
+    </li>
     <li *ngFor="let option of _options">
       <a
         [class.active]="_currentValue.value === option.value"

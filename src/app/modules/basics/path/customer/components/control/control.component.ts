@@ -62,7 +62,6 @@ export class CustomerControlComponent {
     return this._category;
   }
 
-
   @Input()
   set customerId(customerId) {
     this._customerId = customerId;

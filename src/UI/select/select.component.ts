@@ -9,41 +9,56 @@ import { Component, Input, Output, ViewEncapsulation, EventEmitter, ChangeDetect
 
 export class SelectComponent {
 
-  private _currentValue = {};
-  private _selectedValue = null;
+  private _defaultValue = -1;
+  private _defaultText = '请选择';
+
+  private _defaultOption = {
+    label: this._defaultText,
+    value: this._defaultValue
+  };
+
+  private _currentValue = this._defaultOption;
 
   _options = [];
 
   @Input()
   set options(list) {
     this._options = list;
-    if (this._selectedValue === null || this._selectedValue === undefined) {
-      this._currentValue = this.options[0];
-    } else {
-      this._currentValue = this.options.find(option => option.value === this._selectedValue) || {};
-    }
-    this._selectedValue = null;
     this.cd.markForCheck();
   }
+
   get options() {
     return this._options;
   }
+
   @Input() placement = 'bottom';
   @Input() formSelect = false;
 
   @Input()
-  set value(value) {
+  set defaultValue(value) {
+    this._defaultValue = value;
+  }
+
+  @Input()
+  set defaultText(value) {
+    this._defaultText = value;
+  }
+
+  @Input()
+  set value(setNewValue) {
     if (this.options.length > 0) {
-      this._currentValue = this.options.find(option => option.value === value) || {};
-      this._selectedValue = null;
+      const selectedValue = this.options.find(option => option.value === setNewValue) || null;
+      if (selectedValue) {
+        this._currentValue = selectedValue;
+      } else {
+        this._currentValue = this._defaultOption;
+      }
       this.cd.markForCheck();
-    } else {
-      this._selectedValue = value;
     }
   }
 
   get value() {
-    return this._currentValue;
+    return this._currentValue.value;
   }
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();
