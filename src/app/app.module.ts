@@ -87,6 +87,7 @@ import { EmployeeService } from './modules/basics/path/employee/employee.service
 import { OtherExchangeUnitService } from './modules/basics/path/otherexchangeunit/other-exchange-unit.service';
 import { SupplierService } from './modules/basics/path/supplier/supplier.service';
 import { BasicsSharedModule } from './modules/basics/components/basics.shared.module';
+import { ProductsSharedModule } from './modules/products/components/products.shared.module';
 import { CompanyComponent } from './modules/admins/path/company/company.component';
 import { CompanyListComponent } from './modules/admins/path/company/components/list/list.component';
 import { CompanyActionsComponent } from './modules/admins/path/company/components/actions/actions.component';
@@ -323,6 +324,7 @@ import { ProductControlComponent } from './modules/products/path/product/compone
     AuthorizeModule,
     SharedModule,
     BasicsSharedModule,
+    ProductsSharedModule,
     AppRoutingModule,
     DpDatePickerModule,
     SlimLoadingBarModule.forRoot()

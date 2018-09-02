@@ -156,15 +156,11 @@ export class ProductService {
   }
 
   create(product, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Product/New', {
-      product
-    }, next, fallback, ModuleType.Product);
+    return this.http.post('/Product/New', product, next, fallback, ModuleType.Product);
   }
 
   modify(product, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Product/Modify', {
-      product
-    }, next, fallback, ModuleType.Product);
+    return this.http.post('/Product/Modify', product, next, fallback, ModuleType.Product);
   }
 
   modifyBarCode(product, next: (data: any) => void, fallback: (error: any) => void) {
