@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 import { AlertService } from '@services/alert.service';
-import { EmployeePopupSelectService } from './employee-popup-selector.service';
+import { GoodsPopupSelectService } from './goods-popup-selector.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
-  selector: 'app-popup-selector-employee',
-  templateUrl: './popup-selector-employee.component.html',
-  styleUrls: ['./popup-selector-employee.component.less'],
-  providers: [ EmployeePopupSelectService,
-    { provide: NG_VALUE_ACCESSOR, useExisting: PopupSelectorEmployeeComponent, multi: true }
+  selector: 'app-popup-selector-goods',
+  templateUrl: './popup-selector-goods.component.html',
+  styleUrls: ['./popup-selector-goods.component.less'],
+  providers: [ GoodsPopupSelectService,
+    { provide: NG_VALUE_ACCESSOR, useExisting: PopupSelectorGoodsComponent, multi: true }
   ]
 })
-export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
+export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
@@ -22,7 +22,7 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
   private innerValue: any;
   private onTouched = null;
   private onChange = null;
-  private employees = <any>[];
+  private goods = <any>[];
   private pagination = {};
   private _showLabel = '';
   private _show: boolean;
@@ -36,13 +36,13 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
   set show(isShow) {
     this._show = isShow;
     if (isShow) {
-      this.dataService.list(({ employees, currentPagination }) => {
-        this.employees = employees;
+      this.dataService.list(({ goods, currentPagination }) => {
+        this.goods = goods;
         this.pagination = currentPagination;
       }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '绑定职员列表失败!' + err
+          content: '绑定货品列表失败!' + err
         });
       });
     }
@@ -88,30 +88,30 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
     this.dataService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    }, ({ employees, currentPagination }) => {
-      this.employees = employees;
+    }, ({ goods, currentPagination }) => {
+      this.goods = goods;
       this.pagination = currentPagination;
     }, (err) => {
       this.alertService.open({
         type: 'danger',
-        content: '绑定职员列表失败!' + err
+        content: '绑定货品列表失败!' + err
       });
     });
   }
 
   onSearch(queryKey) {
-    this.dataService.onSearch(queryKey, ({ employees, currentPagination }) => {
-      this.employees = employees;
+    this.dataService.onSearch(queryKey, ({ goods, currentPagination }) => {
+      this.goods = goods;
       this.pagination = currentPagination;
     }, (err) => {
       this.alertService.open({
         type: 'danger',
-        content: '绑定职员列表失败!' + err
+        content: '绑定货品列表失败!' + err
       });
     });
   }
 
-  constructor(private dataService: EmployeePopupSelectService,
+  constructor(private dataService: GoodsPopupSelectService,
               private alertService: AlertService) {
   }
 
@@ -123,7 +123,7 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
       }, (err) => {
         this.alertService.open({
           type: 'danger',
-          content: '获取职员信息失败!' + err
+          content: '绑定货品列表失败!' + err
         });
       });
     }
@@ -141,4 +141,5 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
     this.innerValue = value;
     this.onChange(value);
   }
+
 }

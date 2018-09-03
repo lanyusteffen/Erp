@@ -6,10 +6,12 @@ import { SystemuitSelectorComponent } from '../components/systemunit-selector/sy
 
 import { SystemUnitService } from '../path/systemunit/systemunit.service';
 import { SharedModule } from '../../../shared.module';
+import { PopupSelectorGoodsComponent } from './popup-selector-goods/popup-selector-goods/popup-selector-goods.component';
 
 @NgModule({
   declarations: [
-    SystemuitSelectorComponent
+    SystemuitSelectorComponent,
+    PopupSelectorGoodsComponent
   ],
   imports: [
     UIModule,
