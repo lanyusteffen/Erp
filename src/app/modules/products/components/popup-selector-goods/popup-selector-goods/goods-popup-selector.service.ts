@@ -27,16 +27,15 @@ export class GoodsPopupSelectService {
             }
         } = this.state;
 
-        return this.http.post('/Employee/GetListPaged', {
+        return this.http.post('/Goods/GetList', {
             QueryKey: currentQueryKey,
-            EmployeeId: currentEmployee.Id,
             Status: 1,
             PageIndex,
             PageSize
         }, data => {
             next({
                 ...this.state,
-                employees: data.EmployeeList,
+                goods: data.EmployeeList,
                 currentPagination: data.EmployeePageQueryReq
             });
         }, fallback, ModuleType.Basic);
@@ -72,7 +71,7 @@ export class GoodsPopupSelectService {
     }
 
     getEmployee(employeeId, next: (data: any) => void, fallback: (error: any) => void) {
-        return this.http.post(`/Employee/GetForModify`, { EntityId : employeeId }, next, fallback, ModuleType.Basic);
+        return this.http.post(`/Goods/GetForModify`, { EntityId : employeeId }, next, fallback, ModuleType.Basic);
     }
 
     constructor(private http: HttpService) {}
