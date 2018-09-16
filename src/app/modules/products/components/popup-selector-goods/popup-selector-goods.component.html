@@ -27,22 +27,30 @@
         <app-ui-table>
           <thead>
             <tr>
+              <th>数量</th>
+              <th>商品编号</th>
               <th>商品名称</th>
-              <th>商品名称</th>
-              <th>单位</th>
-              <th>规格</th>
-              <th>颜色</th>
-              <th>价格等级</th>
+              <th>规格型号</th>
+              <th>基本单位</th>
+              <th>{{PropertyName1}}</th>
+              <th>{{PropertyName2}}</th>
+              <th>库存数量</th>
+              <th>预设采购价</th>
+              <th>最新进价</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of goods" (dblclick)="selectConfirm(item)" (click)="select(item)">
-              <td>{{item.ProductCode}}</td>
+              
+              <td><input type="text" formControlName="Quanlity" class="form-control" [ngModel]></td>
               <td>{{item.Name}}</td>
+              <td>{{item.ProductCode}}</td>
               <td>{{item.Spec}}</td>
+              <td>{{item.ProductUnit}}</td>
+              <td>{{item.ProductColor}}</td>
+              <td>{{item.ProductSize}}</td>
               <td></td>
               <td></td>
-              <td>{{item.SalePriceLevelDes}}</td>
             </tr>
           </tbody>
         </app-ui-table>

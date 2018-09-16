@@ -9,6 +9,7 @@ export class GoodsPopupSelectService {
     private state = {
         goods: [],
         currentQueryKey: '',
+        ProductCategoryId: null,
         currentPagination: {
             PageIndex: 1,
             PageSize: 10,
