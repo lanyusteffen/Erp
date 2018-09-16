@@ -9,11 +9,11 @@ import { SelectComponent } from '@UI/select/select.component';
   templateUrl: './systemunit-selector.component.html',
   styleUrls: ['./systemunit-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: SystemuitSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: SystemUnitSelectorComponent, multi: true }
   ]
 })
 
-export class SystemuitSelectorComponent implements OnInit, ControlValueAccessor {
+export class SystemUnitSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;

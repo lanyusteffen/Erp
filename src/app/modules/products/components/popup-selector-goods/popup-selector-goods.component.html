@@ -1,21 +1,14 @@
 <div class="selector-group">
-  <input type="text" [value]="_showLabel" class="form-control" />
+  <input type="text" formControlName="_showLabel" class="form-control">
   <span class="addon" (click)="showModal($event)">
-    <i class="iconfont icon-filter"></i>
+    <i class="iconfont"></i>选择
   </span>
 </div>
 <app-ui-modal [show]="_show" (onClose)="closeModal($event)">
   <div app-ui-modal-header>
-    选择客户
+    选择商品
   </div>
   <div class="modal-body-wrapper">
-    <div class="tabs">
-      <ul class="tabs-list">
-        <li><a [class]="isActive('Customer')" (click)="selectTab('Customer')">客户</a></li>
-        <li><a [class]="isActive('Supplier')" (click)="selectTab('Supplier')">供应商</a></li>
-        <li><a [class]="isActive('Other')" (click)="selectTab('Other')">其他往来单位</a></li>
-      </ul>
-    </div>
     <div class="actions">
       <app-quick-search [placeholder]="'编号、姓名'" (onSearch)="onSearch($event)"></app-quick-search>
       <div class="more">
@@ -27,26 +20,26 @@
     <div class="content" *ngIf="_show">
       <app-category
         (onChange)="onCategoryChange($event)"
-        [categoryType]="'Customer'"
-        [resourceType]="'Customer'"
+        [categoryType]="'Product'"
+        [resourceType]="''"
       ></app-category>
       <div class="table-wrapper">
         <app-ui-table>
           <thead>
             <tr>
-              <th>客户编号</th>
-              <th>客户名称</th>
-              <th>应收款</th>
-              <th>信用额度</th>
-              <th>可用额度</th>
+              <th>商品名称</th>
+              <th>商品名称</th>
+              <th>单位</th>
+              <th>规格</th>
+              <th>颜色</th>
               <th>价格等级</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of customers" (dblclick)="selectConfirm(item)" (click)="select(item)">
-              <td>{{item.Code}}</td>
+            <tr *ngFor="let item of goods" (dblclick)="selectConfirm(item)" (click)="select(item)">
+              <td>{{item.ProductCode}}</td>
               <td>{{item.Name}}</td>
-              <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>
+              <td>{{item.Spec}}</td>
               <td></td>
               <td></td>
               <td>{{item.SalePriceLevelDes}}</td>

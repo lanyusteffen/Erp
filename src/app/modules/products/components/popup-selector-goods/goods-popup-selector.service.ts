@@ -7,9 +7,8 @@ import { Subject } from 'rxjs/Subject';
 export class GoodsPopupSelectService {
 
     private state = {
-        employees: [],
+        goods: [],
         currentQueryKey: '',
-        currentEmployee: { Id: null },
         currentPagination: {
             PageIndex: 1,
             PageSize: 10,
@@ -19,7 +18,6 @@ export class GoodsPopupSelectService {
 
     list(next: (data: any) => void, fallback: (error: any) => void) {
         const {
-            currentEmployee,
             currentQueryKey,
             currentPagination: {
                 PageIndex,
@@ -27,7 +25,7 @@ export class GoodsPopupSelectService {
             }
         } = this.state;
 
-        return this.http.post('/Goods/GetList', {
+        return this.http.post('/Goods/GetListPaged', {
             QueryKey: currentQueryKey,
             Status: 1,
             PageIndex,
@@ -35,10 +33,10 @@ export class GoodsPopupSelectService {
         }, data => {
             next({
                 ...this.state,
-                goods: data.EmployeeList,
-                currentPagination: data.EmployeePageQueryReq
+                goods: data.GoodsList,
+                currentPagination: data.GoodsPageQueryReq
             });
-        }, fallback, ModuleType.Basic);
+        }, fallback, ModuleType.Webadmin);
     }
 
     onSearch(queryKey, next: (data: any) => void, fallback: (error: any) => void) {
@@ -70,9 +68,6 @@ export class GoodsPopupSelectService {
         this.list(next, fallback);
     }
 
-    getEmployee(employeeId, next: (data: any) => void, fallback: (error: any) => void) {
-        return this.http.post(`/Goods/GetForModify`, { EntityId : employeeId }, next, fallback, ModuleType.Basic);
+    constructor(private http: HttpService) {
     }
-
-    constructor(private http: HttpService) {}
 }
