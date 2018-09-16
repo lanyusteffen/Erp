@@ -118,7 +118,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   writeValue(value) {
     this.innerValue = value || 0;
     if (this.innerValue > 0) {
-      this.dataService.getEmployee(this.innerValue, (data) => {
+      this.dataService.list((data) => {
         this._showLabel = data.Name;
       }, (err) => {
         this.alertService.open({

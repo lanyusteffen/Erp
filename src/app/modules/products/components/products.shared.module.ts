@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UIModule } from '@UI/ui.module';
 
-import { SystemuitSelectorComponent } from '../components/systemunit-selector/systemunit-selector.component';
+import { SystemUnitSelectorComponent } from '../components/systemunit-selector/systemunit-selector.component';
 
 import { SystemUnitService } from '../path/systemunit/systemunit.service';
 import { SharedModule } from '../../../shared.module';
-import { PopupSelectorGoodsComponent } from './popup-selector-goods/popup-selector-goods/popup-selector-goods.component';
+import { PopupSelectorGoodsComponent } from './popup-selector-goods/popup-selector-goods.component';
 
 @NgModule({
   declarations: [
-    SystemuitSelectorComponent,
+    SystemUnitSelectorComponent,
     PopupSelectorGoodsComponent
   ],
   imports: [
@@ -19,7 +19,8 @@ import { PopupSelectorGoodsComponent } from './popup-selector-goods/popup-select
     SharedModule
   ],
   exports: [
-    SystemuitSelectorComponent
+    SystemUnitSelectorComponent,
+    PopupSelectorGoodsComponent
   ],
   providers: [
     SystemUnitService

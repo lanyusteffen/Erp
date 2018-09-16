@@ -69,12 +69,7 @@
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
         </td>
         <td>
-            <div class="selector-group">
-                <input type="text" formControlName="Name" class="form-control" [ngModel]>
-                <span class="addon" (click)="showModal($event)">
-                  <i class="iconfont"></i>选择
-                </span>
-            </div>
+          <app-popup-selector-goods (onConfirm)="selectEmployee($event)" formControlName="GoodsId" [ngModel]></app-popup-selector-goods>
         </td>
         <td></td>
         <td></td>
