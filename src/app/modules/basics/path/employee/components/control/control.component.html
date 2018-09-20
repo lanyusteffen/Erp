@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form,form.valid)" novalidate *ngIf="formReady">
     <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
       <div class="card-content">
         <div class="heading">
@@ -12,7 +12,7 @@
             </th>
             <td class="form-control-group">
               <app-form-field [name]="'Name'">
-                <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+                <input #formField type="text" class="form-control" [ngModel] formControlName="Name"  (blur)="setErrorMessage('Name',form.get('Name').errors)">
               </app-form-field>
             </td>
             <th class="form-label">所属部门：</th>

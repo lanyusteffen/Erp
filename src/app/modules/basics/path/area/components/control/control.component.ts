@@ -3,7 +3,6 @@ import { AreaService } from '../../area.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
-import { ValidateBase } from '../../../../../../validators/ValidateBase';
 import { ErrorService } from '@services/error.service';
 
 
@@ -41,36 +40,45 @@ export class AreaControlComponent {
     return this.type === 'create' ? '新增地区' : '修改地区';
   }
 
-  private getValidators(){
-    var validatorArrs ={
-      Name:[
-        Validators.maxLength(100),
-        Validators.required,
-        ValidateBase.urlValidator
-      ]
-    };
+  public setErrorMessage(propertyName, errors): void {
+    const errorItems = new Array();
+    if (errors) {
 
-    
-     return validatorArrs;
-  }
-
-  public setErrorMessage(propertyName,errors):void{
-    var errorItems = new Array();
-    if(errors){
-      if(errors.isUrl){
-        var errorItem = {
-          AttemptedValue: "",
-          ErrorCode:"NotEmptyValidator",
-          ErrorDescription:null,
-          ErrorMessage:"格式不正确",
-          ErrorStackTrace:null,
-          PropertyName:propertyName
-        }
+      if (errors.maxLength) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: '名称 长度不能超过 200',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
         errorItems.push(errorItem);
       }
-    
+      if (errors.required) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: '名称 必填',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        errorItems.push(errorItem);
+      }
+
     }
     this.errorService.setErrorItems(errorItems);
+  }
+
+  private getValidators() {
+    const validatorArrs = {
+      Name: [
+        Validators.maxLength(200),
+        Validators.required
+      ]
+    };
+    return validatorArrs;
   }
 
   private showPop(): void {
@@ -78,14 +86,14 @@ export class AreaControlComponent {
       if (this.type === 'create') {
         this.areaService
           .newOne(data => {
-            this.form = this.formService.createForm(data,this.getValidators());
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Area, err);
           });
       } else {
         this.areaService
           .detail(this._areaId, data => {
-            this.form = this.formService.createForm(data,this.getValidators());
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Area, err);
           });
@@ -124,8 +132,8 @@ export class AreaControlComponent {
     }
   }
 
-  onSubmit({ value },IsValid) {  
-    if(IsValid){
+  onSubmit({ value }, IsValid) {
+    if (IsValid) {
       if (value.Id === 0) {
         this.areaService.create(value, data => {
           this.validate(data, '添加');
@@ -139,7 +147,7 @@ export class AreaControlComponent {
           this.alertService.modifyFail(err);
         });
       }
-    }    
+    }
   }
 }
 

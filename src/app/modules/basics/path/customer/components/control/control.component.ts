@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 
 const contractor = {
@@ -103,7 +103,7 @@ export class CustomerControlComponent {
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   get contractorList(): FormArray { return this.form.get('CustomerContractorList') as FormArray; }
   get categoryName() { return this.form.get('CustomerCategoryName').value; }
