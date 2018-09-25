@@ -1,20 +1,20 @@
-﻿export class ProductColorValidateComponent{
+﻿// export class ProductColorValidateComponent{
 
-	constructor(private errorService: ErrorService) 
-	{ }
+// 	constructor(private errorService: ErrorService) 
+// 	{ }
 
-	public setErrorMessage(propertyName, displayName, errors):void{
-		const errorItems = new Array();
-		if(errors)
-		{
-		}
-		this.errorService.setErrorItems(errorItems);
-	}
+// 	public setErrorMessage(propertyName, displayName, errors):void{
+// 		const errorItems = new Array();
+// 		if(errors)
+// 		{
+// 		}
+// 		this.errorService.setErrorItems(errorItems);
+// 	}
 
-	private getValidators(){
-		const validatorArrs ={
-		};    
-		return validatorArrs;
-	  }
+// 	private getValidators(){
+// 		const validatorArrs ={
+// 		};    
+// 		return validatorArrs;
+// 	  }
 
-}
+// }
