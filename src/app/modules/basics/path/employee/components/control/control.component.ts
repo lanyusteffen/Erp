@@ -39,16 +39,17 @@ export class EmployeeControlComponent {
     }
   }
 
-  public setErrorMessage(propertyName, errors): void {
+
+  public setErrorMessage(propertyName, displayName, errors): void {
     const errorItems = new Array();
     if (errors) {
 
-      if (errors.maxLength) {
+      if (errors.maxlength) {
         const errorItem = {
           AttemptedValue: '',
           ErrorCode: 'NotEmptyValidator',
           ErrorDescription: null,
-          ErrorMessage: '名称 长度不能超过 400',
+          ErrorMessage: displayName + '长度不能超过 400',
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
@@ -59,7 +60,7 @@ export class EmployeeControlComponent {
           AttemptedValue: '',
           ErrorCode: 'NotEmptyValidator',
           ErrorDescription: null,
-          ErrorMessage: '名称 必填',
+          ErrorMessage: displayName + '必填',
           ErrorStackTrace: null,
           PropertyName: propertyName
         };

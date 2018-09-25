@@ -12,7 +12,7 @@
                     </th>
                     <td class="form-control-group">
                         <app-form-field [name]="'Code'">
-                            <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="Code" (blur)="setErrorMessage('Code','编码',form.get('Code').errors)">
                         </app-form-field>
                     </td>
                     <th>
@@ -21,7 +21,7 @@
                     </th>
                     <td class="form-control-group">
                         <app-form-field [name]="'Name'">
-                            <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="Name" (blur)="setErrorMessage('Name','名称',form.get('Name').errors)">
                         </app-form-field>
                     </td>
                 </tr>

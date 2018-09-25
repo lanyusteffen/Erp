@@ -40,46 +40,46 @@ export class AreaControlComponent {
     return this.type === 'create' ? '新增地区' : '修改地区';
   }
 
-  public setErrorMessage(propertyName, errors): void {
+  public setErrorMessage(propertyName, displayName, errors): void {
     const errorItems = new Array();
     if (errors) {
 
-      if (errors.maxLength) {
-        const errorItem = {
-          AttemptedValue: '',
-          ErrorCode: 'NotEmptyValidator',
-          ErrorDescription: null,
-          ErrorMessage: '名称 长度不能超过 200',
-          ErrorStackTrace: null,
-          PropertyName: propertyName
-        };
-        errorItems.push(errorItem);
-      }
-      if (errors.required) {
-        const errorItem = {
-          AttemptedValue: '',
-          ErrorCode: 'NotEmptyValidator',
-          ErrorDescription: null,
-          ErrorMessage: '名称 必填',
-          ErrorStackTrace: null,
-          PropertyName: propertyName
-        };
-        errorItems.push(errorItem);
-      }
+        if (errors.maxlength) {
+            const errorItem = {
+                AttemptedValue: '',
+                ErrorCode: 'NotEmptyValidator',
+                ErrorDescription: null,
+                ErrorMessage: displayName + '长度不能超过 200',
+                ErrorStackTrace: null,
+                PropertyName: propertyName
+            };
+            errorItems.push(errorItem);
+        }
+        if (errors.required) {
+            const errorItem = {
+                AttemptedValue: '',
+                ErrorCode: 'NotEmptyValidator',
+                ErrorDescription: null,
+                ErrorMessage: displayName + '必填',
+                ErrorStackTrace: null,
+                PropertyName: propertyName
+            };
+            errorItems.push(errorItem);
+        }
 
     }
     this.errorService.setErrorItems(errorItems);
-  }
+}
 
-  private getValidators() {
+private getValidators() {
     const validatorArrs = {
-      Name: [
-        Validators.maxLength(200),
-        Validators.required
-      ]
+        Name: [
+            Validators.maxLength(200),
+            Validators.required
+        ]
     };
     return validatorArrs;
-  }
+}
 
   private showPop(): void {
     if (this._show) {

@@ -1,8 +1,9 @@
 ﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SystemUnitService } from '../../systemunit.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { ErrorService } from '@services/error.service';
 
 @Component({
   selector: 'app-systemunit-control',
@@ -38,19 +39,60 @@ export class SystemUnitControlComponent {
     return this.type === 'create' ? '新增系统单位' : '修改系统单位';
   }
 
+  public setErrorMessage(propertyName, displayName, errors): void {
+    const errorItems = new Array();
+    if (errors) {
+
+      if (errors.maxlength) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '长度不能超过 200',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        errorItems.push(errorItem);
+      }
+      if (errors.required) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '必填',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        errorItems.push(errorItem);
+      }
+
+    }
+    this.errorService.setErrorItems(errorItems);
+  }
+
+  private getValidators() {
+    const validatorArrs = {
+      Name: [
+        Validators.maxLength(200),
+        Validators.required
+      ]
+    };
+    return validatorArrs;
+  }
+
   private showPop(): void {
     if (this._show) {
       if (this.type === 'create') {
         this.systemUnitService
           .newOne(data => {
-            this.form = this.formService.createForm(data);
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.SystemUnit, err);
           });
       } else {
         this.systemUnitService
           .detail(this._systemUnitId, data => {
-            this.form = this.formService.createForm(data);
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.SystemUnit, err);
           });
@@ -66,7 +108,8 @@ export class SystemUnitControlComponent {
     private systemUnitService: SystemUnitService,
     private formService: FormService,
     private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private errorService: ErrorService
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }

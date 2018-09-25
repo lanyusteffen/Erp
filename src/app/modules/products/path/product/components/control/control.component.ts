@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProductService } from '../../product.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
+import { ErrorService } from '@services/error.service';
 
 @Component({
   selector: 'app-product-control',
@@ -61,53 +62,54 @@ export class ProductControlComponent {
     this.selectSize(evt, selectedItem);
 
     const goodsList = <FormArray>this.form.controls['GoodsActionRequests'];
-    var length = goodsList.length;
-    for (var i = 0; i < length; i++) {
+    const length = goodsList.length;
+    for (let i = 0; i < length; i++) {
       goodsList.removeAt(0);
     }
 
     if (this._productColors.length > 0 && this._productSizes.length > 0) {
-      var index = 0;
+      let index = 0;
       this._productColors.map(color => {
         this._productSizes.map(size => {
-          var goods = {
+          const goods = {
             Index: index++,
             ProductColorId: color.Id,
             ProductColorValue: color.Name,
             ProductSizeId: size.Id,
             ProductSizeValue: size.Name
-          }
+          };
           goodsList.insert(goodsList.length, this.fb.group(goods));
         });
       });
 
     } else if (this._productColors.length > 0) {
-      var index = 0;
+      // tslint:disable-next-line:no-shadowed-variable
+      let index = 0;
       this._productColors.map(color => {
-        var goods = {
+        const goods = {
           Index: index++,
           ProductColorId: color.Id,
           ProductColorValue: color.Name
-        }
+        };
         goodsList.insert(goodsList.length, this.fb.group(goods));
 
       });
 
     } else if (this._productSizes.length > 0) {
-      var index = 0;
+      let index = 0;
       this._productSizes.map(size => {
-        var goods = {
+        const goods = {
           Index: index++,
           ProductSizeId: size.Id,
           ProductSizeValue: size.Name
-        }
+        };
         goodsList.insert(goodsList.length, this.fb.group(goods));
       });
     }
   }
 
   selectColor(evt, selectedItem): void {
-    var productColorList = this.form.get('ProductColorActionRequests').value;
+    const productColorList = this.form.get('ProductColorActionRequests').value;
     if (evt == null) {
       productColorList.map(item => {
         if (item.IsSelected && !this.isContainer(this._productColors, item)) {
@@ -116,14 +118,13 @@ export class ProductControlComponent {
       });
     } else {
       productColorList.map(item => {
-        if (item.Name == selectedItem.Name) {
+        if (item.Name === selectedItem.Name) {
           item.IsSelected = evt.target.checked;
           if (evt.target.checked && !this.isContainer(this._productColors, item)) {
             this._productColors.push(item);
-          }
-          else {
-            for (var i = 0; i < this._productColors.length; i++) {
-              if (this._productColors[i].Name == selectedItem.Name) {
+          } else {
+            for (let i = 0; i < this._productColors.length; i++) {
+              if (this._productColors[i].Name === selectedItem.Name) {
                 this._productColors.splice(i, 1);
               }
             }
@@ -134,7 +135,7 @@ export class ProductControlComponent {
   }
 
   selectSize(evt, selectedItem): void {
-    var productSizeList = this.form.get('ProductSizeActionRequests').value;
+    const productSizeList = this.form.get('ProductSizeActionRequests').value;
     if (evt == null) {
       productSizeList.map(item => {
         if (item.IsSelected && !this.isContainer(this._productSizes, item)) {
@@ -143,14 +144,13 @@ export class ProductControlComponent {
       });
     } else {
       productSizeList.map(item => {
-        if (item.Name == selectedItem.Name) {
+        if (item.Name === selectedItem.Name) {
           item.IsSelected = evt.target.checked;
           if (evt.target.checked && !this.isContainer(this._productSizes, item)) {
             this._productSizes.push(item);
-          }
-          else {
-            for (var i = 0; i < this._productSizes.length; i++) {
-              if (this._productSizes[i].Name == selectedItem.Name) {
+          } else {
+            for (let i = 0; i < this._productSizes.length; i++) {
+              if (this._productSizes[i].Name === selectedItem.Name) {
                 this._productSizes.splice(i, 1);
               }
             }
@@ -162,8 +162,8 @@ export class ProductControlComponent {
 
   isContainer(arr: any, item: any): boolean {
 
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i].Id == item.Id) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].Id === item.Id) {
         return true;
       }
     }
@@ -174,20 +174,20 @@ export class ProductControlComponent {
   onRemove(index: number): void {
     const goodsList = <FormArray>this.form.controls['GoodsActionRequests'];
 
-    var _goodsList = new Array();
+    const _goodsList = new Array();
 
-    for (var i = 0; i < goodsList.length; i++) {
+    // tslint:disable-next-line:no-shadowed-variable
+    for (let i = 0; i < goodsList.length; i++) {
       _goodsList.push(goodsList.controls[i]);
     }
     _goodsList.splice(index, 1);
 
-    var length = goodsList.length;
-    for (var i = 0; i < length; i++) {
+    const length = goodsList.length;
+    for (let i = 0; i < length; i++) {
       goodsList.removeAt(0);
     }
 
-    var j = 0;
-    for (var j = 0; j < _goodsList.length; j++) {
+    for (let j = 0; j < _goodsList.length; j++) {
       _goodsList[j].value.Index = j;
       goodsList.insert(j, _goodsList[j]);
     }
@@ -201,19 +201,60 @@ export class ProductControlComponent {
     });
   }
 
+  public setErrorMessage(propertyName, displayName, errors): void {
+    const errorItems = new Array();
+    if (errors) {
+
+      if (errors.maxlength) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '长度不能超过 200',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        errorItems.push(errorItem);
+      }
+      if (errors.required) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '必填',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        errorItems.push(errorItem);
+      }
+
+    }
+    this.errorService.setErrorItems(errorItems);
+  }
+
+  private getValidators() {
+    const validatorArrs = {
+      Name: [
+        Validators.maxLength(200),
+        Validators.required
+      ]
+    };
+    return validatorArrs;
+  }
+
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.productService
           .newOne(data => {
-            this.form = this.formService.createForm(data);
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.listErrorCallBack(err);
           });
       } else {
         this.productService
           .detail(this.productId, data => {
-            this.form = this.formService.createForm(data);
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.listErrorCallBack(err);
           });
@@ -225,7 +266,8 @@ export class ProductControlComponent {
     private productService: ProductService,
     private formService: FormService,
     private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private errorService: ErrorService
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }

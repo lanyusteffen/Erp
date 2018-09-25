@@ -19,7 +19,7 @@
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Name'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Name" (blur)="setErrorMessage('Name', '部门名称',form.get('Name').errors)">
             </app-form-field>
           </td>
         </tr>
@@ -29,7 +29,7 @@
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Mobile'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Mobile">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Mobile" (blur)="setErrorMessage('Mobile', '联系电话',form.get('Mobile').errors)">
             </app-form-field>
           </td>
           <th class="form-label">
@@ -37,7 +37,7 @@
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Address'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Address">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Address" (blur)="setErrorMessage('Address', '地址',form.get('Address').errors)">
             </app-form-field>
           </td>
         </tr>
