@@ -34,19 +34,21 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   ];
 
   getQuanlity(item: any) {
-    // for (var _item in this._selectedItems) {
-    //   if (_item.Id === item.Id) {
-
-    //   }
-    // }
+    for (var _item in this._selectedItems) {
+      if ((<any>_item).Id === item.Id) {
+        return (<any>_item).Quanlity;
+      }
+    }
+    return 0;
   } 
 
   isSelected(item: any) {
-    // for (var _item in this._selectedItems) {
-    //   if (_item.Id === item.Id) {
-
-    //   }
-    // }
+    for (var _item in this._selectedItems) {
+      if ((<any>_item).Id === item.Id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Input()
@@ -86,6 +88,16 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   select(item: any) {
     this._selectedItems.push(item);
+  }
+  
+  inputQuanlity(evt, item) {
+    for (var _item in this._selectedItems) {
+      if ((<any>_item).Id === item.Id) {
+        (<any>_item).Quanlity = evt.value;
+        return;
+      }
+    }
+    return 0;
   }
 
   selectConfirm(item: any) {
