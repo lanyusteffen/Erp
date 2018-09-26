@@ -1,3 +1,3 @@
-﻿export class ProductValidateComponent{
+﻿export class ProductValidateComponent {
 
 }

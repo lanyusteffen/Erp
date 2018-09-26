@@ -22,22 +22,45 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   private innerValue: any;
   private onTouched = null;
   private onChange = null;
+  private allSelected = false;
   private goods = <any>[];
   private pagination = {};
   private _showLabel = '';
   private _show: boolean;
   private _size = 10;
-  private _selectedItem: any;
+  private _selectedItems = <any>[];
   private _options = [
     { label: '10 条／页', value: 10 }
   ];
 
+  getQuanlity(item: any) {
+    // for (var _item in this._selectedItems) {
+    //   if (_item.Id === item.Id) {
+
+    //   }
+    // }
+  } 
+
+  isSelected(item: any) {
+    // for (var _item in this._selectedItems) {
+    //   if (_item.Id === item.Id) {
+
+    //   }
+    // }
+  }
+
   @Input()
   set show(isShow) {
     this._show = isShow;
+    this.allSelected = false;
     if (isShow) {
       this.dataService.list(({ goods, currentPagination }) => {
         this.goods = goods;
+        this.goods = this.goods.map(item => ({
+          ...item,
+          selected: this.isSelected(item),
+          quanlity: this.getQuanlity(item)
+        }));
         this.pagination = currentPagination;
       }, (err) => {
         this.alertService.open({
@@ -50,21 +73,29 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   @Output()
   get selectedItem() {
-    return this._selectedItem;
+    return this._selectedItems;
+  }
+
+  selectAll(evt) {
+    this.allSelected = evt.target.checked;
+    this.goods = this.goods.map(item => ({
+      ...item,
+      selected: this.allSelected
+    }));
   }
 
   select(item: any) {
-    this._selectedItem = item;
+    this._selectedItems.push(item);
   }
 
   selectConfirm(item: any) {
-    this._selectedItem = item;
+    this._selectedItems.push(item);
     this._showLabel = item.Name;
     this.closeModal();
   }
 
   unSelect() {
-    this._selectedItem = null;
+    this._selectedItems = <any>[];
     this._showLabel = '';
   }
 
@@ -141,5 +172,4 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     this.innerValue = value;
     this.onChange(value);
   }
-
 }
