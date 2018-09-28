@@ -31,7 +31,7 @@
             </th>
             <td class="form-control-group">
               <app-form-field [name]="'Mobile'">
-               <input #formField type="text" class="form-control" [ngModel] formControlName="Mobile">
+               <input #formField type="text" class="form-control" [ngModel] formControlName="Mobile" (blur)="setErrorMessage('Mobile','联系电话',form.get('Mobile').errors)">
               </app-form-field>
             </td>
             <th>
@@ -39,7 +39,7 @@
             </th>
             <td class="form-control-group">
               <app-form-field [name]="'QQ'">
-                <input #formField type="text" class="form-control" [ngModel] formControlName="QQ">
+                <input #formField type="text" class="form-control" [ngModel] formControlName="QQ" (blur)="setErrorMessage('QQ','QQ',form.get('QQ').errors)">
               </app-form-field>
             </td>
           </tr>
@@ -49,7 +49,7 @@
             </th>
             <td class="form-control-group">
               <app-form-field [name]="'Email'">
-               <input #formField type="text" class="form-control" [ngModel] formControlName="Email">
+               <input #formField type="text" class="form-control" [ngModel] formControlName="Email" (blur)="setErrorMessage('Email','邮箱',form.get('Email').errors)">
               </app-form-field>
             </td>
             <th>
@@ -57,7 +57,7 @@
             </th>
             <td class="form-control-group">
               <app-form-field [name]="'IdentityCardNo'">
-                <input #formField type="text" class="form-control" [ngModel] formControlName="IdentityCardNo">
+                <input #formField type="text" class="form-control" [ngModel] formControlName="IdentityCardNo" (blur)="setErrorMessage('IdentityCardNo','身份证',form.get('IdentityCardNo').errors)">
               </app-form-field>
             </td>
           </tr>

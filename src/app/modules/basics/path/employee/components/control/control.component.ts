@@ -4,6 +4,10 @@ import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { ErrorService } from '@services/error.service';
+import { EmailValid } from '@validators/email.valid';
+import { MobileValid } from '@validators/mobile.valid';
+import { QQValid } from '@validators/qq.valid';
+import { IDCardValid } from '@validators/idcard.valid';
 
 
 @Component({
@@ -17,7 +21,7 @@ export class EmployeeControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _employeeId: number;
-  private errorService: ErrorService;
+  private errorItems = new Array();
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   @Input()
@@ -41,20 +45,22 @@ export class EmployeeControlComponent {
 
 
   public setErrorMessage(propertyName, displayName, errors): void {
-    const errorItems = new Array();
+    this.errorService.removeErrorItems(this.errorItems, propertyName);
+
     if (errors) {
 
       if (errors.maxlength) {
         const errorItem = {
           AttemptedValue: '',
-          ErrorCode: 'NotEmptyValidator',
+          ErrorCode: 'MaxLengthValidator',
           ErrorDescription: null,
           ErrorMessage: displayName + '长度不能超过 400',
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
+
       if (errors.required) {
         const errorItem = {
           AttemptedValue: '',
@@ -64,11 +70,23 @@ export class EmployeeControlComponent {
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
+      }
+
+      if (errors.result && !errors.result.valid) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'CustomerValidator',
+          ErrorDescription: null,
+          ErrorMessage: errors.result.errMsg,
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        this.errorItems.push(errorItem);
       }
 
     }
-    this.errorService.setErrorItems(errorItems);
+    this.errorService.setErrorItems(this.errorItems);
   }
 
   private getValidators() {
@@ -76,6 +94,18 @@ export class EmployeeControlComponent {
       Name: [
         Validators.maxLength(400),
         Validators.required
+      ],
+      Email: [
+        EmailValid.validation
+      ],
+      Mobile: [
+        MobileValid.validation
+      ],
+      QQ: [
+        QQValid.validation
+      ],
+      IdentityCardNo: [
+        IDCardValid.validation
       ]
     };
     return validatorArrs;
@@ -114,7 +144,8 @@ export class EmployeeControlComponent {
     private employeeService: EmployeeService,
     private formService: FormService,
     private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private errorService: ErrorService
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }

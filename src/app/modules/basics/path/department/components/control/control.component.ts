@@ -18,6 +18,7 @@ export class DepartmentControlComponent {
   private _show = false;
   private _departmentId: number;
   private _category: any;
+  private errorItems = new Array();
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -49,7 +50,9 @@ export class DepartmentControlComponent {
 
 
   public setErrorMessage(propertyName, displayName, errors): void {
-    const errorItems = new Array();
+
+    this.errorService.removeErrorItems(this.errorItems, propertyName);
+
     if (errors) {
 
       if (errors.maxlength) {
@@ -61,7 +64,7 @@ export class DepartmentControlComponent {
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
       if (errors.required) {
         const errorItem = {
@@ -72,11 +75,11 @@ export class DepartmentControlComponent {
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
 
     }
-    this.errorService.setErrorItems(errorItems);
+    this.errorService.setErrorItems(this.errorItems);
   }
 
   private getValidators() {

@@ -15,6 +15,16 @@ export class ErrorService {
     this.error$.next(this.errors);
   }
 
+  removeErrorItems(errorItems, propertyName) {
+    let index = 0;
+    errorItems.map((value) => {
+      if (value.PropertyName === propertyName) {
+        errorItems.splice(index, 1);
+      }
+      index = index + 1;
+    });
+  }
+
   clear() {
     this.errors = [];
     this.error$.next(this.errors);

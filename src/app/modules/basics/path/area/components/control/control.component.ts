@@ -17,6 +17,7 @@ export class AreaControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _areaId: number;
+  private errorItems = new Array();
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   @Input()
@@ -41,45 +42,47 @@ export class AreaControlComponent {
   }
 
   public setErrorMessage(propertyName, displayName, errors): void {
-    const errorItems = new Array();
+
+    this.errorService.removeErrorItems(this.errorItems, propertyName);
+
     if (errors) {
 
-        if (errors.maxlength) {
-            const errorItem = {
-                AttemptedValue: '',
-                ErrorCode: 'NotEmptyValidator',
-                ErrorDescription: null,
-                ErrorMessage: displayName + '长度不能超过 200',
-                ErrorStackTrace: null,
-                PropertyName: propertyName
-            };
-            errorItems.push(errorItem);
-        }
-        if (errors.required) {
-            const errorItem = {
-                AttemptedValue: '',
-                ErrorCode: 'NotEmptyValidator',
-                ErrorDescription: null,
-                ErrorMessage: displayName + '必填',
-                ErrorStackTrace: null,
-                PropertyName: propertyName
-            };
-            errorItems.push(errorItem);
-        }
+      if (errors.maxlength) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '长度不能超过 200',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        this.errorItems.push(errorItem);
+      }
+      if (errors.required) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '必填',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        this.errorItems.push(errorItem);
+      }
 
     }
-    this.errorService.setErrorItems(errorItems);
-}
+    this.errorService.setErrorItems(this.errorItems);
+  }
 
-private getValidators() {
+  private getValidators() {
     const validatorArrs = {
-        Name: [
-            Validators.maxLength(200),
-            Validators.required
-        ]
+      Name: [
+        Validators.maxLength(200),
+        Validators.required
+      ]
     };
     return validatorArrs;
-}
+  }
 
   private showPop(): void {
     if (this._show) {

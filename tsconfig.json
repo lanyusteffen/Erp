@@ -24,7 +24,8 @@
       "@services/*": ["./app/services/*"],
       "@pipes/*": ["./app/pipes/*"],
       "@components/*": ["./app/components/*"],
-      "@strategies/*": ["./app/strategies/*"]
+      "@strategies/*": ["./app/strategies/*"],
+      "@validators/*": ["./app/validators/*"]
     }
   }
 }

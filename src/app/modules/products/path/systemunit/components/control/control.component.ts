@@ -16,6 +16,7 @@ export class SystemUnitControlComponent {
   private form = new FormGroup({});
   private _show = false;
   private _systemUnitId: number;
+  private errorItems = new Array();
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   @Input()
@@ -40,7 +41,9 @@ export class SystemUnitControlComponent {
   }
 
   public setErrorMessage(propertyName, displayName, errors): void {
-    const errorItems = new Array();
+
+    this.errorService.removeErrorItems(this.errorItems, propertyName);
+
     if (errors) {
 
       if (errors.maxlength) {
@@ -52,7 +55,7 @@ export class SystemUnitControlComponent {
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
       if (errors.required) {
         const errorItem = {
@@ -63,11 +66,11 @@ export class SystemUnitControlComponent {
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
 
     }
-    this.errorService.setErrorItems(errorItems);
+    this.errorService.setErrorItems(this.errorItems);
   }
 
   private getValidators() {

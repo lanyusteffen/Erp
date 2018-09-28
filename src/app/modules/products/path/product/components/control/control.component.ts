@@ -17,6 +17,7 @@ export class ProductControlComponent {
   private _show = false;
   private _productColors = new Array();
   private _productSizes = new Array();
+  private errorItems = new Array();
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
@@ -202,19 +203,21 @@ export class ProductControlComponent {
   }
 
   public setErrorMessage(propertyName, displayName, errors): void {
-    const errorItems = new Array();
+
+    this.errorService.removeErrorItems(this.errorItems, propertyName);
+
     if (errors) {
 
       if (errors.maxlength) {
         const errorItem = {
           AttemptedValue: '',
-          ErrorCode: 'NotEmptyValidator',
+          ErrorCode: 'MaxLengthValidator',
           ErrorDescription: null,
           ErrorMessage: displayName + '长度不能超过 200',
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
       if (errors.required) {
         const errorItem = {
@@ -225,11 +228,11 @@ export class ProductControlComponent {
           ErrorStackTrace: null,
           PropertyName: propertyName
         };
-        errorItems.push(errorItem);
+        this.errorItems.push(errorItem);
       }
 
     }
-    this.errorService.setErrorItems(errorItems);
+    this.errorService.setErrorItems(this.errorItems);
   }
 
   private getValidators() {
