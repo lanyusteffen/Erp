@@ -43,11 +43,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of goods" (dblclick)="selectConfirm(item)" (click)="select(item)">
+            <tr *ngFor="let item of goods">
               <td>
-                <app-ui-checkbox [checked]="item.selected" (onChange)="inputQuanlity($event, item)"></app-ui-checkbox>
+                <app-ui-checkbox [checked]="item.Selected" (click)="select($event, item)"></app-ui-checkbox>
               </td>
-              <td><input type="text" formControlName="item.Quanlity" class="form-control" ></td>
+              <td><input type="text" formControlName="item.Quanlity" (change)="inputQuanlity($event, item)" class="form-control" ></td>
               <td>{{item.Name}}</td>
               <td>{{item.ProductCode}}</td>
               <td>{{item.Spec}}</td>

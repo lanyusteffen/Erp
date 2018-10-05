@@ -22,7 +22,6 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   private innerValue: any;
   private onTouched = null;
   private onChange = null;
-  private allSelected = false;
   private goods = <any>[];
   private pagination = {};
   private _showLabel = '';
@@ -34,34 +33,33 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   ];
 
   getQuanlity(item: any) {
-    for (var _item in this._selectedItems) {
-      if ((<any>_item).Id === item.Id) {
-        return (<any>_item).Quanlity;
+    this._selectedItems.forEach(_item => {
+      if (_item.Id === item.Id) {
+        return _item.Quanlity;
       }
-    }
+    });
     return 0;
   } 
 
   isSelected(item: any) {
-    for (var _item in this._selectedItems) {
-      if ((<any>_item).Id === item.Id) {
-        return true;
+    this._selectedItems.forEach(_item => {
+      if (_item.Id === item.Id) {
+        return _item.Selected;
       }
-    }
+    });
     return false;
   }
 
   @Input()
   set show(isShow) {
     this._show = isShow;
-    this.allSelected = false;
     if (isShow) {
       this.dataService.list(({ goods, currentPagination }) => {
         this.goods = goods;
         this.goods = this.goods.map(item => ({
           ...item,
-          selected: this.isSelected(item),
-          quanlity: this.getQuanlity(item)
+          Selected: this.isSelected(item),
+          Quanlity: this.getQuanlity(item)
         }));
         this.pagination = currentPagination;
       }, (err) => {
@@ -79,31 +77,55 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   }
 
   selectAll(evt) {
-    this.allSelected = evt.target.checked;
+    const allSelected = evt.target.checked;
     this.goods = this.goods.map(item => ({
       ...item,
-      selected: this.allSelected
+      Selected: allSelected,
+      Quanlity: 0
     }));
   }
 
-  select(item: any) {
-    this._selectedItems.push(item);
-  }
-  
-  inputQuanlity(evt, item) {
-    for (var _item in this._selectedItems) {
-      if ((<any>_item).Id === item.Id) {
-        (<any>_item).Quanlity = evt.value;
-        return;
+  select(evt, item: any) {
+    let finded = false;
+    item.Selected = evt.target.checked;
+    item.Quanlity = evt.target.checked ? 0 : '';
+    this._selectedItems.forEach(_item => {
+      if (_item.Id === item.Id) {
+        _item.Selected = evt.target.checked;
+        _item.Quanlity = evt.target.checked ? 0 : '';
+        finded = true;
       }
+    });
+    if (!finded) {
+      this._selectedItems.push(item);
     }
-    return 0;
+    this.makeListRefresh(item, item.Quanlity, evt.target.checked);
   }
 
-  selectConfirm(item: any) {
-    this._selectedItems.push(item);
-    this._showLabel = item.Name;
-    this.closeModal();
+  makeListRefresh(item, quanlity, isSelected) {
+    this.goods.forEach(good => {
+      if (good.Id === item.Id) {
+        good.Quanlity = quanlity;
+        good.Selected = isSelected;
+      }
+    });
+  }
+  
+  inputQuanlity(evt, item: any) {
+    let finded = false;
+    item.Selected = true;
+    item.Quanlity = parseInt(evt.target.value, 10);
+    this._selectedItems.forEach(_item => {
+      if (_item.Id === item.Id) {
+        _item.Quanlity = parseInt(evt.target.value, 10);
+        _item.Selected = true;
+        finded = true;
+      }
+    });
+    if (!finded) {
+      this._selectedItems.push(item);
+    }
+    this.makeListRefresh(item, item.Quanlity, true);
   }
 
   unSelect() {
