@@ -1,9 +1,3 @@
-<div class="selector-group">
-  <input type="text" formControlName="_showLabel" class="form-control">
-  <span class="addon" (click)="showModal($event)">
-    <i class="iconfont"></i>选择
-  </span>
-</div>
 <app-ui-modal [show]="_show" (onClose)="closeModal($event)">
   <div app-ui-modal-header>
     选择商品
@@ -47,7 +41,10 @@
               <td>
                 <app-ui-checkbox [checked]="item.Selected" (click)="select($event, item)"></app-ui-checkbox>
               </td>
-              <td><input type="text" formControlName="item.Quanlity" (change)="inputQuanlity($event, item)" class="form-control" ></td>
+              <td>
+                <app-form-field [name]="'Name'">
+                  <input #formField type="text" class="form-control" [value]="item.Quanlity" (change)="inputQuanlity($event, item)" />
+                </app-form-field>
               <td>{{item.Name}}</td>
               <td>{{item.ProductCode}}</td>
               <td>{{item.Spec}}</td>

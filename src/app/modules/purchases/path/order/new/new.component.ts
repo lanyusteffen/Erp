@@ -3,6 +3,7 @@ import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
+import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { PurchaseOrderService } from '../order.service';
 import { FormService } from '@services/form.service';
@@ -38,18 +39,26 @@ const purchaseItem = {
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   @ViewChild(PopupSelectorEmployeeComponent)
-  private popupSelectorEmployee: PopupSelectorEmployeeComponent;
+  private EmployeePopupSelector: PopupSelectorEmployeeComponent;
 
   @ViewChild(CustomerPopupSelectorComponent)
-  private customerPopupSeletor: CustomerPopupSelectorComponent;
+  private customerPopupSelector: CustomerPopupSelectorComponent;
+
+  @ViewChild(PopupSelectorGoodsComponent)
+  private goodsPopupSelector: PopupSelectorGoodsComponent;
 
   private selectedCustomer: any;
   private selectedEmployee: any;
+  private selectedGoods: any;
   private form = new FormGroup({});
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
     format: 'YYYY-MM-DD HH:mm:ss'
   };
+
+  showModal() {
+    this.goodsPopupSelector.show = true;
+  }
 
   get purchaseItemList(): FormArray { return this.form.get('ItemList') as FormArray; }
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
@@ -70,11 +79,15 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   selectCustomer(item: any): void {
     this.selectCustomer = item;
-    this.popupSelectorEmployee.unSelect();
+    this.customerPopupSelector.unSelect();
   }
 
   selectEmployee(item: any): void {
     this.selectedEmployee = item;
+  }
+
+  selectGoods(item: any): void {
+    
   }
 
   onSubmit({ value }) {

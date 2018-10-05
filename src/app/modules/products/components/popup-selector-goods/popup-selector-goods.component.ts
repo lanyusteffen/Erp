@@ -19,12 +19,10 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   @Output() onConfirm = new EventEmitter<any>();
 
-  private innerValue: any;
   private onTouched = null;
   private onChange = null;
   private goods = <any>[];
   private pagination = {};
-  private _showLabel = '';
   private _show: boolean;
   private _size = 10;
   private _selectedItems = <any>[];
@@ -33,21 +31,23 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   ];
 
   getQuanlity(item: any) {
+    let returnValue = '';
     this._selectedItems.forEach(_item => {
       if (_item.Id === item.Id) {
-        return _item.Quanlity;
+        returnValue = _item.Quanlity;
       }
     });
-    return 0;
+    return returnValue;
   } 
 
   isSelected(item: any) {
+    let returnValue = false;
     this._selectedItems.forEach(_item => {
       if (_item.Id === item.Id) {
-        return _item.Selected;
+        returnValue = _item.Selected;
       }
     });
-    return false;
+    return returnValue;
   }
 
   @Input()
@@ -55,12 +55,12 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     this._show = isShow;
     if (isShow) {
       this.dataService.list(({ goods, currentPagination }) => {
-        this.goods = goods;
-        this.goods = this.goods.map(item => ({
+        goods = goods.map(item => ({
           ...item,
           Selected: this.isSelected(item),
           Quanlity: this.getQuanlity(item)
         }));
+        this.goods = goods;
         this.pagination = currentPagination;
       }, (err) => {
         this.alertService.open({
@@ -72,7 +72,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   }
 
   @Output()
-  get selectedItem() {
+  get selectedItems() {
     return this._selectedItems;
   }
 
@@ -80,8 +80,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     const allSelected = evt.target.checked;
     this.goods = this.goods.map(item => ({
       ...item,
-      Selected: allSelected,
-      Quanlity: 0
+      Selected: allSelected
     }));
   }
 
@@ -130,11 +129,6 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   unSelect() {
     this._selectedItems = <any>[];
-    this._showLabel = '';
-  }
-
-  showModal() {
-    this.show = true;
   }
 
   closeModal() {
@@ -142,9 +136,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   }
 
   confirm() {
-    if (this.selectedItem !== undefined) {
-      this.onConfirm.emit(this.selectedItem);
-      this._showLabel = this.selectedItem.Name;
+    if (this.selectedItems !== undefined) {
+      this.onConfirm.emit(this.selectedItems);
     }
     this.closeModal();
   }
@@ -154,6 +147,11 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       PageIndex: current,
       PageSize: pageSize
     }, ({ goods, currentPagination }) => {
+      goods = goods.map(item => ({
+        ...item,
+        Selected: this.isSelected(item),
+        Quanlity: this.getQuanlity(item)
+      }));
       this.goods = goods;
       this.pagination = currentPagination;
     }, (err) => {
@@ -164,10 +162,19 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     });
   }
 
+  bindTable(goods, currentPagination) {
+    goods = goods.map(item => ({
+      ...item,
+      Selected: this.isSelected(item),
+      Quanlity: this.getQuanlity(item)
+    }));
+    this.goods = goods;
+    this.pagination = currentPagination;
+  }
+
   onSearch(queryKey) {
     this.dataService.onSearch(queryKey, ({ goods, currentPagination }) => {
-      this.goods = goods;
-      this.pagination = currentPagination;
+      this.bindTable(goods, currentPagination);
     }, (err) => {
       this.alertService.open({
         type: 'danger',
@@ -181,17 +188,21 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   }
 
   writeValue(value) {
-    this.innerValue = value || 0;
-    if (this.innerValue > 0) {
-      this.dataService.list((data) => {
-        this._showLabel = data.Name;
-      }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '绑定货品列表失败!' + err
-        });
+    this._selectedItems = value || <any>[];
+    this.dataService.list(({ goods, currentPagination }) => {
+      goods = goods.map(item => ({
+        ...item,
+        Selected: this.isSelected(item),
+        Quanlity: this.getQuanlity(item)
+      }));
+      this.goods = goods;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定货品列表失败!' + err
       });
-    }
+    });
   }
 
   registerOnChange(fn) {
@@ -203,7 +214,21 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   }
 
   handleChange(value) {
-    this.innerValue = value;
+    this._selectedItems = value || <any>[];
+    this.dataService.list(({ goods, currentPagination }) => {
+      goods = goods.map(item => ({
+        ...item,
+        Selected: this.isSelected(item),
+        Quanlity: this.getQuanlity(item)
+      }));
+      this.goods = goods;
+      this.pagination = currentPagination;
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定货品列表失败!' + err
+      });
+    });
     this.onChange(value);
   }
 }

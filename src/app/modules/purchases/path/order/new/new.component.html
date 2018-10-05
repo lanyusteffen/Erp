@@ -55,8 +55,8 @@
       <th><span class="required">*</span>商品</th>
       <th>规格型号</th>
       <th>单位</th>
-      <th>颜色</th>
-      <th>尺码</th>
+      <th>{{PropertyName1}}</th>
+      <th>{{PropertyName2}}</th>
       <th><span class="required">*</span>采购数量(批量设置))</th>
       <th>采购单价(批量设置)</th>
       <th>采购金额</th>
@@ -69,12 +69,17 @@
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
         </td>
         <td>
-          <app-popup-selector-goods (onConfirm)="selectEmployee($event)" formControlName="GoodsId" [ngModel]></app-popup-selector-goods>
+          <div class="selector-group">
+            <input type="text" formControlName="GoodsId" [ngModel] class="form-control">
+            <span class="addon" (click)="showModal($event)">
+              <i class="iconfont"></i>选择
+            </span>
+          </div>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{item.Spec}}</td>
+        <td>{{item.ProductUnitName}}</td>
+        <td>{{item.ProductColorValue}}</td>
+        <td>{{item.ProductSizeValue}}</td>
         <td><input type="text" formControlName="Quanlity" class="form-control" [ngModel]></td>
         <td><input type="text" formControlName="Price" class="form-control" [ngModel]></td>
         <td><input type="text" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
@@ -82,4 +87,5 @@
       </tr>
     </tbody>
   </app-ui-table>
+  <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
 </form>
