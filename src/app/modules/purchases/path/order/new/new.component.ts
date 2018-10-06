@@ -14,19 +14,17 @@ const purchaseItem = {
   PurchaseCode: null,
   GoodsId: 0,
   ProductId: 0,
-  Quanlity: null,
+  Quanlity: 0,
   Price: null,
-  DiscountRate: null,
-  DiscountAmount: 0,
-  AfterDiscountAmount: false,
-  TaxRate: true,
-  TaxAmount: null,
-  AfterTaxAmount: null,
   StorageId: null,
   ProductUnitId: null,
   PurchaseAmount: 0,
-  StorageInQuanlity: null,
   UnitTime: null,
+  Spec: null,
+  ProductUnitName: null,
+  ProductColorValue: null,
+  ProductSizeValue: null,
+  Name: null,
 };
 
 @Component({
@@ -47,9 +45,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
 
+  private propertyName1 = null;
+  private propertyName2 = null;
   private selectedCustomer: any;
   private selectedEmployee: any;
-  private selectedGoods: any;
+  private selectedGoods : number[] = [];
   private form = new FormGroup({});
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
@@ -86,8 +86,35 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     this.selectedEmployee = item;
   }
 
-  selectGoods(item: any): void {
+  selectGoods(selectItems: any): void {
     
+    selectItems.forEach(item => {
+      
+      let findIndex = this.selectedGoods.indexOf(item.Id);
+      
+      if (findIndex > -1) {
+        findIndex = findIndex + 1;
+        const control = <FormArray>this.form.controls['ItemList'];
+        control.removeAt(findIndex);
+      }
+
+      let newPurchaseItem = Object.assign({}, purchaseItem);
+
+      newPurchaseItem.GoodsId = item.Id;
+      newPurchaseItem.ProductUnitName = item.ProductUnitName;
+      newPurchaseItem.ProductSizeValue = item.ProductSizeValue;
+      newPurchaseItem.ProductColorValue = item.ProductColorValue;
+      newPurchaseItem.Spec = item.Spec;
+      newPurchaseItem.Quanlity = item.Quanlity;
+      newPurchaseItem.Name = item.Name;
+
+      if (findIndex == -1) {
+        findIndex = 1;
+      }
+
+      this.addPurchaseItem(findIndex, newPurchaseItem);
+      this.selectedGoods.push(item.Id);
+    });
   }
 
   onSubmit({ value }) {
@@ -99,19 +126,36 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   newOne() {
     this.purchaseOrderService
       .newOne(data => {
+        data.ItemList = data.ItemList.map(item => ({
+          ...item,
+          Spec: null,
+          Quanlity: null,
+          Price: null,
+          ProductUnitName: null,
+          ProductColorValue: null,
+          ProductSizeValue: null
+        }));
+        this.propertyName1 = data.PropertyName1;
+        this.propertyName2 = data.PropertyName2;
         this.form = this.formService.createForm(data);
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Purchase, err);
       });
   }
 
-  addPurchaseItem(idx) {
+  addPurchaseItem(idx, newPurchaseItem) {
 
     const control = <FormArray>this.form.controls['ItemList'];
-    control.insert(idx + 1, this.fb.group(purchaseItem));
+    control.insert(idx, this.fb.group(newPurchaseItem));
   }
 
-  removePurchaseItem(idx) {
+  addItem(idx) {
+    const control = <FormArray>this.form.controls['ItemList'];
+    let newPurchaseItem = Object.assign({}, purchaseItem);
+    control.insert(idx + 1, this.fb.group(newPurchaseItem));
+  }
+
+  removeItem(idx) {
 
     const control = <FormArray>this.form.controls['ItemList'];
     control.removeAt(idx);

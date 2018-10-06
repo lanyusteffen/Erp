@@ -19,6 +19,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   @Output() onConfirm = new EventEmitter<any>();
 
+  private propertyName1 = null;
+  private propertyName2 = null;
   private onTouched = null;
   private onChange = null;
   private goods = <any>[];
@@ -54,14 +56,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   set show(isShow) {
     this._show = isShow;
     if (isShow) {
-      this.dataService.list(({ goods, currentPagination }) => {
-        goods = goods.map(item => ({
-          ...item,
-          Selected: this.isSelected(item),
-          Quanlity: this.getQuanlity(item)
-        }));
-        this.goods = goods;
-        this.pagination = currentPagination;
+      this.dataService.list(({ goods, currentPagination, propertyName1, propertyName2 }) => {
+        this.bindTable(goods, currentPagination, propertyName1, propertyName2);
       }, (err) => {
         this.alertService.open({
           type: 'danger',
@@ -69,11 +65,6 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
         });
       });
     }
-  }
-
-  @Output()
-  get selectedItems() {
-    return this._selectedItems;
   }
 
   selectAll(evt) {
@@ -136,9 +127,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   }
 
   confirm() {
-    if (this.selectedItems !== undefined) {
-      this.onConfirm.emit(this.selectedItems);
-    }
+    this.onConfirm.emit(this._selectedItems);
     this.closeModal();
   }
 
@@ -146,14 +135,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     this.dataService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
-    }, ({ goods, currentPagination }) => {
-      goods = goods.map(item => ({
-        ...item,
-        Selected: this.isSelected(item),
-        Quanlity: this.getQuanlity(item)
-      }));
-      this.goods = goods;
-      this.pagination = currentPagination;
+    }, ({ goods, currentPagination, propertyName1, propertyName2 }) => {
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2)
     }, (err) => {
       this.alertService.open({
         type: 'danger',
@@ -162,7 +145,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     });
   }
 
-  bindTable(goods, currentPagination) {
+  bindTable(goods, currentPagination, propertyName1, propertyName2) {
     goods = goods.map(item => ({
       ...item,
       Selected: this.isSelected(item),
@@ -170,11 +153,13 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     }));
     this.goods = goods;
     this.pagination = currentPagination;
+    this.propertyName1 = propertyName1;
+    this.propertyName2 = propertyName2;
   }
 
   onSearch(queryKey) {
-    this.dataService.onSearch(queryKey, ({ goods, currentPagination }) => {
-      this.bindTable(goods, currentPagination);
+    this.dataService.onSearch(queryKey, ({ goods, currentPagination, propertyName1, propertyName2 }) => {
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2);
     }, (err) => {
       this.alertService.open({
         type: 'danger',
@@ -189,14 +174,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   writeValue(value) {
     this._selectedItems = value || <any>[];
-    this.dataService.list(({ goods, currentPagination }) => {
-      goods = goods.map(item => ({
-        ...item,
-        Selected: this.isSelected(item),
-        Quanlity: this.getQuanlity(item)
-      }));
-      this.goods = goods;
-      this.pagination = currentPagination;
+    this.dataService.list(({ goods, currentPagination, propertyName1, propertyName2 }) => {
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2)
     }, (err) => {
       this.alertService.open({
         type: 'danger',
@@ -215,14 +194,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
 
   handleChange(value) {
     this._selectedItems = value || <any>[];
-    this.dataService.list(({ goods, currentPagination }) => {
-      goods = goods.map(item => ({
-        ...item,
-        Selected: this.isSelected(item),
-        Quanlity: this.getQuanlity(item)
-      }));
-      this.goods = goods;
-      this.pagination = currentPagination;
+    this.dataService.list(({ goods, currentPagination, propertyName1, propertyName2 }) => {
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2);
     }, (err) => {
       this.alertService.open({
         type: 'danger',

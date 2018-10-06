@@ -11,6 +11,7 @@ import { SelectComponent } from './select/select.component';
 import { AlertComponent } from './alert/alert.component';
 import { ModalComponent } from './modal/modal.component';
 import { RadioComponent } from './radio/radio.component';
+import { ComplexModalComponent } from './complex-modal/complex-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RadioComponent } from './radio/radio.component';
     CheckboxComponent,
     SelectComponent,
     AlertComponent,
-    ModalComponent
+    ModalComponent,
+    ComplexModalComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { RadioComponent } from './radio/radio.component';
     RadioComponent,
     SelectComponent,
     AlertComponent,
-    ModalComponent
+    ModalComponent,
+    ComplexModalComponent
   ]
 })
 

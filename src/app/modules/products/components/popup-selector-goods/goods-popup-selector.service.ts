@@ -35,6 +35,8 @@ export class GoodsPopupSelectService {
             next({
                 ...this.state,
                 goods: data.GoodsList,
+                propertyName1: data.PropertyName1,
+                propertyName2: data.PropertyName2,
                 currentPagination: data.GoodsPageQueryReq
             });
         }, fallback, ModuleType.Webadmin);

@@ -1,4 +1,4 @@
-<app-ui-modal [show]="_show" (onClose)="closeModal($event)">
+<app-ui-complex-modal [show]="_show" (onClose)="closeModal($event)">
   <div app-ui-modal-header>
     选择商品
   </div>
@@ -29,8 +29,8 @@
               <th>商品名称</th>
               <th>规格型号</th>
               <th>基本单位</th>
-              <th>{{PropertyName1}}</th>
-              <th>{{PropertyName2}}</th>
+              <th>{{propertyName1}}</th>
+              <th>{{propertyName2}}</th>
               <th>库存数量</th>
               <th>预设采购价</th>
               <th>最新进价</th>
@@ -43,7 +43,7 @@
               </td>
               <td>
                 <app-form-field [name]="'Name'">
-                  <input #formField type="text" class="form-control" [value]="item.Quanlity" (change)="inputQuanlity($event, item)" />
+                  <input #formField type="number" class="form-control" [value]="item.Quanlity" (change)="inputQuanlity($event, item)" />
                 </app-form-field>
               <td>{{item.Name}}</td>
               <td>{{item.ProductCode}}</td>
@@ -71,4 +71,4 @@
     <app-ui-button [style]="'primary'" (click)="confirm($event)">确定</app-ui-button>
     <app-ui-button (click)="closeModal($event)">取消</app-ui-button>
   </div>
-</app-ui-modal>
+</app-ui-complex-modal>

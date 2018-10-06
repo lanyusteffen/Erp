@@ -55,8 +55,8 @@
       <th><span class="required">*</span>商品</th>
       <th>规格型号</th>
       <th>单位</th>
-      <th>{{PropertyName1}}</th>
-      <th>{{PropertyName2}}</th>
+      <th>{{propertyName1}}</th>
+      <th>{{propertyName2}}</th>
       <th><span class="required">*</span>采购数量(批量设置))</th>
       <th>采购单价(批量设置)</th>
       <th>采购金额</th>
@@ -70,16 +70,17 @@
         </td>
         <td>
           <div class="selector-group">
-            <input type="text" formControlName="GoodsId" [ngModel] class="form-control">
+            <input type="text" formControlName="Name" [ngModel] class="form-control">
+            <input type="hidden" formControlName="GoodsId" [ngModel] class="form-control">
             <span class="addon" (click)="showModal($event)">
               <i class="iconfont"></i>选择
             </span>
           </div>
         </td>
-        <td>{{item.Spec}}</td>
-        <td>{{item.ProductUnitName}}</td>
-        <td>{{item.ProductColorValue}}</td>
-        <td>{{item.ProductSizeValue}}</td>
+        <td><input type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
+        <td><input type="text" formControlName="ProductUnitName" class="none-input" [ngModel] disabled="disabled"></td>
+        <td><input type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
+        <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="Quanlity" class="form-control" [ngModel]></td>
         <td><input type="text" formControlName="Price" class="form-control" [ngModel]></td>
         <td><input type="text" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
@@ -87,5 +88,22 @@
       </tr>
     </tbody>
   </app-ui-table>
+  <div class="footer">
+    <div class="summary-panel">
+      <div class="remark-area">
+          <textarea formControlName="Remark" [ngModel]></textarea>
+      </div>
+      <div class="more">
+          <table>
+            <tr>合计金额: </tr>
+            <td></td>
+            <tr>整单折扣: </tr>
+            <td></td>
+            <tr>总计金额: </tr>
+            <td></td>
+          </table>
+        </div>
+    </div>
+  </div>
   <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
 </form>
