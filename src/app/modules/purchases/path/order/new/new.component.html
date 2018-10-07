@@ -60,7 +60,7 @@
       <th><span class="required">*</span>采购数量(批量设置))</th>
       <th>采购单价(批量设置)</th>
       <th>采购金额</th>
-      <th><span class="required">*</span>仓库</th>
+      <th><span class="required">*</span>仓库<app-storage-selector [isEditing]="false"></app-storage-selector></th>
     </thead>
     <tbody formArrayName="ItemList">
       <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">
@@ -81,10 +81,10 @@
         <td><input type="text" formControlName="ProductUnitName" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input type="text" formControlName="Quanlity" class="form-control" [ngModel]></td>
-        <td><input type="text" formControlName="Price" class="form-control" [ngModel]></td>
-        <td><input type="text" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
-        <td><input type="text" formControlName="StorageId" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Quanlity" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Price" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
+        <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
       </tr>
     </tbody>
   </app-ui-table>
@@ -95,14 +95,22 @@
       </div>
       <div class="more">
           <table>
-            <tr>合计金额: </tr>
+            <tr>合计金额: <input type="number" formControlName="totalAmount" [ngModel] class="form-control"></tr>
             <td></td>
-            <tr>整单折扣: </tr>
+            <tr>整单折扣: <input type="number" formControlName="WholeDiscountRate" [ngModel] class="form-control">%</tr>
             <td></td>
-            <tr>总计金额: </tr>
+            <tr>总计金额: <input type="number" formControlName="payedAmount" [ngModel] class="form-control"></tr>
             <td></td>
           </table>
         </div>
+    </div>
+    <div class="action-bar">
+      <label>
+        <span>制单人：</span><input type="text" formControlName="CreateUserName" class="none-input" [ngModel] disabled="disabled"> 
+        <span>制单时间：</span><input type="text" formControlName="CreateTime" class="none-input" [ngModel] disabled="disabled">
+      </label>
+      <button type="button" class="btn btn-success" ng-click="ctrl.save()">保存</button>
+      <button type="button" class="btn btn-default">关闭</button>
     </div>
   </div>
   <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>

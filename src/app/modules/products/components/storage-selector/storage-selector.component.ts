@@ -1,19 +1,19 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SystemUnitService } from '../../path/systemunit/systemunit.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
+import { StorageService } from '../../path/storage/storage.service';
 
 @Component({
-  selector: 'app-systemunit-selector',
-  templateUrl: './systemunit-selector.component.html',
-  styleUrls: ['./systemunit-selector.component.less'],
+  selector: 'app-storage-selector',
+  templateUrl: './storage-selector.component.html',
+  styleUrls: ['./storage-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: SystemUnitSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: StorageSelectorComponent, multi: true }
   ]
 })
 
-export class SystemUnitSelectorComponent implements OnInit, ControlValueAccessor {
+export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;
@@ -25,9 +25,9 @@ export class SystemUnitSelectorComponent implements OnInit, ControlValueAccessor
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectSystemUnit: SelectComponent;
+  private selectStorage: SelectComponent;
 
-  constructor(private systemUnitService: SystemUnitService, private alertService: AlertService) { }
+  constructor(private storageService: StorageService, private alertService: AlertService) { }
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
@@ -36,8 +36,8 @@ export class SystemUnitSelectorComponent implements OnInit, ControlValueAccessor
   }
 
   bindListData(next: () => void): void {
-    this.systemUnitService
-    .all(data => {
+    this.storageService
+    .dropdownList(data => {
       this.list = data.map(item => ({
         label: item.Name,
         value: item.Id
@@ -46,7 +46,7 @@ export class SystemUnitSelectorComponent implements OnInit, ControlValueAccessor
         next();
       }
     }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Area, err);
+      this.alertService.listErrorCallBack(ModuleName.Storage, err);
     });
   }
 
@@ -55,11 +55,11 @@ export class SystemUnitSelectorComponent implements OnInit, ControlValueAccessor
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || 0;
-        this.selectSystemUnit.value = this.innerValue;
+        this.selectStorage.value = this.innerValue;
       });
     } else {
       this.innerValue = value || 0;
-      this.selectSystemUnit.value = this.innerValue;
+      this.selectStorage.value = this.innerValue;
     }
   }
 

@@ -21,10 +21,21 @@ export class StorageService {
 
   constructor(private http: HttpService) { }
 
-  all(fallback: (error: any) => void, successNotify?: () => void) {
-    return this.http.get('/Storage/GetAll', () => {
-      this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Basic);
+  dropdownList(successNotify: (data: any) => void, fallback: (error: any) => void) {
+    const {
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    this.http.post('/Storage/GetSimpleList', {
+      QueryKey: currentQueryKey,
+      Status: 1,
+      PageIndex,
+      PageSize
+    }, successNotify, fallback, ModuleType.Product);
   }
 
   get() { return this.storage$.asObservable(); }
@@ -63,7 +74,7 @@ export class StorageService {
 
       this.succeessNotifyCallback(successNotify);
 
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Product);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -92,43 +103,43 @@ export class StorageService {
 
       this.succeessNotifyCallback(successNotify);
 
-    }, fallback, ModuleType.Basic);
+    }, fallback, ModuleType.Product);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { } = this.state;
 
-    return this.http.get('/Storage/GetForNew', next, fallback, ModuleType.Basic);
+    return this.http.get('/Storage/GetForNew', next, fallback, ModuleType.Product);
   }
 
   detail(storageId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get(`/Storage/GetForModify?storageId=${storageId}`, next, fallback, ModuleType.Basic);
+    return this.http.get(`/Storage/GetForModify?storageId=${storageId}`, next, fallback, ModuleType.Product);
   }
 
   create(storage, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Storage/New', storage, next, fallback, ModuleType.Basic);
+    return this.http.post('/Storage/New', storage, next, fallback, ModuleType.Product);
   }
 
   modify(storage, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Storage/Modify', storage, next, fallback, ModuleType.Basic);
+    return this.http.post('/Storage/Modify', storage, next, fallback, ModuleType.Product);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/Cancel', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/Remove', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Storage/Restore', {
       entityIdList
-    }, next, fallback, ModuleType.Basic);
+    }, next, fallback, ModuleType.Product);
   }
 
   onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {

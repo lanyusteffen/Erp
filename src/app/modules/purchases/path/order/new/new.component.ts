@@ -45,6 +45,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
 
+  private totalAmount: number = 0;
+  private payedAmount: number = 0;
   private propertyName1 = null;
   private propertyName2 = null;
   private selectedCustomer: any;
