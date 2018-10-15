@@ -9,7 +9,7 @@ export class GoodsPopupSelectService {
     private state = {
         goods: [],
         currentQueryKey: '',
-        ProductCategoryId: null,
+        currentCategory: null,
         currentPagination: {
             PageIndex: 1,
             PageSize: 10,
@@ -20,6 +20,7 @@ export class GoodsPopupSelectService {
     list(next: (data: any) => void, fallback: (error: any) => void) {
         const {
             currentQueryKey,
+            currentCategory,
             currentPagination: {
                 PageIndex,
                 PageSize
@@ -29,6 +30,7 @@ export class GoodsPopupSelectService {
         return this.http.post('/Goods/GetListPaged', {
             QueryKey: currentQueryKey,
             Status: 1,
+            ProductCategoryId: currentCategory.Id,
             PageIndex,
             PageSize
         }, data => {
@@ -65,6 +67,21 @@ export class GoodsPopupSelectService {
             ...this.state.currentPagination,
             ...pagination
           }
+        };
+
+        this.state = nextState;
+        this.list(next, fallback);
+    }
+
+    onCategoryChange(selected, next: (data: any) => void, fallback: (error: any) => void) {
+
+        const nextState = {
+            ...this.state,
+            currentCategory: selected,
+            currentPagination: {
+                ...this.state.currentPagination,
+                PageIndex: 1
+            }
         };
 
         this.state = nextState;
