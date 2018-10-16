@@ -30,7 +30,7 @@ export class GoodsPopupSelectService {
         return this.http.post('/Goods/GetListPaged', {
             QueryKey: currentQueryKey,
             Status: 1,
-            ProductCategoryId: currentCategory.Id,
+            ProductCategoryId: currentCategory == null ? null : currentCategory.Id,
             PageIndex,
             PageSize
         }, data => {
