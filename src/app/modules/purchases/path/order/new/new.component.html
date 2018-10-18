@@ -93,24 +93,29 @@
       <div class="remark-area">
           <textarea formControlName="Remark" [ngModel]></textarea>
       </div>
-      <div class="more">
-          <table>
-            <tr>合计金额: <input type="number" formControlName="totalAmount" [ngModel] class="form-control"></tr>
-            <td></td>
-            <tr>整单折扣: <input type="number" formControlName="WholeDiscountRate" [ngModel] class="form-control">%</tr>
-            <td></td>
-            <tr>总计金额: <input type="number" formControlName="payedAmount" [ngModel] class="form-control"></tr>
-            <td></td>
-          </table>
-        </div>
+      <div class="summary-area">
+        <!-- <div class="table">
+          <div class="row">
+            <span>合计金额</span><input type="number" formControlName="totalAmount" [ngModel] />
+          </div>
+          <div class="row">
+              <span>整单折扣</span><input type="number" formControlName="WholeDiscountRate" [ngModel] />
+          </div>
+          <div class="row">
+              <span>总计金额</span><input type="number" formControlName="payedAmount" [ngModel] />
+          </div>
+        </div> -->
+      </div>
     </div>
-    <div class="action-bar">
-      <label>
+    <div class="detail-panel">
+      <div class="detail-area">
         <span>制单人：</span><input type="text" formControlName="CreateUserName" class="none-input" [ngModel] disabled="disabled"> 
         <span>制单时间：</span><input type="text" formControlName="CreateTime" class="none-input" [ngModel] disabled="disabled">
-      </label>
-      <button type="button" class="btn btn-success" ng-click="ctrl.save()">保存</button>
-      <button type="button" class="btn btn-default">关闭</button>
+      </div>
+      <div class="action-area">
+        <button type="button" class="btn btn-success" ng-click="ctrl.save()">保存</button>
+        <button type="button" class="btn btn-default">关闭</button>
+      </div>
     </div>
   </div>
   <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
