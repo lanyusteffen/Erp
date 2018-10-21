@@ -1,0 +1,308 @@
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+    <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
+        <div class="card-content">
+            <div class="heading">
+                基本信息
+            </div>
+            <table class="form">
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        出库日期：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'BillTime'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="BillTime">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        出库类型：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'BillType'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="BillType">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货方：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'CustomerId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="CustomerId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货方类型：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'CustomerType'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="CustomerType">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        出库人：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'EmployeeId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="EmployeeId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        部门：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DepartmentId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DepartmentId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        总数量：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'TotalQuantity'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="TotalQuantity">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        总金额：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'TotalAmount'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="TotalAmount">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        货品：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'GoodsIdList'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="GoodsIdList">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        商品：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ProductIdList'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ProductIdList">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        显示顺序：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'SortIndex'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="SortIndex">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        备注：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'Remark'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="Remark">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        配送方式：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DeliveryMode'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DeliveryMode">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        送货人：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DeliveryEmployeeId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DeliveryEmployeeId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        送货日期：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DeliveryDate'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DeliveryDate">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货人：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DeliveryReceiveUser'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DeliveryReceiveUser">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货电话：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DeliveryReceiveTel'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DeliveryReceiveTel">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货地址：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'DeliveryReceiveAddress'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="DeliveryReceiveAddress">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        物流公司：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ExpressCustomerId'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ExpressCustomerId">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        送货日期：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ExpressDate'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ExpressDate">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货人：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ExpressReceiveUser'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ExpressReceiveUser">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货电话：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ExpressReceiveTel'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ExpressReceiveTel">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        收货地址：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ExpressReceiveAddress'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ExpressReceiveAddress">
+                        </app-form-field>
+                    </td>
+                </tr>
+
+				 <tr>                    
+                    <th>
+                        <span class="required">*</span>
+                        物流单号：
+                    </th>
+                    <td class="form-control-group">
+                        <app-form-field [name]="'ExpressNumber'">
+                            <input #formField type="text" class="form-control" [ngModel] formControlName="ExpressNumber">
+                        </app-form-field>
+                    </td>
+                </tr>
+               
+            </table>
+        </div>
+        <div app-card-footer>
+            <app-ui-button [style]="'primary'" type="submit">
+                保存
+            </app-ui-button>
+            <app-ui-button (click)="handleClose()">
+                取消
+            </app-ui-button>
+        </div>
+    </app-card>
+</form>
