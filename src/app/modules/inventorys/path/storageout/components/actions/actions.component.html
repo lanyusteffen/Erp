@@ -1,0 +1,31 @@
+﻿<div class="actions">
+    <app-quick-search [placeholder]="'输入编号、名称'" (onSearch)="onSearch($event)"></app-quick-search>
+    <app-ui-button [style]="'primary'" (click)="show()">
+      <i class="iconfont icon-add"></i>
+      新增出库单
+    </app-ui-button>
+    <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="onCancel()">
+      <i class="iconfont icon-delete"></i>
+      停用
+    </app-ui-button>
+    <div class="more">
+      <app-ui-button>
+        导入
+      </app-ui-button>
+      <app-ui-button>
+        导出
+      </app-ui-button>
+      <app-ui-button>
+        打印
+      </app-ui-button>
+      <app-ui-button [style]="'danger'" (click)="showDisabled()">
+        已停用列表
+      </app-ui-button>
+    </div>
+  </div>
+  <app-storageout-control
+    [type]="'create'"
+    [show]="_show"
+    [storageOutId]="selectedId"
+    (onClose)="close()"
+  ></app-storageout-control>

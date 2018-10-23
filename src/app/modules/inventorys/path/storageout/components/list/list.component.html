@@ -1,0 +1,122 @@
+﻿<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+
+			 <th>出库日期</th>
+
+			 <th>出库类型</th>
+
+			 <th>收货方</th>
+
+			 <th>收货方类型</th>
+
+			 <th>出库人</th>
+
+			 <th>部门</th>
+
+			 <th>总数量</th>
+
+			 <th>总金额</th>
+
+			 <th>货品</th>
+
+			 <th>商品</th>
+
+			 <th>显示顺序</th>
+
+			 <th>备注</th>
+
+			 <th>配送方式</th>
+
+			 <th>送货人</th>
+
+			 <th>送货日期</th>
+
+			 <th>收货人</th>
+
+			 <th>收货电话</th>
+
+			 <th>收货地址</th>
+
+			 <th>物流公司</th>
+
+			 <th>送货日期</th>
+
+			 <th>收货人</th>
+
+			 <th>收货电话</th>
+
+			 <th>收货地址</th>
+
+			 <th>物流单号</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of storageOuts">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a (click)="update(item.Id)">修改</a>
+          <a class="text-danger" *ngIf="!item.IsUsed" (click)="onRemove(item.Id)">删除</a>
+          <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+        </td>
+
+			 <td>{{item.BillTime}}</td>
+
+			 <td>{{item.BillType}}</td>
+
+			 <td>{{item.CustomerId}}</td>
+
+			 <td>{{item.CustomerType}}</td>
+
+			 <td>{{item.EmployeeId}}</td>
+
+			 <td>{{item.DepartmentId}}</td>
+
+			 <td>{{item.TotalQuantity}}</td>
+
+			 <td>{{item.TotalAmount}}</td>
+
+			 <td>{{item.GoodsIdList}}</td>
+
+			 <td>{{item.ProductIdList}}</td>
+
+			 <td>{{item.SortIndex}}</td>
+
+			 <td>{{item.Remark}}</td>
+
+			 <td>{{item.DeliveryMode}}</td>
+
+			 <td>{{item.DeliveryEmployeeId}}</td>
+
+			 <td>{{item.DeliveryDate}}</td>
+
+			 <td>{{item.DeliveryReceiveUser}}</td>
+
+			 <td>{{item.DeliveryReceiveTel}}</td>
+
+			 <td>{{item.DeliveryReceiveAddress}}</td>
+
+			 <td>{{item.ExpressCustomerId}}</td>
+
+			 <td>{{item.ExpressDate}}</td>
+
+			 <td>{{item.ExpressReceiveUser}}</td>
+
+			 <td>{{item.ExpressReceiveTel}}</td>
+
+			 <td>{{item.ExpressReceiveAddress}}</td>
+
+			 <td>{{item.ExpressNumber}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar [total]="pagination.ItemCount" [current]="pagination.PageIndex" (onChange)="onPageChange($event)"></app-pagination-bar>
+  <app-storageout-control [type]="'update'" [storageOutId]="selectedId" [show]="_showUpdate" (onClose)="closeUpdate()"></app-storageout-control>
+</div>
