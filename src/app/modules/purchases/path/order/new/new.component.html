@@ -60,7 +60,7 @@
       <th><span class="required">*</span>采购数量(批量设置))</th>
       <th>采购单价(批量设置)</th>
       <th>采购金额</th>
-      <th><span class="required">*</span>仓库<app-storage-selector [isEditing]="false"></app-storage-selector></th>
+      <th><span class="required">*</span>仓库<app-storage-selector (change)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
     </thead>
     <tbody formArrayName="ItemList">
       <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">
@@ -121,15 +121,10 @@
         </table>
       </div>
     </div>
-    <div class="detail-panel">
-      <div class="detail-area">
-        <span>制单人：</span><input type="text" formControlName="CreateUserName" class="none-input" [ngModel] disabled="disabled"> 
-        <span>制单时间：</span><input type="text" formControlName="CreateTime" class="none-input" [ngModel] disabled="disabled">
-      </div>
-      <div class="action-area">
-        <button type="button" class="btn btn-success" ng-click="ctrl.save()">保存</button>
-        <button type="button" class="btn btn-default">关闭</button>
-      </div>
+    <div class="action-bar">
+      <label><span>制单人：</span><input type="text" formControlName="CreateUserName" class="none-input" [ngModel] disabled="disabled"> 
+        <span>制单时间：</span><input type="text" formControlName="CreateTime" class="none-input" [ngModel] disabled="disabled"></label>
+      <app-ui-button [style]="'primary'">保存</app-ui-button>
     </div>
   </div>
   <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>

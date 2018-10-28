@@ -79,6 +79,10 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  selectAllStorage(evt) {
+    const value = evt.target.value;
+  }
+
   selectCustomer(item: any): void {
     this.selectCustomer = item;
     this.customerPopupSelector.unSelect();
