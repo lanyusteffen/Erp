@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       <span class="iconfont icon-form"></span>
       <a (click)="handleSelect(item)">{{item.Name}}</a>
       <ul *ngIf="item.subCategories">
-        <app-category-node [categories]="item.subCategories" (onChange)="onSelect($event)">
+        <app-category-node [categories]="item.subCategories" (onChange)="handleChange($event)">
         </app-category-node>
       </ul>
     </li>
@@ -17,11 +17,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export class CategoryNodeComponent {
   @Input() categories = [];
-  @Input() onSelect: Function;
   @Input() selected: {};
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
-  private handleSelect(item) {
-    this.onChange.emit(item);
+  private handleSelect(selected) {
+    this.selected = selected;
+    this.onChange.emit(selected);
+  }
+
+  private handleChange(evt) {
+    this.onChange.emit(evt);
   }
 }

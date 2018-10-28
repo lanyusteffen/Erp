@@ -130,7 +130,7 @@ export class CustomerPopupSelectorService {
 
     return this.http.post('/Customer/GetListPaged', {
       QueryKey: currentQueryKey,
-      CustomerCategoryId: currentCategory.Id,
+      CustomerCategoryId: currentCategory == null ? null : currentCategory.Id,
       CustomerType: 'Supplier',
       PageIndex,
       PageSize
@@ -181,7 +181,7 @@ export class CustomerPopupSelectorService {
 
     return this.http.post('/Customer/GetListPaged', {
       QueryKey: currentQueryKey,
-      CustomerCategoryId: currentCategory.Id,
+      CustomerCategoryId: currentCategory == null ? null : currentCategory.Id,
       CustomerType: 'Customer',
       PageIndex,
       PageSize
@@ -231,7 +231,7 @@ export class CustomerPopupSelectorService {
 
     return this.http.post('/Customer/GetListPaged', {
       QueryKey: currentQueryKey,
-      CustomerCategoryId: currentCategory.Id,
+      CustomerCategoryId: currentCategory == null ? null : currentCategory.Id,
       CustomerType: 'Other',
       PageIndex,
       PageSize

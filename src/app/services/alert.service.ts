@@ -223,16 +223,20 @@ export class AlertService {
         name = '采购订单';
         break;
 
-        case ModuleName.ProductColor:
+      case ModuleName.ProductColor:
         name = '商品颜色';
         break;
 
-        case ModuleName.ProductSize:
+      case ModuleName.ProductSize:
         name = '商品尺寸';
         break;
 
-        case ModuleName.ProductUnit:
+      case ModuleName.ProductUnit:
         name = '商品单位';
+        break;
+
+      case ModuleName.StorageOut:
+        name = '出库单';
         break;
     }
 
@@ -282,5 +286,6 @@ export enum ModuleName {
   Purchase,
   ProductColor,
   ProductSize,
-  ProductUnit
+  ProductUnit,
+  StorageOut
 }

@@ -22,7 +22,7 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService
-      .get(this.categoryType, this.resourceType,data => {
+      .get(this.categoryType, this.resourceType, data => {
         this.categories = this.parseCategory(data);
       },(err)=>{
 

@@ -136,7 +136,19 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       PageIndex: current,
       PageSize: pageSize
     }, ({ goods, currentPagination, propertyName1, propertyName2 }) => {
-      this.bindTable(goods, currentPagination, propertyName1, propertyName2)
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2);
+    }, (err) => {
+      this.alertService.open({
+        type: 'danger',
+        content: '绑定货品列表失败!' + err
+      });
+    });
+  }
+
+  onCategoryChange(selected) {
+    this.dataService.onCategoryChange(selected, ({ goods, currentPagination, propertyName1, propertyName2 }) => {
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2);
+      this.pagination = currentPagination;
     }, (err) => {
       this.alertService.open({
         type: 'danger',

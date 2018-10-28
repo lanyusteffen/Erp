@@ -5,20 +5,19 @@
 }
 .footer {
     bottom: 0;
-    height: 100px;
+    height: 155px;
     background-color: #ffc0cb;
-    padding: 10px 16px;
     background-color: #f1f5f9;
     border-bottom: 1px solid #e1e5ea;
-    display: block;
+    position: fixed;
+    width: 100%;
 }
 textarea {
     font-size: 12px;
     border: 1px solid #e7e7e7;
     width: 100%;
-    min-height: 48px;
-    line-height: 24px;
-    padding: 0 6px;
+    height: 105px;
+    padding: 10px 10px;
     background: #fff;
     outline: none;
     resize: none;
@@ -26,9 +25,37 @@ textarea {
     color: #353940;
 }
 .remark-area {
-    display: flex;
+    display: table-cell;
+    height: 105px;
+}
+.summary-area {
+    display: table-cell;
+    width: 300px;
 }
 .summary-panel {
+   display: table;
+   width: 100%;
+   padding: 10px 10px 0 10px;
+}
+.detail-panel {
+   display: table;
+   width: 100%;
+   margin: 0 10px;
+}
+.detail-area {
+    display: table-cell;
+    padding-top: 10px;
+    height: 30px;
+}
+.action-area {
+    display: table-cell;
+    width: 300px;
+}
+.table {
+    height: 40px;
     display: flex;
-    padding: 10px;
+    flex-direction: column;
+}
+.row {
+    flex: 1;
 }
