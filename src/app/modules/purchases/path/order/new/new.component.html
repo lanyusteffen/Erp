@@ -93,18 +93,32 @@
       <div class="remark-area">
           <textarea formControlName="Remark" [ngModel]></textarea>
       </div>
-      <div class="summary-area">
-        <!-- <div class="table">
-          <div class="row">
-            <span>合计金额</span><input type="number" formControlName="totalAmount" [ngModel] />
-          </div>
-          <div class="row">
-              <span>整单折扣</span><input type="number" formControlName="WholeDiscountRate" [ngModel] />
-          </div>
-          <div class="row">
-              <span>总计金额</span><input type="number" formControlName="payedAmount" [ngModel] />
-          </div>
-        </div> -->
+      <div class="billing-area">
+        <table class="form">
+          <tr>
+            <th>合计金额：</th>
+            <td>
+              <input type="number" class="none-input" formControlName="totalAmount" [ngModel] />
+            </td>
+          </tr>
+          <tr>
+            <th>整单折扣：</th>
+            <td>
+              <div class="input-group">
+                <input type="number" formControlName="WholeDiscountRate" [ngModel] />
+                <div class="addon">
+                  %
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>总计金额：</th>
+            <td>
+              <input type="number" class="none-input" formControlName="payedAmount" [ngModel] />
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
     <div class="detail-panel">

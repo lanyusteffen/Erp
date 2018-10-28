@@ -12,30 +12,85 @@
     position: fixed;
     width: 100%;
 }
-textarea {
-    font-size: 12px;
-    border: 1px solid #e7e7e7;
-    width: 100%;
-    height: 105px;
-    padding: 10px 10px;
-    background: #fff;
-    outline: none;
-    resize: none;
-    border-radius: 2px;
-    color: #353940;
-}
-.remark-area {
-    display: table-cell;
-    height: 105px;
-}
-.summary-area {
-    display: table-cell;
-    width: 300px;
-}
 .summary-panel {
-   display: table;
-   width: 100%;
-   padding: 10px 10px 0 10px;
+    display: flex;
+    padding: 10px;
+    .remark-area {
+        display: flex;
+        flex: 1;
+    }
+    .billing-area {
+        width: 300px;
+    }
+}
+textarea {
+	font-size: 12px;
+	width: 100%;
+	min-height: 48px;
+	line-height: 24px;
+	padding: 0 6px;
+	background: #fff;
+	outline: none;
+	resize: none;
+	border-radius: 2px;
+	color: #353940;
+	transition: border-color .5s ease;
+
+	&:focus {
+		border-color: #118DF0;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+.form {
+	width: 100%;
+
+	&.inline-form {
+		display: inline-block;
+		width: auto;
+		vertical-align: top;
+	}
+
+	th,
+	td {
+		font-size: 12px;
+		position: relative;
+	}
+
+	th {
+		text-align: right;
+		font-weight: normal;
+		line-height: 24px;
+		white-space: nowrap;
+		padding-left: 10px;
+	}
+
+	td {
+		padding: 5px 10px;
+	}
+
+}
+.input-group {
+	width: 80%;
+
+	input {
+		display: table-cell;
+		vertical-align: middle;
+
+		&:focus ~ .addon {
+			border-bottom-color: #118DF0;
+		}
+	}
+    .addon {
+        display: table-cell;
+        width: 20px;
+        vertical-align: middle;
+        height: 24px;
+        border-bottom: 1px solid #e7e7e7;
+        transition: border-color 0.5s ease;
+    }
 }
 .detail-panel {
    display: table;
@@ -50,12 +105,4 @@ textarea {
 .action-area {
     display: table-cell;
     width: 300px;
-}
-.table {
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-}
-.row {
-    flex: 1;
 }
