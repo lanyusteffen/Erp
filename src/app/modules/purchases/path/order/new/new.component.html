@@ -57,9 +57,15 @@
       <th>单位</th>
       <th>{{propertyName1}}</th>
       <th>{{propertyName2}}</th>
-      <th><span class="required">*</span>采购数量(批量设置))</th>
+      <th><span class="required">*</span>采购数量(批量设置)</th>
       <th>采购单价(批量设置)</th>
       <th>采购金额</th>
+      <th *ngIf="hasOpenDiscount()">折扣率(%)(批量设置)</th>
+      <th *ngIf="hasOpenDiscount()">折扣额</th>
+      <th *ngIf="hasOpenDiscount()">折后金额</th>
+      <th *ngIf="hasOpenTax()">税率(%)(批量设置)</th>
+      <th *ngIf="hasOpenTax()">税额</th>
+      <th *ngIf="hasOpenTax()">税后金额</th>
       <th><span class="required">*</span>仓库<app-storage-selector (selectChanged)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
     </thead>
     <tbody formArrayName="ItemList">
@@ -84,6 +90,12 @@
         <td><input type="number" formControlName="Quanlity" class="form-control" [ngModel]></td>
         <td><input type="number" formControlName="Price" class="form-control" [ngModel]></td>
         <td><input type="number" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'DiscountRate', i)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenDiscount()"><input type="number" formControlName="DiscountAmount" class="form-control" [ngModel] disabled="disabled"></td>
+        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'AfterDiscountAmount', i)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculate($event, 'TaxRate', i)" formControlName="TaxRate" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenTax()"><input type="number" formControlName="TaxAmount" class="form-control" [ngModel] disabled="disabled"></td>
+        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculate($event, 'AfterTaxAmount', i)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
         <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
       </tr>
     </tbody>
@@ -98,32 +110,37 @@
           <tr>
             <th>合计金额：</th>
             <td>
-              <input type="number" class="none-input" formControlName="totalAmount" [ngModel] />
+              <input type="number" class="none-input" [value]="totalAmount" disabled="disabled" />
             </td>
           </tr>
           <tr>
-            <th>整单折扣：</th>
+            <th>整单折扣额：</th>
             <td>
-              <div class="input-group">
+                <input type="number" formControlName="WholeDiscountAmount" [ngModel] />
+            </td>
+          </tr>
+          <tr>
+            <th>整单折扣率：</th>
+            <td>
                 <input type="number" formControlName="WholeDiscountRate" [ngModel] />
                 <div class="addon">
                   %
                 </div>
-              </div>
             </td>
           </tr>
           <tr>
             <th>总计金额：</th>
             <td>
-              <input type="number" class="none-input" formControlName="payedAmount" [ngModel] />
+              <input type="number" class="none-input" [value]="payedAmount" disabled="disabled" />
             </td>
           </tr>
         </table>
       </div>
     </div>
     <div class="action-bar">
-      <label><span>制单人：</span><input type="text" formControlName="CreateUserName" class="none-input" [ngModel] disabled="disabled"> 
-        <span>制单时间：</span><input type="text" formControlName="CreateTime" class="none-input" [ngModel] disabled="disabled"></label>
+      <label>
+        <span>制单人：</span><input type="text" formControlName="UserName" class="none-input" [ngModel] disabled="disabled"> 
+      </label>
       <app-ui-button [style]="'primary'">保存</app-ui-button>
     </div>
   </div>

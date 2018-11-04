@@ -1,5 +1,5 @@
 
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
@@ -19,6 +19,12 @@ const purchaseItem = {
   StorageId: null,
   ProductUnitId: null,
   PurchaseAmount: 0,
+  TaxRate: null,
+  TaxAmount: null,
+  AfterTaxAmount: null,
+  DiscountRate: null,
+  DiscountAmount: null,
+  AfterDiscountAmount: null,
   UnitTime: null,
   Spec: null,
   ProductUnitName: null,
@@ -79,10 +85,20 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  hasOpenTax() {
+    const control = <FormControl>this.form.controls['IsOpenTax'];
+    return control.value;
+  }
+
+  hasOpenDiscount() {
+    const control = <FormControl>this.form.controls['IsOpenDiscount'];
+    return control.value;
+  }
+
   selectAllStorage(selectedStorageId) {
-    const control = <FormArray>this.form.controls['ItemList'];
-    for (let i = 0; i < control.length; i++) {
-      control.at(i).patchValue({'StorageId': selectedStorageId});
+    const itemArr = <FormArray>this.form.controls['ItemList'];
+    for (let i = 0; i < itemArr.length; i++) {
+      itemArr.at(i).patchValue({'StorageId': selectedStorageId});
     }
   }
 
@@ -103,8 +119,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       
       if (findIndex > -1) {
         findIndex = findIndex + 1;
-        const control = <FormArray>this.form.controls['ItemList'];
-        control.removeAt(findIndex);
+        const itemArr = <FormArray>this.form.controls['ItemList'];
+        itemArr.removeAt(findIndex);
       }
 
       let newPurchaseItem = Object.assign({}, purchaseItem);
@@ -168,5 +184,30 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
     const control = <FormArray>this.form.controls['ItemList'];
     control.removeAt(idx);
+  }
+
+  calculate(evt, source: string, index: number) {
+
+    const itemArr = <FormArray>this.form.controls['ItemList'];
+    const item = <FormGroup>itemArr.at(index);
+
+    let isOpenTax = <FormControl>this.form.controls['IsOpenTax'];
+    let isOpenDiscount = <FormControl>this.form.controls['IsOpenDiscount'];
+    let taxRate = <AbstractControl>item.controls['TaxRate'];
+    let discountRate = <AbstractControl>item.controls['DiscountRate'];
+    let discountAmount = <AbstractControl>item.controls['DiscountAmount'];
+    let afterDiscountAmount = <AbstractControl>item.controls['AfterDiscountAmount'];
+    let taxAmount = <AbstractControl>item.controls['TaxAmount'];
+    let afterTaxAmount = <AbstractControl>item.controls['AfterTaxAmount'];
+    let wholeDiscountAmount = <FormControl>this.form.controls['WholeDiscountAmount'];
+    let wholeDiscountRate = <FormControl>this.form.controls['WholeDiscountRate'];
+    let purchaseAmount = <AbstractControl>item.controls['PurchaseAmount'];
+
+    switch (source) {
+      case 'DiscountRate':
+
+        discountAmount.setValue(purchaseAmount.value * discountRate.value);
+        break;
+    }
   }
 }
