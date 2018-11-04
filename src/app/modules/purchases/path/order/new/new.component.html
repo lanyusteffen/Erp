@@ -60,7 +60,7 @@
       <th><span class="required">*</span>采购数量(批量设置))</th>
       <th>采购单价(批量设置)</th>
       <th>采购金额</th>
-      <th><span class="required">*</span>仓库<app-storage-selector (change)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
+      <th><span class="required">*</span>仓库<app-storage-selector (selectChanged)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
     </thead>
     <tbody formArrayName="ItemList">
       <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">

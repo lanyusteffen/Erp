@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, Output } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
@@ -14,11 +14,15 @@ import { StorageService } from '../../path/storage/storage.service';
 })
 
 export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
+
+  @Output() selectChanged = new EventEmitter();
+
   private list = [];
   private innerValue: any;
-  private onTouched;
-  private onChange;
   private dataInitialized = false;
+
+  onChange: (value: string) => void = () => null
+  onTouched: () => void = () => null
 
   @Input()
   private isEditing = false;
@@ -74,5 +78,6 @@ export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
   handleChange(value) {
     this.innerValue = value;
     this.onChange(value);
+    this.selectChanged.emit(value);
   }
 }

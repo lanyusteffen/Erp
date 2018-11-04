@@ -1,5 +1,5 @@
-import { Subscription } from 'rxjs/Subscription';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
@@ -79,8 +79,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  selectAllStorage(evt) {
-    const value = evt.target.value;
+  selectAllStorage(selectedStorageId) {
+    const control = <FormArray>this.form.controls['ItemList'];
+    for (let i = 0; i < control.length; i++) {
+      control.at(i).patchValue({'StorageId': selectedStorageId});
+    }
   }
 
   selectCustomer(item: any): void {
