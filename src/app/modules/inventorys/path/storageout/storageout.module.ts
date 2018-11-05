@@ -6,11 +6,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { UIModule } from '@UI/ui.module';
 
 import { StorageOutComponent } from './storageout.component';
-import { StorageOutListComponent } from './components/list/list.component';
-import { StorageOutActionsComponent } from './components/actions/actions.component';
-import { StorageOutControlComponent } from './components/control/control.component';
-import { StorageOutDisabledComponent } from './storageout-disabled.component';
-import { StorageOutDisabledListComponent } from './components/disabled/disabled.component';
 
 import { StorageOutService } from './storageout.service';
 import { SharedModule } from '@app/shared.module';
@@ -20,12 +15,7 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @NgModule({
   declarations: [
-    StorageOutComponent,
-    StorageOutListComponent,
-    StorageOutActionsComponent,
-    StorageOutControlComponent,
-    StorageOutDisabledComponent,
-    StorageOutDisabledListComponent
+    StorageOutComponent
   ],
   imports: [
     UIModule,

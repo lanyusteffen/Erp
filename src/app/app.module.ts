@@ -176,6 +176,9 @@ import { ProductConfigService } from './modules/products/path/productconfig/prod
 
 import { ProductControlComponent } from './modules/products/path/product/components/control/control.component';
 
+import { StorageOutComponent } from './modules/inventorys/path/storageout/new/new.component'
+import { StorageOutService } from './modules/inventorys/path/storageout/storageout.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -312,7 +315,9 @@ import { ProductControlComponent } from './modules/products/path/product/compone
     ProductConfigComponent,
     ProductConfigControlComponent,
 
-    ProductControlComponent
+    ProductControlComponent,
+
+    StorageOutComponent
   ],
   imports: [
     BrowserModule,
@@ -345,7 +350,8 @@ import { ProductControlComponent } from './modules/products/path/product/compone
     PurchaseOrderService,
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
-    HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService],
+    HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,
+    StorageOutService],
   bootstrap: [AppComponent]
 })
 

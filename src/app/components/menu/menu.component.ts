@@ -40,9 +40,9 @@ export class MenuComponent {
       icon: 'box',
       subMenu: [
         {
-          name: '商品管理',
+          name: '出库单管理',
           subMenu: [
-           
+            { name: '新增出库单', link: '/inventorys/storageout' },
           ]
         }
       ]
