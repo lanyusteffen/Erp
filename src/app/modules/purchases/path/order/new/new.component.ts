@@ -135,7 +135,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       newPurchaseItem.TaxRate = 0.00;
       newPurchaseItem.DiscountRate = 0.00;
       newPurchaseItem.Quanlity = item.Quanlity;
-      newPurchaseItem.Price = item.Price;
+      newPurchaseItem.Price = item.SalePrice;
       newPurchaseItem.Name = item.Name;
 
       if (findIndex === -1) {
