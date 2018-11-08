@@ -87,15 +87,15 @@
         <td><input type="text" formControlName="ProductUnitName" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input type="number" formControlName="Quanlity" (change)="calculate($event, 'Quanlity', i)" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="Price" (change)="calculate($event, 'Price', i)" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Quanlity" (change)="calculateItem($event, 'Quanlity', i, true)" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Price" (change)="calculateItem($event, 'Price', i, true)" class="form-control" [ngModel]></td>
         <td><input type="number" formControlName="PurchaseAmount"  class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'DiscountRate', i)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculateItem($event, 'DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
         <td *ngIf="hasOpenDiscount()"><input type="number" formControlName="DiscountAmount" class="form-control" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'AfterDiscountAmount', i)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculate($event, 'TaxRate', i)" formControlName="TaxRate" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculateItem($event, 'AfterDiscountAmount', i, true)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculateItem($event, 'TaxRate', i, true)" formControlName="TaxRate" class="form-control" [ngModel]></td>
         <td *ngIf="hasOpenTax()"><input type="number" formControlName="TaxAmount" class="form-control" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculate($event, 'AfterTaxAmount', i)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculateItem($event, 'AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
         <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
       </tr>
     </tbody>
@@ -116,13 +116,13 @@
           <tr>
             <th>整单折扣额：</th>
             <td>
-                <input type="number" formControlName="WholeDiscountAmount" [ngModel] />
+                <input type="number" (change)="calculateAll($event, 0.00, -1)" formControlName="WholeDiscountAmount" [ngModel] />
             </td>
           </tr>
           <tr>
             <th>整单折扣率：</th>
             <td>
-                <input type="number" formControlName="WholeDiscountRate" [ngModel] />
+                <input type="number" (change)="calculateAll($event, 0.00, -1)" formControlName="WholeDiscountRate" [ngModel] />
                 <div class="addon">
                   %
                 </div>

@@ -52,8 +52,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
 
-  private totalAmount = 0;
-  private payedAmount = 0;
+  private totalAmount: number | string = 0.00;
+  private payedAmount: number | string = 0.00;
 
   private propertyName1 = null;
   private propertyName2 = null;
@@ -191,7 +191,28 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     control.removeAt(idx);
   }
 
-  calculate(evt, source, index) {
+  calculateAll(evt, calculatedPurchaseAmount, index) {
+
+    const itemArr = <FormArray>this.form.controls['ItemList'];
+    for (let i = 0; i < itemArr.length; i++) {
+      if (i !== index) {
+        calculatedPurchaseAmount += this.calculateItem(evt, 'Price', i, false);
+      }
+    }
+
+    this.totalAmount = angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
+
+    const wholeDiscountAmount = (<FormControl>this.form.controls['WholeDiscountAmount']).value;
+    let wholeDiscountRate = (<FormControl>this.form.controls['WholeDiscountRate']).value;
+    wholeDiscountRate = wholeDiscountRate / 100.00;
+
+    calculatedPurchaseAmount = calculatedPurchaseAmount * (1 - wholeDiscountRate);
+    calculatedPurchaseAmount = calculatedPurchaseAmount - wholeDiscountAmount;
+
+    this.payedAmount = angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
+  }
+
+  calculateItem(evt, source, index, hasCalculateAll) {
 
     const itemArr = <FormArray>this.form.controls['ItemList'];
     const item = <FormGroup>itemArr.at(index);
@@ -210,9 +231,6 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     const taxRateCtrl = <AbstractControl>item.controls['TaxRate'];
     const taxAmountCtrl = <AbstractControl>item.controls['TaxAmount'];
     const afterTaxAmountCtrl = <AbstractControl>item.controls['AfterTaxAmount'];
-
-    const wholeDiscountAmountCtrl = <FormControl>this.form.controls['WholeDiscountAmount'];
-    const wholeDiscountRateCtrl = <FormControl>this.form.controls['WholeDiscountRate'];
 
     // 重新某货品的设置采购金额
     const purchaseAmount = quanlityCtrl.value * priceCtrl.value;
@@ -286,5 +304,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
         taxRateCtrl.setValue(angularMath.getNumberWithDecimals(taxRate, 2));
         break;
     }
+
+    if (hasCalculateAll) {
+      this.calculateAll(evt, afterTaxAmount, index);
+    }
+
+    return afterTaxAmount;
   }
 }
