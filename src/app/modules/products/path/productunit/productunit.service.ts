@@ -22,6 +22,24 @@ export class ProductUnitService {
 
   constructor(private http: HttpService) { }
 
+  dropdownList(productId, successNotify: (data: any) => void, fallback: (error: any) => void) {
+    const {
+      currentQueryKey,
+      currentPagination: {
+        PageIndex,
+        PageSize
+      }
+    } = this.state;
+
+    this.http.post('/ProductUnit/GetSimpleList', {
+      QueryKey: currentQueryKey,
+      ProductId: productId,
+      Status: 1,
+      PageIndex,
+      PageSize
+    }, successNotify, fallback, ModuleType.Product);
+  }
+
   succeessNotifyCallback(successNotify?): void {
     if (successNotify !== undefined) {
       successNotify();

@@ -52,8 +52,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
 
-  private totalAmount: number | string = 0.00;
-  private payedAmount: number | string = 0.00;
+  private totalAmount: number | string;
+  private payedAmount: number | string;
 
   private propertyName1 = null;
   private propertyName2 = null;
