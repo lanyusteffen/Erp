@@ -40,7 +40,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       }
     });
     return returnValue;
-  } 
+  }
 
   isSelected(item: any) {
     let returnValue = false;
@@ -78,11 +78,11 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   select(evt, item: any) {
     let finded = false;
     item.Selected = evt.target.checked;
-    item.Quanlity = evt.target.checked ? 0 : '';
+    item.Quanlity = evt.target.checked ? 0.00 : '';
     this._selectedItems.forEach(_item => {
       if (_item.Id === item.Id) {
         _item.Selected = evt.target.checked;
-        _item.Quanlity = evt.target.checked ? 0 : '';
+        _item.Quanlity = evt.target.checked ? 0.00 : '';
         finded = true;
       }
     });
@@ -100,14 +100,14 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       }
     });
   }
-  
+
   inputQuanlity(evt, item: any) {
     let finded = false;
     item.Selected = true;
-    item.Quanlity = parseInt(evt.target.value, 10);
+    item.Quanlity = evt.target.value;
     this._selectedItems.forEach(_item => {
       if (_item.Id === item.Id) {
-        _item.Quanlity = parseInt(evt.target.value, 10);
+        _item.Quanlity = evt.target.value;
         _item.Selected = true;
         finded = true;
       }

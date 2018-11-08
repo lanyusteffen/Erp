@@ -87,9 +87,9 @@
         <td><input type="text" formControlName="ProductUnitName" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input type="number" formControlName="Quanlity" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="Price" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Quanlity" (change)="calculate($event, 'Quanlity', i)" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Price" (change)="calculate($event, 'Price', i)" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="PurchaseAmount"  class="none-input" [ngModel] disabled="disabled"></td>
         <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'DiscountRate', i)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
         <td *ngIf="hasOpenDiscount()"><input type="number" formControlName="DiscountAmount" class="form-control" [ngModel] disabled="disabled"></td>
         <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'AfterDiscountAmount', i)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>

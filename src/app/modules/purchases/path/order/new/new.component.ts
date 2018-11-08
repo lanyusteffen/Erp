@@ -52,14 +52,14 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
 
-  private totalAmount: number = 0;
-  private payedAmount: number = 0;
+  private totalAmount = 0;
+  private payedAmount = 0;
 
   private propertyName1 = null;
   private propertyName2 = null;
   private selectedCustomer: any;
   private selectedEmployee: any;
-  private selectedGoods : number[] = [];
+  private selectedGoods: number[] = [];
   private form = new FormGroup({});
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
@@ -115,29 +115,30 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   }
 
   selectGoods(selectItems: any): void {
-    
+
     selectItems.forEach(item => {
-      
       let findIndex = this.selectedGoods.indexOf(item.Id);
-      
+
       if (findIndex > -1) {
         findIndex = findIndex + 1;
         const itemArr = <FormArray>this.form.controls['ItemList'];
         itemArr.removeAt(findIndex);
       }
 
-      let newPurchaseItem = Object.assign({}, purchaseItem);
+      const newPurchaseItem = Object.assign({}, purchaseItem);
 
       newPurchaseItem.GoodsId = item.Id;
       newPurchaseItem.ProductUnitName = item.ProductUnitName;
       newPurchaseItem.ProductSizeValue = item.ProductSizeValue;
       newPurchaseItem.ProductColorValue = item.ProductColorValue;
       newPurchaseItem.Spec = item.Spec;
+      newPurchaseItem.TaxRate = 0.00;
+      newPurchaseItem.DiscountRate = 0.00;
       newPurchaseItem.Quanlity = item.Quanlity;
       newPurchaseItem.Price = item.Price;
       newPurchaseItem.Name = item.Name;
 
-      if (findIndex == -1) {
+      if (findIndex === -1) {
         findIndex = 1;
       }
 
@@ -180,7 +181,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   addItem(idx) {
     const control = <FormArray>this.form.controls['ItemList'];
-    let newPurchaseItem = Object.assign({}, purchaseItem);
+    const newPurchaseItem = Object.assign({}, purchaseItem);
     control.insert(idx + 1, this.fb.group(newPurchaseItem));
   }
 
@@ -195,70 +196,94 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     const itemArr = <FormArray>this.form.controls['ItemList'];
     const item = <FormGroup>itemArr.at(index);
 
-    let isOpenTax = <FormControl>this.form.controls['IsOpenTax'].value;
-    let isOpenDiscount = <FormControl>this.form.controls['IsOpenDiscount'].value;
-    
-    let quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
-    let priceCtrl = <AbstractControl>item.controls['Price'];
-    let purchaseAmountCtrl = <AbstractControl>item.controls['PurchaseAmount'];
+    const isOpenTax = <FormControl>this.form.controls['IsOpenTax'].value;
+    const isOpenDiscount = <FormControl>this.form.controls['IsOpenDiscount'].value;
 
-    let discountRateCtrl = <AbstractControl>item.controls['DiscountRate'];
-    let discountAmountCtrl = <AbstractControl>item.controls['DiscountAmount'];
-    let afterDiscountAmountCtrl = <AbstractControl>item.controls['AfterDiscountAmount'];
+    const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
+    const priceCtrl = <AbstractControl>item.controls['Price'];
+    const purchaseAmountCtrl = <AbstractControl>item.controls['PurchaseAmount'];
 
-    let taxRateCtrl = <AbstractControl>item.controls['TaxRate'];
-    let taxAmountCtrl = <AbstractControl>item.controls['TaxAmount'];
-    let afterTaxAmountCtrl = <AbstractControl>item.controls['AfterTaxAmount'];
+    const discountRateCtrl = <AbstractControl>item.controls['DiscountRate'];
+    const discountAmountCtrl = <AbstractControl>item.controls['DiscountAmount'];
+    const afterDiscountAmountCtrl = <AbstractControl>item.controls['AfterDiscountAmount'];
 
-    let wholeDiscountAmountCtrl = <FormControl>this.form.controls['WholeDiscountAmount'];
-    let wholeDiscountRateCtrl = <FormControl>this.form.controls['WholeDiscountRate'];
-    
-    purchaseAmountCtrl.setValue(quanlityCtrl.value * priceCtrl.value);
+    const taxRateCtrl = <AbstractControl>item.controls['TaxRate'];
+    const taxAmountCtrl = <AbstractControl>item.controls['TaxAmount'];
+    const afterTaxAmountCtrl = <AbstractControl>item.controls['AfterTaxAmount'];
+
+    const wholeDiscountAmountCtrl = <FormControl>this.form.controls['WholeDiscountAmount'];
+    const wholeDiscountRateCtrl = <FormControl>this.form.controls['WholeDiscountRate'];
+
+    // 重新某货品的设置采购金额
+    const purchaseAmount = quanlityCtrl.value * priceCtrl.value;
+    purchaseAmountCtrl.setValue(angularMath.getNumberWithDecimals(purchaseAmount, 2));
+
+    let afterDiscountAmount = purchaseAmount, afterTaxAmount = afterDiscountAmount;
+    let discountAmount = 0.00, taxAmount = 0.00;
+    let taxRate = taxRateCtrl.value, discountRate = discountRateCtrl.value;
+
+    if (isOpenTax) {
+      taxRate = taxRateCtrl.value / 100.00;
+    }
+
+    if (isOpenDiscount) {
+      discountRate = discountRateCtrl.value / 100.00;
+    }
 
     switch (source) {
 
+      case 'Quanlity':
+      case 'Price':
+      case 'TaxRate':
       case 'DiscountRate':
 
         if (isOpenDiscount) {
-          discountAmountCtrl.setValue(purchaseAmountCtrl.value * discountRateCtrl.value);
-          afterDiscountAmountCtrl.setValue(purchaseAmountCtrl.value - discountAmountCtrl.value);
-        } 
+          discountAmount = discountRate * purchaseAmount;
+          discountAmountCtrl.setValue(angularMath.getNumberWithDecimals(discountAmount, 2));
+          afterDiscountAmount = purchaseAmount - discountAmount;
+          afterTaxAmount = afterDiscountAmount;
+          afterDiscountAmountCtrl.setValue(angularMath.getNumberWithDecimals(afterDiscountAmount, 2));
+        }
+
+        if (isOpenTax) {
+          taxAmount = afterDiscountAmount * taxRate;
+          taxAmountCtrl.setValue(angularMath.getNumberWithDecimals(taxAmount, 2));
+          afterTaxAmount = afterDiscountAmount + taxAmount;
+          afterTaxAmountCtrl.setValue(angularMath.getNumberWithDecimals(afterTaxAmount, 2));
+        }
+
         break;
 
       case 'AfterDiscountAmount':
 
-        if (isOpenDiscount) {
-          discountAmountCtrl.setValue(afterDiscountAmountCtrl.value - purchaseAmountCtrl.value);
-          discountRateCtrl.setValue(angularMath.getNumberWithDecimals(discountAmountCtrl.value / purchaseAmountCtrl.value, 2));
-        }
-        break;
-
-      case 'TaxRate':
+        afterDiscountAmount = afterDiscountAmountCtrl.value;
+        discountAmountCtrl.setValue(angularMath.getNumberWithDecimals(purchaseAmount - afterDiscountAmount, 2));
+        discountRate = discountAmountCtrl.value / purchaseAmount;
+        discountRateCtrl.setValue(angularMath.getNumberWithDecimals(discountRate, 2));
 
         if (isOpenTax) {
-          let toBeTaxAmount = 0.00;
-          if (isOpenDiscount) {
-            toBeTaxAmount = afterDiscountAmountCtrl.value;
-          } else {
-            toBeTaxAmount = purchaseAmountCtrl.value;
-          }
-          taxAmountCtrl.setValue(toBeTaxAmount * taxRateCtrl.value);
-          afterTaxAmountCtrl.setValue(purchaseAmountCtrl.value + taxAmountCtrl.value);
+          taxAmount = afterDiscountAmount * taxRate;
+          taxAmountCtrl.setValue(angularMath.getNumberWithDecimals(taxAmount, 2));
+          afterTaxAmount = afterDiscountAmount + taxAmount;
+          afterTaxAmountCtrl.setValue(angularMath.getNumberWithDecimals(afterTaxAmount, 2));
         }
         break;
 
       case 'AfterTaxAmount':
 
-        if (isOpenTax) {
-          let toBeTaxAmount = 0.00;
-          if (isOpenDiscount) {
-            toBeTaxAmount = afterDiscountAmountCtrl.value;
-          } else {
-            toBeTaxAmount = purchaseAmountCtrl.value;
-          }
-          taxAmountCtrl.setValue(afterTaxAmountCtrl.value - toBeTaxAmount);
-          taxRateCtrl.setValue(angularMath.getNumberWithDecimals(taxAmountCtrl.value / toBeTaxAmount, 2));
+        if (isOpenDiscount) {
+          discountAmount = discountRate * purchaseAmount;
+          discountAmountCtrl.setValue(angularMath.getNumberWithDecimals(discountAmount, 2));
+          afterDiscountAmount = purchaseAmount - discountAmount;
+          afterTaxAmount = afterDiscountAmount;
+          afterDiscountAmountCtrl.setValue(angularMath.getNumberWithDecimals(afterDiscountAmount, 2));
         }
+
+        afterTaxAmount = afterTaxAmountCtrl.value;
+        taxAmount = afterTaxAmount - afterDiscountAmount;
+        taxAmountCtrl.setValue(angularMath.getNumberWithDecimals(taxAmount, 2));
+        taxRate = taxAmount / afterDiscountAmount;
+        taxRateCtrl.setValue(angularMath.getNumberWithDecimals(taxRate, 2));
         break;
     }
   }
