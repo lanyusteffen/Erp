@@ -1,4 +1,4 @@
-<app-ui-select
+<app-ui-select *ngIf="productId > 0"
   [formSelect]="true"
   [options]="list"
   [value]="innerValue"

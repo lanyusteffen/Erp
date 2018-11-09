@@ -17,19 +17,22 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
 
   @Output() selectChanged = new EventEmitter();
 
-  private list = [];
-  private innerValue: any;
-  private dataInitialized = false;
-
-  onChange: (value: string) => void = () => null
-  onTouched: () => void = () => null
-
   @Input()
   private isEditing = false;
+
+  @Input()
+  private productId: number = -1;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
   private selectProductUnit: SelectComponent;
+
+  private list = [];
+  private innerValue: any;
+  private dataInitialized = false;
+
+  onChange: (value: string) => void = () => null;
+  onTouched: () => void = () => null;
 
   constructor(private productUnitService: ProductUnitService, private alertService: AlertService) { }
 
@@ -40,18 +43,17 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   }
 
   bindListData(next: () => void): void {
-    // this.productUnitService
-    // .dropdownList(data => {
-    //   this.list = data.map(item => ({
-    //     label: item.Name,
-    //     value: item.Id
-    //   }));
-    //   if (next !== null) {
-    //     next();
-    //   }
-    // }, (err) => {
-    //   this.alertService.listErrorCallBack(ModuleName.Storage, err);
-    // });
+    this.productUnitService.dropdownList(this.productId, data => {
+      this.list = data.map(item => ({
+        label: item.Name,
+        value: item.Id
+      }));
+      if (next !== null) {
+        next();
+      }
+    }, (err) => {
+      this.alertService.listErrorCallBack(ModuleName.ProductUnit, err);
+    });
   }
 
   writeValue(value) {

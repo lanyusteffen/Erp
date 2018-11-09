@@ -17,19 +17,19 @@ export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
 
   @Output() selectChanged = new EventEmitter();
 
-  private list = [];
-  private innerValue: any;
-  private dataInitialized = false;
-
-  onChange: (value: string) => void = () => null
-  onTouched: () => void = () => null
-
   @Input()
   private isEditing = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
   private selectStorage: SelectComponent;
+
+  private list = [];
+  private innerValue: any;
+  private dataInitialized = false;
+
+  onChange: (value: string) => void = () => null;
+  onTouched: () => void = () => null;
 
   constructor(private storageService: StorageService, private alertService: AlertService) { }
 
