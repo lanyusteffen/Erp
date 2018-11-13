@@ -21,7 +21,7 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   private isEditing = false;
 
   @Input()
-  private productId: number = -1;
+  private productId = -1;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
