@@ -88,7 +88,7 @@
         </td>
         <td><input style="width:60px" type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
         <td>
-          <app-productunit-selector formControlName="ProductUnitId" [productId]="ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
+          <app-productunit-selector formControlName="ProductUnitId" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
         </td>
         <td><input style="width:60px" type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
