@@ -129,6 +129,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
       newPurchaseItem.GoodsId = item.Id;
       newPurchaseItem.ProductId = item.ProductId;
+      newPurchaseItem.ProductUnitId = item.ProductUnitId;
       newPurchaseItem.ProductUnitName = item.ProductUnitName;
       newPurchaseItem.ProductSizeValue = item.ProductSizeValue;
       newPurchaseItem.ProductColorValue = item.ProductColorValue;

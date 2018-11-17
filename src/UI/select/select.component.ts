@@ -12,12 +12,15 @@ export class SelectComponent {
   private _defaultValue = -1;
   private _defaultText = '请选择';
 
+  @Input()
+  private useDefault: boolean = true;
+
   private _defaultOption = {
     label: this._defaultText,
     value: this._defaultValue
   };
 
-  private _currentValue = this._defaultOption;
+  private _currentValue = (this.useDefault ? this._defaultOption : null);
 
   _options = [];
 
@@ -51,7 +54,7 @@ export class SelectComponent {
       if (selectedValue) {
         this._currentValue = selectedValue;
       } else {
-        this._currentValue = this._defaultOption;
+        this._currentValue = (this.useDefault ? this._defaultOption : this.options[0]);
       }
       this.cd.markForCheck();
     }

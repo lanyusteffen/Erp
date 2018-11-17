@@ -79,7 +79,7 @@
         </td>
         <td>
           <div class="selector-group">
-            <input type="text" formControlName="Name" [ngModel] class="form-control">
+            <input type="text" disabled="disabled" formControlName="Name" [ngModel] class="form-control">
             <input type="hidden" formControlName="GoodsId" [ngModel] class="form-control">
             <span class="addon" (click)="showModal($event)">
               <i class="iconfont"></i>选择
@@ -88,7 +88,7 @@
         </td>
         <td><input style="width:60px" type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
         <td>
-          <app-productunit-selector formControlName="ProductUnitId" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
+          <app-productunit-selector formControlName="ProductUnitId" [useDefault]="false" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
         </td>
         <td><input style="width:60px" type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
@@ -101,7 +101,7 @@
         <td *ngIf="hasOpenTax()"><input type="number" (change)="calculateItem($event, 'TaxRate', i, true)" formControlName="TaxRate" class="form-control" [ngModel]></td>
         <td *ngIf="hasOpenTax()"><input style="width:80px" type="number" formControlName="TaxAmount" class="none-input" [ngModel] disabled="disabled"></td>
         <td *ngIf="hasOpenTax()"><input type="number" (change)="calculateItem($event, 'AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
-        <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
+        <td><app-product-storage-selector [isEditing]="false" formControlName="StorageId" [useDefault]="false" [ngModel]></app-product-storage-selector></td>
       </tr>
     </tbody>
   </app-ui-table>

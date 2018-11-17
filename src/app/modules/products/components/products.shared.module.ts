@@ -9,13 +9,15 @@ import { StorageSelectorComponent } from './storage-selector/storage-selector.co
 import { SystemUnitService } from '../path/systemunit/systemunit.service';
 import { SharedModule } from '../../../shared.module';
 import { ProductUnitSelectorComponent } from './productunit-selector/productunit-selector.component';
+import { ProductStorageSelectorComponent } from './productstorage-selector/productstorage-selector.component';
 
 @NgModule({
   declarations: [
     SystemUnitSelectorComponent,
     PopupSelectorGoodsComponent,
     StorageSelectorComponent,
-    ProductUnitSelectorComponent
+    ProductUnitSelectorComponent,
+    ProductStorageSelectorComponent
   ],
   imports: [
     UIModule,
@@ -26,7 +28,8 @@ import { ProductUnitSelectorComponent } from './productunit-selector/productunit
     SystemUnitSelectorComponent,
     PopupSelectorGoodsComponent,
     StorageSelectorComponent,
-    ProductUnitSelectorComponent
+    ProductUnitSelectorComponent,
+    ProductStorageSelectorComponent
   ],
   providers: [
     SystemUnitService

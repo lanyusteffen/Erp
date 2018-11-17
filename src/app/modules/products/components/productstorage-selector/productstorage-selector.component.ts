@@ -2,23 +2,27 @@ import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angu
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
-import { ProductUnitService } from '../../path/productunit/productunit.service';
+import { StorageService } from '../../path/storage/storage.service';
 
 @Component({
-  selector: 'app-productunit-selector',
-  templateUrl: './productunit-selector.component.html',
-  styleUrls: ['./productunit-selector.component.less'],
+  selector: 'app-product-storage-selector',
+  templateUrl: './productstorage-selector.component.html',
+  styleUrls: ['./productstorage-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: ProductUnitSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: ProductStorageSelectorComponent, multi: true }
   ]
 })
 
-export class ProductUnitSelectorComponent implements OnInit, ControlValueAccessor {
+export class ProductStorageSelectorComponent implements OnInit, ControlValueAccessor {
 
   @Output() selectChanged = new EventEmitter();
 
   @Input()
   private isEditing = false;
+
+  // 获取模板内的第一个指定组件
+  @ViewChild(SelectComponent)
+  private selectStorage: SelectComponent;
 
   @Input()
   private _productId = -1;
@@ -35,10 +39,6 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
     this._productId = value;
   }
 
-  // 获取模板内的第一个指定组件
-  @ViewChild(SelectComponent)
-  private selectProductUnit: SelectComponent;
-
   private list = [];
   private innerValue: any;
   private dataInitialized = false;
@@ -46,17 +46,17 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   onChange: (value: string) => void = () => null;
   onTouched: () => void = () => null;
 
-  constructor(private productUnitService: ProductUnitService, private alertService: AlertService) { }
+  constructor(private storageService: StorageService, private alertService: AlertService) { }
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing && this.productId > 0) {
-      this.dataInitialized = true;
       this.bindListData(null);
     }
   }
 
   bindListData(next: () => void): void {
-    this.productUnitService.dropdownList(this.productId, data => {
+    this.storageService
+    .dropdownList(data => {
       this.list = data.map(item => ({
         label: item.Name,
         value: item.Id
@@ -65,7 +65,7 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
         next();
       }
     }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.ProductUnit, err);
+      this.alertService.listErrorCallBack(ModuleName.Storage, err);
     });
   }
 
@@ -74,11 +74,11 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || 0;
-        this.selectProductUnit.value = this.innerValue;
+        this.selectStorage.value = this.innerValue;
       });
     } else {
       this.innerValue = value || 0;
-      this.selectProductUnit.value = this.innerValue;
+      this.selectStorage.value = this.innerValue;
     }
   }
 
