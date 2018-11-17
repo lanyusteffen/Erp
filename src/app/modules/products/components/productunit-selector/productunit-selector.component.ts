@@ -30,9 +30,6 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   @Input('productId')
   set productId(value: number) {
     this._productId = value;
-    if (value) {
-      this.bindListData(null);
-    }
   }
 
   // 获取模板内的第一个指定组件
@@ -50,6 +47,7 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing && this.productId) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }
