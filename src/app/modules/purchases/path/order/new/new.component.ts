@@ -128,6 +128,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       const newPurchaseItem = Object.assign({}, purchaseItem);
 
       newPurchaseItem.GoodsId = item.Id;
+      newPurchaseItem.ProductId = item.ProductId;
       newPurchaseItem.ProductUnitName = item.ProductUnitName;
       newPurchaseItem.ProductSizeValue = item.ProductSizeValue;
       newPurchaseItem.ProductColorValue = item.ProductColorValue;

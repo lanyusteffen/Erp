@@ -21,7 +21,19 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   private isEditing = false;
 
   @Input()
-  private productId = -1;
+  private _productId = -1;
+
+  get productId() : number {
+    return this._productId;
+  }
+
+  @Input('productId')
+  set productId(value: number) {
+    this._productId = value;
+    if (value) {
+      this.bindListData(null);
+    }
+  }
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
@@ -37,7 +49,7 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   constructor(private productUnitService: ProductUnitService, private alertService: AlertService) { }
 
   ngOnInit() {
-    if (!this.dataInitialized && !this.isEditing) {
+    if (!this.dataInitialized && !this.isEditing && this.productId) {
       this.bindListData(null);
     }
   }
@@ -57,7 +69,7 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   }
 
   writeValue(value) {
-    if (!this.dataInitialized) {
+    if (!this.dataInitialized && this.productId) {
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || 0;
