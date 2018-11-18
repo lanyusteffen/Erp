@@ -13,7 +13,7 @@ export class SelectComponent {
   private _defaultText = '请选择';
 
   @Input()
-  private useDefault: boolean = true;
+  private useDefault = true;
 
   private _defaultOption = {
     label: this._defaultText,

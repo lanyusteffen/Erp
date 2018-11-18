@@ -24,7 +24,7 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   private _productId = -1;
 
   @Input()
-  private useDefault: boolean = true;
+  private useDefault = true;
 
   get productId(): number {
     return this._productId;
