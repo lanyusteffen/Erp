@@ -22,13 +22,13 @@ export class ProductStorageSelectorComponent implements OnInit, ControlValueAcce
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectStorage: SelectComponent;
+  private selectProductStorage: SelectComponent;
 
   @Input()
   private _productId = -1;
 
   @Input()
-  private useDefault: boolean = true;
+  private useDefault = true;
 
   get productId(): number {
     return this._productId;
@@ -55,8 +55,7 @@ export class ProductStorageSelectorComponent implements OnInit, ControlValueAcce
   }
 
   bindListData(next: () => void): void {
-    this.storageService
-    .dropdownList(data => {
+    this.storageService.dropdownList(data => {
       this.list = data.map(item => ({
         label: item.Name,
         value: item.Id
@@ -74,11 +73,11 @@ export class ProductStorageSelectorComponent implements OnInit, ControlValueAcce
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || 0;
-        this.selectStorage.value = this.innerValue;
+        this.selectProductStorage.value = this.innerValue;
       });
     } else {
       this.innerValue = value || 0;
-      this.selectStorage.value = this.innerValue;
+      this.selectProductStorage.value = this.innerValue;
     }
   }
 

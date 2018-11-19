@@ -24,9 +24,6 @@ export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
   @ViewChild(SelectComponent)
   private selectStorage: SelectComponent;
 
-  @Input()
-  private useDefault: boolean = true;
-
   private list = [];
   private innerValue: any;
   private dataInitialized = false;

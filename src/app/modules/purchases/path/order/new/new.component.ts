@@ -63,7 +63,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   private form = new FormGroup({});
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
-    format: 'YYYY-MM-DD HH:mm:ss'
+    format: 'YYYY-MM-DD'
   };
 
   showModal() {
@@ -137,7 +137,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       newPurchaseItem.TaxRate = 0.00;
       newPurchaseItem.DiscountRate = 0.00;
       newPurchaseItem.Quanlity = item.Quanlity;
-      newPurchaseItem.Price = item.SalePrice;
+      newPurchaseItem.Price = item.Price;
       newPurchaseItem.Name = item.Name;
 
       if (findIndex === -1) {
@@ -147,6 +147,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       this.addPurchaseItem(findIndex, newPurchaseItem);
       this.selectedGoods.push(item.Id);
     });
+    this.calculate();
   }
 
   onSubmit({ value }) {
@@ -193,12 +194,16 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     control.removeAt(idx);
   }
 
-  calculateAll(evt, calculatedPurchaseAmount, index) {
+  calculate() {
+    this.calculateAll(0.00, -1);
+  }
+
+  calculateAll(calculatedPurchaseAmount, index) {
 
     const itemArr = <FormArray>this.form.controls['ItemList'];
     for (let i = 0; i < itemArr.length; i++) {
       if (i !== index) {
-        calculatedPurchaseAmount += this.calculateItem(evt, 'Price', i, false);
+        calculatedPurchaseAmount += this.calculateItem('Price', i, false);
       }
     }
 
@@ -214,13 +219,19 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     this.payedAmount = angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
   }
 
-  calculateItem(evt, source, index, hasCalculateAll) {
+  calculateItem(source, index, hasCalculateAll) {
 
     const itemArr = <FormArray>this.form.controls['ItemList'];
     const item = <FormGroup>itemArr.at(index);
 
-    const isOpenTax = <FormControl>this.form.controls['IsOpenTax'].value;
-    const isOpenDiscount = <FormControl>this.form.controls['IsOpenDiscount'].value;
+    const currentProductId = (<FormControl>item.controls['ProductId']).value;
+
+    if (!currentProductId || currentProductId <= 0) {
+      return 0.00;
+    }
+
+    const isOpenTax = (<FormControl>this.form.controls['IsOpenTax']).value;
+    const isOpenDiscount = (<FormControl>this.form.controls['IsOpenDiscount']).value;
 
     const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
     const priceCtrl = <AbstractControl>item.controls['Price'];
@@ -308,7 +319,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     }
 
     if (hasCalculateAll) {
-      this.calculateAll(evt, afterTaxAmount, index);
+      this.calculateAll(afterTaxAmount, index);
     }
 
     return afterTaxAmount;

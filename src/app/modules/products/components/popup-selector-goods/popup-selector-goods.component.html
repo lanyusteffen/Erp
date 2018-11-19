@@ -32,6 +32,7 @@
               <th>{{propertyName1}}</th>
               <th>{{propertyName2}}</th>
               <th>库存数量</th>
+              <th>销售价</th>
               <th>预设采购价</th>
               <th>最新进价</th>
             </tr>
@@ -43,7 +44,7 @@
               </td>
               <td>
                 <app-form-field [name]="'Name'">
-                  <input #formField type="number" class="form-control" [value]="item.Quanlity" (change)="inputQuanlity($event, item)" />
+                  <input #formField type="text" class="form-control" [value]="item.Quanlity" (change)="inputQuanlity($event, item)" />
                 </app-form-field>
               <td>{{item.Name}}</td>
               <td>{{item.ProductCode}}</td>
@@ -52,6 +53,7 @@
               <td>{{item.ProductColorValue}}</td>
               <td>{{item.ProductSizeValue}}</td>
               <td>{{item.MarketableStock}}</td>
+              <td>{{item.Price}}</td>
               <td></td>
               <td></td>
             </tr>
