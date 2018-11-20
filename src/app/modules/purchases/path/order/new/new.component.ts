@@ -59,7 +59,6 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   private propertyName2 = null;
   private selectedCustomer: any;
   private selectedEmployee: any;
-  private selectedGoods: number[] = [];
   private form = new FormGroup({});
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
@@ -79,6 +78,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private alertService: AlertService
   ) {
+    this.totalAmount = 0.00;
+    this.payedAmount = 0.00;
   }
 
   ngOnInit() {
@@ -117,12 +118,22 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   selectGoods(selectItems: any): void {
 
     selectItems.forEach(item => {
-      let findIndex = this.selectedGoods.indexOf(item.Id);
 
-      if (findIndex > -1) {
-        findIndex = findIndex + 1;
-        const itemArr = <FormArray>this.form.controls['ItemList'];
-        itemArr.removeAt(findIndex);
+      const quanlity = parseInt(item.Quanlity, 10);
+
+      let findIndex = -1;
+      const purchaseItemArr = <FormArray>this.form.controls['ItemList'];
+
+      for (let i = 0; i < purchaseItemArr.length; i++) {
+        findIndex = i;
+        const purchaseItemCtrl = <FormGroup>purchaseItemArr.at(findIndex);
+        if ((<AbstractControl>purchaseItemCtrl.controls['GoodsId']).value > 0) {
+          if (item.Id === (<AbstractControl>purchaseItemCtrl.controls['GoodsId']).value) {
+            (<AbstractControl>purchaseItemCtrl.controls['Price']).setValue(angularMath.getNumberWithDecimals(item.Price, 2));
+            (<AbstractControl>purchaseItemCtrl.controls['Quanlity']).setValue(angularMath.getNumberWithDecimals(quanlity, 2));
+            return;
+          }
+        }
       }
 
       const newPurchaseItem = Object.assign({}, purchaseItem);
@@ -136,17 +147,13 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       newPurchaseItem.Spec = item.Spec;
       newPurchaseItem.TaxRate = 0.00;
       newPurchaseItem.DiscountRate = 0.00;
-      newPurchaseItem.Quanlity = item.Quanlity;
+      newPurchaseItem.Quanlity = quanlity;
       newPurchaseItem.Price = item.Price;
       newPurchaseItem.Name = item.Name;
 
-      if (findIndex === -1) {
-        findIndex = 1;
-      }
-
-      this.addPurchaseItem(findIndex, newPurchaseItem);
-      this.selectedGoods.push(item.Id);
+      this.addPurchaseItem(findIndex + 1, newPurchaseItem);
     });
+
     this.calculate();
   }
 
