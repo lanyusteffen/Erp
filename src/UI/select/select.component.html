@@ -1,4 +1,4 @@
-<app-ui-dropdown [placement]="placement" [class.form-select]="formSelect">
+<app-ui-dropdown *ngIf="shown" [placement]="placement" [class.form-select]="formSelect">
   <button type="button" class="dropdown-toggle" #toggle app-ui-dropdown-toggle>
     <span class="text">{{_currentValue?.label}}</span>
     <span class="caret"></span>

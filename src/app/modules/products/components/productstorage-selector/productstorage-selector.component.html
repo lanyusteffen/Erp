@@ -1,6 +1,7 @@
-<app-ui-select *ngIf="productId > 0"
+<app-ui-select
   [formSelect]="true"
   [options]="list"
+  [shown]="productId > 0"
   [useDefault]="useDefault"
   [value]="innerValue"
   (onChange)="handleChange($event)"

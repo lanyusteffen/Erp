@@ -34,8 +34,9 @@ export class SelectComponent {
     return this._options;
   }
 
-  @Input() placement = 'bottom';
-  @Input() formSelect = false;
+  @Input() private placement = 'bottom';
+  @Input() private formSelect = false;
+  @Input() private shown = true;
 
   @Input()
   set defaultValue(value) {
