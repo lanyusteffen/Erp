@@ -176,7 +176,7 @@ import { ProductConfigService } from './modules/products/path/productconfig/prod
 
 import { ProductControlComponent } from './modules/products/path/product/components/control/control.component';
 
-import { StorageOutComponent } from './modules/inventorys/path/storageout/new/new.component'
+import { StorageOutComponent } from './modules/inventorys/path/storageout/new/new.component';
 import { StorageOutService } from './modules/inventorys/path/storageout/storageout.service';
 
 @NgModule({
@@ -314,9 +314,7 @@ import { StorageOutService } from './modules/inventorys/path/storageout/storageo
 
     ProductConfigComponent,
     ProductConfigControlComponent,
-
     ProductControlComponent,
-
     StorageOutComponent
   ],
   imports: [

@@ -1,14 +1,13 @@
-
 import { FormGroup, FormArray, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
-import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { PurchaseOrderService } from '../order.service';
 import { FormService } from '@services/form.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { angularMath } from 'angular-ts-math';
+import { DatePipe } from '@angular/common';
 
 const purchaseItem = {
   PurchaseId: null,
@@ -38,16 +37,13 @@ const purchaseItem = {
   selector: 'app-purchase-order-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.less'],
-  providers: [FormService]
+  providers: [ FormService, DatePipe ]
 })
 
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   @ViewChild(PopupSelectorEmployeeComponent)
-  private EmployeePopupSelector: PopupSelectorEmployeeComponent;
-
-  @ViewChild(CustomerPopupSelectorComponent)
-  private customerPopupSelector: CustomerPopupSelectorComponent;
+  private employeePopupSelector: PopupSelectorEmployeeComponent;
 
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
@@ -76,7 +72,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     private purchaseOrderService: PurchaseOrderService,
     private formService: FormService,
     private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private datePipe: DatePipe
   ) {
     this.totalAmount = 0.00;
     this.payedAmount = 0.00;
@@ -107,8 +104,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   }
 
   selectCustomer(item: any): void {
-    this.selectCustomer = item;
-    this.customerPopupSelector.unSelect();
+    this.selectedCustomer = item;
+    this.employeePopupSelector.unSelect();
   }
 
   selectEmployee(item: any): void {
@@ -177,6 +174,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
         }));
         this.propertyName1 = data.PropertyName1;
         this.propertyName2 = data.PropertyName2;
+        data.PurchaseTime = this.datePipe.transform(<Date>data.PurchaseTime, 'yyyy-MM-dd'),
         this.form = this.formService.createForm(data);
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Purchase, err);
