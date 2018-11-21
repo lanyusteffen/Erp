@@ -44,7 +44,7 @@ import { ProductColorDisabledComponent } from './modules/products/path/productco
 import { ProductSizeComponent } from './modules/products/path/productsize/productsize.component';
 import { ProductSizeDisabledComponent } from './modules/products/path/productsize/productsize-disabled.component';
 import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
-import { StorageOutComponent } from './modules/inventorys/path/storageout/new/new.component'
+import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new/new.component';
 
 export const ROUTES: Routes = [
     {
@@ -269,8 +269,8 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuard]
               },
               {
-                path: 'inventorys/storageout',
-                component: StorageOutComponent,
+                path: 'inventorys/storageout/new',
+                component: StorageOutNewComponent,
                 canActivate: [AuthGuard]
               },
               { path: '**', component: PageNotFoundComponent }

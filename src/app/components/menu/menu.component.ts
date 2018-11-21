@@ -42,7 +42,7 @@ export class MenuComponent {
         {
           name: '出库单管理',
           subMenu: [
-            { name: '新增出库单', link: '/inventorys/storageout' },
+            { name: '新增出库单', link: '/inventorys/storageout/new' },
           ]
         }
       ]
