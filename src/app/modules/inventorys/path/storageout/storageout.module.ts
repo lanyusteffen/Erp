@@ -6,10 +6,10 @@ import { UIModule } from '@UI/ui.module';
 
 import { StorageOutNewComponent } from './new/new.component';
 
-import { StorageOutService } from './order.service';
+import { StorageOutService } from './storageout.service';
 
 import { SharedModule } from '@app/shared.module';
-import { StorageOutRoutingModule } from './order.router';
+import { StorageOutRoutingModule } from './storageout.router';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 import { ProductsSharedModule } from '../../../products/components/products.shared.module';

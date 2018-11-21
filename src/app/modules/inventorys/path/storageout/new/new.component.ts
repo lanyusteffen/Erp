@@ -8,6 +8,8 @@ import { IDatePickerConfig } from 'ng2-date-picker';
 import { StorageOutService } from '../storageout.service';
 import { FormService } from '@services/form.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { angularMath } from 'angular-ts-math';
+
 
 const storageOutItem = {
     BelongBillId: null,
@@ -17,15 +19,9 @@ const storageOutItem = {
     ProductId: 0,
     Quanlity: 0,
     Price: null,
+    Amount: null,
     StorageId: null,
     ProductUnitId: null,
-    PurchaseAmount: 0,
-    TaxRate: null,
-    TaxAmount: null,
-    AfterTaxAmount: null,
-    DiscountRate: null,
-    DiscountAmount: null,
-    AfterDiscountAmount: null,
     UnitTime: null,
     Spec: null,
     ProductUnitName: null,
@@ -84,15 +80,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    hasOpenTax() {
-        const control = <FormControl>this.form.controls['IsOpenTax'];
-        return control.value;
-    }
 
-    hasOpenDiscount() {
-        const control = <FormControl>this.form.controls['IsOpenDiscount'];
-        return control.value;
-    }
 
     selectAllStorage(selectedStorageId) {
         const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
@@ -131,6 +119,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
             newstorageOutItem.Spec = item.Spec;
             newstorageOutItem.Quanlity = item.Quanlity;
             newstorageOutItem.Name = item.Name;
+            newstorageOutItem.Price = item.Price;
 
             if (findIndex === -1) {
                 findIndex = 1;
@@ -163,7 +152,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
                 this.propertyName2 = data.PropertyName2;
                 this.form = this.formService.createForm(data);
             }, (err) => {
-                this.alertService.getErrorCallBack(ModuleName.Purchase, err);
+                this.alertService.getErrorCallBack(ModuleName.StorageOut, err);
             });
     }
 
@@ -190,23 +179,12 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
         const item = <FormGroup>itemArr.at(index);
 
-        let isOpenTax = <FormControl>this.form.controls['IsOpenTax'];
-        let isOpenDiscount = <FormControl>this.form.controls['IsOpenDiscount'];
-        let taxRate = <AbstractControl>item.controls['TaxRate'];
-        let discountRate = <AbstractControl>item.controls['DiscountRate'];
-        let discountAmount = <AbstractControl>item.controls['DiscountAmount'];
-        let afterDiscountAmount = <AbstractControl>item.controls['AfterDiscountAmount'];
-        let taxAmount = <AbstractControl>item.controls['TaxAmount'];
-        let afterTaxAmount = <AbstractControl>item.controls['AfterTaxAmount'];
-        let wholeDiscountAmount = <FormControl>this.form.controls['WholeDiscountAmount'];
-        let wholeDiscountRate = <FormControl>this.form.controls['WholeDiscountRate'];
-        let purchaseAmount = <AbstractControl>item.controls['PurchaseAmount'];
+        const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
+        const priceCtrl = <AbstractControl>item.controls['Price'];
+        const amountCtrl = <AbstractControl>item.controls['Amount'];
 
-        switch (source) {
-            case 'DiscountRate':
+        const amount = quanlityCtrl.value * priceCtrl.value;
 
-                discountAmount.setValue(purchaseAmount.value * discountRate.value);
-                break;
-        }
+        amountCtrl.setValue(angularMath.getNumberWithDecimals(amount, 2));
     }
 }
