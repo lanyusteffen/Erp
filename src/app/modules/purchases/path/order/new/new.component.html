@@ -151,5 +151,6 @@
       </label>
     </div>
   </div>
-  <app-popup-selector-goods [customerId]="selectCustomer ? selectCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
+  <app-popup-selector-goods [customerId]="selectedCustomer ? selectedCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
+  <input type="hidden" formControlName="Id" [ngModel] class="form-control">
 </form>

@@ -155,8 +155,24 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit({ value }) {
-    if (value.Id === 0) {
+    if (value.Id > 0) {
+      this.purchaseOrderService.create(value, data => {
+        if (data.IsValid) {
+        } else {
+          this.alertService.addFail(data.ErrorMessages);
+        }
+      }, (err) => {
+        this.alertService.addFail(err);
+      });
     } else {
+      this.purchaseOrderService.modify(value, data => {
+        if (data.IsValid) {
+        } else {
+          this.alertService.modifyFail(data.ErrorMessages);
+        }
+      }, (err) => {
+        this.alertService.modifyFail(err);
+      });
     }
   }
 
