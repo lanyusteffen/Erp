@@ -315,6 +315,7 @@ import { StorageOutService } from './modules/inventorys/path/storageout/storageo
     ProductConfigComponent,
     ProductConfigControlComponent,
     ProductControlComponent,
+
     StorageOutNewComponent
   ],
   imports: [

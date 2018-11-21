@@ -6,12 +6,12 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="SupplierId" [ngModel]></app-customer-popup-selector>
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
       </div>
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>采购员：</label>
+        <label>经手人：</label>
       </div>
       <div class="form-group-control">
         <app-popup-selector-employee (onConfirm)="selectEmployee($event)" formControlName="EmployeeId" [ngModel]></app-popup-selector-employee>
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>采购部门：</label>
+        <label>部门：</label>
       </div>
       <div class="form-group-control">
         <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
@@ -30,10 +30,10 @@
         <div class="form-group">
           <div class="form-group-label">
             <span class="required">*</span>
-            <label>采购时间：</label>
+            <label>出库时间：</label>
           </div>
           <div class="form-group-control">
-            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="PurchaseTime" [ngModel]></dp-date-picker> 
+            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="BillTime" [ngModel]></dp-date-picker> 
           </div>
         </div>
       </div>
@@ -42,12 +42,7 @@
   <div class="actions">
     <app-ui-button [style]="'primary'">
       导入
-    </app-ui-button>
-    <div class="more">
-      <app-ui-checkbox formControlName="IsOpenDiscount" [inline]="false" [ngModel]>启用折扣</app-ui-checkbox>
-      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <app-ui-checkbox formControlName="IsOpenTax" [inline]="false" [ngModel]>启用税率</app-ui-checkbox>
-    </div>
+    </app-ui-button>   
   </div>
   <app-ui-table>
     <thead>
@@ -57,19 +52,13 @@
       <th>单位</th>
       <th>{{propertyName1}}</th>
       <th>{{propertyName2}}</th>
-      <th><span class="required">*</span>采购数量(批量设置)</th>
-      <th>采购单价(批量设置)</th>
-      <th>采购金额</th>
-      <th *ngIf="hasOpenDiscount()">折扣率(%)(批量设置)</th>
-      <th *ngIf="hasOpenDiscount()">折扣额</th>
-      <th *ngIf="hasOpenDiscount()">折后金额</th>
-      <th *ngIf="hasOpenTax()">税率(%)(批量设置)</th>
-      <th *ngIf="hasOpenTax()">税额</th>
-      <th *ngIf="hasOpenTax()">税后金额</th>
+      <th><span class="required">*</span>出库数量(批量设置)</th>
+      <th><span class="required">*</span>出库成本单价（批量设置）</th>
+      <th><span class="required">*</span>出库成本金额（批量设置）</th>
       <th><span class="required">*</span>仓库<app-storage-selector (selectChanged)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
     </thead>
-    <tbody formArrayName="ItemList">
-      <tr *ngFor="let item of purchaseItemList.controls; index as i" [formGroupName]="i">
+    <tbody formArrayName="StorageOutItemActionRequests">
+      <tr *ngFor="let item of storageOutItemList.controls; index as i" [formGroupName]="i">
         <td>
           <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
@@ -89,13 +78,7 @@
         <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="number" formControlName="Quanlity" class="form-control" [ngModel]></td>
         <td><input type="number" formControlName="Price" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="PurchaseAmount" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'DiscountRate', i)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" formControlName="DiscountAmount" class="form-control" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculate($event, 'AfterDiscountAmount', i)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculate($event, 'TaxRate', i)" formControlName="TaxRate" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input type="number" formControlName="TaxAmount" class="form-control" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculate($event, 'AfterTaxAmount', i)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Amount" class="form-control" [ngModel]></td>       
         <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
       </tr>
     </tbody>
@@ -105,37 +88,6 @@
       <div class="remark-area">
           <textarea formControlName="Remark" [ngModel]></textarea>
       </div>
-      <div class="billing-area">
-        <table class="form">
-          <tr>
-            <th>合计金额：</th>
-            <td>
-              <input type="number" class="none-input" [value]="totalAmount" disabled="disabled" />
-            </td>
-          </tr>
-          <tr>
-            <th>整单折扣额：</th>
-            <td>
-                <input type="number" formControlName="WholeDiscountAmount" [ngModel] />
-            </td>
-          </tr>
-          <tr>
-            <th>整单折扣率：</th>
-            <td>
-                <input type="number" formControlName="WholeDiscountRate" [ngModel] />
-                <div class="addon">
-                  %
-                </div>
-            </td>
-          </tr>
-          <tr>
-            <th>总计金额：</th>
-            <td>
-              <input type="number" class="none-input" [value]="payedAmount" disabled="disabled" />
-            </td>
-          </tr>
-        </table>
-      </div>
     </div>
     <div class="action-bar">
       <label>
@@ -144,5 +96,5 @@
       <app-ui-button [style]="'primary'">保存</app-ui-button>
     </div>
   </div>
-  <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
+  <app-popup-selector-goods [customerId]="selectCustomer ? selectCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
 </form>
