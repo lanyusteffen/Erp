@@ -76,8 +76,8 @@
         <td><input type="text" formControlName="ProductUnitName" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input type="number" formControlName="Quanlity" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="Price" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Quanlity"  (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]></td>
+        <td><input type="number" formControlName="Price"  (change)="calculateItem('Price', i, true)" class="form-control" [ngModel]></td>
         <td><input type="number" formControlName="Amount" class="form-control" [ngModel]></td>       
         <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
       </tr>

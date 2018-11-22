@@ -120,6 +120,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
             newstorageOutItem.Quanlity = item.Quanlity;
             newstorageOutItem.Name = item.Name;
             newstorageOutItem.Price = item.Price;
+            newstorageOutItem.Amount = item.Quanlity* item.Price;
 
             if (findIndex === -1) {
                 findIndex = 1;
@@ -174,10 +175,28 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         control.removeAt(idx);
     }
 
-    calculate(evt, source: string, index: number) {
+    calculateAll(calculatedPurchaseAmount, index) {
 
         const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        for (let i = 0; i < itemArr.length; i++) {
+          if (i !== index) {
+            calculatedPurchaseAmount += this.calculateItem('Price', i, false);
+          }
+        }
+    
+        this.totalAmount = <number>angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
+    
+    
+        this.payedAmount = <number>angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
+      }
+
+    calculateItem(source, index, hasCalculateAll) {
+
+        console.log(this.form)
+        const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
         const item = <FormGroup>itemArr.at(index);
+
+        console.log(<AbstractControl>item)
 
         const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
         const priceCtrl = <AbstractControl>item.controls['Price'];
@@ -186,5 +205,9 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         const amount = quanlityCtrl.value * priceCtrl.value;
 
         amountCtrl.setValue(angularMath.getNumberWithDecimals(amount, 2));
+
+        if (hasCalculateAll) {
+            this.calculateAll(amount, index);
+          }
     }
 }
