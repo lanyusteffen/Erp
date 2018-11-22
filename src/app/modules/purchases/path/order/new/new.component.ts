@@ -155,7 +155,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit({ value }) {
-    if (value.Id > 0) {
+    if (value.Id === 0) {
       this.purchaseOrderService.create(value, data => {
         if (data.IsValid) {
         } else {
