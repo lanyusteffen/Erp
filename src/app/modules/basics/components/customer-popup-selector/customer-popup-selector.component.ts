@@ -19,6 +19,7 @@ import { AlertService } from '../../../../services/alert.service';
 export class CustomerPopupSelectorComponent implements OnInit, ControlValueAccessor {
 
   @LocalStorage()
+  @Output()
   selectedTab: string;
 
   private innerValue: any;
@@ -121,16 +122,6 @@ export class CustomerPopupSelectorComponent implements OnInit, ControlValueAcces
 
   writeValue(value) {
     this.innerValue = value || 0;
-    if (this.innerValue > 0) {
-      // this.dataService.getEmployee(this.innerValue, (data) => {
-      //   this._showLabel = data.Name;
-      // }, (err) => {
-      //   this.alertService.open({
-      //     type: 'danger',
-      //     content: '获取职员信息失败!' + err
-      //   });
-      // });
-    }
   }
 
   registerOnChange(fn) {

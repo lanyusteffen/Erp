@@ -8,207 +8,206 @@ import { IDatePickerConfig } from 'ng2-date-picker';
 import { StorageOutService } from '../storageout.service';
 import { FormService } from '@services/form.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { angularMath } from 'angular-ts-math';
+
 
 const storageOutItem = {
-  BelongBillId: null,
-  BelongBillCode: null,
-  BelongBillTime: null,
-  GoodsId: 0,
-  ProductId: 0,
-  Quanlity: 0,
-  Price: null,
-  StorageId: null,
-  ProductUnitId: null,
-  PurchaseAmount: 0,
-  TaxRate: null,
-  TaxAmount: null,
-  AfterTaxAmount: null,
-  DiscountRate: null,
-  DiscountAmount: null,
-  AfterDiscountAmount: null,
-  UnitTime: null,
-  Spec: null,
-  ProductUnitName: null,
-  ProductColorValue: null,
-  ProductSizeValue: null,
-  Name: null,
+    BelongBillId: null,
+    BelongBillCode: null,
+    BelongBillTime: null,
+    GoodsId: 0,
+    ProductId: 0,
+    Quanlity: 0,
+    Price: null,
+    Amount: null,
+    StorageId: null,
+    ProductUnitId: null,
+    UnitTime: null,
+    Spec: null,
+    ProductUnitName: null,
+    ProductColorValue: null,
+    ProductSizeValue: null,
+    Name: null,
 };
 
 @Component({
-  selector: 'app-inventory-storageout-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.less'],
-  providers: [FormService]
+    selector: 'app-inventory-storageout-new',
+    templateUrl: './new.component.html',
+    styleUrls: ['./new.component.less'],
+    providers: [FormService]
 })
 
-export class StorageOutComponent implements OnInit, OnDestroy {
+export class StorageOutNewComponent implements OnInit, OnDestroy {
 
-  @ViewChild(PopupSelectorEmployeeComponent)
-  private EmployeePopupSelector: PopupSelectorEmployeeComponent;
 
-  @ViewChild(CustomerPopupSelectorComponent)
-  private customerPopupSelector: CustomerPopupSelectorComponent;
+    @ViewChild(CustomerPopupSelectorComponent)
+    private customerPopupSelector: CustomerPopupSelectorComponent;
 
-  @ViewChild(PopupSelectorGoodsComponent)
-  private goodsPopupSelector: PopupSelectorGoodsComponent;
+    @ViewChild(PopupSelectorGoodsComponent)
+    private goodsPopupSelector: PopupSelectorGoodsComponent;
 
-  private totalAmount: number = 0;
-  private payedAmount: number = 0;
-  private propertyName1 = null;
-  private propertyName2 = null;
-  private selectedCustomer: any;
-  private selectedEmployee: any;
-  private selectedGoods : number[] = [];
-  private form = new FormGroup({});
-  private datePickerConfig: IDatePickerConfig = {
-    locale: 'zh-cn',
-    format: 'YYYY-MM-DD HH:mm:ss'
-  };
+    private totalAmount: number = 0;
+    private payedAmount: number = 0;
+    private propertyName1 = null;
+    private propertyName2 = null;
+    private selectedCustomer: any;
+    private selectedEmployee: any;
+    private selectedGoods: number[] = [];
+    private form = new FormGroup({});
+    private datePickerConfig: IDatePickerConfig = {
+        locale: 'zh-cn',
+        format: 'YYYY-MM-DD HH:mm:ss'
+    };
 
-  showModal() {
-    this.goodsPopupSelector.show = true;
-  }
-
-  get storageOutItemList(): FormArray { return this.form.get('ItemList') as FormArray; }
-  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
-
-  constructor(
-    private StorageOutService: StorageOutService,
-    private formService: FormService,
-    private fb: FormBuilder,
-    private alertService: AlertService
-  ) {}
-
-  ngOnInit() {
-    this.newOne();
-  }
-
-  ngOnDestroy() {
-  }
-
-  hasOpenTax() {
-    const control = <FormControl>this.form.controls['IsOpenTax'];
-    return control.value;
-  }
-
-  hasOpenDiscount() {
-    const control = <FormControl>this.form.controls['IsOpenDiscount'];
-    return control.value;
-  }
-
-  selectAllStorage(selectedStorageId) {
-    const itemArr = <FormArray>this.form.controls['ItemList'];
-    for (let i = 0; i < itemArr.length; i++) {
-      itemArr.at(i).patchValue({'StorageId': selectedStorageId});
+    showModal() {
+        this.goodsPopupSelector.show = true;
     }
-  }
 
-  selectCustomer(item: any): void {
-    this.selectCustomer = item;
-    this.customerPopupSelector.unSelect();
-  }
+    get storageOutItemList(): FormArray { return this.form.get('StorageOutItemActionRequests') as FormArray; }
+    get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
-  selectEmployee(item: any): void {
-    this.selectedEmployee = item;
-  }
+    constructor(
+        private StorageOutService: StorageOutService,
+        private formService: FormService,
+        private fb: FormBuilder,
+        private alertService: AlertService
+    ) { }
 
-  selectGoods(selectItems: any): void {
+    ngOnInit() {
+        this.newOne();
+    }
+
+    ngOnDestroy() {
+    }
+
+
+
+    selectAllStorage(selectedStorageId) {
+        const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        for (let i = 0; i < itemArr.length; i++) {
+            itemArr.at(i).patchValue({ 'StorageId': selectedStorageId });
+        }
+    }
+
+    selectCustomer(item: any): void {
+        this.selectCustomer = item;
+        this.customerPopupSelector.unSelect();
+    }
+
+    selectEmployee(item: any): void {
+        this.selectedEmployee = item;
+    }
+
+    selectGoods(selectItems: any): void {
+
+        selectItems.forEach(item => {
+
+            let findIndex = this.selectedGoods.indexOf(item.Id);
+
+            if (findIndex > -1) {
+                findIndex = findIndex + 1;
+                const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+                itemArr.removeAt(findIndex);
+            }
+
+            const newstorageOutItem = Object.assign({}, storageOutItem);
+
+            newstorageOutItem.GoodsId = item.Id;
+            newstorageOutItem.ProductUnitName = item.ProductUnitName;
+            newstorageOutItem.ProductSizeValue = item.ProductSizeValue;
+            newstorageOutItem.ProductColorValue = item.ProductColorValue;
+            newstorageOutItem.Spec = item.Spec;
+            newstorageOutItem.Quanlity = item.Quanlity;
+            newstorageOutItem.Name = item.Name;
+            newstorageOutItem.Price = item.Price;
+            newstorageOutItem.Amount = item.Quanlity* item.Price;
+
+            if (findIndex === -1) {
+                findIndex = 1;
+            }
+
+            this.addstorageOutItem(findIndex, newstorageOutItem);
+            this.selectedGoods.push(item.Id);
+        });
+    }
+
+    onSubmit({ value }) {
+        if (value.Id === 0) {
+        } else {
+        }
+    }
+
+    newOne() {
+        this.StorageOutService
+            .newOne(data => {
+                data.StorageOutItemActionRequests = data.StorageOutItemActionRequests.map(item => ({
+                    ...item,
+                    Spec: null,
+                    Quanlity: null,
+                    Price: null,
+                    ProductUnitName: null,
+                    ProductColorValue: null,
+                    ProductSizeValue: null
+                }));
+                this.propertyName1 = data.PropertyName1;
+                this.propertyName2 = data.PropertyName2;
+                this.form = this.formService.createForm(data);
+            }, (err) => {
+                this.alertService.getErrorCallBack(ModuleName.StorageOut, err);
+            });
+    }
+
+    addstorageOutItem(idx, newstorageOutItem) {
+
+        const control = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        control.insert(idx, this.fb.group(newstorageOutItem));
+    }
+
+    addItem(idx) {
+        const control = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        const newstorageOutItem = Object.assign({}, storageOutItem);
+        control.insert(idx + 1, this.fb.group(newstorageOutItem));
+    }
+
+    removeItem(idx) {
+
+        const control = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        control.removeAt(idx);
+    }
+
+    calculateAll(calculatedPurchaseAmount, index) {
+
+        const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        for (let i = 0; i < itemArr.length; i++) {
+          if (i !== index) {
+            calculatedPurchaseAmount += this.calculateItem('Price', i, false);
+          }
+        }
     
-    selectItems.forEach(item => {
-      
-      let findIndex = this.selectedGoods.indexOf(item.Id);
-      
-      if (findIndex > -1) {
-        findIndex = findIndex + 1;
-        const itemArr = <FormArray>this.form.controls['ItemList'];
-        itemArr.removeAt(findIndex);
+        this.totalAmount = <number>angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
+    
+    
+        this.payedAmount = <number>angularMath.getNumberWithDecimals(calculatedPurchaseAmount, 2);
       }
 
-      let newstorageOutItem = Object.assign({}, storageOutItem);
+    calculateItem(source, index, hasCalculateAll) {
 
-      newstorageOutItem.GoodsId = item.Id;
-      newstorageOutItem.ProductUnitName = item.ProductUnitName;
-      newstorageOutItem.ProductSizeValue = item.ProductSizeValue;
-      newstorageOutItem.ProductColorValue = item.ProductColorValue;
-      newstorageOutItem.Spec = item.Spec;
-      newstorageOutItem.Quanlity = item.Quanlity;
-      newstorageOutItem.Name = item.Name;
+        console.log(this.form)
+        const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        const item = <FormGroup>itemArr.at(index);
 
-      if (findIndex == -1) {
-        findIndex = 1;
-      }
+        console.log(<AbstractControl>item)
 
-      this.addstorageOutItem(findIndex, newstorageOutItem);
-      this.selectedGoods.push(item.Id);
-    });
-  }
+        const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
+        const priceCtrl = <AbstractControl>item.controls['Price'];
+        const amountCtrl = <AbstractControl>item.controls['Amount'];
 
-  onSubmit({ value }) {
-    if (value.Id === 0) {
-    } else {
+        const amount = quanlityCtrl.value * priceCtrl.value;
+
+        amountCtrl.setValue(angularMath.getNumberWithDecimals(amount, 2));
+
+        if (hasCalculateAll) {
+            this.calculateAll(amount, index);
+          }
     }
-  }
-
-  newOne() {
-    this.StorageOutService
-      .newOne(data => {
-        data.ItemList = data.ItemList.map(item => ({
-          ...item,
-          Spec: null,
-          Quanlity: null,
-          Price: null,
-          ProductUnitName: null,
-          ProductColorValue: null,
-          ProductSizeValue: null
-        }));
-        this.propertyName1 = data.PropertyName1;
-        this.propertyName2 = data.PropertyName2;
-        this.form = this.formService.createForm(data);
-      }, (err) => {
-        this.alertService.getErrorCallBack(ModuleName.Purchase, err);
-      });
-  }
-
-  addstorageOutItem(idx, newstorageOutItem) {
-
-    const control = <FormArray>this.form.controls['ItemList'];
-    control.insert(idx, this.fb.group(newstorageOutItem));
-  }
-
-  addItem(idx) {
-    const control = <FormArray>this.form.controls['ItemList'];
-    let newstorageOutItem = Object.assign({}, storageOutItem);
-    control.insert(idx + 1, this.fb.group(newstorageOutItem));
-  }
-
-  removeItem(idx) {
-
-    const control = <FormArray>this.form.controls['ItemList'];
-    control.removeAt(idx);
-  }
-
-  calculate(evt, source: string, index: number) {
-
-    const itemArr = <FormArray>this.form.controls['ItemList'];
-    const item = <FormGroup>itemArr.at(index);
-
-    let isOpenTax = <FormControl>this.form.controls['IsOpenTax'];
-    let isOpenDiscount = <FormControl>this.form.controls['IsOpenDiscount'];
-    let taxRate = <AbstractControl>item.controls['TaxRate'];
-    let discountRate = <AbstractControl>item.controls['DiscountRate'];
-    let discountAmount = <AbstractControl>item.controls['DiscountAmount'];
-    let afterDiscountAmount = <AbstractControl>item.controls['AfterDiscountAmount'];
-    let taxAmount = <AbstractControl>item.controls['TaxAmount'];
-    let afterTaxAmount = <AbstractControl>item.controls['AfterTaxAmount'];
-    let wholeDiscountAmount = <FormControl>this.form.controls['WholeDiscountAmount'];
-    let wholeDiscountRate = <FormControl>this.form.controls['WholeDiscountRate'];
-    let purchaseAmount = <AbstractControl>item.controls['PurchaseAmount'];
-
-    switch (source) {
-      case 'DiscountRate':
-
-        discountAmount.setValue(purchaseAmount.value * discountRate.value);
-        break;
-    }
-  }
 }

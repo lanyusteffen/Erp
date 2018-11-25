@@ -1,10 +1,10 @@
-<app-ui-dropdown [placement]="placement" [class.form-select]="formSelect">
+<app-ui-dropdown *ngIf="shown" [placement]="placement" [class.form-select]="formSelect">
   <button type="button" class="dropdown-toggle" #toggle app-ui-dropdown-toggle>
     <span class="text">{{_currentValue?.label}}</span>
     <span class="caret"></span>
   </button>
   <ul #menu app-ui-dropdown-menu>
-    <li>
+    <li *ngIf="useDefault">
       <a
         [class.active]="_currentValue.value === _defaultValue"
         (click)="handleChange(_defaultValue)"

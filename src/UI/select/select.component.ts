@@ -12,12 +12,15 @@ export class SelectComponent {
   private _defaultValue = -1;
   private _defaultText = '请选择';
 
+  @Input()
+  private useDefault = true;
+
   private _defaultOption = {
     label: this._defaultText,
     value: this._defaultValue
   };
 
-  private _currentValue = this._defaultOption;
+  private _currentValue = (this.useDefault ? this._defaultOption : null);
 
   _options = [];
 
@@ -31,8 +34,9 @@ export class SelectComponent {
     return this._options;
   }
 
-  @Input() placement = 'bottom';
-  @Input() formSelect = false;
+  @Input() private placement = 'bottom';
+  @Input() private formSelect = false;
+  @Input() private shown = true;
 
   @Input()
   set defaultValue(value) {
@@ -51,7 +55,7 @@ export class SelectComponent {
       if (selectedValue) {
         this._currentValue = selectedValue;
       } else {
-        this._currentValue = this._defaultOption;
+        this._currentValue = (this.useDefault ? this._defaultOption : this.options[0]);
       }
       this.cd.markForCheck();
     }

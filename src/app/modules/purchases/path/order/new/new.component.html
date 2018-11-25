@@ -6,7 +6,7 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="SupplierId" [ngModel]></app-customer-popup-selector>
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
       </div>
     </div>
     <div class="form-group">
@@ -30,22 +30,23 @@
         <div class="form-group">
           <div class="form-group-label">
             <span class="required">*</span>
-            <label>采购时间：</label>
+            <label>采购日期：</label>
           </div>
           <div class="form-group-control">
-            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="PurchaseTime" [ngModel]></dp-date-picker> 
+            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" 
+            formControlName="PurchaseTime" [ngModel]></dp-date-picker> 
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="actions">
-    <app-ui-button [style]="'primary'">
+    <app-ui-button [style]="'primary'" type="submit">
       保存
     </app-ui-button>
     <app-ui-button [style]="'primary'">
-        导入
-      </app-ui-button>
+      导入
+    </app-ui-button>
     <div class="more">
       <app-ui-checkbox formControlName="IsOpenDiscount" [inline]="false" [ngModel]>启用折扣</app-ui-checkbox>
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -60,15 +61,15 @@
       <th width="60px">单位</th>
       <th width="60px">{{propertyName1}}</th>
       <th width="60px">{{propertyName2}}</th>
-      <th><span class="required">*</span>采购数量</th>
-      <th>采购单价</th>
+      <th width="80px"><span class="required">*</span>采购数量</th>
+      <th width="80px">采购单价</th>
       <th width="80px">采购金额</th>
-      <th *ngIf="hasOpenDiscount()">折扣率(%)</th>
+      <th width="80px" *ngIf="hasOpenDiscount()">折扣率(%)</th>
       <th width="80px" *ngIf="hasOpenDiscount()">折扣额</th>
-      <th *ngIf="hasOpenDiscount()">折后金额</th>
-      <th *ngIf="hasOpenTax()">税率(%)</th>
+      <th width="80px" *ngIf="hasOpenDiscount()">折后金额</th>
+      <th width="80px" *ngIf="hasOpenTax()">税率(%)</th>
       <th width="80px" *ngIf="hasOpenTax()">税额</th>
-      <th *ngIf="hasOpenTax()">税后金额</th>
+      <th width="80px" *ngIf="hasOpenTax()">税后金额</th>
       <th><span class="required">*</span>仓库<app-storage-selector (selectChanged)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
     </thead>
     <tbody formArrayName="ItemList">
@@ -76,10 +77,11 @@
         <td>
           <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
+          <input type="hidden" formControlName="SortIndex" [value]="i" />
         </td>
         <td>
           <div class="selector-group">
-            <input type="text" formControlName="Name" [ngModel] class="form-control">
+            <input type="text" disabled="disabled" formControlName="Name" [ngModel] class="form-control">
             <input type="hidden" formControlName="GoodsId" [ngModel] class="form-control">
             <span class="addon" (click)="showModal($event)">
               <i class="iconfont"></i>选择
@@ -88,20 +90,20 @@
         </td>
         <td><input style="width:60px" type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
         <td>
-          <app-productunit-selector formControlName="ProductUnitId" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
+          <app-productunit-selector formControlName="ProductUnitId" [useDefault]="false" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
         </td>
         <td><input style="width:60px" type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input type="number" formControlName="Quanlity" (change)="calculateItem($event, 'Quanlity', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="Price" (change)="calculateItem($event, 'Price', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="number" style="width:80px" formControlName="PurchaseAmount"  class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculateItem($event, 'DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="number" formControlName="DiscountAmount" class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input type="number" (change)="calculateItem($event, 'AfterDiscountAmount', i, true)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculateItem($event, 'TaxRate', i, true)" formControlName="TaxRate" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input style="width:80px" type="number" formControlName="TaxAmount" class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenTax()"><input type="number" (change)="calculateItem($event, 'AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
-        <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
+        <td><input type="text" style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]></td>
+        <td><input type="text" style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel]></td>
+        <td><input type="text" style="width:80px" formControlName="Amount"  class="none-input" [ngModel] disabled="disabled"></td>
+        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" (change)="calculateItem('DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" formControlName="DiscountAmount" class="none-input" [ngModel] disabled="disabled"></td>
+        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" (change)="calculateItem('AfterDiscountAmount', i, true)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenTax()"><input style="width:80px" type="text" (change)="calculateItem('TaxRate', i, true)" formControlName="TaxRate" class="form-control" [ngModel]></td>
+        <td *ngIf="hasOpenTax()"><input style="width:80px" type="text" formControlName="TaxAmount" class="none-input" [ngModel] disabled="disabled"></td>
+        <td *ngIf="hasOpenTax()"><input style="width:80px" type="text" (change)="calculateItem('AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
+        <td><app-product-storage-selector [isEditing]="false" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel]></app-product-storage-selector></td>
       </tr>
     </tbody>
   </app-ui-table>
@@ -115,20 +117,20 @@
           <tr>
             <th>合计金额：</th>
             <td>
-              <input type="number" class="none-input" [value]="totalAmount" disabled="disabled" />
+              <input type="text" class="none-input" [value]="totalAmount" disabled="disabled" />
             </td>
           </tr>
           <tr>
             <th>整单折扣额：</th>
             <td>
-                <input type="number" (change)="calculateAll($event, 0.00, -1)" formControlName="WholeDiscountAmount" [ngModel] />
+                <input type="text" (change)="calculate()" formControlName="WholeDiscountAmount" [ngModel] />
             </td>
           </tr>
           <tr>
             <th>整单折扣率：</th>
             <td>
                 <div class="input-group">
-                    <input type="number" (change)="calculateAll($event, 0.00, -1)" formControlName="WholeDiscountRate" [ngModel] />
+                    <input type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
                     <div class="addon">
                       %
                     </div>
@@ -138,7 +140,7 @@
           <tr>
             <th>总计金额：</th>
             <td>
-              <input type="number" class="none-input" [value]="payedAmount" disabled="disabled" />
+              <input type="text" class="none-input" [value]="payedAmount" disabled="disabled" />
             </td>
           </tr>
         </table>
@@ -146,9 +148,11 @@
     </div>
     <div class="action-bar">
       <label>
-        <span>制单人：</span><input type="text" formControlName="UserName" class="none-input" [ngModel] disabled="disabled"> 
+        <span>制单人：</span><input type="text" formControlName="UserName" class="none-input" [ngModel] disabled="disabled" /> 
       </label>
     </div>
   </div>
-  <app-popup-selector-goods (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
+  <app-popup-selector-goods [customerId]="selectedCustomer ? selectedCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
+  <input type="hidden" formControlName="Id" [ngModel] />
+  <input type="hidden" formControlName="CustomerType" [ngModel] />
 </form>

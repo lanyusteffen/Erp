@@ -5,7 +5,7 @@
 }
 .footer {
     bottom: 0;
-    height: 185px;
+    height: 170px;
     background-color: #ffc0cb;
     background-color: #f1f5f9;
     border-bottom: 1px solid #e1e5ea;
@@ -47,6 +47,15 @@ textarea {
 .form {
 	width: 100%;
 
+	input {
+		display: table-cell;
+		vertical-align: middle;
+		width: 120px;
+		&:focus ~ .addon {
+			border-bottom-color: #118DF0;
+		}
+	}
+
 	&.inline-form {
 		display: inline-block;
 		width: auto;
@@ -64,33 +73,31 @@ textarea {
 		font-weight: normal;
 		line-height: 18px;
 		white-space: nowrap;
-		padding-left: 10px;
+		width: 90px;
 	}
-
-	td {
-		padding: 5px 10px;
-	}
-
 }
 .input-group {
-	width: 70%;
+
+	display: table;
+
+	.addon {
+		display: table-cell;
+		width: 20px;
+		vertical-align: middle;
+		text-align: right;
+		height: 24px;
+		border-bottom: 1px solid #e7e7e7;
+		transition: border-color 0.5s ease;
+	}
 
 	input {
 		display: table-cell;
+		width: 120px;
 		vertical-align: middle;
-
 		&:focus ~ .addon {
 			border-bottom-color: #118DF0;
 		}
 	}
-    .addon {
-        display: table-cell;
-        width: 20px;
-        vertical-align: middle;
-        height: 24px;
-        border-bottom: 1px solid #e7e7e7;
-        transition: border-color 0.5s ease;
-    }
 }
 .action-bar {
 	padding: 0 10px;

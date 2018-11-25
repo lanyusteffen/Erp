@@ -17,6 +17,11 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;
 
+  @Input()
+  set customerId(value) {
+    this.dataService.setCustomerId(value);
+  }
+
   @Output() onConfirm = new EventEmitter<any>();
 
   private propertyName1 = null;
@@ -187,7 +192,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
   writeValue(value) {
     this._selectedItems = value || <any>[];
     this.dataService.list(({ goods, currentPagination, propertyName1, propertyName2 }) => {
-      this.bindTable(goods, currentPagination, propertyName1, propertyName2)
+      this.bindTable(goods, currentPagination, propertyName1, propertyName2);
     }, (err) => {
       this.alertService.open({
         type: 'danger',

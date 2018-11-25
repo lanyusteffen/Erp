@@ -8,6 +8,7 @@ export class GoodsPopupSelectService {
 
     private state = {
         goods: [],
+        customerId: -1,
         currentQueryKey: '',
         currentCategory: null,
         currentPagination: {
@@ -17,10 +18,15 @@ export class GoodsPopupSelectService {
         }
     };
 
+    setCustomerId(customerId: number) {
+        this.state.customerId = customerId;
+    }
+
     list(next: (data: any) => void, fallback: (error: any) => void) {
         const {
             currentQueryKey,
             currentCategory,
+            customerId,
             currentPagination: {
                 PageIndex,
                 PageSize
@@ -30,6 +36,7 @@ export class GoodsPopupSelectService {
         return this.http.post('/Goods/GetListPaged', {
             QueryKey: currentQueryKey,
             Status: 1,
+            CustomerId: (customerId ? customerId : null),
             ProductCategoryId: currentCategory == null ? null : currentCategory.Id,
             PageIndex,
             PageSize

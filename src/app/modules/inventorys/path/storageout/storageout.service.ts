@@ -3,20 +3,20 @@ import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
+
 @Injectable()
 export class StorageOutService {
-
-  private storageOut$ = new Subject<any>();
-  private storageOutDisabled$ = new Subject<any>();
+  private storageout$ = new Subject<any>();
+  private storageoutDisabled$ = new Subject<any>();
 
   private state = {
-    storageOut: [],
+    storageouts: [],
     currentQueryKey: '',
-    storageOutParentId: 0,
+    areaParentId: 0,
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
-      ItemCount: 0
+      TotalCount: 0
     }
   };
 
@@ -29,12 +29,10 @@ export class StorageOutService {
   }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/StorageOut/GetList', {}, next, fallback, ModuleType.Inventory);
+    return this.http.get('/StorageOut/GetAll', next, fallback, ModuleType.Inventory);
   }
 
-  get() { return this.storageOut$.asObservable(); }
-
-  getDisabled() { return this.storageOutDisabled$.asObservable(); }
+  get() { return this.storageout$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -52,12 +50,12 @@ export class StorageOutService {
     }, data => {
       const nextState = {
         ...this.state,
-        storageOuts: data.StorageOutList,
-        currentPagination: data.StorageOutPageQueryReq
+        storageouts: data.StorageOutList,
+        currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.storageOut$.next(nextState);
+      this.storageout$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
     }, fallback, ModuleType.Inventory);
@@ -66,6 +64,7 @@ export class StorageOutService {
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
+      areaParentId,
       currentPagination: {
         PageIndex,
         PageSize
@@ -79,29 +78,23 @@ export class StorageOutService {
     }, data => {
       const nextState = {
         ...this.state,
-        storageOuts: data.StorageOutList,
-        currentPagination: data.StorageOutPageQueryReq
+        storageouts: data.StorageOutList,
+        currentPagination: data.Pagination
       };
 
       this.state = nextState;
-      this.storageOutDisabled$.next(nextState);
+      this.storageoutDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
     }, fallback, ModuleType.Inventory);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-
-    const { storageOutParentId } = this.state;
-    return this.http.post('/StorageOut/GetForNew', { EntityId: storageOutParentId }, next, fallback, ModuleType.Inventory);
+    return this.http.post('/StorageOut/GetForNew', {}, next, fallback, ModuleType.Webadmin);
   }
 
-  detail(storageOutId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post(`/StorageOut/GetForModify`, { EntityId: storageOutId }, next, fallback, ModuleType.Inventory);
-  }
-
-  create(storageOut, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/StorageOut/New', storageOut, next, fallback, ModuleType.Inventory);
+  create(storageout, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/StorageOut/New', storageout, next, fallback, ModuleType.Inventory);
   }
 
   modify(area, next: (data: any) => void, fallback: (error: any) => void) {
@@ -113,7 +106,6 @@ export class StorageOutService {
       entityIdList
     }, next, fallback, ModuleType.Inventory);
   }
-
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/StorageOut/Remove', {

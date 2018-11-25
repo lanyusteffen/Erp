@@ -60,6 +60,7 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
   selectConfirm(item: any) {
     this._selectedItem = item;
     this._showLabel = item.Name;
+    this.onConfirm.emit(this.selectedItem);
     this.closeModal();
   }
 
