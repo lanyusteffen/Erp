@@ -1,4 +1,4 @@
-import { FormGroup, FormArray, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
@@ -9,6 +9,7 @@ import { FormService } from '@services/form.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { angularMath } from 'angular-ts-math';
 import { DatePipe } from '@angular/common';
+import { ErrorService } from '@services/error.service';
 
 const purchaseItem = {
   PurchaseId: null,
@@ -57,6 +58,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   private totalAmount: number | string;
   private payedAmount: number | string;
+  private errorItems = new Array();
 
   private propertyName1 = null;
   private propertyName2 = null;
@@ -80,7 +82,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private errorService: ErrorService
   ) {
     this.totalAmount = 0.00;
     this.payedAmount = 0.00;
@@ -174,25 +177,91 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     this.calculate();
   }
 
-  onSubmit({ value }) {
-    value.PurchaseTime = this.datePipe.transform(<Date>value.PurchaseTime, 'yyyy-MM-dd HH:mm:ss');
-    if (value.Id === 0) {
-      this.purchaseOrderService.create(value, data => {
-        if (data.IsValid) {
-        } else {
-          this.alertService.addFail(data.ErrorMessages);
-        }
-      }, (err) => {
-        this.alertService.addFail(err);
-      });
-    } else {
-      this.purchaseOrderService.modify(value, data => {
-        if (data.IsValid) {
-        } else {
-          this.alertService.modifyFail(data.ErrorMessages);
-        }
-      }, (err) => {
-        this.alertService.modifyFail(err);
+  onSubmit({ value }, IsValid) {
+    if (IsValid) {
+      value.PurchaseTime = this.datePipe.transform(<Date>value.PurchaseTime, 'yyyy-MM-dd HH:mm:ss');
+      if (value.Id === 0) {
+        this.purchaseOrderService.create(value, data => {
+          if (data.IsValid) {
+            this.validate(data);
+          } else {
+            this.alertService.addFail(data.ErrorMessages);
+          }
+        }, (err) => {
+          this.alertService.addFail(err);
+        });
+      } else {
+        this.purchaseOrderService.modify(value, data => {
+          if (data.IsValid) {
+          } else {
+            this.alertService.modifyFail(data.ErrorMessages);
+          }
+        }, (err) => {
+          this.alertService.modifyFail(err);
+        });
+      }
+    }
+  }
+
+  public setErrorMessage(propertyName, displayName, errors): void {
+    this.errorService.removeErrorItems(this.errorItems, propertyName);
+
+    if (errors) {
+
+      if (errors.maxlength) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'MaxLengthValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '长度不能超过 400',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        this.errorItems.push(errorItem);
+      }
+
+      if (errors.required) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: displayName + '必填',
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        this.errorItems.push(errorItem);
+      }
+
+      if (errors.result && !errors.result.valid) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'CustomerValidator',
+          ErrorDescription: null,
+          ErrorMessage: errors.result.errMsg,
+          ErrorStackTrace: null,
+          PropertyName: propertyName
+        };
+        this.errorItems.push(errorItem);
+      }
+
+    }
+    this.errorService.setErrorItems(this.errorItems);
+  }
+
+  private getValidators() {
+    const validatorArrs = {
+      CustomerId: [
+        Validators.required
+      ]
+    };
+    return validatorArrs;
+  }
+
+  validate(data): void {
+    if (data.IsValid) {
+      this.alertService.open({
+        type: 'success',
+        content: '采购单' + data.Code + '新增成功！'
       });
     }
   }
@@ -215,7 +284,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
         this.propertyName1 = data.PropertyName1;
         this.propertyName2 = data.PropertyName2;
         data.PurchaseTime = this.datePipe.transform(<Date>data.PurchaseTime, 'yyyy-MM-dd'),
-        this.form = this.formService.createForm(data);
+        this.form = this.formService.createForm(data, this.getValidators());
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Purchase, err);
       });

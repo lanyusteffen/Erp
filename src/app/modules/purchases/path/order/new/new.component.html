@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form,form.valid)" novalidate *ngIf="formReady">
   <div class="actions">
     <div class="form-group">
       <div class="form-group-label">
@@ -6,7 +6,7 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" (blur)="setErrorMessage('CustomerId','客户名称',form.get('CustomerId').errors)" [ngModel]></app-customer-popup-selector>
       </div>
     </div>
     <div class="form-group">
