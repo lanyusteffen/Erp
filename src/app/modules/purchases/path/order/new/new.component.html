@@ -77,12 +77,12 @@
         <td>
           <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
-          <input type="hidden" formControlName="SortIndex" [value]="i" />
+          <input type="hidden" formControlName="SortIndex" [value]="i" [ngModel] />
         </td>
         <td>
           <div class="selector-group">
-            <input type="text" disabled="disabled" formControlName="Name" [ngModel] class="form-control">
-            <input type="hidden" formControlName="GoodsId" [ngModel] class="form-control">
+            <input type="text" disabled="disabled" formControlName="Name" [ngModel] class="form-control" />
+            <input type="hidden" formControlName="GoodsId" [ngModel] class="form-control" />
             <span class="addon" (click)="showModal($event)">
               <i class="iconfont"></i>选择
             </span>
@@ -90,10 +90,17 @@
         </td>
         <td><input style="width:60px" type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
         <td>
-          <app-productunit-selector formControlName="ProductUnitId" [useDefault]="false" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
+          <input type="hidden" formControlName="UnitTime" [ngModel] />
+          <app-productunit-selector (selectChanged)="selectProductUnit($event, i)" formControlName="ProductUnitId" [useDefault]="false" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
         </td>
-        <td><input style="width:60px" type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
+        <td>
+          <input type="hidden" formControlName="ProductColorId" [ngModel] />
+          <input style="width:60px" type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled">
+        </td>
+        <td>
+          <input type="hidden" formControlName="ProductSizeId" [ngModel] />
+          <input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled">
+        </td>
         <td><input type="text" style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]></td>
         <td><input type="text" style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel]></td>
         <td><input type="text" style="width:80px" formControlName="Amount"  class="none-input" [ngModel] disabled="disabled"></td>

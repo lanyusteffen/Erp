@@ -30,7 +30,9 @@ const purchaseItem = {
   Spec: null,
   ProductUnitName: null,
   ProductColorValue: null,
+  ProductColorId: 0,
   ProductSizeValue: null,
+  ProductSizeId: 0,
   Name: null,
   SortIndex: 0
 };
@@ -108,6 +110,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     }
   }
 
+  selectProductUnit(selectedProductUnitTime, index) {
+    const itemArr = <FormArray>this.form.controls['ItemList'];
+    itemArr.at(index).patchValue({'UnitTime': selectedProductUnitTime});
+  }
+
   selectCustomer(item: any): void {
     this.selectedCustomer = item;
     const customerTypeCtrl = <FormControl>this.form.controls['CustomerType'];
@@ -152,12 +159,14 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       newPurchaseItem.ProductUnitName = item.ProductUnitName;
       newPurchaseItem.ProductSizeValue = item.ProductSizeValue;
       newPurchaseItem.ProductColorValue = item.ProductColorValue;
+      newPurchaseItem.UnitTime = 1.00; // 倍数为1, 则不会变
       newPurchaseItem.Spec = item.Spec;
       newPurchaseItem.TaxRate = 0.00;
       newPurchaseItem.DiscountRate = 0.00;
       newPurchaseItem.Quanlity = quanlity;
       newPurchaseItem.Price = item.Price;
       newPurchaseItem.Name = item.Name;
+      newPurchaseItem.SortIndex = findIndex + 1;
 
       this.addPurchaseItem(findIndex + 1, newPurchaseItem);
     });
@@ -196,9 +205,12 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
           Spec: null,
           Quanlity: null,
           Price: null,
+          UnitTime: null,
           ProductUnitName: null,
           ProductColorValue: null,
-          ProductSizeValue: null
+          ProductColorId: null,
+          ProductSizeValue: null,
+          ProductSizeId: null
         }));
         this.propertyName1 = data.PropertyName1;
         this.propertyName2 = data.PropertyName2;

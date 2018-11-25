@@ -58,7 +58,8 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
     this.productUnitService.dropdownList(this.productId, data => {
       this.list = data.map(item => ({
         label: item.Name,
-        value: item.Id
+        value: item.Id,
+        unitTime: item.UnitTime
       }));
       if (next !== null) {
         next();
@@ -92,6 +93,13 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
   handleChange(value) {
     this.innerValue = value;
     this.onChange(value);
-    this.selectChanged.emit(value);
+    let unitTime = null;
+    for (let i = 0; i < this.list.length; i++) {
+      if (this.list[i].value === value) {
+        unitTime = this.list[i].unitTime;
+        break;
+      }
+    }
+    this.selectChanged.emit({Id: value, UnitTime: unitTime});
   }
 }
