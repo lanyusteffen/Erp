@@ -10,6 +10,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 import { angularMath } from 'angular-ts-math';
 import { DatePipe } from '@angular/common';
 import { ErrorService } from '@services/error.service';
+import { ParmaryKeyValid } from '@validators/parmary-key.valid';
 
 const purchaseItem = {
   PurchaseId: null,
@@ -64,7 +65,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   private propertyName2 = null;
   private selectedCustomer: any;
   private selectedEmployee: any;
-  private form = new FormGroup({});
+  private form: FormGroup;
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
     format: 'YYYY-MM-DD'
@@ -75,7 +76,12 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   }
 
   get purchaseItemList(): FormArray { return this.form.get('ItemList') as FormArray; }
-  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
+  get formReady(): boolean {
+    if (this.form) {
+      return !!Object.keys(this.form.controls).length;
+    }
+    return false;
+  }
 
   constructor(
     private purchaseOrderService: PurchaseOrderService,
@@ -177,13 +183,16 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     this.calculate();
   }
 
-  onSubmit({ value }, IsValid) {
-    if (IsValid) {
+  onSubmit({ value }, isValid) {
+    if (isValid) {
       value.PurchaseTime = this.datePipe.transform(<Date>value.PurchaseTime, 'yyyy-MM-dd HH:mm:ss');
       if (value.Id === 0) {
         this.purchaseOrderService.create(value, data => {
           if (data.IsValid) {
-            this.validate(data);
+            this.alertService.open({
+              type: 'success',
+              content: '采购单' + data.Code + '新增成功！'
+            });
           } else {
             this.alertService.addFail(data.ErrorMessages);
           }
@@ -200,6 +209,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
           this.alertService.modifyFail(err);
         });
       }
+    } else {
+
     }
   }
 
@@ -251,19 +262,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   private getValidators() {
     const validatorArrs = {
       CustomerId: [
-        Validators.required
+        Validators.required,
+        ParmaryKeyValid.validation
       ]
     };
     return validatorArrs;
-  }
-
-  validate(data): void {
-    if (data.IsValid) {
-      this.alertService.open({
-        type: 'success',
-        content: '采购单' + data.Code + '新增成功！'
-      });
-    }
   }
 
   newOne() {
