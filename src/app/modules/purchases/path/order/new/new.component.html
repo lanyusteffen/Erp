@@ -6,7 +6,7 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" (blur)="setErrorMessage('CustomerId','客户名称',form.get('CustomerId').errors)" [ngModel]></app-customer-popup-selector>
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
       </div>
     </div>
     <div class="form-group">
