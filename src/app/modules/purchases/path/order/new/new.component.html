@@ -45,8 +45,8 @@
       保存
     </app-ui-button>
     <app-ui-button [style]="'primary'">
-        导入
-      </app-ui-button>
+      导入
+    </app-ui-button>
     <div class="more">
       <app-ui-checkbox formControlName="IsOpenDiscount" [inline]="false" [ngModel]>启用折扣</app-ui-checkbox>
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -77,6 +77,7 @@
         <td>
           <a class="text-success" (click)="addItem(i)"><i class="iconfont icon-add"></i></a>
           <a class="text-danger" (click)="removeItem(i)"><i class="iconfont icon-close"></i></a>
+          <input type="hidden" formControlName="SortIndex" [value]="i" />
         </td>
         <td>
           <div class="selector-group">
@@ -95,7 +96,7 @@
         <td><input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]></td>
         <td><input type="text" style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="text" style="width:80px" formControlName="PurchaseAmount"  class="none-input" [ngModel] disabled="disabled"></td>
+        <td><input type="text" style="width:80px" formControlName="Amount"  class="none-input" [ngModel] disabled="disabled"></td>
         <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" (change)="calculateItem('DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
         <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" formControlName="DiscountAmount" class="none-input" [ngModel] disabled="disabled"></td>
         <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" (change)="calculateItem('AfterDiscountAmount', i, true)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
@@ -147,10 +148,11 @@
     </div>
     <div class="action-bar">
       <label>
-        <span>制单人：</span><input type="text" formControlName="UserName" class="none-input" [ngModel] disabled="disabled"> 
+        <span>制单人：</span><input type="text" formControlName="UserName" class="none-input" [ngModel] disabled="disabled" /> 
       </label>
     </div>
   </div>
   <app-popup-selector-goods [customerId]="selectedCustomer ? selectedCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
-  <input type="hidden" formControlName="Id" [ngModel] class="form-control">
+  <input type="hidden" formControlName="Id" [ngModel] />
+  <input type="hidden" formControlName="CustomerType" [ngModel] />
 </form>

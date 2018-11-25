@@ -2,6 +2,7 @@ import { FormGroup, FormArray, FormBuilder, FormControl, AbstractControl } from 
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
+import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { PurchaseOrderService } from '../order.service';
 import { FormService } from '@services/form.service';
@@ -18,7 +19,7 @@ const purchaseItem = {
   Price: null,
   StorageId: null,
   ProductUnitId: null,
-  PurchaseAmount: 0.00,
+  Amount: 0.00,
   TaxRate: null,
   TaxAmount: null,
   AfterTaxAmount: null,
@@ -31,6 +32,7 @@ const purchaseItem = {
   ProductColorValue: null,
   ProductSizeValue: null,
   Name: null,
+  SortIndex: 0
 };
 
 @Component({
@@ -41,6 +43,9 @@ const purchaseItem = {
 })
 
 export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
+
+  @ViewChild(CustomerPopupSelectorComponent)
+  private customerPopupSelector: CustomerPopupSelectorComponent;
 
   @ViewChild(PopupSelectorEmployeeComponent)
   private employeePopupSelector: PopupSelectorEmployeeComponent;
@@ -105,11 +110,17 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
   selectCustomer(item: any): void {
     this.selectedCustomer = item;
+    const customerTypeCtrl = <FormControl>this.form.controls['CustomerType'];
+    const customerIdCtrl = <FormControl>this.form.controls['CustomerId'];
+    customerTypeCtrl.setValue(this.customerPopupSelector.selectedTab);
+    customerIdCtrl.setValue(item.Id);
     this.employeePopupSelector.unSelect();
   }
 
   selectEmployee(item: any): void {
     this.selectedEmployee = item;
+    const employeeIdCtrl = <FormControl>this.form.controls['EmployeeId'];
+    employeeIdCtrl.setValue(item.Id);
   }
 
   selectGoods(selectItems: any): void {
@@ -155,6 +166,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit({ value }) {
+    value.PurchaseTime = this.datePipe.transform(<Date>value.PurchaseTime, 'yyyy-MM-dd HH:mm:ss');
     if (value.Id === 0) {
       this.purchaseOrderService.create(value, data => {
         if (data.IsValid) {
@@ -256,7 +268,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
 
     const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
     const priceCtrl = <AbstractControl>item.controls['Price'];
-    const purchaseAmountCtrl = <AbstractControl>item.controls['PurchaseAmount'];
+    const purchaseAmountCtrl = <AbstractControl>item.controls['Amount'];
 
     const discountRateCtrl = <AbstractControl>item.controls['DiscountRate'];
     const discountAmountCtrl = <AbstractControl>item.controls['DiscountAmount'];
