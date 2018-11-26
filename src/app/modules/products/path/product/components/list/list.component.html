@@ -36,7 +36,7 @@
           <td>{{item.Weight}}</td>
           <td><a *ngIf="item.IsOpenSku" (click)="extension(item.Id)">详情</a></td>
           <td><a (click)="unit(item.Id)">详情</a></td>
-          <td><a (click)="storageInit(item.Id)">详情</a></td>
+          <td><a (click)="storageInit(item.Id)" *ngIf="systemConfig.IsOpenBill">详情</a></td>
           <td>{{item.Remark}}</td>
         </tr>
       </tbody>

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProductService } from '../../product.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
 import { ErrorService } from '@services/error.service';
 
@@ -240,6 +240,10 @@ export class ProductControlComponent {
       Name: [
         Validators.maxLength(200),
         Validators.required
+      ],
+      Code: [
+        Validators.maxLength(200),
+        Validators.required
       ]
     };
     return validatorArrs;
@@ -285,39 +289,64 @@ export class ProductControlComponent {
     this._productId = 0;
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    const productUnitList = <FormArray>this.form.get('ProductUnitList');
+    let findIndex = 0;
+    for (let i = 0; i < productUnitList.length; i++) {
+      findIndex = i;
+      const purchaseItemCtrl = <FormGroup>productUnitList.at(findIndex);
+      if ((<AbstractControl>purchaseItemCtrl.controls['UnitType']).value == 1 
+      && (<AbstractControl>purchaseItemCtrl.controls['SystemUnitId']).value <= 0) {
+        const errorItem = {
+          AttemptedValue: '',
+          ErrorCode: 'NotEmptyValidator',
+          ErrorDescription: null,
+          ErrorMessage: (<AbstractControl>purchaseItemCtrl.controls['UnitTypeName']).value + '必填',
+          ErrorStackTrace: null,
+          PropertyName: 'SystemUnitId'
+        };
+        this.errorItems.push(errorItem);
 
-    if (this.type === 'create') {
-      this.productService.create(value, data => {
-        if (data.IsValid) {
-          this.productService.list((err) => {
-            this.listErrorCallBack(err);
-          }, () => {
-            this.onClose.emit();
-            this.alertService.addSuccess();
-          });
-        } else {
-          this.alertService.addFail(data.ErrorMessages);
-        }
-      }, (err) => {
-        this.alertService.addFail(err);
-      });
-    } else {
-      this.productService.modify(value, data => {
-        if (data.IsValid) {
-          this.productService.list((err) => {
-            this.listErrorCallBack(err);
-          }, () => {
-            this.onClose.emit();
-            this.alertService.modifySuccess();
-          });
-        } else {
-          this.alertService.modifyFail(data.ErrorMessages);
-        }
-      }, (err) => {
-        this.alertService.modifyFail(err);
-      });
+        isValid = false;
+      }
     }
+
+
+
+    if (isValid) {
+      if (this.type === 'create') {
+        this.productService.create(value, data => {
+          if (data.IsValid) {
+            this.productService.list((err) => {
+              this.listErrorCallBack(err);
+            }, () => {
+              this.onClose.emit();
+              this.alertService.addSuccess();
+            });
+          } else {
+            this.alertService.addFail(data.ErrorMessages);
+          }
+        }, (err) => {
+          this.alertService.addFail(err);
+        });
+      } else {
+        this.productService.modify(value, data => {
+          if (data.IsValid) {
+            this.productService.list((err) => {
+              this.listErrorCallBack(err);
+            }, () => {
+              this.onClose.emit();
+              this.alertService.modifySuccess();
+            });
+          } else {
+            this.alertService.modifyFail(data.ErrorMessages);
+          }
+        }, (err) => {
+          this.alertService.modifyFail(err);
+        });
+      }
+    }
+
   }
 }
 
