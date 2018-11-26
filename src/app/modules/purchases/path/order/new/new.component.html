@@ -62,7 +62,7 @@
       <th width="60px">{{propertyName1}}</th>
       <th width="60px">{{propertyName2}}</th>
       <th width="80px"><span class="required">*</span>采购数量</th>
-      <th width="80px">采购单价</th>
+      <th width="80px"><span class="required">*</span>采购单价</th>
       <th width="80px">采购金额</th>
       <th width="80px" *ngIf="hasOpenDiscount()">折扣率(%)</th>
       <th width="80px" *ngIf="hasOpenDiscount()">折扣额</th>
@@ -101,16 +101,54 @@
           <input type="hidden" formControlName="ProductSizeId" [ngModel] />
           <input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled">
         </td>
-        <td><input type="text" style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="text" style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="text" style="width:80px" formControlName="Amount"  class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" (change)="calculateItem('DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" formControlName="DiscountAmount" class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenDiscount()"><input style="width:80px" type="text" (change)="calculateItem('AfterDiscountAmount', i, true)" formControlName="AfterDiscountAmount" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input style="width:80px" type="text" (change)="calculateItem('TaxRate', i, true)" formControlName="TaxRate" class="form-control" [ngModel]></td>
-        <td *ngIf="hasOpenTax()"><input style="width:80px" type="text" formControlName="TaxAmount" class="none-input" [ngModel] disabled="disabled"></td>
-        <td *ngIf="hasOpenTax()"><input style="width:80px" type="text" (change)="calculateItem('AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel]></td>
-        <td><app-product-storage-selector [isEditing]="false" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel]></app-product-storage-selector></td>
+        <td>
+          <app-form-field [name]="'Quanlity'">
+            <input #formField type="text" style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel] />
+          </app-form-field>
+        </td>
+        <td>
+          <app-form-field [name]="'Price'">
+            <input #formField type="text" style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel] />
+          </app-form-field>
+        </td>
+        <td>
+          <app-form-field [name]="'Amount'">
+            <input #formField type="text" style="width:80px" formControlName="Amount"  class="none-input" [ngModel] disabled="disabled" />
+          </app-form-field>
+        </td>
+        <td *ngIf="hasOpenDiscount()">
+          <app-form-field [name]="'Amount'">
+            <input #formField style="width:80px" type="text" (change)="calculateItem('DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel] />
+          </app-form-field>
+        </td>
+        <td *ngIf="hasOpenDiscount()">
+          <app-form-field [name]="'DiscountAmount'">
+            <input #formField style="width:80px" type="text" formControlName="DiscountAmount" class="none-input" [ngModel] disabled="disabled" />
+          </app-form-field>
+        </td>
+        <td *ngIf="hasOpenDiscount()">
+          <app-form-field [name]="'AfterDiscountAmount'">
+            <input #formField style="width:80px" type="text" (change)="calculateItem('AfterDiscountAmount', i, true)" formControlName="AfterDiscountAmount" class="form-control" [ngModel] />
+          </app-form-field>
+        </td>
+        <td *ngIf="hasOpenTax()">
+          <app-form-field [name]="'TaxRate'">
+            <input #formField style="width:80px" type="text" (change)="calculateItem('TaxRate', i, true)" formControlName="TaxRate" class="form-control" [ngModel] />
+          </app-form-field>
+        </td>
+        <td *ngIf="hasOpenTax()">
+          <app-form-field [name]="'TaxAmount'">
+            <input #formField style="width:80px" type="text" formControlName="TaxAmount" class="none-input" [ngModel] disabled="disabled" />
+          </app-form-field>
+        </td>
+        <td *ngIf="hasOpenTax()">
+          <app-form-field [name]="'AfterTaxAmount'">
+            <input #formField style="width:80px" type="text" (change)="calculateItem('AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel] />
+          </app-form-field>
+        </td>
+        <td>
+          <app-product-storage-selector [isEditing]="false" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel] />
+        </td>
       </tr>
     </tbody>
   </app-ui-table>
@@ -130,17 +168,22 @@
           <tr>
             <th>整单折扣额：</th>
             <td>
-                <input type="text" (change)="calculate()" formControlName="WholeDiscountAmount" [ngModel] />
+              <app-form-field [name]="'WholeDiscountAmount'">
+                <input #formField type="text" (change)="calculate()" formControlName="WholeDiscountAmount" [ngModel] />
+              </app-form-field>
             </td>
           </tr>
           <tr>
             <th>整单折扣率：</th>
             <td>
                 <div class="input-group">
-                    <input type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
+                  <app-form-field [name]="'WholeDiscountAmount'">
+                    <input #formField type="text" (change)="calculate()" formControlName="WholeDiscountAmount" [ngModel] />
+                    <input  type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
                     <div class="addon">
                       %
                     </div>
+                  </app-form-field>
                 </div>
             </td>
           </tr>
