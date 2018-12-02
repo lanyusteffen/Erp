@@ -2,6 +2,7 @@ import { Injectable,  } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FormGroup, ValidationErrors } from '@angular/forms';
+import { MethodFn } from '@angular/core/src/reflection/types';
 
 @Injectable()
 export class ErrorService {
@@ -34,19 +35,24 @@ export class ErrorService {
     return this.error$.asObservable();
   }
 
-  getControlErrors(validForm: FormGroup): { [id: string]: any; } {
-    const controlErrorDict: { [id: string]: any; } = {};
+  renderErrorItems(validForm: FormGroup, getErrorMessageFn: (key: string, controlErrors: ValidationErrors, keyError: string) => void) {
+    const errorItems = new Array();
+
     Object.keys(validForm.controls).forEach(key => {
+
       const controlErrors: ValidationErrors = validForm.get(key).errors;
+
       if (controlErrors != null) {
-          Object.keys(controlErrors).forEach(error => {
-            console.log('Key control: ' + key + ', keyError: ' + error + ', err value: ', controlErrors[error]);
-            if (controlErrors[error]) {
-              controlErrorDict[key] = error;
-            }
-          });
+        Object.keys(controlErrors).forEach(keyError => {
+          const item = {
+            PropertyName: key,
+            ErrorMessage: getErrorMessageFn(key, controlErrors, keyError)
+          };
+          errorItems.push(item);
+        });
       }
     });
-    return controlErrorDict;
+
+    this.setErrorItems(errorItems);
   }
 }

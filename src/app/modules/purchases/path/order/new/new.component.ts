@@ -10,7 +10,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 import { angularMath } from 'angular-ts-math';
 import { DatePipe } from '@angular/common';
 import { ErrorService } from '@services/error.service';
-import { ParmaryKeyValid } from '@validators/parmary-key.valid';
+import { PrimaryKeyValid } from '@validators/primary-key.valid';
 import { NumberDecimalValid } from '@validators/number-decimal.valid';
 
 const purchaseItem = {
@@ -212,32 +212,24 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       }
     } else {
 
-      const errorItems = new Array();
-
-      Object.keys(this.form.controls).forEach(key => {
-
-        const controlErrors: ValidationErrors = this.form.get(key).errors;
-
-        if (controlErrors != null) {
-          Object.keys(controlErrors).forEach(keyError => {
-            const item = {
-              PropertyName: key,
-              ErrorMessage: controlErrors[keyError].errMsg
-            };
-            errorItems.push(item);
-          });
-        }
-      });
-
-      this.errorService.setErrorItems(errorItems);
+      this.errorService.renderErrorItems(this.form,
+        (key, controlErrors, keyError) => this.getErrorMessage);
     }
+  }
+
+  getErrorMessage(key: string, controlErrors: ValidationErrors, keyError: string) {
+    switch (key) {
+      case 'CustomerId':
+        return '必须选择供应商!';
+    }
+    return controlErrors[keyError].errMsg;
   }
 
   private getValidators() {
     const validatorArrs = {
       CustomerId: [
         Validators.required,
-        ParmaryKeyValid.validation
+        PrimaryKeyValid.validation
       ],
       WholeDiscountRate: [
         NumberDecimalValid.validation

@@ -6,7 +6,9 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
+        <app-form-field [name]="'CustomerId'">
+          <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
+        </app-form-field>
       </div>
     </div>
     <div class="form-group">
@@ -22,7 +24,9 @@
         <label>采购部门：</label>
       </div>
       <div class="form-group-control">
-        <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
+        <app-form-field [name]="'DepartmentId'">
+          <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
+        </app-form-field>
       </div>
     </div>
     <div class="more">

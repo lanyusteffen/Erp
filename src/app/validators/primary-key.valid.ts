@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-export class ParmaryKeyValid {
+export class PrimaryKeyValid {
 
     private static REGEXID = new RegExp('^\d+$');
 
@@ -9,7 +9,7 @@ export class ParmaryKeyValid {
             return null;
         }
 
-        return ParmaryKeyValid.REGEXID.test(ctrl.value) && parseInt(ctrl.value, 10) > 0 ? null : {
+        return PrimaryKeyValid.REGEXID.test(ctrl.value) && parseInt(ctrl.value, 10) > 0 ? null : {
             result: {
                 valid: false
             }

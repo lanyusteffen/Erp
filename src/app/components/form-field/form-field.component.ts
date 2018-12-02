@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ContentChild, AfterContentInit, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ContentChild, Renderer2 } from '@angular/core';
 import { ErrorService } from '@services/error.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -30,17 +30,19 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     this.subscription = this.errorService.get().subscribe(errors => this.updateErrorMessage(errors));
 
-    this._render.listen(this.child.nativeElement, 'focus', () => {
+    if (typeof this.child !== 'undefined') {
+      this._render.listen(this.child.nativeElement, 'focus', () => {
         this.error = false;
         this.errorMessage = null;
-    });
+      });
+    }
   }
 
   updateErrorMessage(errors: any) {
     const errorItem = errors.find(item => item.PropertyName === this.name);
     this.error = !!errorItem;
 
-    if (this.error && typeof errorItem.ErrorMessage !== 'undefined') {
+    if (this.error) {
       this.errorMessage = errorItem.ErrorMessage;
     }
   }
