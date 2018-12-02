@@ -7,7 +7,7 @@ import { AlertService, ModuleName} from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
-  selector: 'app-product-storageInit',
+  selector: 'app-product-storage-init',
   templateUrl: './storageInit.component.html',
   styleUrls: ['./storageInit.component.less'],
   providers: [FormService]
@@ -22,7 +22,7 @@ export class ProductStorageInitComponent {
   private _show: boolean;
   private _productId: number;
   private _storageInitList: Array<any>;
-  private _storageInit:any;
+  private _storageInit: any;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -48,8 +48,8 @@ export class ProductStorageInitComponent {
 
   get formReady(): boolean { return true; }
 
-  get storageInitList(): FormArray { 
-    return this.form.value as FormArray; 
+  get storageInitList(): FormArray {
+    return this.form.value as FormArray;
   }
 
   handleClose() {
@@ -61,9 +61,7 @@ export class ProductStorageInitComponent {
   set productId(productId) {
     this._productId = productId;
     if (this.show) {
-      this.productService.getStorageDetailList(productId, data => {        
-        // this._storageInit = this.createStorageInitList(data);
-        // console.log(this._storageInit);
+      this.productService.getStorageDetailList(productId, data => {
         this.form = this.formService.createArrayForm(data);
       }, (err) => {
         this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
@@ -72,37 +70,9 @@ export class ProductStorageInitComponent {
   }
 
   @Input()
-  set localSystemConfig(systemConfig){
+  set localSystemConfig(systemConfig) {
     this.systemConfig = systemConfig;
   }
-
-  createStorageInitList(data): any {
-
-    let storageInitList = new Array();
-
-    data.forEach(item => {
-      let storageInit = {
-        StorageName: item.StorageName,
-        ProductSpecColorAlias: item.ProductSpecColorAlias,
-        ProductSpecSizeAlias: item.ProductSpecSizeAlias,
-        ProductUnit: item.ProductUnit,
-        UnitCost: item.UnitCost,
-        InitialTotalAmount: item.InitialTotalAmount,
-        BeginCount: item.BeginCount,
-        IsOpenSku: item.IsOpenSku,
-        StorageLowerAlarmCount: item.StorageLowerAlarmCount,
-        StorageUpAlarmCount: item.StorageUpAlarmCount
-      };
-      storageInitList.push(storageInit);
-    });
-
-    let storageInit = {
-      StorageInitList : storageInitList
-    };
-
-    return storageInit;
-  }
-
 
   get productId() {
     return this._productId;
