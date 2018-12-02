@@ -55,12 +55,12 @@
     [show]="_showUnitUpdate"
     (onClose)="closeUnit()"
   ></app-product-unit>
-  <app-product-storageInit
+  <app-product-storage-init
     [productId]="storageInitProductId"
     [show]="_showStorageInitUpdate"
     [localSystemConfig] = "systemConfig"
     (onClose)="closeStorageInit()"
-  ></app-product-storageInit>
+  ></app-product-storage-init>
   <app-product-control 
   [type]="'update'"
   [show]="_showUpdate"

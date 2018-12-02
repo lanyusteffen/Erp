@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ContentChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ContentChildren, Renderer2, AfterContentInit, QueryList, ElementRef } from '@angular/core';
 import { ErrorService } from '@services/error.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.less']
 })
-export class FormFieldComponent implements OnInit, OnDestroy {
+export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  {
   private error = false;
   private subscription: Subscription;
 
@@ -22,19 +22,32 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
   }
 
-  @ContentChild('formField') child;
+  @ContentChildren('formField', {descendants: true, read: ElementRef}) handlers: QueryList<any>;
 
   constructor(private errorService: ErrorService, private _render: Renderer2) {}
 
   ngOnInit() {
 
     this.subscription = this.errorService.get().subscribe(errors => this.updateErrorMessage(errors));
+  }
 
-    if (typeof this.child !== 'undefined') {
-      this._render.listen(this.child.nativeElement, 'focus', () => {
-        this.error = false;
-        this.errorMessage = null;
+  ngAfterContentInit() {
+    if (typeof this.handlers !== 'undefined') {
+      this.handlers.forEach(ctrl => {
+        if (ctrl.nativeElement.getAttribute('handler') == null) {
+          this._render.listen(ctrl.nativeElement, 'focus', () => {
+            this.error = false;
+            this.errorMessage = null;
+          });
+        } else {
+          this._render.listen(ctrl.nativeElement, 'click', () => {
+            this.error = false;
+            this.errorMessage = null;
+          });
+        }
       });
+    } else {
+      console.log(this.handlers);
     }
   }
 
