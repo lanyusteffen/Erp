@@ -9,10 +9,10 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
   private error = false;
-  private errorMessage = '';
   private subscription: Subscription;
 
   @Input() name: string;
+  @Input() errorMessage: string;
 
   @Input()
   set validError(value) {
@@ -40,7 +40,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     const errorItem = errors.find(item => item.PropertyName === this.name);
     this.error = !!errorItem;
 
-    if (this.error) {
+    if (this.error && typeof errorItem.ErrorMessage !== 'undefined') {
       this.errorMessage = errorItem.ErrorMessage;
     }
   }

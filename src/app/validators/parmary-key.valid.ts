@@ -1,13 +1,17 @@
 import { FormControl } from '@angular/forms';
 export class ParmaryKeyValid {
 
-    public static validation(ctrl: FormControl) {
-        const REXNUMBER = new RegExp('^\d+$');
+    private static REGEXID = new RegExp('^\d+$');
 
-        return REXNUMBER.test(ctrl.value) && parseInt(ctrl.value, 10) > 0 ? null : {
+    public static validation(ctrl: FormControl) {
+
+        if (ctrl.value == null || ctrl.value === '' || typeof ctrl.value === 'undefined') {
+            return null;
+        }
+
+        return ParmaryKeyValid.REGEXID.test(ctrl.value) && parseInt(ctrl.value, 10) > 0 ? null : {
             result: {
-                valid: false,
-                errMsg: '请选择!'
+                valid: false
             }
         };
     }

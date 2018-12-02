@@ -1,4 +1,4 @@
-import { FormGroup, FormArray, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
@@ -11,6 +11,7 @@ import { angularMath } from 'angular-ts-math';
 import { DatePipe } from '@angular/common';
 import { ErrorService } from '@services/error.service';
 import { ParmaryKeyValid } from '@validators/parmary-key.valid';
+import { NumberDecimalValid } from '@validators/number-decimal.valid';
 
 const purchaseItem = {
   PurchaseId: null,
@@ -211,52 +212,25 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       }
     } else {
 
+      const errorItems = new Array();
+
+      Object.keys(this.form.controls).forEach(key => {
+
+        const controlErrors: ValidationErrors = this.form.get(key).errors;
+
+        if (controlErrors != null) {
+          Object.keys(controlErrors).forEach(keyError => {
+            const item = {
+              PropertyName: key,
+              ErrorMessage: controlErrors[keyError].errMsg
+            };
+            errorItems.push(item);
+          });
+        }
+      });
+
+      this.errorService.setErrorItems(errorItems);
     }
-  }
-
-  public setErrorMessage(propertyName, displayName, errors): void {
-    this.errorService.removeErrorItems(this.errorItems, propertyName);
-
-    if (errors) {
-
-      if (errors.maxlength) {
-        const errorItem = {
-          AttemptedValue: '',
-          ErrorCode: 'MaxLengthValidator',
-          ErrorDescription: null,
-          ErrorMessage: displayName + '长度不能超过 400',
-          ErrorStackTrace: null,
-          PropertyName: propertyName
-        };
-        this.errorItems.push(errorItem);
-      }
-
-      if (errors.required) {
-        const errorItem = {
-          AttemptedValue: '',
-          ErrorCode: 'NotEmptyValidator',
-          ErrorDescription: null,
-          ErrorMessage: displayName + '必填',
-          ErrorStackTrace: null,
-          PropertyName: propertyName
-        };
-        this.errorItems.push(errorItem);
-      }
-
-      if (errors.result && !errors.result.valid) {
-        const errorItem = {
-          AttemptedValue: '',
-          ErrorCode: 'CustomerValidator',
-          ErrorDescription: null,
-          ErrorMessage: errors.result.errMsg,
-          ErrorStackTrace: null,
-          PropertyName: propertyName
-        };
-        this.errorItems.push(errorItem);
-      }
-
-    }
-    this.errorService.setErrorItems(this.errorItems);
   }
 
   private getValidators() {
@@ -264,6 +238,9 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       CustomerId: [
         Validators.required,
         ParmaryKeyValid.validation
+      ],
+      WholeDiscountRate: [
+        NumberDecimalValid.validation
       ]
     };
     return validatorArrs;

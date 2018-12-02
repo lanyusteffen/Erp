@@ -176,15 +176,14 @@
           <tr>
             <th>整单折扣率：</th>
             <td>
-                <div class="input-group">
-                  <app-form-field [name]="'WholeDiscountAmount'">
-                    <input #formField type="text" (change)="calculate()" formControlName="WholeDiscountAmount" [ngModel] />
-                    <input  type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
-                    <div class="addon">
-                      %
-                    </div>
-                  </app-form-field>
-                </div>
+                <app-form-field [name]="'WholeDiscountRate'">
+                  <div class="input-group">
+                      <input #formField type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
+                      <div class="addon">
+                        %
+                      </div>
+                  </div>
+                </app-form-field>
             </td>
           </tr>
           <tr>
