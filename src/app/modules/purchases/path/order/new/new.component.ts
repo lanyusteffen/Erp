@@ -211,9 +211,8 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
         });
       }
     } else {
-
       this.errorService.renderErrorItems(this.form,
-        (key, controlErrors, keyError) => this.getErrorMessage);
+        (key, controlErrors, keyError) => this.getErrorMessage(key, controlErrors, keyError));
     }
   }
 
@@ -232,6 +231,9 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
         PrimaryKeyValid.validation
       ],
       WholeDiscountRate: [
+        NumberDecimalValid.validation
+      ],
+      WholeDiscountAmount: [
         NumberDecimalValid.validation
       ]
     };
