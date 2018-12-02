@@ -18,6 +18,8 @@ export class ProductControlComponent {
   private _productColors = new Array();
   private _productSizes = new Array();
   private errorItems = new Array();
+  private product :any;
+  private validationNames :{[key: string]: string; };
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
@@ -246,6 +248,10 @@ export class ProductControlComponent {
         Validators.required
       ]
     };
+    this.validationNames = {
+      'Name':'商品名称',
+      'Code':'商品编号'
+    };
     return validatorArrs;
   }
 
@@ -254,6 +260,8 @@ export class ProductControlComponent {
       if (this.type === 'create') {
         this.productService
           .newOne(data => {
+            this.product = data;
+            console.log(data);
             this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.listErrorCallBack(err);
@@ -261,6 +269,7 @@ export class ProductControlComponent {
       } else {
         this.productService
           .detail(this.productId, data => {
+            this.product = data;
             this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.listErrorCallBack(err);
@@ -289,14 +298,14 @@ export class ProductControlComponent {
     this._productId = 0;
   }
 
-  onSubmit({ value }, isValid) {
+  validateItem(isValid) {
     const productUnitList = <FormArray>this.form.get('ProductUnitList');
     let findIndex = 0;
     for (let i = 0; i < productUnitList.length; i++) {
       findIndex = i;
       const purchaseItemCtrl = <FormGroup>productUnitList.at(findIndex);
-      if ((<AbstractControl>purchaseItemCtrl.controls['UnitType']).value == 1 
-      && (<AbstractControl>purchaseItemCtrl.controls['SystemUnitId']).value <= 0) {
+      if ((<AbstractControl>purchaseItemCtrl.controls['UnitType']).value == 1
+        && (<AbstractControl>purchaseItemCtrl.controls['SystemUnitId']).value <= 0) {
         const errorItem = {
           AttemptedValue: '',
           ErrorCode: 'NotEmptyValidator',
@@ -311,7 +320,21 @@ export class ProductControlComponent {
       }
     }
 
+    return isValid;
+  }
 
+  validateForm() {
+    var controls = this.form.controls;
+    Object.keys(this.product).forEach(name => {
+      if (controls[name] && this.validationNames[name]) {
+        this.setErrorMessage(name,this.validationNames[name],controls[name].errors)
+      }
+    });
+  }
+
+  onSubmit({ value }, isValid) {
+
+    isValid = this.validateItem(isValid);
 
     if (isValid) {
       if (this.type === 'create') {
@@ -345,6 +368,8 @@ export class ProductControlComponent {
           this.alertService.modifyFail(err);
         });
       }
+    } else {
+      this.validateForm();
     }
 
   }

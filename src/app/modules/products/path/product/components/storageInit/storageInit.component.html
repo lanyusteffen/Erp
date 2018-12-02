@@ -14,17 +14,22 @@
                   <th>上线报警值</th>
               </thead>
               <tbody>
-                  <tr *ngFor="let item of storageInitList">
+                <tr *ngFor="let item of storageInitList; index as i">
                     <td>{{item.StorageName}}</td>
                     <td>{{item.ProductSpecColorAlias}}</td>
                     <td>{{item.ProductSpecSizeAlias}}</td>
                     <td>{{item.UnitName}}</td>
-                    <td>{{item.BeginCount}}</td>
-                    <td>{{item.UnitCost}}</td>
-                    <td>{{item.InitialTotalAmount}}</td>
-                    <td>{{item.StorageLowerAlarmCount}}</td>
-                    <td>{{item.StorageUpAlarmCount}}</td>
-                  </tr>
+                    <td *ngIf="systemConfig.IsOpenBill">{{item.BeginCount}}</td>
+                    <td *ngIf="systemConfig.IsOpenBill">{{item.UnitCost}}</td>
+                    <td *ngIf="systemConfig.IsOpenBill">{{item.InitialTotalAmount}}</td>
+                    <td *ngIf="systemConfig.IsOpenBill">{{item.StorageLowerAlarmCount}}</td>
+                    <td *ngIf="systemConfig.IsOpenBill">{{item.StorageUpAlarmCount}}</td>
+                    <td *ngIf="!systemConfig.IsOpenBill"><app-form-field [name]="'BeginCount'"><input type="number" formControlName="BeginCount" class="form-control" [ngModel]></app-form-field></td>
+                    <td *ngIf="!systemConfig.IsOpenBill"><app-form-field [name]="'UnitCost'"><input type="number" formControlName="UnitCost" class="form-control" [ngModel]></app-form-field></td>
+                    <td *ngIf="!systemConfig.IsOpenBill"><app-form-field [name]="'InitialTotalAmount'"><input type="number" formControlName="InitialTotalAmount" class="form-control" [ngModel]></app-form-field></td>
+                    <td *ngIf="!systemConfig.IsOpenBill"><app-form-field [name]="'StorageLowerAlarmCount'"><input type="number" formControlName="StorageLowerAlarmCount" class="form-control" [ngModel]></app-form-field></td>
+                    <td *ngIf="!systemConfig.IsOpenBill"><app-form-field [name]="'StorageUpAlarmCount'"><input type="number" formControlName="StorageUpAlarmCount" class="form-control" [ngModel]></app-form-field></td>
+                </tr>
               </tbody>
             </app-ui-table>
         </div>
