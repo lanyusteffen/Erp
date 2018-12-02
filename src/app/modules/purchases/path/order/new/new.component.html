@@ -121,7 +121,7 @@
           </app-form-field>
         </td>
         <td *ngIf="hasOpenDiscount()">
-          <app-form-field [name]="'Amount'">
+          <app-form-field [name]="'DiscountRate'">
             <input #formField style="width:80px" type="text" (change)="calculateItem('DiscountRate', i, true)" formControlName="DiscountRate" class="form-control" [ngModel] />
           </app-form-field>
         </td>
