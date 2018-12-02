@@ -6,9 +6,7 @@
         <label>供应商：</label>
       </div>
       <div class="form-group-control">
-        <app-form-field [name]="'CustomerId'">
-          <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
-        </app-form-field>
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
       </div>
     </div>
     <div class="form-group">
@@ -24,9 +22,7 @@
         <label>采购部门：</label>
       </div>
       <div class="form-group-control">
-        <app-form-field [name]="'DepartmentId'">
-          <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
-        </app-form-field>
+        <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
       </div>
     </div>
     <div class="more">
@@ -151,7 +147,7 @@
           </app-form-field>
         </td>
         <td>
-          <app-product-storage-selector [isEditing]="false" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel]></app-product-storage-selector>
+          <!-- <app-product-storage-selector [isEditing]="false" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel] /> -->
         </td>
       </tr>
     </tbody>
@@ -180,14 +176,15 @@
           <tr>
             <th>整单折扣率：</th>
             <td>
-                <app-form-field [name]="'WholeDiscountRate'">
-                  <div class="input-group">
-                      <input #formField type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
-                      <div class="addon">
-                        %
-                      </div>
-                  </div>
-                </app-form-field>
+                <div class="input-group">
+                  <app-form-field [name]="'WholeDiscountAmount'">
+                    <input #formField type="text" (change)="calculate()" formControlName="WholeDiscountAmount" [ngModel] />
+                    <input  type="text" (change)="calculate()" formControlName="WholeDiscountRate" [ngModel] />
+                    <div class="addon">
+                      %
+                    </div>
+                  </app-form-field>
+                </div>
             </td>
           </tr>
           <tr>

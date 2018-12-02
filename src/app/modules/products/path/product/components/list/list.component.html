@@ -36,7 +36,10 @@
           <td>{{item.Weight}}</td>
           <td><a *ngIf="item.IsOpenSku" (click)="extension(item.Id)">详情</a></td>
           <td><a (click)="unit(item.Id)">详情</a></td>
-          <td><a (click)="storageInit(item.Id)" *ngIf="systemConfig.IsOpenBill">详情</a></td>
+          <td>
+            <a (click)="storageInit(item.Id)" *ngIf="systemConfig.IsOpenBill">详情</a>
+            <a (click)="storageInit(item.Id)" *ngIf="!systemConfig.IsOpenBill">编辑</a>
+          </td>
           <td>{{item.Remark}}</td>
         </tr>
       </tbody>
@@ -55,6 +58,7 @@
   <app-product-storageInit
     [productId]="storageInitProductId"
     [show]="_showStorageInitUpdate"
+    [localSystemConfig] = "systemConfig"
     (onClose)="closeStorageInit()"
   ></app-product-storageInit>
   <app-product-control 

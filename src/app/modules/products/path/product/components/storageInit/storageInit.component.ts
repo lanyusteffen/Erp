@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { AlertService, ModuleName} from '@services/alert.service';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-product-storageInit',
@@ -17,10 +18,11 @@ export class ProductStorageInitComponent {
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
-  private form = new FormGroup({});
+  private form: any;
   private _show: boolean;
   private _productId: number;
   private _storageInitList: Array<any>;
+  private _storageInit:any;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -32,6 +34,9 @@ export class ProductStorageInitComponent {
   ) {
   }
 
+  @LocalStorage()
+  systemConfig: any;
+
   @Input()
   get show() {
     return this._show;
@@ -41,9 +46,11 @@ export class ProductStorageInitComponent {
     this._show = isShow;
   }
 
-  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
+  get formReady(): boolean { return true; }
 
-  get storageInitList(): Array<any> { return this._storageInitList; }
+  get storageInitList(): FormArray { 
+    return this.form.value as FormArray; 
+  }
 
   handleClose() {
     this.onClose.emit();
@@ -54,21 +61,27 @@ export class ProductStorageInitComponent {
   set productId(productId) {
     this._productId = productId;
     if (this.show) {
-      this.productService.getStorageDetailList(productId, data => {
-        this.createStorageInitList(data);
-        this.form = this.formService.createForm(this._storageInitList);
+      this.productService.getStorageDetailList(productId, data => {        
+        // this._storageInit = this.createStorageInitList(data);
+        // console.log(this._storageInit);
+        this.form = this.formService.createArrayForm(data);
       }, (err) => {
         this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
       });
     }
   }
 
-  createStorageInitList(data): void {
+  @Input()
+  set localSystemConfig(systemConfig){
+    this.systemConfig = systemConfig;
+  }
 
-    const storageInitList = new Array();
+  createStorageInitList(data): any {
+
+    let storageInitList = new Array();
 
     data.forEach(item => {
-      const storageInit = {
+      let storageInit = {
         StorageName: item.StorageName,
         ProductSpecColorAlias: item.ProductSpecColorAlias,
         ProductSpecSizeAlias: item.ProductSpecSizeAlias,
@@ -83,7 +96,11 @@ export class ProductStorageInitComponent {
       storageInitList.push(storageInit);
     });
 
-    this._storageInitList = storageInitList;
+    let storageInit = {
+      StorageInitList : storageInitList
+    };
+
+    return storageInit;
   }
 
 

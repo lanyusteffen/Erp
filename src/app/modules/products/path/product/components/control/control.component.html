@@ -115,7 +115,26 @@
         <tbody formArrayName="ProductUnitList">
           <tr *ngFor="let item of productUnitList.controls; index as i" [formGroupName]="i">
             <td>{{item.value.UnitTypeName}}</td>
-            <td><app-systemunit-selector formControlName="SystemUnitId" [ngModel]></app-systemunit-selector></td>
+            <td>                  
+              <app-systemunit-selector formControlName="SystemUnitId" [ngModel]></app-systemunit-selector> 
+            </td>
+            <td><app-form-field [name]="'UnitTime'"><input type="text" formControlName="UnitTime" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PrePurchasePrice'"><input type="text" formControlName="PrePurchasePrice" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel1'"><input type="text" formControlName="PriceLevel1" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel2'"><input type="text" formControlName="PriceLevel2" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel3'"><input type="text" formControlName="PriceLevel3" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel4'"><input type="text" formControlName="PriceLevel4" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel5'"><input type="text" formControlName="PriceLevel5" class="form-control" [ngModel]></app-form-field></td>
+          </tr>
+        </tbody>
+
+      </table>
+      <!-- <tbody formArrayName="ProductUnitList">
+          <tr *ngFor="let item of productUnitList.controls; index as i" [formGroupName]="i">
+            <td>{{item.value.UnitTypeName}}</td>
+            <td>                  
+              <app-systemunit-selector formControlName="SystemUnitId" [ngModel]></app-systemunit-selector> 
+            </td>
             <td><input type="text" formControlName="UnitTime" class="form-control" [ngModel]></td>
             <td><input type="text" formControlName="PrePurchasePrice" class="form-control" [ngModel]></td>
             <td><input type="text" formControlName="PriceLevel1" class="form-control" [ngModel]></td>
@@ -126,7 +145,7 @@
           </tr>
         </tbody>
 
-      </table>
+      </table> -->
     </div>
     <div class="card-content">
       <div class="heading">备注</div>

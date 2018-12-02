@@ -41,6 +41,9 @@
   </div>
   <div class="actions">
     <app-ui-button [style]="'primary'">
+      保存
+    </app-ui-button>
+    <app-ui-button [style]="'primary'">
       导入
     </app-ui-button>   
   </div>
@@ -93,7 +96,6 @@
       <label>
         <span>制单人：</span><input type="text" formControlName="UserName" class="none-input" [ngModel] disabled="disabled"> 
       </label>
-      <app-ui-button [style]="'primary'">保存</app-ui-button>
     </div>
   </div>
   <app-popup-selector-goods [customerId]="selectCustomer ? selectCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
