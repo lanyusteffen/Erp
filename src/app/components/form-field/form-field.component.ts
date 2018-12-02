@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ContentChild, AfterContentInit, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ContentChild, Renderer2 } from '@angular/core';
 import { ErrorService } from '@services/error.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -9,10 +9,10 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
   private error = false;
-  private errorMessage = '';
   private subscription: Subscription;
 
   @Input() name: string;
+  @Input() errorMessage: string;
 
   @Input()
   set validError(value) {
@@ -30,10 +30,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     this.subscription = this.errorService.get().subscribe(errors => this.updateErrorMessage(errors));
 
-    this._render.listen(this.child.nativeElement, 'focus', () => {
+    if (typeof this.child !== 'undefined') {
+      this._render.listen(this.child.nativeElement, 'focus', () => {
         this.error = false;
         this.errorMessage = null;
-    });
+      });
+    }
   }
 
   updateErrorMessage(errors: any) {

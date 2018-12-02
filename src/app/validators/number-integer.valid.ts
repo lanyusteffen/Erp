@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
-export class QQValid {
+export class NumberIntegerValid {
 
-    private static REGEXQQ = new RegExp('^[1-9][0-9]{4,11}$');
+    private static REGEXNUMBERINTEGER = new RegExp('^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$');
 
     public static validation(ctrl: FormControl) {
 
@@ -9,12 +9,11 @@ export class QQValid {
             return null;
         }
 
-        return QQValid.REGEXQQ.test(ctrl.value) ? null : {
+        return NumberIntegerValid.REGEXNUMBERINTEGER.test(ctrl.value) ? null : {
             result: {
                 valid: false,
-                errMsg: '不是有效的QQ格式!'
+                errMsg: '不是有效的整数格式!'
             }
         };
     }
 }
-
