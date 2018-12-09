@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { ErrorService } from '@services/error.service';
 import { PrimaryKeyValid } from '@validators/primary-key.valid';
 import { NumberDecimalValid } from '@validators/number-decimal.valid';
+import { PurchaseItemValid } from '@validators/purchase-item.valid';
 
 const purchaseItem = {
   PurchaseId: null,
@@ -221,7 +222,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       case 'CustomerId':
         return '必须选择供应商!';
     }
-    return controlErrors[keyError].errMsg;
+    return controlErrors.errMsg;
   }
 
   private getValidators() {
@@ -235,6 +236,9 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       ],
       WholeDiscountAmount: [
         NumberDecimalValid.validation
+      ],
+      ItemList: [
+        PurchaseItemValid.validation
       ]
     };
     return validatorArrs;

@@ -49,12 +49,22 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
     }
   }
 
-  updateErrorMessage(errors: any) {
-    const errorItem = errors.find(item => item.PropertyName === this.name);
+  findError(error: any) {
+    const errorItem = error.find(item => item.PropertyName === this.name);
     this.error = !!errorItem;
-
     if (this.error) {
       this.errorMessage = errorItem.ErrorMessage;
+    }
+  }
+
+  updateErrorMessage(errors: any) {
+    if (errors instanceof Array) {
+      const errorArr = errors as Array<any>;
+      for (let i = 0; i < errors.length; i++) {
+        this.findError(errors[i]);
+      }
+    } else {
+      this.findError(errors);
     }
   }
 

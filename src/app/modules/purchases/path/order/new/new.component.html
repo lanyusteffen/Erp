@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" *ngIf="formReady">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
   <div class="actions">
     <div class="form-group">
       <div class="form-group-label">
@@ -104,10 +104,14 @@
           <input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled">
         </td>
         <td>
-          <input type="text" style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel] />
+          <app-form-field [name]="'Quanlity'">
+            <input type="text" #formField style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel] />
+          </app-form-field>
         </td>
         <td>
-          <input type="text" style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel] />
+          <app-form-field [name]="'Price'">
+            <input type="text" #formField style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel] />
+          </app-form-field>
         </td>
         <td>
           <input type="text" style="width:80px" formControlName="Amount"  class="none-input" [ngModel] disabled="disabled" />
