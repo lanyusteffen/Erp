@@ -22,33 +22,28 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
     }
   }
 
-  @ContentChildren('formField', {descendants: true, read: ElementRef}) handlers: QueryList<any>;
+  @ContentChildren('formField', {descendants: true}) handlers: QueryList<ElementRef>;
 
   constructor(private errorService: ErrorService, private _render: Renderer2) {}
 
   ngOnInit() {
-
     this.subscription = this.errorService.get().subscribe(errors => this.updateErrorMessage(errors));
   }
 
   ngAfterContentInit() {
-    if (typeof this.handlers !== 'undefined') {
-      this.handlers.forEach(ctrl => {
-        if (ctrl.nativeElement.getAttribute('handler') == null) {
-          this._render.listen(ctrl.nativeElement, 'focus', () => {
-            this.error = false;
-            this.errorMessage = null;
-          });
-        } else {
-          this._render.listen(ctrl.nativeElement, 'click', () => {
-            this.error = false;
-            this.errorMessage = null;
-          });
-        }
-      });
-    } else {
-      console.log(this.handlers);
-    }
+    this.handlers.forEach(ctrl => {
+      if (ctrl.nativeElement.getAttribute('handler') == null) {
+        this._render.listen(ctrl.nativeElement, 'focus', () => {
+          this.error = false;
+          this.errorMessage = null;
+        });
+      } else {
+        this._render.listen(ctrl.nativeElement, 'click', () => {
+          this.error = false;
+          this.errorMessage = null;
+        });
+      }
+    });
   }
 
   updateErrorMessage(errors: any) {
