@@ -11,7 +11,6 @@ export class FormService {
 
   createForm(fields, validators = null) {
     const formGroup = {};
-
     for (const key in fields) {
       if (Array.isArray(fields[key])) {
         formGroup[key] = this.fb.array(fields[key].map(_item => this.fb.group(_item)));

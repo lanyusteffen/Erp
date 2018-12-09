@@ -29,9 +29,6 @@ export class CustomerPopupSelectorComponent implements OnInit, ControlValueAcces
   private _show = false;
   private _showLabel = '';
 
-  @ViewChild('formField')
-  inputHandler: ElementRef;
-
   @ViewChild('controlHandler')
   controlHandler: ElementRef;
 

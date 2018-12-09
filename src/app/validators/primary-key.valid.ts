@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 export class PrimaryKeyValid {
 
-    private static REGEXID = new RegExp('^\d+$');
+    private static REGEXID = new RegExp('^\\d+$');
 
     public static validation(ctrl: FormControl) {
 
