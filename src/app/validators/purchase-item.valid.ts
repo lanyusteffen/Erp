@@ -19,15 +19,19 @@ export class PurchaseItemValid {
             if (PrimaryKeyValid.validation(goodsIdCtrl) != null) {
                 continue;
             }
-            if (NumberDecimalValid.validation(quanlityCtrl) != null && parseInt(quanlityCtrl.value, 10) >= 0) {
+            if (NumberDecimalValid.validation(quanlityCtrl) != null || parseInt(quanlityCtrl.value, 10) < 0) {
                 result = {
                     valid: false,
+                    propertyName: 'Quanlity',
+                    row: i,
                     errMsg: '数量必须为正数!'
                 };
                 break;
-            } else if (NumberDecimalValid.validation(priceCtrl) != null && parseInt(priceCtrl.value, 10) >= 0) {
+            } else if (NumberDecimalValid.validation(priceCtrl) != null || parseInt(priceCtrl.value, 10) < 0) {
                 result = {
                     valid: false,
+                    propertyName: 'Price',
+                    row: i,
                     errMsg: '价格必须为正数!'
                 };
                 break;

@@ -10,10 +10,8 @@ export class QQValid {
         }
 
         return QQValid.REGEXQQ.test(ctrl.value) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的QQ格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的QQ格式!'
         };
     }
 }

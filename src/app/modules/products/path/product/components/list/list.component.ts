@@ -74,8 +74,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     return this.systemConfig;
   }
 
-
-
   selectAll(evt) {
     this.allSelected = evt.target.checked;
     this.products = this.products.map(item => ({

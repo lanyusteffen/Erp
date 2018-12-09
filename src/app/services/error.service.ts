@@ -1,8 +1,7 @@
 import { Injectable,  } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { FormGroup, ValidationErrors } from '@angular/forms';
-import { MethodFn } from '@angular/core/src/reflection/types';
+import { ErrorItem } from '@contracts/error.item';
 
 @Injectable()
 export class ErrorService {
@@ -35,24 +34,25 @@ export class ErrorService {
     return this.error$.asObservable();
   }
 
-  renderErrorItems(validForm: FormGroup, getErrorMessageFn: (key: string, controlErrors: ValidationErrors, keyError: string) => void) {
-    const errorItems = new Array();
-
-    Object.keys(validForm.controls).forEach(key => {
-
-      const controlErrors: ValidationErrors = validForm.get(key).errors;
-
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-          const item = {
-            PropertyName: key,
-            ErrorMessage: getErrorMessageFn(key, controlErrors, keyError)
-          };
-          errorItems.push(item);
-        });
+  renderErrorItems(validForm: FormGroup, getErrorMessageFn: (key: string, controlErrors: ValidationErrors) => void) {
+    const errorItems: {[key: string]: {[key: number]: ErrorItem}} = {};
+    Object.keys(validForm.controls).forEach(field => {
+      const controlErrors: ValidationErrors = validForm.get(field).errors;
+      if (controlErrors != null && typeof controlErrors !== 'undefined') {
+        const errorMessage = getErrorMessageFn(field, controlErrors);
+        let item: any;
+        errorItems[field] = {};
+        if (typeof controlErrors.propertyName === 'undefined' ||
+              typeof controlErrors.row === 'undefined') {
+          item = { ErrorMessage: errorMessage, ListMode: false };
+          errorItems[field][-1] = item;
+        } else {
+          item = { ErrorMessage: errorMessage, ListMode: true,
+            PropertyName: controlErrors.propertyName };
+          errorItems[field][controlErrors.row] = item;
+        }
       }
     });
-
     this.setErrorItems(errorItems);
   }
 }

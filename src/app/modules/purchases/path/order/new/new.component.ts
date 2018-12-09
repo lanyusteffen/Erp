@@ -213,11 +213,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       }
     } else {
       this.errorService.renderErrorItems(this.form,
-        (key, controlErrors, keyError) => this.getErrorMessage(key, controlErrors, keyError));
+        (key, controlErrors) => this.getErrorMessage(key, controlErrors));
     }
   }
 
-  getErrorMessage(key: string, controlErrors: ValidationErrors, keyError: string) {
+  getErrorMessage(key: string, controlErrors: ValidationErrors) {
     switch (key) {
       case 'CustomerId':
         return '必须选择供应商!';

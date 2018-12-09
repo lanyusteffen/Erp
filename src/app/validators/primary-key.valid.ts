@@ -10,9 +10,7 @@ export class PrimaryKeyValid {
         }
 
         return PrimaryKeyValid.REGEXID.test(ctrl.value) && parseInt(ctrl.value, 10) > 0 ? null : {
-            result: {
-                valid: false
-            }
+            valid: false
         };
     }
 }

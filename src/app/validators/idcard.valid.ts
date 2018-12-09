@@ -11,10 +11,8 @@ export class IDCardValid {
         }
 
         return (IDCardValid.REGEXLONG.test(ctrl.value) || IDCardValid.REGEXSHORT.test(ctrl.value)) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的身份证格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的身份证格式!'
         };
     }
 }

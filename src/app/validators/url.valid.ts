@@ -10,10 +10,8 @@ export class UrlValid {
         }
 
         return UrlValid.REGEXURL.test(ctrl.value) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的URL格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的URL格式!'
         };
     }
 }

@@ -10,10 +10,8 @@ export class NumberDecimalValid {
         }
 
         return NumberDecimalValid.REGEXNUMBERDECIMAL.test(ctrl.value) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的数字格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的数字格式!'
         };
     }
 }

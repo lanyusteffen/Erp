@@ -11,10 +11,8 @@ export class MobileValid {
         }
 
         return (MobileValid.REGEXTEL.test(ctrl.value) || MobileValid.REGEXMOBILE.test(ctrl.value)) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的电话格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的电话格式!'
         };
     }
 }

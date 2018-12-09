@@ -10,10 +10,8 @@ export class EmailValid {
         }
 
         return EmailValid.REGEXEMAIL.test(ctrl.value) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的邮箱格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的邮箱格式!'
         };
     }
 }

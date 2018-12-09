@@ -10,10 +10,8 @@ export class NumberIntegerValid {
         }
 
         return NumberIntegerValid.REGEXNUMBERINTEGER.test(ctrl.value) ? null : {
-            result: {
-                valid: false,
-                errMsg: '不是有效的整数格式!'
-            }
+            valid: false,
+            errMsg: '不是有效的整数格式!'
         };
     }
 }
