@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, Input, ContentChildren, Renderer2, AfterContentInit, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ContentChild, Renderer2, AfterContentInit, QueryList, ElementRef } from '@angular/core';
 import { ErrorService } from '@services/error.service';
 import { Subscription } from 'rxjs/Subscription';
+import { PopupNoInputControlInterface } from '@contracts/popup-noinput-control.interface';
 
 @Component({
   selector: 'app-form-field',
@@ -13,6 +14,7 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
 
   @Input() name: string;
   @Input() errorMessage: string;
+  @Input() complexType = false;
 
   @Input()
   set validError(value) {
@@ -22,7 +24,7 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
     }
   }
 
-  @ContentChildren('formField', {descendants: true}) handlers: QueryList<ElementRef>;
+  @ContentChild('formField') handler: any;
 
   constructor(private errorService: ErrorService, private _render: Renderer2) {}
 
@@ -31,19 +33,20 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
   }
 
   ngAfterContentInit() {
-    this.handlers.forEach(ctrl => {
-      if (ctrl.nativeElement.getAttribute('handler') == null) {
-        this._render.listen(ctrl.nativeElement, 'focus', () => {
-          this.error = false;
-          this.errorMessage = null;
-        });
-      } else {
-        this._render.listen(ctrl.nativeElement, 'click', () => {
+    if (this.complexType) {
+      const validateControl = this.handler as PopupNoInputControlInterface;
+      if (validateControl) {
+        this._render.listen(validateControl.controlHandler.nativeElement, 'click', () => {
           this.error = false;
           this.errorMessage = null;
         });
       }
-    });
+    } else {
+      this._render.listen(this.handler.nativeElement, 'focus', () => {
+        this.error = false;
+        this.errorMessage = null;
+      });
+    }
   }
 
   updateErrorMessage(errors: any) {

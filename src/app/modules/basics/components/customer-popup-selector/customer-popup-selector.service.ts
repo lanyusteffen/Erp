@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from '@services/http.service';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CustomerPopupSelectorService {

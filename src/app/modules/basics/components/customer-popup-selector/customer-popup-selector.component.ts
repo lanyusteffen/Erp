@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { CustomerPopupSelectorService } from './customer-popup-selector.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
@@ -6,6 +6,7 @@ import { PopupSelectorCustomerComponent } from '../popup-selector-customer/popup
 import { PopupSelectorSupplierComponent } from '../popup-selector-supplier/popup-selector-supplier.component';
 import { PopupSelectorOtherComponent } from '../popup-selector-other/popup-selector-other.component';
 import { AlertService } from '../../../../services/alert.service';
+import { PopupNoInputControlInterface } from '@contracts/popup-noinput-control.interface';
 
 @Component({
   selector: 'app-customer-popup-selector',
@@ -16,7 +17,7 @@ import { AlertService } from '../../../../services/alert.service';
   ]
 })
 
-export class CustomerPopupSelectorComponent implements OnInit, ControlValueAccessor {
+export class CustomerPopupSelectorComponent implements OnInit, ControlValueAccessor, PopupNoInputControlInterface {
 
   @LocalStorage()
   @Output()
@@ -27,6 +28,12 @@ export class CustomerPopupSelectorComponent implements OnInit, ControlValueAcces
   private onChange = null;
   private _show = false;
   private _showLabel = '';
+
+  @ViewChild('formField')
+  inputHandler: ElementRef;
+
+  @ViewChild('controlHandler')
+  controlHandler: ElementRef;
 
   @Input()
   set defaultTab(value) {
