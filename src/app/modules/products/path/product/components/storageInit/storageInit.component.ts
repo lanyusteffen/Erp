@@ -46,7 +46,12 @@ export class ProductStorageInitComponent {
     this._show = isShow;
   }
 
-  get formReady(): boolean { return true; }
+  get formReady(): boolean {
+    if (this.form) {
+      return !!(this.form.value as FormArray).length;
+    }
+    return false;
+  }
 
   get storageInitList(): FormArray {
     return this.form.value as FormArray;
@@ -56,16 +61,17 @@ export class ProductStorageInitComponent {
     this.onClose.emit();
   }
 
-
   @Input()
   set productId(productId) {
-    this._productId = productId;
-    if (this.show) {
-      this.productService.getStorageDetailList(productId, data => {
-        this.form = this.formService.createArrayForm(data);
-      }, (err) => {
-        this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
-      });
+    if (productId) {
+      this._productId = productId;
+      if (this.show) {
+        this.productService.getStorageDetailList(productId, data => {
+          this.form = this.formService.createArrayForm(data);
+        }, (err) => {
+          this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
+        });
+      }
     }
   }
 
