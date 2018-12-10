@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 export class NumberIntegerValid {
 
-    private static REGEXNUMBERINTEGER = new RegExp('^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$');
+    private static REGEXNUMBERINTEGER = new RegExp('^[0-9]+$');
 
     public static validation(ctrl: FormControl) {
 

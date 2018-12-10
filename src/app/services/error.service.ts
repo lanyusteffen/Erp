@@ -39,17 +39,23 @@ export class ErrorService {
     Object.keys(validForm.controls).forEach(field => {
       const controlErrors: ValidationErrors = validForm.get(field).errors;
       if (controlErrors != null && typeof controlErrors !== 'undefined') {
-        const errorMessage = getErrorMessageFn(field, controlErrors);
+        let errorMessage = null;
         let item: any;
         errorItems[field] = {};
-        if (typeof controlErrors.propertyName === 'undefined' ||
-              typeof controlErrors.row === 'undefined') {
+        if (typeof controlErrors[0] !== 'undefined') {
+          let i = 0;
+          while (typeof controlErrors[i] !== 'undefined') {
+            const controlError = controlErrors[i];
+            errorMessage = getErrorMessageFn(field, controlError);
+            item = { ErrorMessage: errorMessage, ListMode: true,
+              PropertyName: controlError.propertyName };
+            errorItems[field][controlError.row] = item;
+            ++i;
+          }
+        } else {
+          errorMessage = getErrorMessageFn(field, controlErrors);
           item = { ErrorMessage: errorMessage, ListMode: false };
           errorItems[field][-1] = item;
-        } else {
-          item = { ErrorMessage: errorMessage, ListMode: true,
-            PropertyName: controlErrors.propertyName };
-          errorItems[field][controlErrors.row] = item;
         }
       }
     });

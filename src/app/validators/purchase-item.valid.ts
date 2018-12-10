@@ -9,7 +9,7 @@ export class PurchaseItemValid {
             return null;
         }
 
-        let result = null;
+        const result = new Array();
 
         for (let i = 0; i < itemArr.length; i++) {
             const item = <FormGroup>itemArr.at(i);
@@ -20,21 +20,19 @@ export class PurchaseItemValid {
                 continue;
             }
             if (NumberDecimalValid.validation(quanlityCtrl) != null || parseInt(quanlityCtrl.value, 10) < 0) {
-                result = {
+                result.push({
                     valid: false,
                     propertyName: 'Quanlity',
                     row: i,
                     errMsg: '数量必须为正数!'
-                };
-                break;
+                });
             } else if (NumberDecimalValid.validation(priceCtrl) != null || parseInt(priceCtrl.value, 10) < 0) {
-                result = {
+                result.push({
                     valid: false,
                     propertyName: 'Price',
                     row: i,
                     errMsg: '价格必须为正数!'
-                };
-                break;
+                });
             }
         }
 
