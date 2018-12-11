@@ -13,6 +13,8 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
   private subscription: Subscription;
 
   @Input() name: string;
+  @Input() columnName: string = null;
+  @Input() row: number;
   @Input() errorMessage: string;
   @Input() complexType = false;
 
@@ -49,23 +51,28 @@ export class FormFieldComponent implements OnInit, OnDestroy, AfterContentInit  
     }
   }
 
-  findError(error: any) {
-    const errorItem = error.find(item => item.PropertyName === this.name);
-    this.error = !!errorItem;
-    if (this.error) {
-      this.errorMessage = errorItem.ErrorMessage;
-    }
+  findError(errors: any) {
+    Object.keys(errors).forEach(row => {
+      const errorItem = errors[row];
+      const rowNum = parseInt(row, 10);
+      if (rowNum < 0) {
+        this.errorMessage = errorItem.ErrorMessage;
+        this.error = true;
+      } else {
+        if (this.columnName === errorItem.PropertyName && rowNum === this.row) {
+          this.errorMessage = errorItem.ErrorMessage;
+          this.error = true;
+        }
+      }
+    });
   }
 
-  updateErrorMessage(errors: any) {
-    if (errors instanceof Array) {
-      const errorArr = errors as Array<any>;
-      for (let i = 0; i < errors.length; i++) {
-        this.findError(errors[i]);
+  updateErrorMessage(errorFieldMap: any) {
+    Object.keys(errorFieldMap).forEach(field => {
+      if (field === this.name) {
+        this.findError(errorFieldMap[field]);
       }
-    } else {
-      this.findError(errors);
-    }
+    });
   }
 
   ngOnDestroy() {

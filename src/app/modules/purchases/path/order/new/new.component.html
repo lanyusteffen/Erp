@@ -104,12 +104,12 @@
           <input style="width:60px" type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled">
         </td>
         <td>
-          <app-form-field [name]="'Quanlity'">
+          <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'Quanlity'">
             <input type="text" #formField style="width:80px" formControlName="Quanlity" (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel] />
           </app-form-field>
         </td>
         <td>
-          <app-form-field [name]="'Price'">
+          <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'Price'">
             <input type="text" #formField style="width:80px" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control" [ngModel] />
           </app-form-field>
         </td>

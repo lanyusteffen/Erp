@@ -47,14 +47,13 @@ export class ErrorService {
           while (typeof controlErrors[i] !== 'undefined') {
             const controlError = controlErrors[i];
             errorMessage = getErrorMessageFn(field, controlError);
-            item = { ErrorMessage: errorMessage, ListMode: true,
-              PropertyName: controlError.propertyName };
+            item = { ErrorMessage: errorMessage, PropertyName: controlError.propertyName };
             errorItems[field][controlError.row] = item;
             ++i;
           }
         } else {
           errorMessage = getErrorMessageFn(field, controlErrors);
-          item = { ErrorMessage: errorMessage, ListMode: false };
+          item = { ErrorMessage: errorMessage };
           errorItems[field][-1] = item;
         }
       }

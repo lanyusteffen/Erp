@@ -10,8 +10,4 @@ export interface ErrorItem {
      * 错误描述
      */
     ErrorMessage: string;
-    /**
-     * 是否是否在列表中的错误
-     */
-    ListMode: boolean;
 }
