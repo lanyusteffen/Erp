@@ -39,6 +39,7 @@ export class StorageListComponent implements OnInit, OnDestroy {
     this.subscription = this.storageService
       .get()
       .subscribe(({ storages, currentPagination }) => {
+        console.log(currentPagination);
         this.storages = storages;
         this.pagination = currentPagination;
       });

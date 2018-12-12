@@ -44,6 +44,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.subscription = this.productService
       .get()
       .subscribe(({ products, currentPagination }) => {
+        console.log(currentPagination)
         this.products = products;
         this.pagination = currentPagination;
       });

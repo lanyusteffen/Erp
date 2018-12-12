@@ -142,6 +142,12 @@ export class ProductService {
     return this.http.post('/StorageDetail/GetList', { productId }, next, fallback, ModuleType.Product);
   }
 
+  createOrUpdate(storageDetailList,next:(data:any) => void,fallback:(error:any)=>void){
+
+    const { } = this.state;
+
+    return this.http.post('/StorageDetail/CreateOrUpdate',storageDetailList, next, fallback, ModuleType.Product);
+  }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     const { } = this.state;

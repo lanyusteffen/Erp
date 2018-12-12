@@ -66,8 +66,10 @@ export class StorageService {
       const nextState = {
         ...this.state,
         storages: data.StorageList,
-        currentPagination: data.Pagination
+        currentPagination: data.StoragePageQueryReq
       };
+
+      console.log(nextState);
 
       this.state = nextState;
       this.storage$.next(nextState);

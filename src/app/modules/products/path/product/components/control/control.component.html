@@ -118,13 +118,13 @@
             <td>                  
               <app-systemunit-selector formControlName="SystemUnitId" [ngModel]></app-systemunit-selector> 
             </td>
-            <td><app-form-field [name]="'UnitTime'"><input type="text" formControlName="UnitTime" class="form-control" [ngModel]></app-form-field></td>
-            <td><app-form-field [name]="'PrePurchasePrice'"><input type="text" formControlName="PrePurchasePrice" class="form-control" [ngModel]></app-form-field></td>
-            <td><app-form-field [name]="'PriceLevel1'"><input type="text" formControlName="PriceLevel1" class="form-control" [ngModel]></app-form-field></td>
-            <td><app-form-field [name]="'PriceLevel2'"><input type="text" formControlName="PriceLevel2" class="form-control" [ngModel]></app-form-field></td>
-            <td><app-form-field [name]="'PriceLevel3'"><input type="text" formControlName="PriceLevel3" class="form-control" [ngModel]></app-form-field></td>
-            <td><app-form-field [name]="'PriceLevel4'"><input type="text" formControlName="PriceLevel4" class="form-control" [ngModel]></app-form-field></td>
-            <td><app-form-field [name]="'PriceLevel5'"><input type="text" formControlName="PriceLevel5" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'UnitTime'"><input type="text" #formField formControlName="UnitTime" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PrePurchasePrice'"><input type="text" #formField formControlName="PrePurchasePrice" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel1'"><input type="text" #formField formControlName="PriceLevel1" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel2'"><input type="text" #formField formControlName="PriceLevel2" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel3'"><input type="text" #formField formControlName="PriceLevel3" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel4'"><input type="text" #formField formControlName="PriceLevel4" class="form-control" [ngModel]></app-form-field></td>
+            <td><app-form-field [name]="'PriceLevel5'"><input type="text" #formField formControlName="PriceLevel5" class="form-control" [ngModel]></app-form-field></td>
           </tr>
         </tbody>
 

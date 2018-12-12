@@ -87,4 +87,40 @@ export class ProductStorageInitComponent {
   getKeys(item) {
     return Object.keys(item);
   }
+
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定期初信息列表失败!' + err
+    });
+  }
+
+  onSubmit({ value }, isValid) {
+      let storageInitList = new Array();
+
+     value.forEach((val, idx, array) => {
+      // val: 当前值
+      // idx：当前index
+      // array: Array
+       if (val.StorageId == 0 && (val.BeginCount > 0 || val.UnitCost > 0
+         || val.InitialTotalAmount > 0 || val.StorageLowerAlarmCount > 0 || val.StorageUpAlarmCount > 0)) {
+         storageInitList.push(val);
+       } else if (val.StorageId > 0) {
+         storageInitList.push(val);
+       }
+
+       
+  });
+
+  this.productService.createOrUpdate(storageInitList, data => {
+    if (data.IsValid) {
+      this.productService.getStorageDetailList(this._productId , data => {
+        this.form = this.formService.createArrayForm(data);
+      }, (err) => {
+        this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
+      });
+    }
+  }, (err) => {this.alertService.listErrorCallBack(ModuleName.Product, err);})
+  
+  }
 }
