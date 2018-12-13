@@ -1,0 +1,32 @@
+.form {
+	width: 100%;
+
+	input {
+		display: table-cell;
+		vertical-align: middle;
+		width: 120px;
+		&:focus ~ .addon {
+			border-bottom-color: #118DF0;
+		}
+	}
+
+	&.inline-form {
+		display: inline-block;
+		width: auto;
+		vertical-align: top;
+	}
+
+	th,
+	td {
+		font-size: 12px;
+		position: relative;
+	}
+
+	th {
+		text-align: right;
+		font-weight: normal;
+		line-height: 18px;
+		white-space: nowrap;
+		width: 90px;
+	}
+}

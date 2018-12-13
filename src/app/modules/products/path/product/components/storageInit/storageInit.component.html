@@ -25,28 +25,28 @@
                     <td *ngIf="systemConfig.IsOpenBill">{{item.StorageLowerAlarmCount}}</td>
                     <td *ngIf="systemConfig.IsOpenBill">{{item.StorageUpAlarmCount}}</td>
                     <td *ngIf="!systemConfig.IsOpenBill">
-                    <app-form-field [name]="'BeginCount'">
-                    <input #formField style="width:60px" type="text"  formControlName="BeginCount" class="form-control" [ngModel]/>
-                    </app-form-field>
+                      <app-form-field [name]="'BeginCount'">
+                        <input #formField style="width:60px" type="text" formControlName="BeginCount" [ngModel] />
+                      </app-form-field>
                     </td>
                     <td *ngIf="!systemConfig.IsOpenBill">
                       <app-form-field [name]="'UnitCost'">
-                        <input #formField style="width:60px" type="text" formControlName="UnitCost" class="form-control" [ngModel]/>
+                        <input #formField style="width:60px" type="text" formControlName="UnitCost" [ngModel] />
                       </app-form-field>
                     </td>
                     <td *ngIf="!systemConfig.IsOpenBill">
                       <app-form-field [name]="'InitialTotalAmount'">
-                        <input #formField style="width:60px" type="text" formControlName="InitialTotalAmount" class="form-control" [ngModel]/>
+                        <input #formField style="width:60px" type="text" formControlName="InitialTotalAmount" [ngModel] />
                       </app-form-field>
                     </td>
                     <td *ngIf="!systemConfig.IsOpenBill">
                       <app-form-field [name]="'StorageLowerAlarmCount'">
-                        <input #formField style="width:60px" type="text" formControlName="StorageLowerAlarmCount" class="form-control" [ngModel]/>
+                        <input #formField style="width:60px" type="text" formControlName="StorageLowerAlarmCount" [ngModel] />
                       </app-form-field>
                     </td>
                     <td *ngIf="!systemConfig.IsOpenBill">
                       <app-form-field [name]="'StorageUpAlarmCount'">
-                        <input #formField style="width:60px" type="text" formControlName="StorageUpAlarmCount" class="form-control" [ngModel]/>
+                        <input #formField style="width:60px" type="text" formControlName="StorageUpAlarmCount" [ngModel] />
                       </app-form-field>
                     </td>
                 </tr>
