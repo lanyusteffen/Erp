@@ -103,10 +103,10 @@ export class ProductStorageInitComponent {
       // val: 当前值
       // idx：当前index
       // array: Array
-      if (val.StorageId === 0 && (val.BeginCount > 0 || val.UnitCost > 0
+      if (val.Id === 0 && (val.BeginCount > 0 || val.UnitCost > 0
         || val.InitialTotalAmount > 0 || val.StorageLowerAlarmCount > 0 || val.StorageUpAlarmCount > 0)) {
          storageInitList.push(val);
-       } else if (val.StorageId > 0) {
+       } else if (val.Id > 0) {
          storageInitList.push(val);
        }
     });
