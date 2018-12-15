@@ -1,55 +1,63 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form,form.valid)" novalidate *ngIf="formReady">
-    <app-card [header]="'商品期初编辑'" [show]="_show" (onCancel)="handleClose()">
-        <div class="card-content">
-            <app-ui-table class="form">
-              <thead>                    
-                  <th>仓库</th>
-                  <th>颜色</th>
-                  <th>尺码</th>
-                  <th>单位</th>                  
-                  <th>期初数量</th>
-                  <th>成本单价</th>
-                  <th>期初总额</th>
-                  <th>下线报警值</th>
-                  <th>上线报警值</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of storageInitList; index as i" [formGroupName]="i">
-                    <td>{{item.StorageName}}</td>
-                    <td>{{item.ProductSpecColorAlias}}</td>
-                    <td>{{item.ProductSpecSizeAlias}}</td>
-                    <td>{{item.UnitName}}</td>
-                    <td *ngIf="systemConfig.IsOpenBill">{{item.BeginCount}}</td>
-                    <td *ngIf="systemConfig.IsOpenBill">{{item.UnitCost}}</td>
-                    <td *ngIf="systemConfig.IsOpenBill">{{item.InitialTotalAmount}}</td>
-                    <td *ngIf="systemConfig.IsOpenBill">{{item.StorageLowerAlarmCount}}</td>
-                    <td *ngIf="systemConfig.IsOpenBill">{{item.StorageUpAlarmCount}}</td>
-                    <td *ngIf="!systemConfig.IsOpenBill">
-                      <input style="width:60px" type="text" class="form-control" formControlName="BeginCount" [ngModel] />
-                    </td>
-                    <td *ngIf="!systemConfig.IsOpenBill">
-                      <input style="width:60px" type="text" class="form-control" formControlName="UnitCost" [ngModel] />
-                    </td>
-                    <td *ngIf="!systemConfig.IsOpenBill">
-                      <input style="width:60px" type="text" class="form-control" formControlName="InitialTotalAmount" [ngModel] />
-                    </td>
-                    <td *ngIf="!systemConfig.IsOpenBill">
-                      <input style="width:60px" type="text" class="form-control" formControlName="StorageLowerAlarmCount" [ngModel] />
-                    </td>
-                    <td *ngIf="!systemConfig.IsOpenBill">
-                      <input style="width:60px" type="text" class="form-control" formControlName="StorageUpAlarmCount" [ngModel] />
-                    </td>
-                </tr>
-              </tbody>
-            </app-ui-table>           
-        </div>
-        <div app-card-footer>
-            <app-ui-button [style]="'primary'" type="submit">
-              保存
-            </app-ui-button>
-            <app-ui-button (click)="handleClose()">
-              取消
-            </app-ui-button>
-          </div>
-    </app-card>
-    </form>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
+  <app-card [header]="'商品期初编辑'" [show]="_show" (onCancel)="handleClose()">
+      <div class="card-content">
+          <app-ui-table class="form">
+            <thead>                    
+                <th>仓库</th>
+                <th>颜色</th>
+                <th>尺码</th>
+                <th>单位</th>                  
+                <th>期初数量</th>
+                <th>成本单价</th>
+                <th>期初总额</th>
+                <th>下线报警值</th>
+                <th>上线报警值</th>
+            </thead>
+            <tbody formArrayName="ItemList">
+              <tr *ngFor="let item of storageInitItemList.controls; index as i" [formGroupName]="i">
+                  <td>
+                    <input style="width:60px" type="text" formControlName="StorageName" class="none-input" [ngModel] disabled="disabled" />
+                  </td>
+                  <td>
+                      <input style="width:60px" type="text" formControlName="ProductSpecColorAlias" class="none-input" [ngModel] disabled="disabled" />
+                  </td>
+                  <td>
+                      <input style="width:60px" type="text" formControlName="ProductSpecSizeAlias" class="none-input" [ngModel] disabled="disabled" />
+                  </td>
+                  <td>
+                      <input style="width:60px" type="text" formControlName="UnitName" class="none-input" [ngModel] disabled="disabled" />
+                  </td>
+                  <td *ngIf="systemConfig.IsOpenBill">{{item.BeginCount}}</td>
+                  <td *ngIf="systemConfig.IsOpenBill">{{item.UnitCost}}</td>
+                  <td *ngIf="systemConfig.IsOpenBill">{{item.InitialTotalAmount}}</td>
+                  <td *ngIf="systemConfig.IsOpenBill">{{item.StorageLowerAlarmCount}}</td>
+                  <td *ngIf="systemConfig.IsOpenBill">{{item.StorageUpAlarmCount}}</td>
+                  <td *ngIf="!systemConfig.IsOpenBill">
+                    <input style="width:60px" type="text" class="form-control" formControlName="BeginCount" [ngModel] />
+                  </td>
+                  <td *ngIf="!systemConfig.IsOpenBill">
+                    <input style="width:60px" type="text" class="form-control" formControlName="UnitCost" [ngModel] />
+                  </td>
+                  <td *ngIf="!systemConfig.IsOpenBill">
+                    <input style="width:60px" type="text" class="form-control" formControlName="InitialTotalAmount" [ngModel] />
+                  </td>
+                  <td *ngIf="!systemConfig.IsOpenBill">
+                    <input style="width:60px" type="text" class="form-control" formControlName="StorageLowerAlarmCount" [ngModel] />
+                  </td>
+                  <td *ngIf="!systemConfig.IsOpenBill">
+                    <input style="width:60px" type="text" class="form-control" formControlName="StorageUpAlarmCount" [ngModel] />
+                  </td>
+              </tr>
+            </tbody>
+          </app-ui-table>           
+      </div>
+      <div app-card-footer>
+        <app-ui-button [style]="'primary'" type="submit">
+          保存
+        </app-ui-button>
+        <app-ui-button (click)="handleClose()">
+          取消
+        </app-ui-button>
+      </div>
+  </app-card>
+</form>

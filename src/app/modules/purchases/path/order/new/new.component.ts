@@ -77,7 +77,10 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     this.goodsPopupSelector.show = true;
   }
 
-  get purchaseItemList(): FormArray { return this.form.get('ItemList') as FormArray; }
+  get purchaseItemList(): FormArray {
+    return this.form.get('ItemList') as FormArray;
+  }
+
   get formReady(): boolean {
     if (this.form) {
       return !!Object.keys(this.form.controls).length;

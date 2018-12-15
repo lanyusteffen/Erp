@@ -5,12 +5,14 @@ import { FormArray, FormControl, FormGroup, Validators, FormBuilder } from '@ang
 export class FormService {
   constructor(private fb: FormBuilder) { }
 
-  createArrayForm(array, validator = null) {
+  createArrayForm(key, array, validator = null) {
+    const formGroup = {};
     if (validator !== undefined && validator != null) {
-      return this.fb.array(array.map(_item => this.fb.group(_item)), validator);
+      formGroup[key] = this.fb.array(array.map(_item => this.fb.group(_item)), validator);
     } else {
-      return this.fb.array(array.map(_item => this.fb.group(_item)));
+      formGroup[key] = this.fb.array(array.map(_item => this.fb.group(_item)));
     }
+    return this.fb.group(formGroup);
   }
 
   createForm(fields, validators = null) {

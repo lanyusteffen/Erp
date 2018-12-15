@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { AlertService, ModuleName} from '@services/alert.service';
@@ -48,13 +48,13 @@ export class ProductStorageInitComponent {
 
   get formReady(): boolean {
     if (this.form) {
-      return !!(this.form.value as FormArray).length;
+      return !!Object.keys(this.form.controls).length;
     }
     return false;
   }
 
-  get storageInitList(): FormArray {
-    return this.form.value as FormArray;
+  get storageInitItemList(): FormArray {
+    return this.form.get('ItemList') as FormArray;
   }
 
   handleClose() {
@@ -67,7 +67,7 @@ export class ProductStorageInitComponent {
       this._productId = productId;
       if (this.show) {
         this.productService.getStorageDetailList(productId, data => {
-          this.form = this.formService.createArrayForm(data);
+          this.form = this.formService.createArrayForm('ItemList', data);
         }, (err) => {
           this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
         });
@@ -95,26 +95,12 @@ export class ProductStorageInitComponent {
     });
   }
 
-  onSubmit({ value }, isValid) {
-
-    const storageInitList = new Array();
-
-    value.forEach((val, idx, array) => {
-      // val: 当前值
-      // idx：当前index
-      // array: Array
-      if (val.Id === 0 && (val.BeginCount > 0 || val.UnitCost > 0
-        || val.InitialTotalAmount > 0 || val.StorageLowerAlarmCount > 0 || val.StorageUpAlarmCount > 0)) {
-         storageInitList.push(val);
-       } else if (val.Id > 0) {
-         storageInitList.push(val);
-       }
-    });
+  onSubmit({ storageInitList }, isValid) {
 
     this.productService.createOrUpdate(storageInitList, data => {
       if (data.IsValid) {
         this.productService.getStorageDetailList(this._productId, inData => {
-          this.form = this.formService.createArrayForm(inData);
+          this.form = this.formService.createArrayForm('ItemList', inData);
         }, (err) => {
           this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
         });
