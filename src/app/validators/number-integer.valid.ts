@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 export class NumberIntegerValid {
 
-    private static REGEXNUMBERINTEGER = /^[0-9]+$/g;
+    private static REGEXNUMBERINTEGER: RegExp = /^[0-9]+$/;
 
     public static validation(ctrl: FormControl) {
 
