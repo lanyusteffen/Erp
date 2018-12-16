@@ -64,7 +64,7 @@ export class PopupSelectorEmployeeComponent implements ControlValueAccessor {
     this.closeModal();
   }
 
-  unSelect() {
+  reset() {
     this._selectedItem = null;
     this._showLabel = '';
   }

@@ -40,7 +40,7 @@
           <tbody>
             <tr *ngFor="let item of goods">
               <td>
-                <app-ui-checkbox [checked]="item.Selected" (click)="select($event, item)"></app-ui-checkbox>
+                <app-ui-checkbox [checked]="item.Selected" (onChange)="select($event, item)"></app-ui-checkbox>
               </td>
               <td>
                 <app-form-field [name]="'Name'">

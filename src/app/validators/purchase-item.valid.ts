@@ -19,6 +19,7 @@ export class PurchaseItemValid {
             if (PrimaryKeyValid.validation(goodsIdCtrl) != null) {
                 continue;
             }
+
             if (NumberDecimalValid.validation(quanlityCtrl) != null || parseInt(quanlityCtrl.value, 10) < 0) {
                 result.push({
                     valid: false,

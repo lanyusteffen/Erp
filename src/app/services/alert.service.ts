@@ -18,7 +18,7 @@ export class AlertService {
 
     this.timeout = setTimeout(() => {
       this.close();
-    }, 3000);
+    }, 30000);
   }
 
   close() {

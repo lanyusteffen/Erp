@@ -80,6 +80,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     if (this.form) {
       return !!Object.keys(this.form.controls).length;
     }
+<<<<<<< HEAD
     return false;
   }
 
@@ -106,6 +107,61 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
     for (let i = 0; i < itemArr.length; i++) {
       itemArr.at(i).patchValue({'StorageId': selectedStorageId});
+=======
+
+    ngOnDestroy() {
+    }
+
+
+
+    selectAllStorage(selectedStorageId) {
+        const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+        for (let i = 0; i < itemArr.length; i++) {
+            itemArr.at(i).patchValue({ 'StorageId': selectedStorageId });
+        }
+    }
+
+    selectCustomer(item: any): void {
+        this.selectCustomer = item;
+        this.customerPopupSelector.reset();
+    }
+
+    selectEmployee(item: any): void {
+        this.selectedEmployee = item;
+    }
+
+    selectGoods(selectItems: any): void {
+
+        selectItems.forEach(item => {
+
+            let findIndex = this.selectedGoods.indexOf(item.Id);
+
+            if (findIndex > -1) {
+                findIndex = findIndex + 1;
+                const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+                itemArr.removeAt(findIndex);
+            }
+
+            const newstorageOutItem = Object.assign({}, storageOutItem);
+
+            newstorageOutItem.GoodsId = item.Id;
+            newstorageOutItem.ProductUnitName = item.ProductUnitName;
+            newstorageOutItem.ProductSizeValue = item.ProductSizeValue;
+            newstorageOutItem.ProductColorValue = item.ProductColorValue;
+            newstorageOutItem.Spec = item.Spec;
+            newstorageOutItem.Quanlity = item.Quanlity;
+            newstorageOutItem.Name = item.Name;
+            newstorageOutItem.Price = item.Price;
+            newstorageOutItem.Amount = item.Quanlity* item.Price;
+
+            if (findIndex === -1) {
+                findIndex = 1;
+            }
+
+            this.addstorageOutItem(findIndex, newstorageOutItem);
+            this.selectedGoods.push(item.Id);
+        });
+>>>>>>> 0b5a1bb4882812a87032f938edc8fbeb1352d649
     }
   }
 
