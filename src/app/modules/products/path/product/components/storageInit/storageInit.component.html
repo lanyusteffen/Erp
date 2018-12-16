@@ -3,60 +3,60 @@
     <div class="card-content">
       <app-ui-table class="form">
         <thead>
-          <th>仓库</th>
-          <th>颜色</th>
-          <th>尺码</th>
-          <th>单位</th>
-          <th>期初数量</th>
-          <th>成本单价</th>
-          <th>期初总额</th>
-          <th>下线报警值</th>
-          <th>上线报警值</th>
+          <th style="width:120px">仓库</th>
+          <th style="width:60px">颜色</th>
+          <th style="width:60px">尺码</th>
+          <th style="width:60px">单位</th>
+          <th style="width:60px">期初数量</th>
+          <th style="width:60px">成本单价</th>
+          <th style="width:60px">期初总额</th>
+          <th style="width:60px">下线报警值</th>
+          <th style="width:60px">上线报警值</th>
         </thead>
         <tbody formArrayName="ItemList">
           <tr *ngFor="let item of storageInitItemList.controls; index as i" [formGroupName]="i">
-            <td>
-              <input style="width:60px" type="text" formControlName="StorageName" class="none-input" [ngModel] disabled="disabled" />
+            <td style="width:120px">
+              <input style="width:120px" type="text" formControlName="StorageName" class="none-input" [ngModel] disabled="disabled" />
             </td>
-            <td>
+            <td style="width:60px">
               <input style="width:60px" type="text" formControlName="ProductSpecColorAlias" class="none-input"
                 [ngModel] disabled="disabled" />
             </td>
-            <td>
+            <td style="width:60px">
               <input style="width:60px" type="text" formControlName="ProductSpecSizeAlias" class="none-input" [ngModel]
                 disabled="disabled" />
             </td>
-            <td>
+            <td style="width:60px">
               <input style="width:60px" type="text" formControlName="UnitName" class="none-input" [ngModel] disabled="disabled" />
             </td>
-            <td *ngIf="systemConfig.IsOpenBill">{{item.BeginCount}}</td>
-            <td *ngIf="systemConfig.IsOpenBill">{{item.UnitCost}}</td>
-            <td *ngIf="systemConfig.IsOpenBill">{{item.InitialTotalAmount}}</td>
-            <td *ngIf="systemConfig.IsOpenBill">{{item.StorageLowerAlarmCount}}</td>
-            <td *ngIf="systemConfig.IsOpenBill">{{item.StorageUpAlarmCount}}</td>
-            <td *ngIf="!systemConfig.IsOpenBill">
+            <td style="width:60px" *ngIf="systemConfig.IsOpenBill">{{item.BeginCount}}</td>
+            <td style="width:60px" *ngIf="systemConfig.IsOpenBill">{{item.UnitCost}}</td>
+            <td style="width:60px" *ngIf="systemConfig.IsOpenBill">{{item.InitialTotalAmount}}</td>
+            <td style="width:60px" *ngIf="systemConfig.IsOpenBill">{{item.StorageLowerAlarmCount}}</td>
+            <td style="width:60px" *ngIf="systemConfig.IsOpenBill">{{item.StorageUpAlarmCount}}</td>
+            <td style="width:60px" *ngIf="!systemConfig.IsOpenBill">
               <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'BeginCount'">
                 <input #formField style="width:60px" type="text" class="form-control" formControlName="BeginCount" [ngModel] />
               </app-form-field>
             </td>
-            <td *ngIf="!systemConfig.IsOpenBill">
+            <td style="width:60px" *ngIf="!systemConfig.IsOpenBill">
               <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'Price'">
                 <input #formField style="width:60px" type="text" class="form-control" formControlName="Price" [ngModel] />
               </app-form-field>
             </td>
-            <td *ngIf="!systemConfig.IsOpenBill">
+            <td style="width:60px" *ngIf="!systemConfig.IsOpenBill">
               <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'InitialTotalAmount'">
                 <input #formField style="width:60px" type="text" class="form-control" formControlName="InitialTotalAmount"
                   [ngModel] />
               </app-form-field>
             </td>
-            <td *ngIf="!systemConfig.IsOpenBill">
+            <td style="width:60px" *ngIf="!systemConfig.IsOpenBill">
               <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'StorageLowerAlarmCount'">
                 <input #formField style="width:60px" type="text" class="form-control" formControlName="StorageLowerAlarmCount"
                   [ngModel] />
               </app-form-field>
             </td>
-            <td *ngIf="!systemConfig.IsOpenBill">
+            <td style="width:60px" *ngIf="!systemConfig.IsOpenBill">
                 <app-form-field [name]="'ItemList'" [row]="i" [columnName]="'StorageUpAlarmCount'">
               <input #formField style="width:60px" type="text" class="form-control" formControlName="StorageUpAlarmCount"
                 [ngModel] />

@@ -97,25 +97,7 @@ export class ProductStorageInitComponent {
 
   onSubmit({ value }, isValid) {
 
-    var storageDetailActionRequestList = new Array();
-
-    value.ItemList.forEach(item => {
-      
-      if(item.Id==0 && !(item.BeginCount==0 
-        && item.UnitCost==0 
-        && item.InitialTotalAmount==0 
-        && item.StorageLowerAlarmCount==0
-        && item.StorageUpAlarmCount==0
-        ))
-        {
-          storageDetailActionRequestList.push(item);
-        }else if(item.Id>0){
-          storageDetailActionRequestList.push(item);
-        }
-
-    });
-
-    this.productService.createOrUpdate(storageDetailActionRequestList, data => {
+    this.productService.createOrUpdate(value.ItemList, data => {
       if (data.IsValid) {
         this.productService.getStorageDetailList(this._productId, inData => {
           this.form = this.formService.createArrayForm('ItemList', inData);

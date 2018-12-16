@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
   <div class="actions">
     <div class="form-group">
       <div class="form-group-label">
@@ -40,7 +40,7 @@
     </div>
   </div>
   <div class="actions">
-    <app-ui-button [style]="'primary'">
+    <app-ui-button [style]="'primary'"  type="submit">
       保存
     </app-ui-button>
     <app-ui-button [style]="'primary'">
@@ -49,16 +49,16 @@
   </div>
   <app-ui-table>
     <thead>
-      <th>操作</th>
-      <th><span class="required">*</span>商品</th>
-      <th>规格型号</th>
-      <th>单位</th>
-      <th>{{propertyName1}}</th>
-      <th>{{propertyName2}}</th>
-      <th><span class="required">*</span>出库数量(批量设置)</th>
-      <th><span class="required">*</span>出库成本单价（批量设置）</th>
-      <th><span class="required">*</span>出库成本金额（批量设置）</th>
-      <th><span class="required">*</span>仓库<app-storage-selector (selectChanged)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
+      <th width="60px">操作</th>
+      <th width="60px"><span class="required">*</span>商品</th>
+      <th width="60px">规格型号</th>
+      <th width="60px">单位</th>
+      <th width="60px">{{propertyName1}}</th>
+      <th width="60px">{{propertyName2}}</th>
+      <th width="80px"><span class="required">*</span>出库数量</th>
+      <th width="80px"><span class="required">*</span>出库成本单价</th>
+      <th width="80px"><span class="required">*</span>出库成本金额</th>
+      <th width="120px"><span class="required">*</span>仓库<app-storage-selector (selectChanged)="selectAllStorage($event)" [isEditing]="false"></app-storage-selector></th>
     </thead>
     <tbody formArrayName="StorageOutItemActionRequests">
       <tr *ngFor="let item of storageOutItemList.controls; index as i" [formGroupName]="i">
@@ -75,18 +75,49 @@
             </span>
           </div>
         </td>
-        <td><input type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
+        <td>
+              <input type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled">
+        </td>
         <td><input type="text" formControlName="ProductUnitName" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductColorValue" class="none-input" [ngModel] disabled="disabled"></td>
         <td><input type="text" formControlName="ProductSizeValue" class="none-input" [ngModel] disabled="disabled"></td>
-        <td><input type="number" formControlName="Quanlity"  (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="Price"  (change)="calculateItem('Price', i, true)" class="form-control" [ngModel]></td>
-        <td><input type="number" formControlName="Amount" class="form-control" [ngModel]></td>       
-        <td><app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector></td>
+        <td>
+            <app-form-field [name]="'StorageOutItemActionRequests'" [row]="i" [columnName]="'Quanlity'">
+              <input #formField type="number" formControlName="Quanlity"  (change)="calculateItem('Quanlity', i, true)" class="form-control" [ngModel]>
+            </app-form-field>
+        </td>
+        <td>
+          <app-form-field [name]="'StorageOutItemActionRequests'" [row]="i" [columnName]="'Price'">
+            <input  #formField type="number" formControlName="Price" (change)="calculateItem('Price', i, true)" class="form-control"
+              [ngModel]>
+          </app-form-field>
+        </td>
+        <td>
+          <app-form-field [name]="'StorageOutItemActionRequests'" [row]="i" [columnName]="'Amount'">
+            <input  #formField type="number" formControlName="Amount" class="form-control" [ngModel]>
+          </app-form-field>
+        </td>
+        <td>
+          <app-storage-selector [isEditing]="false" formControlName="StorageId" [ngModel]></app-storage-selector>
+        </td>
       </tr>
     </tbody>
   </app-ui-table>
   <div class="footer">
+      <div class="action-bar">
+          <label>
+            <span>配送方式：</span> 
+            <app-ui-radio [radioName]="'DeliveryMode'" [value]="0" formControlName="DeliveryMode" [label]="'自提'" [ngModel]></app-ui-radio>
+            <app-ui-radio [radioName]="'DeliveryMode'" [value]="1" formControlName="DeliveryMode" [label]="'送货'" [ngModel]></app-ui-radio>
+            <app-ui-radio [radioName]="'DeliveryMode'" [value]="2" formControlName="DeliveryMode" [label]="'快递'" [ngModel]></app-ui-radio>
+          </label>
+          <span *ngIf="form.controls['DeliveryMode'].value===1">
+
+          </span>
+          <span *ngIf="form.controls['DeliveryMode'].value===2">
+            
+          </span>
+        </div>
     <div class="summary-panel">
       <div class="remark-area">
           <textarea formControlName="Remark" [ngModel]></textarea>
@@ -99,4 +130,6 @@
     </div>
   </div>
   <app-popup-selector-goods [customerId]="selectCustomer ? selectCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods>
+  <input type="hidden" formControlName="Id" [ngModel] />
+  <input type="hidden" formControlName="CustomerType" [ngModel] />
 </form>
