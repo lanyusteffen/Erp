@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 export class NumberDecimalValid {
 
-    private static REGEXNUMBERDECIMAL = new RegExp('^[0-9]+(\\.|0-9]+)?$');
+    private static REGEXNUMBERDECIMAL = /[0-9]+([\.]?[0-9]+)?/g;
 
     public static validation(ctrl: FormControl) {
 
