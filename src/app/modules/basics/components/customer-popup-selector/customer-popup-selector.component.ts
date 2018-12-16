@@ -69,7 +69,7 @@ export class CustomerPopupSelectorComponent implements OnInit, ControlValueAcces
     this.closeModal();
   }
 
-  unSelect() {
+  reset() {
     this._showLabel = '';
     this.popupSelectorCustomer.unSelect();
     this.popupSelectorOther.unSelect();

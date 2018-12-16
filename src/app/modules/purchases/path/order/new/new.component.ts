@@ -135,7 +135,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     const customerIdCtrl = <FormControl>this.form.controls['CustomerId'];
     customerTypeCtrl.setValue(this.customerPopupSelector.selectedTab);
     customerIdCtrl.setValue(item.Id);
-    this.employeePopupSelector.unSelect();
+    this.employeePopupSelector.reset();
   }
 
   selectEmployee(item: any): void {
@@ -198,6 +198,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
               type: 'success',
               content: '采购单' + data.Code + '新增成功！'
             });
+            this.newOne();
           } else {
             this.alertService.addFail(data.ErrorMessages);
           }
@@ -207,6 +208,11 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
       } else {
         this.purchaseOrderService.modify(value, data => {
           if (data.IsValid) {
+            this.alertService.open({
+              type: 'success',
+              content: '采购单' + data.Code + '修改成功！'
+            });
+            this.newOne();
           } else {
             this.alertService.modifyFail(data.ErrorMessages);
           }

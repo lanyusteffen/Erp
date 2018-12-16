@@ -91,7 +91,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
 
     selectCustomer(item: any): void {
         this.selectCustomer = item;
-        this.customerPopupSelector.unSelect();
+        this.customerPopupSelector.reset();
     }
 
     selectEmployee(item: any): void {
