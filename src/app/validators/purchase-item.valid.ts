@@ -20,7 +20,7 @@ export class PurchaseItemValid {
                 continue;
             }
 
-            if (NumberDecimalValid.validation(quanlityCtrl) != null || parseInt(priceCtrl.value, 10) < 0) {
+            if (NumberDecimalValid.validation(quanlityCtrl) != null || parseInt(quanlityCtrl.value, 10) < 0) {
                 result.push({
                     valid: false,
                     propertyName: 'Quanlity',
