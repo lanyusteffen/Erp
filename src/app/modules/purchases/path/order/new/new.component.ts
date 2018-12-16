@@ -188,6 +188,32 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     this.calculate();
   }
 
+  private reset(): void {
+
+    this.payedAmount = 0.00;
+    this.totalAmount = 0.00;
+
+    this.clearSelectGoods();
+    this.clearSummaryControl();
+
+    this.goodsPopupSelector.reset();
+  }
+
+  private clearSummaryControl(): void {
+    (<FormControl>this.form.controls['WholeDiscountAmount']).patchValue(null);
+    (<FormControl>this.form.controls['WholeDiscountRate']).patchValue(null);
+  }
+
+  private clearSelectGoods(): void {
+    const itemArr = <FormArray>this.form.controls['ItemList'];
+    for (let i = 0; i < itemArr.length; i++) {
+      if (i !== 0) {
+        itemArr.removeAt(i);
+      }
+    }
+    this.form.controls['ItemList'] = itemArr;
+  }
+
   onSubmit({ value }, isValid) {
     if (isValid) {
       value.PurchaseTime = this.datePipe.transform(<Date>value.PurchaseTime, 'yyyy-MM-dd HH:mm:ss');
@@ -198,7 +224,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
               type: 'success',
               content: '采购单' + data.Code + '新增成功！'
             });
-            this.newOne();
+            this.reset();
           } else {
             this.alertService.addFail(data.ErrorMessages);
           }
@@ -212,7 +238,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
               type: 'success',
               content: '采购单' + data.Code + '修改成功！'
             });
-            this.newOne();
+            this.reset();
           } else {
             this.alertService.modifyFail(data.ErrorMessages);
           }

@@ -57,7 +57,7 @@ export class PopupSelectorSupplierComponent {
     this.onSelectChanged.emit(item.Name);
   }
 
-  unSelect() {
+  reset() {
     this._selectedItem = null;
     this.onSelectChanged.emit('');
   }

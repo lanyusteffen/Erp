@@ -9,9 +9,7 @@ export class NumberDecimalValid {
             return null;
         }
 
-        const validResult = NumberDecimalValid.REGEXNUMBERDECIMAL.test(ctrl.value);
-
-        return validResult ? null : {
+        return NumberDecimalValid.REGEXNUMBERDECIMAL.test(ctrl.value) ? null : {
             valid: false,
             errMsg: '不是有效的数字格式!'
         };

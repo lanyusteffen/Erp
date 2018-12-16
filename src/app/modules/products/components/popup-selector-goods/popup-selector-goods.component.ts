@@ -84,14 +84,17 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     let finded = false;
     item.Selected = evt.target.checked;
     item.Quanlity = evt.target.checked ? 0.00 : '';
+    let index = 0;
     this._selectedItems.forEach(_item => {
       if (_item.Id === item.Id) {
         _item.Selected = evt.target.checked;
         _item.Quanlity = evt.target.checked ? 0.00 : '';
         finded = true;
+        this._selectedItems.splice(index, 1);
       }
+      ++index;
     });
-    if (!finded) {
+    if (!finded && evt.target.checked) {
       this._selectedItems.push(item);
     }
     this.makeListRefresh(item, item.Quanlity, evt.target.checked);
@@ -123,7 +126,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     this.makeListRefresh(item, item.Quanlity, true);
   }
 
-  unSelect() {
+  reset() {
     this._selectedItems = <any>[];
   }
 
