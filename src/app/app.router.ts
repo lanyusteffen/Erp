@@ -29,7 +29,7 @@ import { UserDisabledComponent } from './modules/admins/path/user/user-disabled.
 import { RoleDisabledComponent } from './modules/admins/path/role/role-disabled.component';
 import { RoleComponent } from './modules/admins/path/role/role.component';
 import { SystemConfigComponent } from './modules/admins/path/systemconfig/systemconfig.component';
-import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
+import { PurchaseNewComponent } from './modules/purchases/path/order/new/new.component';
 import { ProductComponent } from './modules/products/path/product/product.component';
 import { ProductBarcodeComponent } from './modules/products/path/product/product-barcode.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
@@ -45,6 +45,7 @@ import { ProductSizeComponent } from './modules/products/path/productsize/produc
 import { ProductSizeDisabledComponent } from './modules/products/path/productsize/productsize-disabled.component';
 import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
 import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new/new.component';
+import { PurchaseHistoryComponent } from './modules/purchases/path/order/history/history.component';
 
 export const ROUTES: Routes = [
     {
@@ -265,12 +266,17 @@ export const ROUTES: Routes = [
               },
               {
                 path: 'purchases/order/new',
-                component: PurchaseOrderNewComponent,
+                component: PurchaseNewComponent,
                 canActivate: [AuthGuard]
               },
               {
                 path: 'inventorys/storageout/new',
                 component: StorageOutNewComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'purchases/order/history',
+                component: PurchaseHistoryComponent,
                 canActivate: [AuthGuard]
               },
               { path: '**', component: PageNotFoundComponent }

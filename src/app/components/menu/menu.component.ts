@@ -19,7 +19,7 @@ export class MenuComponent {
           name: '采购订单管理',
           subMenu: [
             { name: '新增采购订单', link: '/purchases/order/new' },
-            { name: '采购订单历史', link: '/purchases/order/list' }
+            { name: '采购订单历史', link: '/purchases/order/history' }
           ]
         }
       ]

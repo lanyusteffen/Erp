@@ -48,7 +48,7 @@ const purchaseItem = {
   providers: [ FormService, DatePipe ]
 })
 
-export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
+export class PurchaseNewComponent implements OnInit, OnDestroy {
 
   @ViewChild(CustomerPopupSelectorComponent)
   private customerPopupSelector: CustomerPopupSelectorComponent;
@@ -209,6 +209,7 @@ export class PurchaseOrderNewComponent implements OnInit, OnDestroy {
     for (let i = 0; i < itemArr.length; i++) {
       if (i !== 0) {
         itemArr.removeAt(i);
+        --i;
       }
     }
     this.form.controls['ItemList'] = itemArr;

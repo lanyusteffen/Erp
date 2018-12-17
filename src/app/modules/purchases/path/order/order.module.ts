@@ -4,19 +4,27 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
-import { PurchaseOrderNewComponent } from './new/new.component';
+import { PurchaseNewComponent } from './new/new.component';
+import { PurchaseListComponent } from './history/list/list.component';
+import { PurchaseHistoryComponent } from './history/history.component';
+import { PurchaseActionsComponent } from './history/actions/actions.component';
+import { PurchaseNavsComponent } from './history/navs/navs.component';
 
 import { PurchaseOrderService } from './order.service';
 
 import { SharedModule } from '@app/shared.module';
-import { PurchaseOrderRoutingModule } from './order.router';
+import { PurchaseRoutingModule } from './order.router';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 import { ProductsSharedModule } from '../../../products/components/products.shared.module';
 
 @NgModule({
     declarations: [
-        PurchaseOrderNewComponent
+        PurchaseNewComponent,
+        PurchaseListComponent,
+        PurchaseHistoryComponent,
+        PurchaseActionsComponent,
+        PurchaseNavsComponent
     ],
     imports: [
         UIModule,
@@ -27,7 +35,7 @@ import { ProductsSharedModule } from '../../../products/components/products.shar
         ProductsSharedModule,
         SharedModule,
         DpDatePickerModule,
-        PurchaseOrderRoutingModule
+        PurchaseRoutingModule
     ],
     entryComponents: [
         DatePickerComponent

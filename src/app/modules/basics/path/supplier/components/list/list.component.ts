@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { SupplierService } from '../../supplier.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
-import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-supplier-list',

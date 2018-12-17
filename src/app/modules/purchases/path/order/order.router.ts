@@ -1,12 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { PurchaseOrderNewComponent } from './new/new.component';
+import { PurchaseNewComponent } from './new/new.component';
+import { PurchaseHistoryComponent } from './history/history.component';
 
 export const ROUTES: Routes = [
     {
       path: '',
       children: [
-        { path: 'new', component: PurchaseOrderNewComponent }
+        { path: 'new', component: PurchaseNewComponent },
+        { path: 'history', component: PurchaseHistoryComponent }
       ]
     }
   ];
@@ -16,5 +18,5 @@ export const ROUTES: Routes = [
     exports: [RouterModule]
   })
 
-  export class PurchaseOrderRoutingModule {
+  export class PurchaseRoutingModule {
   }

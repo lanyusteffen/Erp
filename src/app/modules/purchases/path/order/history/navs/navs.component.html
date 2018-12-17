@@ -1,0 +1,24 @@
+<div class="navs">
+  <ul>
+    <li [class.active]="status==='unAudit'">
+      <span class="iconfont icon-more"></span>
+      <a (click)="handleChange({})">未审核</a>
+    </li>
+    <li [class.active]="status==='audited'">
+      <span class="iconfont icon-more"></span>
+      <a (click)="handleChange({})">已审核</a>
+    </li>
+    <li [class.active]="status==='partIn'">
+      <span class="iconfont icon-more"></span>
+      <a (click)="handleChange({})">部分入库</a>
+    </li>
+    <li [class.active]="status==='allIn'">
+      <span class="iconfont icon-more"></span>
+      <a (click)="handleChange({})">全部入库</a>
+    </li>
+    <li [class.active]="status==='terminal'">
+      <span class="iconfont icon-more"></span>
+      <a (click)="handleChange({})">已终止</a>
+    </li>
+  </ul>
+</div>

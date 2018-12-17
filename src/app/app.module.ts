@@ -116,7 +116,8 @@ import { UserModifyComponent } from './modules/admins/path/user/components/modif
 import { UserPasswordComponent } from './modules/admins/path/user/components/password/password.component';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 import { PurchaseOrderService } from './modules/purchases/path/order/order.service';
-import { PurchaseOrderNewComponent } from './modules/purchases/path/order/new/new.component';
+import { PurchaseNewComponent } from './modules/purchases/path/order/new/new.component';
+import { PurchaseHistoryComponent } from './modules/purchases/path/order/history/history.component';
 
 import { ProductComponent } from './modules/products/path/product/product.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
@@ -178,6 +179,9 @@ import { ProductControlComponent } from './modules/products/path/product/compone
 
 import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new/new.component';
 import { StorageOutService } from './modules/inventorys/path/storageout/storageout.service';
+import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
+import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
+import { PurchaseNavsComponent } from './modules/purchases/path/order/history/navs/navs.component';
 
 @NgModule({
   declarations: [
@@ -266,7 +270,6 @@ import { StorageOutService } from './modules/inventorys/path/storageout/storageo
     RoleDisabledListComponent,
     SystemConfigComponent,
     SystemConfigControlComponent,
-    PurchaseOrderNewComponent,
     SystemUnitComponent,
     SystemUnitDisabledComponent,
     SystemUnitActionsComponent,
@@ -315,6 +318,12 @@ import { StorageOutService } from './modules/inventorys/path/storageout/storageo
     ProductConfigComponent,
     ProductConfigControlComponent,
     ProductControlComponent,
+
+    PurchaseNewComponent,
+    PurchaseHistoryComponent,
+    PurchaseActionsComponent,
+    PurchaseListComponent,
+    PurchaseNavsComponent,
 
     StorageOutNewComponent
   ],
