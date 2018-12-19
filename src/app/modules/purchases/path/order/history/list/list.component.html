@@ -24,9 +24,10 @@
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
         <td>
-          <a (click)="showContact(item.Id)">详情</a>
+          <a (click)="audit(item.Id)">审核</a>
           <a (click)="update(item.Id)">修改</a>
-          <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+          <a class="text-danger" (click)="onCancel(item.Id)">作废</a>
+          <a (click)="copy(item.Id)">复制</a>
         </td>
         <td>{{item.Code}}</td>
         <td>{{item.CustomerName}}</td>

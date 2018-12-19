@@ -117,23 +117,4 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  onRemove(id) {
-    this.confirmService.open({
-      content: '确认删除吗？',
-      onConfirm: () => {
-        this.purchaseOrderService
-          .remove([id], data => {
-            if (data.IsValid) {
-              this.alertService.removeSuccess();
-              this.purchaseOrderService.list((err) => {
-                this.alertService.listErrorCallBack(ModuleName.Product, err);
-              });
-            }
-          }, (err) => {
-            this.alertService.removeFail(err);
-          });
-      }
-    });
-  }
 }
