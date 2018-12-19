@@ -179,7 +179,7 @@ export class AlertService {
         name = '其他往来单位';
         break;
 
-      case ModuleName.feetype:
+      case ModuleName.Feetype:
         name = '费用类型';
         break;
 
@@ -273,7 +273,7 @@ export enum ModuleName {
   Employee,
   OtherExchangeUnit,
   Supplier,
-  feetype,
+  Feetype,
   IncomeType,
   Storage,
   Barcode,

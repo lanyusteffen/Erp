@@ -16,31 +16,28 @@
         <th>单据状态</th>
         <th>单据备注</th>
         <th>制单人</th>
-        <th>操作</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of orders">
+      <tr *ngFor="let item of purchases">
         <td>
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
         <td>
+          <a (click)="showContact(item.Id)">详情</a>
           <a (click)="update(item.Id)">修改</a>
           <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
         </td>
         <td>{{item.Code}}</td>
-        <td>{{item.Name}}</td>
-        <td>{{item.AreaName}}</td>
+        <td>{{item.CustomerName}}</td>
         <td>{{item.EmployeeName}}</td>
-        <td>
-          <a (click)="showContact(item.Id)">详情</a>
-        </td>
-        <td>{{item.InitShouldPayAmount | number: '1.2'}}</td>
-        <td>{{item.ShouldPayAmountLimit | number: '1.2'}}</td>
-        <td>{{item.ShoulePayAmountPeriod | stringAddon: '天'}}</td>
-        <td>{{item.SalePriceLevelDes}}</td>
-        <td>{{item.BankInfo}}</td>
+        <td>{{item.DepartmentName}}</td>
+        <td>{{item.PurchaseTime | number: '1.2'}}</td>
+        <td>{{item.Quanlity | number: '1.2'}}</td>
+        <td>{{item.Amount | number: '1.2'}}</td>
+        <td>{{item.StatusDes}}</td>
         <td>{{item.Remark}}</td>
+        <td>{{item.CreateUserName}}</td>
       </tr>
     </tbody>
   </app-ui-table>

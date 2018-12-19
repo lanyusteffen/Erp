@@ -56,7 +56,7 @@ export class FeeTypeControlComponent {
           .detail(this.feeTypeId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
-           this.alertService.getErrorCallBack(ModuleName.feetype, err);
+           this.alertService.getErrorCallBack(ModuleName.Feetype, err);
           });
       }
     }
@@ -80,7 +80,7 @@ export class FeeTypeControlComponent {
       this.feeTypeService.create(value, data => {
         if (data.IsValid) {
           this.feeTypeService.list((err) => {
-            this.alertService.listErrorCallBack(ModuleName.feetype, err);
+            this.alertService.listErrorCallBack(ModuleName.Feetype, err);
           }, () => {
             this.onClose.emit();
             this.alertService.addSuccess();
@@ -95,7 +95,7 @@ export class FeeTypeControlComponent {
       this.feeTypeService.modify(value, data => {
         if (data.IsValid) {
           this.feeTypeService.list((err) => {
-            this.alertService.listErrorCallBack(ModuleName.feetype, err);
+            this.alertService.listErrorCallBack(ModuleName.Feetype, err);
           }, () => {
             this.onClose.emit();
             this.alertService.modifySuccess();

@@ -44,7 +44,7 @@ export class FeeTypeActionsComponent {
 
   onSearch(queryKey) {
     this.feeTypeService.onSearch(queryKey, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.feetype, err);
+      this.alertService.listErrorCallBack(ModuleName.Feetype, err);
     });
   }
 
@@ -57,7 +57,7 @@ export class FeeTypeActionsComponent {
             if (data.IsValid) {
               this.alertService.removeSuccess();
               this.feeTypeService.list((err) => {
-                this.alertService.listErrorCallBack(ModuleName.feetype, err);
+                this.alertService.listErrorCallBack(ModuleName.Feetype, err);
               });
             }
           }, (err) => {

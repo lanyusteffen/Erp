@@ -38,7 +38,7 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.feeTypeService.list((err) => {
-      this.alertService.listErrorCallBack(ModuleName.feetype, err);
+      this.alertService.listErrorCallBack(ModuleName.Feetype, err);
     });
   }
 
@@ -94,7 +94,7 @@ export class FeeTypeListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.feeTypeService.list((err) => {
-                this.alertService.listErrorCallBack(ModuleName.feetype, err);
+                this.alertService.listErrorCallBack(ModuleName.Feetype, err);
               }, () => {
                 this.alertService.cancelSuccess();
               });
