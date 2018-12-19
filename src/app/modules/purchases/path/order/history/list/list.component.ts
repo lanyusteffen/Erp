@@ -45,7 +45,7 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getSystemConfig();
     this.purchaseOrderService.list((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Product, err);
+      this.alertService.listErrorCallBack(ModuleName.Purchase, err);
     });
   }
 
@@ -91,7 +91,7 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Product, err);
+      this.alertService.listErrorCallBack(ModuleName.Purchase, err);
     });
   }
 

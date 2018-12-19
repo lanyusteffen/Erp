@@ -58,7 +58,7 @@ export class PurchaseOrderService {
       this.purchase$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Purchase);
+    }, fallback, ModuleType.Webadmin);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -86,7 +86,7 @@ export class PurchaseOrderService {
       this.purchaseDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Purchase);
+    }, fallback, ModuleType.Webadmin);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
