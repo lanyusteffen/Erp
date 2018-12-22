@@ -107,118 +107,119 @@
       </tr>
     </tbody>
   </app-ui-table>
-  <div class="actions delivery">
-    <div>
+  <div class="deliverybox">
+    <div class="delivery">
       <span>配送方式：</span>
-      <app-ui-radio [radioName]="'DeliveryMode'" [value]="0" formControlName="DeliveryMode" [label]="'自提'" [ngModel]></app-ui-radio>
-      <app-ui-radio [radioName]="'DeliveryMode'" [value]="1" formControlName="DeliveryMode" [label]="'送货'" [ngModel]></app-ui-radio>
-      <app-ui-radio [radioName]="'DeliveryMode'" [value]="2" formControlName="DeliveryMode" [label]="'快递'" [ngModel]></app-ui-radio>
+      <app-ui-radio [radioName]="'DeliveryMode'" [value]="'1'" formControlName="DeliveryMode" [label]="'自提'" [ngModel]></app-ui-radio>
+      <app-ui-radio [radioName]="'DeliveryMode'" [value]="'2'" formControlName="DeliveryMode" [label]="'送货'" [ngModel]></app-ui-radio>
+      <app-ui-radio [radioName]="'DeliveryMode'" [value]="'3'" formControlName="DeliveryMode" [label]="'快递'" [ngModel]></app-ui-radio>
+    </div>
+    <div *ngIf="form.controls['DeliveryMode'].value==='2'" class="actions">
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>送货人员：</label>
+        </div>
+        <div class="form-group-control">
+          <app-popup-selector-employee (onConfirm)="selectEmployee($event)" formControlName="DeliveryEmployeeId"
+            [ngModel]></app-popup-selector-employee>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>送货时间：</label>
+        </div>
+        <div class="form-group-control">
+          <dp-date-picker width="60px" theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="DeliveryDate"
+            [ngModel]></dp-date-picker>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>收货人：</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="DeliveryReceiveUser" class="form-control" [ngModel]>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>收货电话:</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="DeliveryReceiveTel" class="form-control" [ngModel]>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>收货地址:</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="DeliveryReceiveAddress" class="form-control" [ngModel]>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="form.controls['DeliveryMode'].value==='3'" class="actions">
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>物流公司:</label>
+        </div>
+        <div class="form-group-control">
+          <app-customer-popup-selector width="60px" (onConfirm)="selectCustomer($event)" formControlName="ExpressCustomerId" [ngModel]></app-customer-popup-selector>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>送货时间：</label>
+        </div>
+        <div class="form-group-control">
+          <dp-date-picker theme="dp-material" width="60px" mode="day" [config]="datePickerConfig" formControlName="DeliveryDate"
+            [ngModel]></dp-date-picker>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>收货人：</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="DeliveryReceiveUser" class="form-control" [ngModel]>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>收货电话:</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="DeliveryReceiveTel" class="form-control" [ngModel]>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>收货地址:</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="DeliveryReceiveAddress" class="form-control" [ngModel]>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="form-group-label">
+          <label>物流单号:</label>
+        </div>
+        <div class="form-group-control">
+          <input type="text" width="60px" formControlName="ExpressNumber" class="form-control" [ngModel]>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="form.controls['DeliveryMode'].value===1" class="actions delivery">
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>送货人员：</label>
-      </div>
-      <div class="form-group-control">
-        <app-popup-selector-employee (onConfirm)="selectEmployee($event)" formControlName="DeliveryEmployeeId"
-          [ngModel]></app-popup-selector-employee>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>送货时间：</label>
-      </div>
-      <div class="form-group-control">
-        <dp-date-picker width="60px" theme="dp-material" mode="day" [config]="datePickerConfig" formControlName="DeliveryDate"
-          [ngModel]></dp-date-picker>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>收货人：</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="DeliveryReceiveUser" class="form-control" [ngModel]>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>收货电话:</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="DeliveryReceiveTel" class="form-control" [ngModel]>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>收货地址:</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="DeliveryReceiveAddress" class="form-control" [ngModel]>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="form.controls['DeliveryMode'].value===2" class="actions delivery">
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>物流公司:</label>
-      </div>
-      <div class="form-group-control">
-        <app-popup-selector-employee width="60px" (onConfirm)="selectCustomer($event)" formControlName="ExpressCustomerId" [ngModel]></app-popup-selector-employee>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>送货时间：</label>
-      </div>
-      <div class="form-group-control">
-        <dp-date-picker theme="dp-material" width="60px" mode="day" [config]="datePickerConfig" formControlName="DeliveryDate"
-          [ngModel]></dp-date-picker>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>收货人：</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="DeliveryReceiveUser" class="form-control" [ngModel]>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>收货电话:</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="DeliveryReceiveTel" class="form-control" [ngModel]>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>收货地址:</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="DeliveryReceiveAddress" class="form-control" [ngModel]>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>物流单号:</label>
-      </div>
-      <div class="form-group-control">
-        <input type="text" width="60px" formControlName="ExpressNumber" class="form-control" [ngModel]>
-      </div>
-    </div>
-  </div>
+  
   <div class="footer">
     <div class="summary-panel">
       <div class="remark-area">

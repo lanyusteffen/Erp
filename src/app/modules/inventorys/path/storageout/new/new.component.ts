@@ -114,6 +114,29 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     itemArr.at(index).patchValue({'UnitTime': selectedProductUnitTime});
   }
 
+  private clearSelectGoods(): void {
+    const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
+    for (let i = 0; i < itemArr.length; i++) {
+      if (i !== 0) {
+        itemArr.removeAt(i);
+        --i;
+      }
+    }
+    this.form.controls['StorageOutItemActionRequests'] = itemArr;
+  }
+
+  private reset(): void {
+
+    this.payedAmount = 0.00;
+    this.totalAmount = 0.00;
+
+    this.clearSelectGoods();
+
+    this.goodsPopupSelector.reset();
+    this.customerPopupSelector.reset();
+    this.employeePopupSelector.reset();
+  }
+
   selectCustomer(item: any): void {
     this.selectedCustomer = item;
     const customerTypeCtrl = <FormControl>this.form.controls['CustomerType'];
@@ -182,6 +205,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
               type: 'success',
               content: '出库单' + data.Code + '新增成功！'
             });
+            this.reset();
           } else {
             this.alertService.addFail(data.ErrorMessages);
           }
@@ -191,6 +215,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
       } else {
         this.storageOutService.modify(value, data => {
           if (data.IsValid) {
+            this.reset();
           } else {
             this.alertService.modifyFail(data.ErrorMessages);
           }

@@ -16,6 +16,10 @@ export class StorageOutItemValid {
             const goodsIdCtrl = <FormControl>item.controls['GoodsId'];
             const quanlityCtrl = <FormControl>item.controls['Quanlity'];
             const priceCtrl = <FormControl>item.controls['Price'];
+            const storageCtrl = <FormControl>item.controls['StorageId'];
+            if (PrimaryKeyValid.validation(storageCtrl) != null) {
+                continue;
+            }
             if (PrimaryKeyValid.validation(goodsIdCtrl) != null) {
                 continue;
             }
