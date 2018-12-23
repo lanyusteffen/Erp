@@ -12,7 +12,6 @@ export class PurchaseOrderService {
   private state = {
     purchases: [],
     currentQueryKey: '',
-    areaParentId: 0,
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -51,7 +50,7 @@ export class PurchaseOrderService {
       const nextState = {
         ...this.state,
         purchases: data.PurchaseList,
-        currentPagination: data.Pagination
+        currentPagination: data.PurchasePageQueryReq
       };
 
       this.state = nextState;
@@ -64,7 +63,6 @@ export class PurchaseOrderService {
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
     const {
       currentQueryKey,
-      areaParentId,
       currentPagination: {
         PageIndex,
         PageSize
@@ -79,7 +77,7 @@ export class PurchaseOrderService {
       const nextState = {
         ...this.state,
         purchases: data.PurchaseList,
-        currentPagination: data.Pagination
+        currentPagination: data.PurchasePageQueryReq
       };
 
       this.state = nextState;
