@@ -74,6 +74,21 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
   };
 
   showModal() {
+
+    const purchaseItemArr = <FormArray>this.form.controls['ItemList'];
+    const selectedGoods = new Array();
+
+    for (let i = 0; i < purchaseItemArr.length; i++) {
+      const purchaseItemCtrl = <FormGroup>purchaseItemArr.at(i);
+      const goods = {
+        Id: (<AbstractControl>purchaseItemCtrl.controls['GoodsId']).value,
+        Price: Number(<AbstractControl>purchaseItemCtrl.controls['Price'].value),
+        Quanlity: Number(<AbstractControl>purchaseItemCtrl.controls['Quanlity'].value)
+      };
+      selectedGoods.push(goods);
+    }
+
+    this.goodsPopupSelector.selectedGoods = selectedGoods;
     this.goodsPopupSelector.show = true;
   }
 
@@ -148,7 +163,7 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
 
     selectItems.forEach(item => {
 
-      const quanlity = parseInt(item.Quanlity, 10);
+      const quanlity = Number(item.Quanlity);
 
       let findIndex = -1;
       const purchaseItemArr = <FormArray>this.form.controls['ItemList'];

@@ -72,6 +72,18 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     }
   }
 
+  @Input()
+  set selectedGoods(goodsInfo: any[]) {
+    goodsInfo.forEach(_goods => {
+      this._selectedItems.forEach(_item => {
+        if (_goods.Id === _item.Id) {
+          _item.Quanlity = _goods.Quanlity;
+          _item.Price = _goods.Price;
+        }
+      });
+    });
+  }
+
   selectAll(evt) {
     const allSelected = evt.target.checked;
     this.goods = this.goods.map(item => ({
