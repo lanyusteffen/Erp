@@ -62,6 +62,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
   private propertyName2 = null;
   private selectedCustomer: any;
   private selectedEmployee: any;
+  private goods:any[];
   private form: FormGroup;
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
@@ -122,6 +123,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         --i;
       }
     }
+    this.goodsPopupSelector.selectedGoods=null;
     this.form.controls['StorageOutItemActionRequests'] = itemArr;
   }
 
@@ -154,6 +156,8 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
 
   selectGoods(selectItems: any): void {
 
+    this.goods = selectItems;
+
     selectItems.forEach(item => {
 
       const quanlity = parseInt(item.Quanlity, 10);
@@ -166,12 +170,14 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         const StorageOutItemActionRequestCtrl = <FormGroup>StorageOutItemActionRequestArr.at(findIndex);
         if ((<AbstractControl>StorageOutItemActionRequestCtrl.controls['GoodsId']).value > 0) {
           if (item.Id === (<AbstractControl>StorageOutItemActionRequestCtrl.controls['GoodsId']).value) {
-            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Price']).setValue(angularMath.getNumberWithDecimals(item.Price, 2));
+            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Price'])
+            .setValue(angularMath.getNumberWithDecimals(item.CurrentPrice>0?item.CurrentPrice:item.Price, 0));
             // tslint:disable-next-line:max-line-length
-            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Quanlity']).setValue(angularMath.getNumberWithDecimals(quanlity, 2));
+            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Quanlity']).setValue(angularMath.getNumberWithDecimals(quanlity,0));
             return;
           }
         }
+
       }
 
       const newStorageOutItemActionRequest = Object.assign({}, StorageOutItemActionRequest);
@@ -185,7 +191,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
       newStorageOutItemActionRequest.UnitTime = 1.00; // 倍数为1, 则不会变
       newStorageOutItemActionRequest.Spec = item.Spec;
       newStorageOutItemActionRequest.Quanlity = quanlity;
-      newStorageOutItemActionRequest.Price = item.Price;
+      newStorageOutItemActionRequest.Price = item.CurrentPrice<=0? item.Price:item.CurrentPrice;
       newStorageOutItemActionRequest.Name = item.Name;
       newStorageOutItemActionRequest.SortIndex = findIndex + 1;
 
@@ -330,6 +336,16 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
     const priceCtrl = <AbstractControl>item.controls['Price'];
     const amountCtrl = <AbstractControl>item.controls['Amount'];
+    const goodsCtrl = <AbstractControl>item.controls['GoodsId'];
+
+    this.goods.forEach(item=>{
+      if(item.Id === goodsCtrl.value){
+        item.CurrentPrice = priceCtrl.value;
+        item.Quanlity = quanlityCtrl.value;
+      }
+    });
+
+    this.goodsPopupSelector.selectedGoods = this.goods;
 
     // 重新某货品的设置采购金额
     const purchaseAmount = quanlityCtrl.value * priceCtrl.value;

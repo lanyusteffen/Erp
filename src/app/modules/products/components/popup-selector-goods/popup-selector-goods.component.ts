@@ -3,6 +3,7 @@ import { PaginationBarComponent } from '@components/pagination-bar/pagination-ba
 import { AlertService } from '@services/alert.service';
 import { GoodsPopupSelectService } from './goods-popup-selector.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
   selector: 'app-popup-selector-goods',
@@ -57,6 +58,16 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     return returnValue;
   }
 
+  getCurrentPrice(item:any){
+    let returnValue = 0;
+    this._selectedItems.forEach(_item => {
+      if (_item.Id === item.Id) {
+        returnValue = _item.CurrentPrice;
+      }
+    });
+    return returnValue;
+  }
+
   @Input()
   set show(isShow) {
     this._show = isShow;
@@ -79,6 +90,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
         if (_goods.Id === _item.Id) {
           _item.Quanlity = _goods.Quanlity;
           _item.Price = _goods.Price;
+          _item.CurrentPrice = _goods.CurrentPrice;
         }
       });
     });
@@ -101,6 +113,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       if (_item.Id === item.Id) {
         _item.Selected = evt.target.checked;
         _item.Quanlity = evt.target.checked ? 0.00 : '';
+        _item.CurrentPrice = item.CurrentPrice;
         finded = true;
         this._selectedItems.splice(index, 1);
       }
@@ -117,6 +130,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       if (good.Id === item.Id) {
         good.Quanlity = quanlity;
         good.Selected = isSelected;
+        good.CurrentPrice = item.CurrentPrice;
       }
     });
   }
@@ -129,6 +143,7 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
       if (_item.Id === item.Id) {
         _item.Quanlity = evt.target.value;
         _item.Selected = true;
+        _item.CurrentPrice = item.CurrentPrice;
         finded = true;
       }
     });
@@ -181,7 +196,8 @@ export class PopupSelectorGoodsComponent implements ControlValueAccessor {
     goods = goods.map(item => ({
       ...item,
       Selected: this.isSelected(item),
-      Quanlity: this.getQuanlity(item)
+      Quanlity: this.getQuanlity(item),
+      CurrentPrice:this.getCurrentPrice(item)
     }));
     this.goods = goods;
     this.pagination = currentPagination;
