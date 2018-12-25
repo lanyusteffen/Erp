@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { PurchaseOrderService } from '../../order.service';
+import { DatePipe } from '@angular/common';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 
@@ -11,9 +12,7 @@ import { LocalStorage } from 'ngx-webstorage';
   selector: 'app-purchase-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.less'],
-  providers: [
-    AppService
-  ]
+  providers: [ AppService, DatePipe ]
 })
 export class PurchaseListComponent implements OnInit, OnDestroy {
 
@@ -32,12 +31,16 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     private purchaseOrderService: PurchaseOrderService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private datePipe: DatePipe
   ) {
     this.subscription = this.purchaseOrderService
       .get()
       .subscribe(({ purchases, currentPagination }) => {
-        this.purchases = purchases;
+        this.purchases = purchases.map(item => ({
+          ...item,
+          PurchaseTime: this.datePipe.transform(<Date>item.PurchaseTime, 'yyyy-MM-dd')
+        }));
         this.pagination = currentPagination;
       });
   }
