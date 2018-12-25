@@ -10,6 +10,7 @@ import { CardComponent } from '@components/card/card.component';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 import { FormFieldComponent } from '@components/form-field/form-field.component';
 import { StringAddonPipe } from '@pipes/string-addon.pipe';
+import { NavsComponent } from '@components/navs/navs.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StringAddonPipe } from '@pipes/string-addon.pipe';
     CardComponent,
     PaginationBarComponent,
     FormFieldComponent,
-    StringAddonPipe
+    StringAddonPipe,
+    NavsComponent
   ],
   imports: [
     UIModule,
@@ -32,7 +34,8 @@ import { StringAddonPipe } from '@pipes/string-addon.pipe';
     CardComponent,
     PaginationBarComponent,
     FormFieldComponent,
-    StringAddonPipe
+    StringAddonPipe,
+    NavsComponent
   ]
 })
 

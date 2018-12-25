@@ -8,7 +8,6 @@ import { PurchaseNewComponent } from './new/new.component';
 import { PurchaseListComponent } from './history/list/list.component';
 import { PurchaseHistoryComponent } from './history/history.component';
 import { PurchaseActionsComponent } from './history/actions/actions.component';
-import { PurchaseNavsComponent } from './history/navs/navs.component';
 
 import { PurchaseOrderService } from './order.service';
 
@@ -23,8 +22,7 @@ import { ProductsSharedModule } from '../../../products/components/products.shar
         PurchaseNewComponent,
         PurchaseListComponent,
         PurchaseHistoryComponent,
-        PurchaseActionsComponent,
-        PurchaseNavsComponent
+        PurchaseActionsComponent
     ],
     imports: [
         UIModule,

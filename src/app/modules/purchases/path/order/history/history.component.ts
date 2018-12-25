@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <app-purchase-actions ></app-purchase-actions>
     <div class="content">
-      <app-purchase-navs></app-purchase-navs>
+      <app-navs></app-navs>
       <app-purchase-list></app-purchase-list>
     </div>
   `,

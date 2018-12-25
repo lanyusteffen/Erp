@@ -181,7 +181,6 @@ import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new
 import { StorageOutService } from './modules/inventorys/path/storageout/storageout.service';
 import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
 import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
-import { PurchaseNavsComponent } from './modules/purchases/path/order/history/navs/navs.component';
 
 @NgModule({
   declarations: [
@@ -323,7 +322,6 @@ import { PurchaseNavsComponent } from './modules/purchases/path/order/history/na
     PurchaseHistoryComponent,
     PurchaseActionsComponent,
     PurchaseListComponent,
-    PurchaseNavsComponent,
 
     StorageOutNewComponent
   ],
