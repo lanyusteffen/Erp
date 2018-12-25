@@ -26,7 +26,8 @@
       "@components/*": ["./app/components/*"],
       "@strategies/*": ["./app/strategies/*"],
       "@validators/*": ["./app/validators/*"],
-      "@contracts/*": ["./app/contracts/*"]
+      "@contracts/*": ["./app/contracts/*"],
+      "@enums/*": ["./app/enums/*"]
     }
   }
 }
