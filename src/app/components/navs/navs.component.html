@@ -1,8 +1,8 @@
 <div class="navs">
-  <ul *ngFor="let item of _navItems; index as i">
-    <li [class.active]="item.IsSelected" (click)="handleChange(item)">
+  <ul *ngFor="let nav of navs; index as i">
+    <li [class.active]="nav.IsSelected" (click)="handleChange(nav)">
       <span class="iconfont icon-more"></span>
-      <a (click)="handleChange(item)">{{Item.Name}}</a>
+      <a (click)="handleChange(nav)">{{nav.Name}}</a>
     </li>
   </ul>
 </div>

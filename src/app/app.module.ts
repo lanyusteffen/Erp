@@ -115,7 +115,7 @@ import { RoleService } from './modules/admins/path/role/role.service';
 import { UserModifyComponent } from './modules/admins/path/user/components/modify/modify.component';
 import { UserPasswordComponent } from './modules/admins/path/user/components/password/password.component';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
-import { PurchaseOrderService } from './modules/purchases/path/order/order.service';
+import { PurchaseService } from './modules/purchases/path/order/order.service';
 import { PurchaseNewComponent } from './modules/purchases/path/order/new/new.component';
 import { PurchaseHistoryComponent } from './modules/purchases/path/order/history/history.component';
 
@@ -181,6 +181,7 @@ import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new
 import { StorageOutService } from './modules/inventorys/path/storageout/storageout.service';
 import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
 import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
+import { NavService } from './components/navs/nav.service';
 
 @NgModule({
   declarations: [
@@ -353,10 +354,10 @@ import { PurchaseListComponent } from './modules/purchases/path/order/history/li
     FundsAccountService, OtherIncomeService, FeeTypeService,
     SystemConfigService, CompanyService, UserService, RoleService,
     AreaService, CustomerService, DepartmentService, EmployeeService, OtherExchangeUnitService, SupplierService,
-    PurchaseOrderService,
+    PurchaseService,
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
-    HttpService, TabsService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,
+    HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,
     StorageOutService],
   bootstrap: [AppComponent]
 })

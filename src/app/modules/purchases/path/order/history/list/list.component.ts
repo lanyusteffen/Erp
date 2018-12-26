@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { PurchaseOrderService } from '../../order.service';
+import { PurchaseService } from '../../order.service';
 import { DatePipe } from '@angular/common';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
@@ -28,7 +28,7 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private purchaseOrderService: PurchaseOrderService,
+    private purchaseOrderService: PurchaseService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService,

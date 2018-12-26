@@ -4,7 +4,7 @@ import { PopupSelectorEmployeeComponent } from '../../../../basics/components/po
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
-import { PurchaseOrderService } from '../order.service';
+import { PurchaseService } from '../order.service';
 import { FormService } from '@services/form.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { angularMath } from 'angular-ts-math';
@@ -104,7 +104,7 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private purchaseOrderService: PurchaseOrderService,
+    private purchaseService: PurchaseService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService,
@@ -234,7 +234,7 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
     if (isValid) {
       value.PurchaseTime = this.datePipe.transform(<Date>value.PurchaseTime, 'yyyy-MM-dd HH:mm:ss');
       if (value.Id === 0) {
-        this.purchaseOrderService.create(value, data => {
+        this.purchaseService.create(value, data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
@@ -248,7 +248,7 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
           this.alertService.addFail(err);
         });
       } else {
-        this.purchaseOrderService.modify(value, data => {
+        this.purchaseService.modify(value, data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
@@ -296,7 +296,7 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
   }
 
   newOne() {
-    this.purchaseOrderService
+    this.purchaseService
       .newOne(data => {
         data.ItemList = data.ItemList.map(item => ({
           ...item,

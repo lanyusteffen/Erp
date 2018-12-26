@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from '@services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { NavItem } from '@contracts/nav.item';
 
 
 @Injectable()
-export class PurchaseOrderService {
+export class PurchaseService {
   private purchase$ = new Subject<any>();
   private purchaseDisabled$ = new Subject<any>();
 
   private state = {
     purchases: [],
     currentQueryKey: '',
+    currentNav: { Status: null, AuditStatus: null, BusinessStatus: null },
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -124,6 +126,16 @@ export class PurchaseOrderService {
         ...this.state.currentPagination,
         ...pagination
       }
+    };
+
+    this.state = nextState;
+    this.list(fallback, successNotify);
+  }
+
+  onNavChange(selected, fallback: (error: any) => void, successNotify?: () => void) {
+    const nextState = {
+      ...this.state,
+      currentNav: selected
     };
 
     this.state = nextState;

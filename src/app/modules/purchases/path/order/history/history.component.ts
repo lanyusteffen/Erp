@@ -3,16 +3,16 @@ import { NavItem } from '@contracts/nav.item';
 import { StatusPublic } from '@enums/status.public';
 import { AuditStatusPublic } from '@enums/audit.status.public';
 import { PurchaseOrderStatus } from '../../../enums/purchase.status.public';
+import { NavService } from '@components/navs/nav.service';
+import { PurchaseService } from '../order.service';
+import { AlertService } from '@services/alert.service';
 
 @Component({
   selector: 'app-purchase-history',
   template: `
     <app-purchase-actions ></app-purchase-actions>
     <div class="content">
-      <app-navs
-        [navItems]="navItems"
-      >
-      </app-navs>
+      <app-navs (onSelectedChange)="onNavChanged($event)></app-navs>
       <app-purchase-list></app-purchase-list>
     </div>
   `,
@@ -31,63 +31,80 @@ import { PurchaseOrderStatus } from '../../../enums/purchase.status.public';
 })
 export class PurchaseHistoryComponent implements OnInit {
 
-  private navItems: NavItem[];
+  private selectNav: any;
 
-  constructor() { }
+  constructor(private navService: NavService,
+              private alertService: AlertService,
+              private purchaseService: PurchaseService) {
+
+  }
+
+  onNavChanged(selected: NavItem) {
+    this.selectNav = selected;
+    this.purchaseService.onNavChange(selected, (err) => {
+      this.listErrorCallBack(err);
+    });
+  }
+
+  listErrorCallBack(err: any): void {
+    this.alertService.open({
+      type: 'danger',
+      content: '绑定采购订单列表失败!' + err
+    });
+  }
 
   ngOnInit() {
     this.initNavs();
   }
 
   initNavs() {
-    const draftNav = {
+    this.navService.create({
       Status: StatusPublic.Valid,
       Name: '草稿',
       Code: 'Draft',
       AuditStatus: AuditStatusPublic.WaitAudit,
-      BusinessStauts: PurchaseOrderStatus.Draft,
+      BusinessStatus: PurchaseOrderStatus.Draft,
       IsSelected: false
-    };
-    const unAuditNav = {
+    });
+    this.navService.create({
       Status: StatusPublic.Valid,
       Name: '未审核',
       Code: 'UnAudit',
       AuditStatus: AuditStatusPublic.WaitAudit,
-      BusinessStauts: null,
+      BusinessStatus: null,
       IsSelected: false
-    };
-    const auditedNav = {
+    });
+    this.navService.create( {
       Status: StatusPublic.Valid,
       Name: '已审核',
       Code: 'Audited',
       AuditStatus: AuditStatusPublic.Approved,
-      BusinessStauts: null,
+      BusinessStatus: null,
       IsSelected: false
-    };
-    const partInNav = {
+    });
+    this.navService.create({
       Status: StatusPublic.Valid,
       Name: '部分入库',
       Code: 'Audited',
       AuditStatus: AuditStatusPublic.Approved,
-      BusinessStauts: PurchaseOrderStatus.PartialPurchaseIn,
+      BusinessStatus: PurchaseOrderStatus.PartialPurchaseIn,
       IsSelected: false
-    };
-    const allInNav = {
+    });
+    this.navService.create({
       Status: StatusPublic.Valid,
       Name: '全部入库',
       Code: 'Audited',
       AuditStatus: AuditStatusPublic.Approved,
-      BusinessStauts: PurchaseOrderStatus.AllPurchaseIn,
+      BusinessStatus: PurchaseOrderStatus.AllPurchaseIn,
       IsSelected: false
-    };
-    const terminalNav = {
+    });
+    this.navService.create({
       Status: StatusPublic.Valid,
       Name: '已终止',
       Code: 'Terminal',
       AuditStatus: AuditStatusPublic.Approved,
-      BusinessStauts: PurchaseOrderStatus.Stoped,
+      BusinessStatus: PurchaseOrderStatus.Stoped,
       IsSelected: false
-    };
-    this.navItems = new Array( unAuditNav, auditedNav, partInNav, allInNav, terminalNav );
+    });
   }
 }

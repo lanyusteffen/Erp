@@ -22,7 +22,7 @@ export class ProductUnitActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService,
-	private router: Router
+	  private router: Router
   ) { }
 
   show() {
@@ -35,7 +35,7 @@ export class ProductUnitActionsComponent {
       name: '停用商品单位',
       link: '/products/productunit/disabled'
     });
-	this.router.navigate(['/products/productunit/disabled']);
+	  this.router.navigate(['/products/productunit/disabled']);
   }
 
   close() {

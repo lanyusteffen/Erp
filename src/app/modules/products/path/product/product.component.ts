@@ -60,7 +60,6 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.selectedItems = selected;
   }
 
-
   onCategoryChange(selected) {
 
     this.selectCategory = selected;

@@ -9,7 +9,7 @@ import { PurchaseListComponent } from './history/list/list.component';
 import { PurchaseHistoryComponent } from './history/history.component';
 import { PurchaseActionsComponent } from './history/actions/actions.component';
 
-import { PurchaseOrderService } from './order.service';
+import { PurchaseService } from './order.service';
 
 import { SharedModule } from '@app/shared.module';
 import { PurchaseRoutingModule } from './order.router';
@@ -38,7 +38,7 @@ import { ProductsSharedModule } from '../../../products/components/products.shar
     entryComponents: [
         DatePickerComponent
     ],
-    providers: [ PurchaseOrderService ]
+    providers: [ PurchaseService ]
 })
 
 export class PurchaseOrderModule {

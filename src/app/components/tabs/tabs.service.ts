@@ -2,14 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Router } from '@angular/router';
+import { Tab } from '@contracts/tab';
 
-export interface Tab {
-  id: number;
-  name: string;
-  link: string;
-}
-
-const homeTab = {
+const homeTab: Tab = {
   id: 1,
   name: '首页',
   link: '/home/index'
