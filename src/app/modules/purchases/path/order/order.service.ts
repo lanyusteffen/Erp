@@ -41,13 +41,21 @@ export class PurchaseService {
       currentPagination: {
         PageIndex,
         PageSize
+      },
+      currentNav: {
+        Status,
+        AuditStatus,
+        BusinessStatus
       }
     } = this.state;
 
     return this.http.post('/Purchase/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize
+      PageSize,
+      Status,
+      AuditStatus,
+      BusinessStatus
     }, data => {
       const nextState = {
         ...this.state,
@@ -68,13 +76,21 @@ export class PurchaseService {
       currentPagination: {
         PageIndex,
         PageSize
+      },
+      currentNav: {
+        Status,
+        AuditStatus,
+        BusinessStatus
       }
     } = this.state;
 
     return this.http.post('/Purchase/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize
+      PageSize,
+      Status,
+      AuditStatus,
+      BusinessStatus
     }, data => {
       const nextState = {
         ...this.state,
@@ -132,10 +148,13 @@ export class PurchaseService {
     this.list(fallback, successNotify);
   }
 
-  onNavChange(selected, fallback: (error: any) => void, successNotify?: () => void) {
+  onNavChange(selectedNav, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
-      currentNav: selected
+      currentNav: {
+        ...this.state.currentNav,
+        ...selectedNav
+      }
     };
 
     this.state = nextState;
