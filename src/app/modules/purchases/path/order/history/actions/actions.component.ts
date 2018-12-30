@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { PopupSelectorEmployeeComponent } from '../../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
-import { PopupSelectorGoodsComponent } from '../../../../../products/components/popup-selector-goods/popup-selector-goods.component';
-import { CustomerPopupSelectorComponent } from '../../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { PurchaseService } from '../../order.service';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { AlertService } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { DatePipe } from '@angular/common';
 
 const queryItemBase = {
   CustomerId: null,
@@ -23,21 +21,13 @@ const queryItemBase = {
   styleUrls: ['./actions.component.less'],
   providers: [
     PurchaseService,
-    AlertService
+    AlertService,
+    DatePipe
   ]
 })
 export class PurchaseActionsComponent implements OnInit {
 
   @Output() onExecuteQuery: EventEmitter<any> = new EventEmitter();
-
-  @ViewChild(CustomerPopupSelectorComponent)
-  private customerPopupSelector: CustomerPopupSelectorComponent;
-
-  @ViewChild(PopupSelectorEmployeeComponent)
-  private employeePopupSelector: PopupSelectorEmployeeComponent;
-
-  @ViewChild(PopupSelectorGoodsComponent)
-  private goodsPopupSelector: PopupSelectorGoodsComponent;
 
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
@@ -47,8 +37,8 @@ export class PurchaseActionsComponent implements OnInit {
   private queryItem = null;
 
   constructor(
-    private alertService: AlertService,
     private loadingBar: SlimLoadingBarService,
+    private datePipe: DatePipe,
     private purchaseService: PurchaseService) {
     this.queryItem = Object.assign({}, queryItemBase);
   }
@@ -58,7 +48,7 @@ export class PurchaseActionsComponent implements OnInit {
   }
 
   selectEmployee(item: any): void {
-    this.queryItem.CustomerId = item.Id;
+    this.queryItem.EmployeeId = item.Id;
   }
 
   selectGoods(item: any): void {
@@ -66,7 +56,16 @@ export class PurchaseActionsComponent implements OnInit {
     this.queryItem.ProductId = item.ProductId;
   }
 
+  selectDepartment(selectedValue: any): void {
+    this.queryItem.DepartmentId = selectedValue;
+  }
+
   ngOnInit() {
+    this.purchaseService.getQueryDateRange(err => {
+    }, data => {
+      this.queryItem.BeginDate = this.datePipe.transform(<Date>data[0], 'yyyy-MM-dd');
+      this.queryItem.EndDate = this.datePipe.transform(<Date>data[1], 'yyyy-MM-dd');
+    });
   }
 
   query() {

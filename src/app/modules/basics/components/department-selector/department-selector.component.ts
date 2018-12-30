@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { DepartmentService } from '../../path/department/department.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
@@ -22,6 +22,8 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
 
   @Input()
   public isEditing = false;
+
+  @Output() onSelectedChange: EventEmitter<any> = new EventEmitter();
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
@@ -76,6 +78,9 @@ export class DepartmentSelectorComponent implements OnInit, ControlValueAccessor
     this.innerValue = value;
     if (this.onChange) {
       this.onChange(value);
+    }
+    if (this.onSelectedChange) {
+      this.onSelectedChange.emit(value);
     }
   }
 }

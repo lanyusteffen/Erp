@@ -46,7 +46,9 @@ export class PurchaseHistoryComponent implements OnInit {
   }
 
   onQuery(queryItem: any) {
-
+    this.purchaseService.onExecuteQuery(queryItem, (err) => {
+      this.listErrorCallBack(err);
+    });
   }
 
   listErrorCallBack(err: any): void {

@@ -20,7 +20,7 @@
         <label>采购部门：</label>
       </div>
       <div class="form-group-control">
-        <app-department-selector [isEditing]="false"></app-department-selector>
+        <app-department-selector (onSelectedChange)="selectDepartment($event)" [isEditing]="false"></app-department-selector>
       </div>
     </div>
 </div>
@@ -30,11 +30,11 @@
             <label>采购日期：</label>
         </div>
         <div class="form-group-control">
-            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
-            </div>
-            <span> ~ </span>
-            <div class="form-group-control">
-            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+          <dp-date-picker theme="dp-material" [(ngModel)]="queryItem.BeginDate" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+        </div>
+        <span> ~ </span>
+        <div class="form-group-control">
+          <dp-date-picker theme="dp-material" [(ngModel)]="queryItem.EndDate" mode="day" [config]="datePickerConfig"></dp-date-picker> 
         </div>
     </div>
     <div class="more">

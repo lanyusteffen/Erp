@@ -12,6 +12,7 @@ export class PurchaseService {
     purchases: [],
     currentQueryKey: '',
     currentNav: { Status: null, AuditStatus: null, BusinessStatus: null },
+    queryItem: { BeginDate: null, EndDate: null, CustomerId: null, EmployeeId: null, DepartmentId: null, ProductId: null, GoodsId: null },
     currentPagination: {
       PageIndex: 1,
       PageSize: 25,
@@ -40,6 +41,15 @@ export class PurchaseService {
         PageIndex,
         PageSize
       },
+      queryItem: {
+        BeginDate,
+        EndDate,
+        CustomerId,
+        EmployeeId,
+        DepartmentId,
+        GoodsId,
+        ProductId
+      },
       currentNav: {
         Status,
         AuditStatus,
@@ -52,6 +62,13 @@ export class PurchaseService {
       PageIndex,
       PageSize,
       Status,
+      BeginDate,
+      EndDate,
+      CustomerId,
+      EmployeeId,
+      DepartmentId,
+      GoodsId,
+      ProductId,
       AuditStatus,
       BusinessStatus
     }, data => {
@@ -75,6 +92,15 @@ export class PurchaseService {
         PageIndex,
         PageSize
       },
+      queryItem: {
+        BeginDate,
+        EndDate,
+        CustomerId,
+        EmployeeId,
+        DepartmentId,
+        GoodsId,
+        ProductId
+      },
       currentNav: {
         Status,
         AuditStatus,
@@ -87,6 +113,13 @@ export class PurchaseService {
       PageIndex,
       PageSize,
       Status,
+      BeginDate,
+      EndDate,
+      CustomerId,
+      EmployeeId,
+      DepartmentId,
+      GoodsId,
+      ProductId,
       AuditStatus,
       BusinessStatus
     }, data => {
@@ -146,6 +179,19 @@ export class PurchaseService {
     this.list(fallback, successNotify);
   }
 
+  onExecuteQuery(queryItem, fallback: (error: any) => void, successNotify?: () => void) {
+    const nextState = {
+      ...this.state,
+      queryItem: {
+        ...this.state.queryItem,
+        ...queryItem
+      }
+    };
+
+    this.state = nextState;
+    this.list(fallback, successNotify);
+  }
+
   onNavChange(selectedNav, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
@@ -177,5 +223,13 @@ export class PurchaseService {
 
     this.state = nextState;
     this.listDisabled(fallback, successNotify);
+  }
+
+  getQueryDateRange(fallback: (error: any) => void, bindData?: (data: any) => void) {
+    return this.http.get('/Purchase/DateRange', data => {
+      if (bindData !== undefined) {
+        bindData(data);
+      }
+    }, fallback, ModuleType.Purchase);
   }
 }
