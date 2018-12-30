@@ -1,0 +1,48 @@
+<div class="actions">
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>供应商：</label>
+      </div>
+      <div class="form-group-control">
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>采购员：</label>
+      </div>
+      <div class="form-group-control">
+        <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>采购部门：</label>
+      </div>
+      <div class="form-group-control">
+        <app-department-selector [isEditing]="false"></app-department-selector>
+      </div>
+    </div>
+</div>
+<div class="actions">
+    <div class="form-group">
+        <div class="form-group-label">
+            <label>采购日期：</label>
+        </div>
+        <div class="form-group-control">
+            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+            </div>
+            <span> ~ </span>
+            <div class="form-group-control">
+            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+        </div>
+    </div>
+    <div class="more">
+        <app-ui-button [style]="'primary'" (click)="query($event)" type="button">
+            查询
+        </app-ui-button>
+        <app-ui-button [style]="'primary'">
+            导出
+        </app-ui-button>
+    </div>
+</div>

@@ -3,7 +3,6 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } fr
 import 'rxjs/add/operator/do';
 import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 import { Observable } from 'rxjs/Observable';
-import { ErrorService } from '../services/error.service';
 import { AlertService } from '../services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
@@ -17,9 +16,8 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
   private persistenceAuthToken: string;
 
   constructor(
-    private errorService: ErrorService,
     private alertService: AlertService,
-    private _loadingBar: SlimLoadingBarService
+    private loadingBar: SlimLoadingBarService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -38,8 +36,8 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
       });
     }
 
-    if (!this._loadingBar.visible) {
-      this._loadingBar.start();
+    if (!this.loadingBar.visible) {
+      this.loadingBar.start();
     }
 
     return next
@@ -48,14 +46,13 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
 
         if (event instanceof HttpResponse) {
 
-          if (this._loadingBar.visible) {
-            this._loadingBar.complete();
+          if (this.loadingBar.visible) {
+            this.loadingBar.complete();
           }
 
           const { body } = event;
 
           if (typeof body.IsValid !== 'undefined' && !body.IsValid) {
-            // this.errorService.setErrorItems(body.ValidationErrorList.ErrorItems);
             this.alertService.open({
               type: 'danger',
               content: body.ErrorMessages

@@ -10,9 +10,9 @@ import { AlertService } from '@services/alert.service';
 @Component({
   selector: 'app-purchase-history',
   template: `
-    <app-purchase-actions ></app-purchase-actions>
+    <app-purchase-actions (onExecuteQuery)="onQuery($event)"></app-purchase-actions>
     <div class="content">
-      <app-navs (onSelectedChange)="onNavChanged($event)></app-navs>
+      <app-navs (onSelectedChange)="onNavChanged($event)"></app-navs>
       <app-purchase-list></app-purchase-list>
     </div>
   `,
@@ -22,7 +22,6 @@ import { AlertService } from '@services/alert.service';
       display: flex;
       flex-direction: column;
     }
-
     .content {
       flex: 1;
       display: flex;
@@ -46,6 +45,10 @@ export class PurchaseHistoryComponent implements OnInit {
     });
   }
 
+  onQuery(queryItem: any) {
+
+  }
+
   listErrorCallBack(err: any): void {
     this.alertService.open({
       type: 'danger',
@@ -58,14 +61,6 @@ export class PurchaseHistoryComponent implements OnInit {
   }
 
   initNavs() {
-    this.navService.create({
-      Status: StatusPublic.Valid,
-      Name: '草稿',
-      Code: 'Draft',
-      AuditStatus: AuditStatusPublic.WaitAudit,
-      BusinessStatus: PurchaseOrderStatus.Draft,
-      IsSelected: false
-    });
     this.navService.create({
       Status: StatusPublic.Valid,
       Name: '未审核',

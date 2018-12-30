@@ -4,7 +4,7 @@ import { PurchaseService } from '../../order.service';
 import { DatePipe } from '@angular/common';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
-
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 
@@ -32,8 +32,10 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private appService: AppService,
+    private loadingBar: SlimLoadingBarService,
     private datePipe: DatePipe
   ) {
+    this.loadingBar.start();
     this.subscription = this.purchaseOrderService
       .get()
       .subscribe(({ purchases, currentPagination }) => {
@@ -49,6 +51,9 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     this.getSystemConfig();
     this.purchaseOrderService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Purchase, err);
+      this.loadingBar.complete();
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
