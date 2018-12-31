@@ -10,7 +10,9 @@ export class StorageOutService {
   private storageoutDisabled$ = new Subject<any>();
 
   private state = {
-    storageouts: [],
+    storageouts: [],  
+    currentNav: { Status: null, AuditStatus: null, BusinessStatus: null },
+    queryItem: { BeginDate: null, EndDate: null, CustomerId: null, EmployeeId: null, DepartmentId: null, ProductId: null, GoodsId: null },
     currentQueryKey: '',
     areaParentId: 0,
     currentPagination: {
@@ -58,7 +60,7 @@ export class StorageOutService {
       this.storageout$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Inventory);
+    }, fallback, ModuleType.Webadmin);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -86,7 +88,7 @@ export class StorageOutService {
       this.storageoutDisabled$.next(nextState);
 
       this.succeessNotifyCallback(successNotify);
-    }, fallback, ModuleType.Inventory);
+    }, fallback, ModuleType.Webadmin);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
@@ -150,5 +152,39 @@ export class StorageOutService {
 
     this.state = nextState;
     this.listDisabled(fallback, successNotify);
+  }
+
+  onExecuteQuery(queryItem, fallback: (error: any) => void, successNotify?: () => void) {
+    const nextState = {
+      ...this.state,
+      queryItem: {
+        ...this.state.queryItem,
+        ...queryItem
+      }
+    };
+
+    this.state = nextState;
+    this.list(fallback, successNotify);
+  }
+
+  onNavChange(selectedNav, fallback: (error: any) => void, successNotify?: () => void) {
+    const nextState = {
+      ...this.state,
+      currentNav: {
+        ...this.state.currentNav,
+        ...selectedNav
+      }
+    };
+
+    this.state = nextState;
+    this.list(fallback, successNotify);
+  }
+
+  getQueryDateRange(fallback: (error: any) => void, bindData?: (data: any) => void) {
+    return this.http.get('/Purchase/DateRange', data => {
+      if (bindData !== undefined) {
+        bindData(data);
+      }
+    }, fallback, ModuleType.Purchase);
   }
 }

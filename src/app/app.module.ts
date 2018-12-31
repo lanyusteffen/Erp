@@ -17,6 +17,7 @@ import { HttpService } from './services/http.service';
 import { AlertService } from './services/alert.service';
 import { ErrorService } from './services/error.service';
 import { ConfirmService } from './services/confirm.service';
+import { NavService } from './components/navs/nav.service';
 
 import { HttpExtensionInterceptor } from './interceptors/http.interceptor.extension';
 import { AppRoutingModule } from './app.router';
@@ -115,9 +116,13 @@ import { RoleService } from './modules/admins/path/role/role.service';
 import { UserModifyComponent } from './modules/admins/path/user/components/modify/modify.component';
 import { UserPasswordComponent } from './modules/admins/path/user/components/password/password.component';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
+
 import { PurchaseService } from './modules/purchases/path/order/order.service';
 import { PurchaseNewComponent } from './modules/purchases/path/order/new/new.component';
 import { PurchaseHistoryComponent } from './modules/purchases/path/order/history/history.component';
+import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
+import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
+
 
 import { ProductComponent } from './modules/products/path/product/product.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
@@ -179,9 +184,9 @@ import { ProductControlComponent } from './modules/products/path/product/compone
 
 import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new/new.component';
 import { StorageOutService } from './modules/inventorys/path/storageout/storageout.service';
-import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
-import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
-import { NavService } from './components/navs/nav.service';
+import { StorageOutHistoryComponent } from './modules/inventorys/path/storageout/history/history.component';
+import { StorageOutActionsComponent } from './modules/inventorys/path/storageout/history/actions/actions.component';
+import { StorageOutListComponent } from './modules/inventorys/path/storageout/history/list/list.component';
 
 @NgModule({
   declarations: [
@@ -324,7 +329,10 @@ import { NavService } from './components/navs/nav.service';
     PurchaseActionsComponent,
     PurchaseListComponent,
 
-    StorageOutNewComponent
+    StorageOutNewComponent,
+    StorageOutHistoryComponent,
+    StorageOutActionsComponent,
+    StorageOutListComponent
   ],
   imports: [
     BrowserModule,

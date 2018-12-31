@@ -46,6 +46,7 @@ import { ProductSizeDisabledComponent } from './modules/products/path/productsiz
 import { ProductConfigComponent } from './modules/products/path/productconfig/productconfig.component';
 import { StorageOutNewComponent } from './modules/inventorys/path/storageout/new/new.component';
 import { PurchaseHistoryComponent } from './modules/purchases/path/order/history/history.component';
+import { StorageOutHistoryComponent } from './modules/inventorys/path/storageout/history/history.component';
 
 export const ROUTES: Routes = [
     {
@@ -272,6 +273,11 @@ export const ROUTES: Routes = [
               {
                 path: 'inventorys/storageout/new',
                 component: StorageOutNewComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'inventorys/storageout/history',
+                component: StorageOutHistoryComponent,
                 canActivate: [AuthGuard]
               },
               {

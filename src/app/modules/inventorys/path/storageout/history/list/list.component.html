@@ -1,0 +1,58 @@
+<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+        <th>单据编号</th>
+        <th>供应商</th>
+        <th>出库员</th>
+        <th>部门</th>
+        <th>出库类型</th>
+        <th>出库日期</th>
+        <th>出库数量</th>
+        <th>出库金额</th>
+        <th>单据状态</th>
+        <th>单据备注</th>
+        <th>制单人</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of purchases">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a (click)="audit(item.Id)">审核</a>
+          <a (click)="update(item.Id)">修改</a>
+          <a class="text-danger" (click)="onCancel(item.Id)">作废</a>
+          <a (click)="copy(item.Id)">复制</a>
+        </td>
+        <td>{{item.Code}}</td>
+        <td>{{item.CustomerName}}</td>
+        <td>{{item.EmployeeName}}</td>
+        <td>{{item.DepartmentName}}</td>
+        <td>{{item.BillTypeDes}}</td>
+        <td>{{item.BillTime}}</td>
+        <td>{{item.Quanlity | number: '1.2'}}</td>
+        <td>{{item.Amount | number: '1.2'}}</td>
+        <td>{{item.StatusDes}}</td>
+        <td>{{item.Remark}}</td>
+        <td>{{item.CreateUserName}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar
+    [total]="pagination.ItemCount"
+    [current]="pagination.PageIndex"
+    (onChange)="onPageChange($event)"
+  ></app-pagination-bar>
+  <app-supplier-control
+    [type]="'update'"
+    [customerId]="selectedId"
+    [show]="_showUpdate"
+    (onClose)="closeUpdate()"
+  ></app-supplier-control>
+</div>

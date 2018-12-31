@@ -5,6 +5,9 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UIModule } from '@UI/ui.module';
 
 import { StorageOutNewComponent } from './new/new.component';
+import { StorageOutHistoryComponent } from './history/history.component';
+import { StorageOutListComponent } from './history/list/list.component';
+import { StorageOutActionsComponent } from './history/actions/actions.component';
 
 import { StorageOutService } from './storageout.service';
 
@@ -16,7 +19,10 @@ import { ProductsSharedModule } from '../../../products/components/products.shar
 
 @NgModule({
     declarations: [
-        StorageOutNewComponent
+        StorageOutNewComponent,
+        StorageOutHistoryComponent,
+        StorageOutActionsComponent,
+        StorageOutListComponent
     ],
     imports: [
         UIModule,
