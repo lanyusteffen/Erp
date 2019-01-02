@@ -6,6 +6,7 @@ import { PurchaseOrderStatus } from '../../../enums/purchase.status.public';
 import { NavService } from '@components/navs/nav.service';
 import { PurchaseService } from '../order.service';
 import { AlertService } from '@services/alert.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-purchase-history',
@@ -26,7 +27,10 @@ import { AlertService } from '@services/alert.service';
       flex: 1;
       display: flex;
     }
-  `]
+  `],
+  providers: [
+    DatePipe
+  ]
 })
 export class PurchaseHistoryComponent implements OnInit {
 
@@ -34,6 +38,7 @@ export class PurchaseHistoryComponent implements OnInit {
 
   constructor(private navService: NavService,
               private alertService: AlertService,
+              private datePipe: DatePipe,
               private purchaseService: PurchaseService) {
 
   }
@@ -46,6 +51,8 @@ export class PurchaseHistoryComponent implements OnInit {
   }
 
   onQuery(queryItem: any) {
+    queryItem.BeginDate = this.datePipe.transform(<Date>queryItem.BeginDate, 'yyyy-MM-dd HH:mm:ss');
+    queryItem.EndDate = this.datePipe.transform(<Date>queryItem.EndDate, 'yyyy-MM-dd HH:mm:ss');
     this.purchaseService.onExecuteQuery(queryItem, (err) => {
       this.listErrorCallBack(err);
     });

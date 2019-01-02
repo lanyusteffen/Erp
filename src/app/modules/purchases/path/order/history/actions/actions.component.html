@@ -23,6 +23,20 @@
         <app-department-selector (onSelectedChange)="selectDepartment($event)" [isEditing]="false"></app-department-selector>
       </div>
     </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>商品：</label>
+      </div>
+      <div class="form-group-control">
+          <div class="selector-group">
+              <input #queryGoodsName type="text" disabled="disabled" class="form-control" />
+              <span class="addon" (click)="showModal($event)">
+                <i class="iconfont"></i>选择
+              </span>
+            </div>
+        <app-popup-selector-goods-simple [customerId]="selectedCustomer ? selectedCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods-simple>
+      </div>
+    </div>
 </div>
 <div class="actions">
     <div class="form-group">

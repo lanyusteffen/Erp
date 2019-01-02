@@ -1,18 +1,19 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { PaginationBarComponent } from '@components/pagination-bar/pagination-bar.component';
 import { AlertService } from '@services/alert.service';
-import { GoodsPopupSelectService } from './goods-popup-selector.service';
+import { GoodsPopupSelectService } from '../popup-selector-goods/goods-popup-selector.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
-  selector: 'app-popup-selector-goods',
-  templateUrl: './popup-selector-goods.component.html',
-  styleUrls: ['./popup-selector-goods.component.less'],
-  providers: [ GoodsPopupSelectService,
-    { provide: NG_VALUE_ACCESSOR, useExisting: PopupSelectorGoodsComponent, multi: true }
+  selector: 'app-popup-selector-goods-simple',
+  templateUrl: './popup-selector-goods-simple.component.html',
+  styleUrls: ['./popup-selector-goods-simple.component.less'],
+  providers: [
+    GoodsPopupSelectService,
+    { provide: NG_VALUE_ACCESSOR, useExisting: PopupSelectorGoodsSimpleComponent, multi: true }
   ]
 })
-export class PopupSelectorGoodsComponent implements ControlValueAccessor {
+export class PopupSelectorGoodsSimpleComponent implements ControlValueAccessor {
 
   @ViewChild(PaginationBarComponent)
   private paginationBar: PaginationBarComponent;

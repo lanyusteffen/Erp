@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { PurchaseService } from '../../order.service';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { AlertService } from '@services/alert.service';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { PopupSelectorGoodsSimpleComponent } from '../../../../../products/components/popup-selector-goods-simple/popup-selector-goods-simple.component';
 import { DatePipe } from '@angular/common';
 
 const queryItemBase = {
@@ -27,6 +27,15 @@ const queryItemBase = {
 })
 export class PurchaseActionsComponent implements OnInit {
 
+  @ViewChild(PopupSelectorGoodsSimpleComponent)
+  private goodsPopupSelector: PopupSelectorGoodsSimpleComponent;
+
+  @ViewChild('queryGoodsName')
+  private el: ElementRef;
+
+  private selectedCustomer: any;
+  private selectedEmployee: any;
+
   @Output() onExecuteQuery: EventEmitter<any> = new EventEmitter();
 
   private datePickerConfig: IDatePickerConfig = {
@@ -37,23 +46,26 @@ export class PurchaseActionsComponent implements OnInit {
   private queryItem = null;
 
   constructor(
-    private loadingBar: SlimLoadingBarService,
     private datePipe: DatePipe,
+    private elementRef: ElementRef,
     private purchaseService: PurchaseService) {
     this.queryItem = Object.assign({}, queryItemBase);
   }
 
   selectCustomer(item: any): void {
+    this.selectCustomer = item;
     this.queryItem.CustomerId = item.Id;
   }
 
   selectEmployee(item: any): void {
+    this.selectEmployee = item;
     this.queryItem.EmployeeId = item.Id;
   }
 
   selectGoods(item: any): void {
-    this.queryItem.GoodsId = item.Id;
-    this.queryItem.ProductId = item.ProductId;
+    this.el.nativeElement.value = item[0].Name;
+    this.queryItem.GoodsId = item[0].Id;
+    this.queryItem.ProductId = item[0].ProductId;
   }
 
   selectDepartment(selectedValue: any): void {
@@ -69,6 +81,11 @@ export class PurchaseActionsComponent implements OnInit {
   }
 
   query() {
-    this.onExecuteQuery.emit(this.queryItem);
+    const queryItem = Object.assign({}, this.queryItem);
+    this.onExecuteQuery.emit(queryItem);
+  }
+
+  showModal() {
+    this.goodsPopupSelector.show = true;
   }
 }
