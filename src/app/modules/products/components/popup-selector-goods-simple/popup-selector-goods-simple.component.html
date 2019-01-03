@@ -39,7 +39,7 @@
             <tbody>
               <tr *ngFor="let item of goods">
                 <td>
-                  <app-ui-radio [checked]="item.Selected" (onChange)="select($event, item)"></app-ui-radio>
+                  <app-ui-radio [radioName]="'Id'" formControlName="Id" [checked]="item.Selected" (click)="select($event, item)"></app-ui-radio>
                 </td>
                 <td>{{item.Name}}</td>
                 <td>{{item.ProductCode}}</td>
