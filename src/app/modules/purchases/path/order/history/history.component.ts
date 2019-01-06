@@ -76,7 +76,7 @@ export class PurchaseHistoryComponent implements OnInit {
       Code: 'UnAudit',
       AuditStatus: AuditStatusPublic.WaitAudit,
       BusinessStatus: null,
-      IsSelected: false
+      IsSelected: true
     });
     this.navService.create( {
       Status: StatusPublic.Valid,

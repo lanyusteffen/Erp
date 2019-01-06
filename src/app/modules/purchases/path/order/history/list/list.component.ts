@@ -20,10 +20,17 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   private pagination = {};
   private allSelected = false;
   private selectedId: number;
+  private _showItem = false;
   private subscription: Subscription;
+  private propertyName1 = null;
+  private propertyName2 = null;
+  private currentPurchase = <any>[];
 
   @LocalStorage()
-  systemConfig: any;
+  private systemConfig: any;
+
+  @LocalStorage()
+  private productConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -49,6 +56,7 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
+    this.getProductConfig();
     this.purchaseOrderService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Purchase, err);
       this.loadingBar.complete();
@@ -59,6 +67,22 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  getProductConfig(): any {
+    if (!this.productConfig) {
+      this.appService.getProductConfig((data) => {
+        this.productConfig = data;
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '获取系统配置失败' + err
+        });
+      });
+    }
+    this.propertyName1 = this.productConfig.PropertyName1;
+    this.propertyName2 = this.productConfig.PropertyName2;
+    return this.productConfig;
   }
 
   getSystemConfig(): any {
@@ -124,5 +148,14 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }
+
+  showItem(item) {
+    this._showItem = true;
+    this.currentPurchase = item;
+  }
+
+  closeItem() {
+    this._showItem = false;
   }
 }

@@ -96,19 +96,11 @@ export class PopupSelectorGoodsSimpleComponent implements ControlValueAccessor {
     });
   }
 
-  selectAll(evt) {
-    const allSelected = evt.target.checked;
-    this.goods = this.goods.map(item => ({
-      ...item,
-      Selected: allSelected
-    }));
-  }
-
   select(evt, item: any) {
     this._selectedItems = [];
-    let finded = false;
+    const finded = false;
     item.Selected = true;
-    item.Quanlity = 0.00;    
+    item.Quanlity = 0.00;
     if (!finded) {
       this._selectedItems.push(item);
     }

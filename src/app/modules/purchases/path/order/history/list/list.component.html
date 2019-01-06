@@ -25,6 +25,7 @@
         </td>
         <td>
           <a (click)="audit(item.Id)">审核</a>
+          <a (click)="showItem(item)">查看明细</a>
           <a (click)="update(item.Id)">修改</a>
           <a class="text-danger" (click)="onCancel(item.Id)">作废</a>
           <a (click)="copy(item.Id)">复制</a>
@@ -47,37 +48,44 @@
     [current]="pagination.PageIndex"
     (onChange)="onPageChange($event)"
   ></app-pagination-bar>
-  <app-card [header]="'联系人信息'" [show]="_showContact" (onCancel)="closeContact()">
-    <app-ui-table>
-      <thead>
-        <th>联系人</th>
-        <th>手机</th>
-        <th>座机</th>
-        <th>传真</th>
-        <th>邮箱</th>
-        <th>单位地址</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of contactList">
-          <td>{{item.Name}}</td>
-          <td>{{item.Mobile}}</td>
-          <td>{{item.Tel}}</td>
-          <td>{{item.Fax}}</td>
-          <td>{{item.Email}}</td>
-          <td>{{item.Address}}</td>
-        </tr>
-      </tbody>
-    </app-ui-table>
-    <div app-card-footer>
-      <app-ui-button [style]="'primary'" (click)="closeContact()">
-        确定
-      </app-ui-button>
-    </div>
+  <app-card [header]="'采购单明细'" [show]="_showItem" (onCancel)="closeItem()">
+      <app-ui-table>
+          <thead>
+            <tr>
+              <th>商品</th>
+              <th>规格型号</th>
+              <th width="60px">{{propertyName1}}</th>
+              <th width="60px">{{propertyName2}}</th>
+              <th>采购数量</th>
+              <th>采购单价</th>
+              <th>采购金额</th>
+              <th *ngIf="currentPurchase.IsOpenDiscount">折扣率</th>
+              <th *ngIf="currentPurchase.IsOpenDiscount">折扣额</th>
+              <th *ngIf="currentPurchase.IsOpenDiscount">折后金额</th>
+              <th *ngIf="currentPurchase.IsOpenTax">税率</th>
+              <th *ngIf="currentPurchase.IsOpenTax">税额</th>
+              <th *ngIf="currentPurchase.IsOpenTax">税后金额</th>
+              <th>仓库</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let purchaseItem of currentPurchase.ItemList">
+              <td>{{purchaseItem.Name}}</td>
+              <td>{{purchaseItem.Spec}}</td>
+              <td>{{purchaseItem.ProductSizeValue}}</td>
+              <td>{{purchaseItem.ProductColorValue}}</td>
+              <td>{{purchaseItem.Quanlity | number: '1.2'}}</td>
+              <td>{{purchaseItem.Price | number: '1.2'}}</td>
+              <td>{{purchaseItem.Amount | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenDiscount">{{purchaseItem.DiscountRate | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenDiscount">{{purchaseItem.DiscountAmount | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenDiscount">{{purchaseItem.AfterDiscountAmount | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenTax">{{purchaseItem.TaxRate | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenTax">{{purchaseItem.TaxAmount | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenTax">{{purchaseItem.AfterTaxAmount | number: '1.2'}}</td>
+              <td>{{purchaseItem.StorageName}}</td>
+            </tr>
+          </tbody>
+      </app-ui-table>
   </app-card>
-  <app-supplier-control
-    [type]="'update'"
-    [customerId]="selectedId"
-    [show]="_showUpdate"
-    (onClose)="closeUpdate()"
-  ></app-supplier-control>
 </div>
