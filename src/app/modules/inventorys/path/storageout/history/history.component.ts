@@ -5,6 +5,7 @@ import { StorageStatus } from '../../../enums/storage.status.public';
 import { NavService } from '@components/navs/nav.service';
 import { StorageOutService } from '../storageout.service';
 import { AlertService } from '@services/alert.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-storageout-history',
@@ -25,7 +26,10 @@ import { AlertService } from '@services/alert.service';
       flex: 1;
       display: flex;
     }
-  `]
+  `],
+  providers: [
+    DatePipe
+  ]
 })
 export class StorageOutHistoryComponent implements OnInit {
 
@@ -33,6 +37,7 @@ export class StorageOutHistoryComponent implements OnInit {
 
   constructor(private navService: NavService,
     private alertService: AlertService,
+    private datePipe: DatePipe,
     private storageoutService: StorageOutService) {
 
   }
@@ -45,6 +50,8 @@ export class StorageOutHistoryComponent implements OnInit {
   }
 
   onQuery(queryItem: any) {
+    queryItem.BeginDate = this.datePipe.transform(<Date>queryItem.BeginDate, 'yyyy-MM-dd HH:mm:ss');
+    queryItem.EndDate = this.datePipe.transform(<Date>queryItem.EndDate, 'yyyy-MM-dd HH:mm:ss');
     this.storageoutService.onExecuteQuery(queryItem, (err) => {
       this.listErrorCallBack(err);
     });
