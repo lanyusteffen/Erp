@@ -16,6 +16,7 @@ import { EmployeeService } from '../path/employee/employee.service';
 import { AreaService } from '../path/area/area.service';
 import { SharedModule } from '../../../shared.module';
 
+
 @NgModule({
   declarations: [
     DepartmentSelectorComponent,

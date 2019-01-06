@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavItem } from '@contracts/nav.item';
 import { StatusPublic } from '@enums/status.public';
-import { AuditStatusPublic } from '@enums/audit.status.public';
 import { StorageStatus } from '../../../enums/storage.status.public';
 import { NavService } from '@components/navs/nav.service';
 import { StorageOutService } from '../storageout.service';
@@ -33,8 +32,8 @@ export class StorageOutHistoryComponent implements OnInit {
   private selectNav: any;
 
   constructor(private navService: NavService,
-              private alertService: AlertService,
-              private storageoutService: StorageOutService) {
+    private alertService: AlertService,
+    private storageoutService: StorageOutService) {
 
   }
 
@@ -64,43 +63,27 @@ export class StorageOutHistoryComponent implements OnInit {
 
   initNavs() {
     this.navService.create({
-      Status: StatusPublic.Valid,
-      Name: '未审核',
-      Code: 'UnAudit',
-      AuditStatus: AuditStatusPublic.WaitAudit,
-      BusinessStatus: null,
-      IsSelected: false
-    });
-    this.navService.create( {
-      Status: StatusPublic.Valid,
-      Name: '已审核',
-      Code: 'Audited',
-      AuditStatus: AuditStatusPublic.Approved,
-      BusinessStatus: null,
+      Status: StorageStatus.Normal,
+      Name: '未出库',
+      Code: 'Normal',
       IsSelected: false
     });
     this.navService.create({
-      Status: StatusPublic.Valid,
-      Name: '部分入库',
-      Code: 'Audited',
-      AuditStatus: AuditStatusPublic.Approved,
-      BusinessStatus: StorageStatus.PartialStorageOut,
+      Status: StorageStatus.PartialStorageOut,
+      Name: '部分出库',
+      Code: 'PartialStorageOut',
       IsSelected: false
     });
     this.navService.create({
-      Status: StatusPublic.Valid,
-      Name: '全部入库',
-      Code: 'Audited',
-      AuditStatus: AuditStatusPublic.Approved,
-      BusinessStatus: StorageStatus.AllStorageOut,
+      Status: StorageStatus.AllStorageOut,
+      Name: '全部出库',
+      Code: 'AllStorageOut',
       IsSelected: false
     });
     this.navService.create({
-      Status: StatusPublic.Valid,
+      Status: StorageStatus.Stoped,
       Name: '已终止',
-      Code: 'Terminal',
-      AuditStatus: AuditStatusPublic.Approved,
-      BusinessStatus: StorageStatus.Stoped,
+      Code: 'Stoped',
       IsSelected: false
     });
   }

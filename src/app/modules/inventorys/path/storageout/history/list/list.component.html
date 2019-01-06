@@ -20,12 +20,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of purchases">
+      <tr *ngFor="let item of storageOuts">
         <td>
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
         <td>
-          <a (click)="audit(item.Id)">审核</a>
           <a (click)="update(item.Id)">修改</a>
           <a class="text-danger" (click)="onCancel(item.Id)">作废</a>
           <a (click)="copy(item.Id)">复制</a>
@@ -36,8 +35,8 @@
         <td>{{item.DepartmentName}}</td>
         <td>{{item.BillTypeDes}}</td>
         <td>{{item.BillTime}}</td>
-        <td>{{item.Quanlity | number: '1.2'}}</td>
-        <td>{{item.Amount | number: '1.2'}}</td>
+        <td>{{item.TotalQuantity | number: '1.2'}}</td>
+        <td>{{item.TotalAmount | number: '1.2'}}</td>
         <td>{{item.StatusDes}}</td>
         <td>{{item.Remark}}</td>
         <td>{{item.CreateUserName}}</td>
