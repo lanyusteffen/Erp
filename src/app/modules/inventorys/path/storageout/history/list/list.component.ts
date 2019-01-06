@@ -38,8 +38,8 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
     this.loadingBar.start();
     this.subscription = this.storageOutOrderService
       .get()
-      .subscribe(({ storageOuts, currentPagination }) => {
-        this.storageOuts = storageOuts.map(item => ({
+      .subscribe(({ storageouts, currentPagination }) => {
+        this.storageOuts = storageouts.map(item => ({
           ...item,
           StorageOutTime: this.datePipe.transform(<Date>item.StorageOutTime, 'yyyy-MM-dd')
         }));

@@ -2,6 +2,7 @@ import { FormGroup, FormArray, FormBuilder, Validators, FormControl, AbstractCon
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
+import { StorageBillTypeSelectorComponent } from '../../../components/storagebilltype-Selector/storagebilltype-Selector.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { StorageOutService } from '../storageout.service';
@@ -11,13 +12,13 @@ import { angularMath } from 'angular-ts-math';
 import { DatePipe } from '@angular/common';
 import { ErrorService } from '@services/error.service';
 import { PrimaryKeyValid } from '@validators/primary-key.valid';
-import { NumberDecimalValid } from '@validators/number-decimal.valid';
-import { StorageOutItemValid  } from '@validators/storageOut-item.valid';
+import { StorageOutItemValid } from '@validators/storageOut-item.valid';
 
 const StorageOutItemActionRequest = {
   BelongBillId: null,
   BelongBillCode: null,
   BelongBillTime: null,
+  BillType: 0,
   GoodsId: 0,
   ProductId: 0,
   Quanlity: 0.00,
@@ -40,7 +41,7 @@ const StorageOutItemActionRequest = {
   selector: 'app-storageout-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.less'],
-  providers: [ FormService, DatePipe ]
+  providers: [FormService, DatePipe]
 })
 
 export class StorageOutNewComponent implements OnInit, OnDestroy {
@@ -54,6 +55,9 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
   @ViewChild(PopupSelectorGoodsComponent)
   private goodsPopupSelector: PopupSelectorGoodsComponent;
 
+  @ViewChild(StorageBillTypeSelectorComponent)
+  private storageBillTypeSelector: StorageBillTypeSelectorComponent;
+
   private totalAmount: number | string;
   private payedAmount: number | string;
   private errorItems = new Array();
@@ -62,7 +66,6 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
   private propertyName2 = null;
   private selectedCustomer: any;
   private selectedEmployee: any;
-  private goods:any[];
   private form: FormGroup;
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',
@@ -106,13 +109,13 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
   selectAllStorage(selectedStorageId) {
     const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
     for (let i = 0; i < itemArr.length; i++) {
-      itemArr.at(i).patchValue({'StorageId': selectedStorageId});
+      itemArr.at(i).patchValue({ 'StorageId': selectedStorageId });
     }
   }
 
   selectProductUnit(selectedProductUnitTime, index) {
     const itemArr = <FormArray>this.form.controls['StorageOutItemActionRequests'];
-    itemArr.at(index).patchValue({'UnitTime': selectedProductUnitTime});
+    itemArr.at(index).patchValue({ 'UnitTime': selectedProductUnitTime });
   }
 
   private clearSelectGoods(): void {
@@ -123,7 +126,6 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         --i;
       }
     }
-    this.goodsPopupSelector.selectedGoods=null;
     this.form.controls['StorageOutItemActionRequests'] = itemArr;
   }
 
@@ -156,8 +158,6 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
 
   selectGoods(selectItems: any): void {
 
-    this.goods = selectItems;
-
     selectItems.forEach(item => {
 
       const quanlity = parseInt(item.Quanlity, 10);
@@ -170,14 +170,12 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         const StorageOutItemActionRequestCtrl = <FormGroup>StorageOutItemActionRequestArr.at(findIndex);
         if ((<AbstractControl>StorageOutItemActionRequestCtrl.controls['GoodsId']).value > 0) {
           if (item.Id === (<AbstractControl>StorageOutItemActionRequestCtrl.controls['GoodsId']).value) {
-            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Price'])
-            .setValue(angularMath.getNumberWithDecimals(item.CurrentPrice>0?item.CurrentPrice:item.Price, 0));
+            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Price']).setValue(angularMath.getNumberWithDecimals(item.Price, 2));
             // tslint:disable-next-line:max-line-length
-            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Quanlity']).setValue(angularMath.getNumberWithDecimals(quanlity,0));
+            (<AbstractControl>StorageOutItemActionRequestCtrl.controls['Quanlity']).setValue(angularMath.getNumberWithDecimals(quanlity, 2));
             return;
           }
         }
-
       }
 
       const newStorageOutItemActionRequest = Object.assign({}, StorageOutItemActionRequest);
@@ -191,7 +189,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
       newStorageOutItemActionRequest.UnitTime = 1.00; // 倍数为1, 则不会变
       newStorageOutItemActionRequest.Spec = item.Spec;
       newStorageOutItemActionRequest.Quanlity = quanlity;
-      newStorageOutItemActionRequest.Price = item.CurrentPrice<=0? item.Price:item.CurrentPrice;
+      newStorageOutItemActionRequest.Price = item.Price;
       newStorageOutItemActionRequest.Name = item.Name;
       newStorageOutItemActionRequest.SortIndex = findIndex + 1;
 
@@ -249,12 +247,6 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         Validators.required,
         PrimaryKeyValid.validation
       ],
-      WholeDiscountRate: [
-        NumberDecimalValid.validation
-      ],
-      WholeDiscountAmount: [
-        NumberDecimalValid.validation
-      ],
       StorageOutItemActionRequests: [
         StorageOutItemValid.validation
       ]
@@ -280,7 +272,7 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         this.propertyName1 = data.PropertyName1;
         this.propertyName2 = data.PropertyName2;
         data.BillTime = this.datePipe.transform(<Date>data.BillTime, 'yyyy-MM-dd'),
-        this.form = this.formService.createForm(data, this.getValidators());
+          this.form = this.formService.createForm(data, this.getValidators());
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Purchase, err);
       });
@@ -336,16 +328,6 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     const quanlityCtrl = <AbstractControl>item.controls['Quanlity'];
     const priceCtrl = <AbstractControl>item.controls['Price'];
     const amountCtrl = <AbstractControl>item.controls['Amount'];
-    const goodsCtrl = <AbstractControl>item.controls['GoodsId'];
-
-    this.goods.forEach(item=>{
-      if(item.Id === goodsCtrl.value){
-        item.CurrentPrice = priceCtrl.value;
-        item.Quanlity = quanlityCtrl.value;
-      }
-    });
-
-    this.goodsPopupSelector.selectedGoods = this.goods;
 
     // 重新某货品的设置采购金额
     const purchaseAmount = quanlityCtrl.value * priceCtrl.value;

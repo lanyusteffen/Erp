@@ -12,7 +12,8 @@ const queryItemBase = {
   GoodsId: null,
   ProductId: null,
   BeginDate: null,
-  EndDate: null
+  EndDate: null,
+  BillType: null
 };
 
 @Component({
@@ -60,6 +61,10 @@ export class StorageOutActionsComponent implements OnInit {
     this.queryItem.DepartmentId = selectedValue;
   }
 
+  selectBillType(selectedValue: any): void {
+    this.queryItem.BillType = selectedValue;
+  }
+
   ngOnInit() {
     this.storageOutService.getQueryDateRange(err => {
     }, data => {
@@ -69,6 +74,7 @@ export class StorageOutActionsComponent implements OnInit {
   }
 
   query() {
-    this.onExecuteQuery.emit(this.queryItem);
+    const queryItem = Object.assign({}, this.queryItem);
+    this.onExecuteQuery.emit(queryItem);
   }
 }

@@ -23,6 +23,14 @@
         <app-department-selector (onSelectedChange)="selectDepartment($event)" [isEditing]="false"></app-department-selector>
       </div>
     </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>出库类型：</label>
+      </div>
+      <div class="form-group-control">
+        <app-storagebilltype-selector (selectChanged)="selectBillType($event)"></app-storagebilltype-selector>
+      </div>
+    </div>
 </div>
 <div class="actions">
     <div class="form-group">

@@ -187,6 +187,7 @@ import { StorageOutService } from './modules/inventorys/path/storageout/storageo
 import { StorageOutHistoryComponent } from './modules/inventorys/path/storageout/history/history.component';
 import { StorageOutActionsComponent } from './modules/inventorys/path/storageout/history/actions/actions.component';
 import { StorageOutListComponent } from './modules/inventorys/path/storageout/history/list/list.component';
+import { InventorysSharedModule } from './modules/inventorys/components/inventorys.shared.module';
 
 @NgModule({
   declarations: [
@@ -344,6 +345,7 @@ import { StorageOutListComponent } from './modules/inventorys/path/storageout/hi
     AuthorizeModule,
     SharedModule,
     BasicsSharedModule,
+    InventorysSharedModule,
     ProductsSharedModule,
     AppRoutingModule,
     DpDatePickerModule,

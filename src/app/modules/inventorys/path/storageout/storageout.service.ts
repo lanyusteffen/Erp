@@ -10,9 +10,18 @@ export class StorageOutService {
   private storageoutDisabled$ = new Subject<any>();
 
   private state = {
-    storageouts: [],  
+    storageouts: [],
     currentNav: { Status: null, AuditStatus: null, BusinessStatus: null },
-    queryItem: { BeginDate: null, EndDate: null, CustomerId: null, EmployeeId: null, DepartmentId: null, ProductId: null, GoodsId: null },
+    queryItem: {
+      BillType: null,
+      BeginDate: null,
+      EndDate: null,
+      CustomerId: null,
+      EmployeeId: null,
+      DepartmentId: null,
+      ProductId: null,
+      GoodsId: null
+    },
     currentQueryKey: '',
     areaParentId: 0,
     currentPagination: {
@@ -42,18 +51,44 @@ export class StorageOutService {
       currentPagination: {
         PageIndex,
         PageSize
+      },
+      queryItem: {
+        BeginDate,
+        EndDate,
+        CustomerId,
+        EmployeeId,
+        DepartmentId,
+        GoodsId,
+        ProductId,
+        BillType
+      },
+      currentNav: {
+        Status,
+        AuditStatus,
+        BusinessStatus
       }
     } = this.state;
 
     return this.http.post('/StorageOut/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize
+      PageSize,
+      Status,
+      BeginDate,
+      EndDate,
+      CustomerId,
+      EmployeeId,
+      DepartmentId,
+      GoodsId,
+      ProductId,
+      AuditStatus,
+      BusinessStatus,
+      BillType
     }, data => {
       const nextState = {
         ...this.state,
         storageouts: data.StorageOutList,
-        currentPagination: data.Pagination
+        currentPagination: data.StorageOutPageQueryReq
       };
 
       this.state = nextState;
@@ -81,7 +116,7 @@ export class StorageOutService {
       const nextState = {
         ...this.state,
         storageouts: data.StorageOutList,
-        currentPagination: data.Pagination
+        currentPagination: data.StorageOutPageQueryReq
       };
 
       this.state = nextState;

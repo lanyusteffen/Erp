@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UIModule } from '@UI/ui.module';
 
@@ -16,6 +16,7 @@ import { StorageOutRoutingModule } from './storageout.router';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 import { ProductsSharedModule } from '../../../products/components/products.shared.module';
+import { InventorysSharedModule } from '../../components/inventorys.shared.module';
 
 @NgModule({
     declarations: [
@@ -33,12 +34,13 @@ import { ProductsSharedModule } from '../../../products/components/products.shar
         ProductsSharedModule,
         SharedModule,
         DpDatePickerModule,
-        StorageOutRoutingModule
+        StorageOutRoutingModule,
+        InventorysSharedModule
     ],
     entryComponents: [
         DatePickerComponent
     ],
-    providers: [ StorageOutService ]
+    providers: [StorageOutService]
 })
 
 export class StorageOutModule {
