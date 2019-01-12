@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AreaService } from '../../area.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-area-list',
@@ -23,8 +24,10 @@ export class AreaListComponent implements OnInit, OnDestroy {
   constructor(
     private areaService: AreaService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.areaService
       .get()
       .subscribe(({ areas, currentPagination }) => {
@@ -36,6 +39,9 @@ export class AreaListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.areaService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Area, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

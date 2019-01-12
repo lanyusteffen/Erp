@@ -4,6 +4,8 @@ import { RoleService } from '../../role.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+
 
 @Component({
   selector: 'app-role-list',
@@ -25,8 +27,10 @@ export class RoleListComponent implements OnInit, OnDestroy {
   constructor(
     private roleService: RoleService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.roleService
       .get()
       .subscribe(({ roles, currentPagination }) => {
@@ -38,6 +42,9 @@ export class RoleListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.roleService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Role, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

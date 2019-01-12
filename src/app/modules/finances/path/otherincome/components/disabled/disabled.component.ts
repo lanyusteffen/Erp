@@ -5,6 +5,7 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { AppService } from '@services/app.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-otherincome-disabled-list',
@@ -29,8 +30,10 @@ export class OtherIncomeDisabledListComponent implements OnInit, OnDestroy {
     private otherIncomeService: OtherIncomeService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.otherIncomeService
       .get()
       .subscribe(({ otherIncomes, currentPagination }) => {
@@ -44,9 +47,13 @@ export class OtherIncomeDisabledListComponent implements OnInit, OnDestroy {
       this.systemConfig = data;
       this.otherIncomeService.listDisabled((err) => {
         this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+        this.loadingBar.complete();
+      },()=>{
+        this.loadingBar.complete();
       });
     }, (err) => {
       this.alertService.systemConfigFail(err);
+      this.loadingBar.complete();
     });
     return this.systemConfig;
   }

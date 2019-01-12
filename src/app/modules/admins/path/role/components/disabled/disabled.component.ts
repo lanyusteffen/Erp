@@ -5,6 +5,7 @@ import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-role-disabled-list',
@@ -31,8 +32,10 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
     private roleService: RoleService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.roleService
       .getDisabled()
       .subscribe(({ roles, currentPagination }) => {
@@ -46,9 +49,13 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
       this.systemConfig = data;
       this.roleService.listDisabled((err) => {
         this.alertService.listErrorCallBack(ModuleName.Role, err);
+        this.loadingBar.complete();
+      },()=>{
+        this.loadingBar.complete();
       });
     }, (err) => {
       this.alertService.systemConfigFail(err);
+      this.loadingBar.complete();
     });
     return this.systemConfig;
   }

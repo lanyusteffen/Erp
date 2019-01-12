@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ProductSizeService } from '../../productsize.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-productsize-list',
@@ -23,8 +24,10 @@ export class ProductSizeListComponent implements OnInit, OnDestroy {
   constructor(
     private productSizeService: ProductSizeService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.productSizeService
       .get()
       .subscribe(({ productSizes, currentPagination }) => {
@@ -36,6 +39,9 @@ export class ProductSizeListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productSizeService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.ProductSize, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
@@ -39,8 +40,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.productService
       .get()
       .subscribe(({ products, currentPagination }) => {
@@ -53,6 +56,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.getSystemConfig();
     this.productService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Product, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

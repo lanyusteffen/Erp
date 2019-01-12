@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-product-barcode-list',
@@ -23,8 +24,10 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.productService
       .getBarcode()
       .subscribe(({ barcodes, currentPagination }) => {
@@ -37,6 +40,9 @@ export class ProductBarcodeListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productService.listBarcode((err) => {
       this.alertService.listErrorCallBack(ModuleName.Barcode, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

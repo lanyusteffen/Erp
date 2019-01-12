@@ -4,6 +4,7 @@ import { OtherExchangeUnitService } from '../../other-exchange-unit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-otherexchangeunit-list',
@@ -26,8 +27,10 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
   constructor(
     private otherExchangeUnitService: OtherExchangeUnitService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.otherExchangeUnitService
       .get()
       .subscribe(({ otherExchangeUnits, currentPagination }) => {
@@ -39,6 +42,9 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.otherExchangeUnitService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.OtherExchangeUnit, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

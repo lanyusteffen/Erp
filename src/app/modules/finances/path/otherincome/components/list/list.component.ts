@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { OtherIncomeService } from '../../otherincome.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-otherincome-list',

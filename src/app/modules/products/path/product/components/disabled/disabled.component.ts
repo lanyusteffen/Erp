@@ -6,6 +6,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-product-disabled-list',
@@ -30,8 +31,10 @@ export class ProductDisabledListComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.productService
       .getDisabled()
       .subscribe(({ products, currentPagination }) => {
@@ -45,9 +48,13 @@ export class ProductDisabledListComponent implements OnInit, OnDestroy {
       this.systemConfig = data;
       this.productService.listDisabled((err) => {
         this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+        this.loadingBar.complete();
+      },()=>{
+        this.loadingBar.complete();
       });
     }, (err) => {
       this.alertService.systemConfigFail(err);
+      this.loadingBar.complete();
     });
     return this.systemConfig;
   }

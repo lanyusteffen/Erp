@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-product-extension',
@@ -29,7 +30,8 @@ export class ProductExtensionComponent {
     private productService: ProductService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private formService: FormService
+    private formService: FormService,
+    private loadingBar:SlimLoadingBarService
   ) {
   }
 
@@ -61,6 +63,7 @@ export class ProductExtensionComponent {
   set productId(productId) {
     this._productId = productId;
     if (this.show) {
+      this.loadingBar.start();
       this.productService.productExtensions(productId, data => {
         const extensions = {
           PropertyName1: data.PropertyName1,
@@ -70,8 +73,10 @@ export class ProductExtensionComponent {
         this._productExtendItemList = data.ProductExtendItemList;
 
         this.form = this.formService.createForm(extensions);
+        this.loadingBar.complete();
       }, (err) => {
         this.alertService.listErrorCallBack(ModuleName.Extension, err);
+        this.loadingBar.complete();
       });
     }
   }

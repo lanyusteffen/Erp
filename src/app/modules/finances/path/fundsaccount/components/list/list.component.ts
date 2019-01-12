@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { FundsAccountService } from '../../fundsaccount.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-fundsaccount-list',
@@ -23,8 +24,10 @@ export class FundsAccountListComponent implements OnInit, OnDestroy {
   constructor(
     private fundsAccountService: FundsAccountService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.fundsAccountService
       .get()
       .subscribe(({ fundsAccounts, currentPagination }) => {
@@ -36,6 +39,9 @@ export class FundsAccountListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fundsAccountService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.FundsAccount, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

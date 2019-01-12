@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { AlertService } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-product-unit',
@@ -28,7 +29,8 @@ export class UnitComponent {
     private productService: ProductService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private formService: FormService
+    private formService: FormService,
+    private loadingBar: SlimLoadingBarService
   ) {
   }
 
@@ -60,11 +62,14 @@ export class UnitComponent {
   set productId(productId) {
     this._productId = productId;
     if (this.show) {
+      this.loadingBar.complete();
       this.productService.getProductUnitList(productId, data => {
         this._productUnitList = data;
         this.form = this.formService.createForm(data);
+        this.loadingBar.complete();
       }, (err) => {
         this.listErrorCallBack(err);
+        this.loadingBar.complete();
       });
     }
   }

@@ -4,6 +4,7 @@ import { SystemUnitService } from '../../systemunit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-systemunit-disabled-list',
@@ -26,8 +27,10 @@ export class SystemUnitDisabledListComponent implements OnInit, OnDestroy {
     private systemUnitService: SystemUnitService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.systemUnitService
       .getDisabled()
       .subscribe(({ systemUnits, currentPagination }) => {
@@ -41,9 +44,13 @@ export class SystemUnitDisabledListComponent implements OnInit, OnDestroy {
       this.systemConfig = data;
       this.systemUnitService.listDisabled((err) => {
         this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+        this.loadingBar.complete();
+      },()=>{
+        this.loadingBar.complete();
       });
     }, (err) => {
       this.alertService.systemConfigFail(err);
+      this.loadingBar.complete();
     });
     return this.systemConfig;
   }

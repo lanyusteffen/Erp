@@ -4,6 +4,7 @@ import { CompanyService } from '../../company.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-company-list',
@@ -25,8 +26,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   constructor(
     private companyService: CompanyService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.companyService
       .get()
       .subscribe(({ companys, currentPagination }) => {
@@ -38,6 +41,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.companyService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Company, err);
+      this.loadingBar.complete();
     });
   }
 

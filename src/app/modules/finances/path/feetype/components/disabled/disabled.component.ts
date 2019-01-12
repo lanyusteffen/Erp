@@ -5,6 +5,7 @@ import { LocalStorage } from 'ngx-webstorage';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-feetype-disabled-list',
@@ -31,8 +32,10 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
     private feeTypeService: FeeTypeService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.feeTypeService
       .getDisabled()
       .subscribe(({ feeTypes, currentPagination }) => {
@@ -46,9 +49,13 @@ export class FeeTypeDisabledListComponent implements OnInit, OnDestroy {
       this.systemConfig = data;
       this.feeTypeService.listDisabled((err) => {
         this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+        this.loadingBar.complete();
+      },()=>{
+        this.loadingBar.complete();
       });
     }, (err) => {
       this.alertService.systemConfigFail(err);
+      this.loadingBar.complete();
     });
     return this.systemConfig;
   }

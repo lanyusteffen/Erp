@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ProductUnitService } from '../../productunit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-productunit-disabled-list',
@@ -24,8 +25,10 @@ export class ProductUnitDisabledListComponent implements OnInit, OnDestroy {
   constructor(
     private productUnitService: ProductUnitService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.productUnitService
       .get()
       .subscribe(({ productUnits, currentPagination }) => {
@@ -37,6 +40,9 @@ export class ProductUnitDisabledListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productUnitService.listDisabled((err) => {
       this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

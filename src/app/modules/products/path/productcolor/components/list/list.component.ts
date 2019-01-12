@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ProductColorService } from '../../productcolor.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-productcolor-list',
@@ -23,8 +24,10 @@ export class ProductColorListComponent implements OnInit, OnDestroy {
   constructor(
     private productColorService: ProductColorService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.productColorService
       .get()
       .subscribe(({ productColors, currentPagination }) => {
@@ -36,6 +39,9 @@ export class ProductColorListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productColorService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.ProductColor, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 

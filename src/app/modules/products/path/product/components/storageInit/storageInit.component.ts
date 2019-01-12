@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ProductService } from '../../product.service';
 import { AlertService, ModuleName} from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-product-storage-init',
@@ -30,7 +31,8 @@ export class ProductStorageInitComponent {
     private productService: ProductService,
     private fb: FormBuilder,
     private alertService: AlertService,
-    private formService: FormService
+    private formService: FormService,
+    private loadingBar: SlimLoadingBarService
   ) {
   }
 
@@ -64,12 +66,15 @@ export class ProductStorageInitComponent {
   @Input()
   set productId(productId) {
     if (productId) {
+      this.loadingBar.start();
       this._productId = productId;
       if (this.show) {
         this.productService.getStorageDetailList(productId, data => {
           this.form = this.formService.createArrayForm('ItemList', data);
+          this.loadingBar.complete();
         }, (err) => {
           this.alertService.listErrorCallBack(ModuleName.StorageInit, err);
+          this.loadingBar.complete();
         });
       }
     }

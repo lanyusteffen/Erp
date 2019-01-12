@@ -4,6 +4,7 @@ import { CustomerService } from '../../customer.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-customer-list',
@@ -26,8 +27,10 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   constructor(
     private customerService: CustomerService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.customerService
       .get()
       .subscribe(({ customers, currentPagination }) => {
@@ -39,6 +42,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.customerService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Customer, err);
+      this.loadingBar.complete();
     });
   }
 
@@ -47,11 +51,14 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
   showContact(customerId) {
+    this.loadingBar.start();
     this._showContact = true;
     this.customerService.contactList(customerId, data => {
       this.contactList = data;
+      this.loadingBar.complete();
     }, (err) => {
       this.alertService.listErrorCallBack(ModuleName.CustomerContact, err);
+      this.loadingBar.complete();
     });
   }
 

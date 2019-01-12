@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SupplierService } from '../../supplier.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-supplier-list',
@@ -25,8 +26,10 @@ export class SupplierListComponent implements OnInit, OnDestroy {
   constructor(
     private supplierService: SupplierService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.supplierService
       .get()
       .subscribe(({ suppliers, currentPagination }) => {
@@ -37,7 +40,10 @@ export class SupplierListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.supplierService.list((err) => {
-
+      this.alertService.listErrorCallBack(ModuleName.Supplier,err);
+      this.loadingBar.complete();
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 

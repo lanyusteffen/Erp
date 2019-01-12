@@ -4,6 +4,7 @@ import { UserService } from '../../user.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-user-list',
@@ -26,8 +27,10 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.userService
       .get()
       .subscribe(({ users, currentPagination }) => {
@@ -39,6 +42,9 @@ export class UserListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.User, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 
