@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { PurchaseService } from '../../order.service';
 import { DatePipe } from '@angular/common';
@@ -7,6 +7,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { NavItem } from '@contracts/nav.item';
 
 @Component({
   selector: 'app-purchase-list',
@@ -31,6 +32,9 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
 
   @LocalStorage()
   private productConfig: any;
+
+  @Input()
+  selectNav: NavItem;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -106,7 +110,6 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.purchases : []);
-
   }
 
   select(evt, selectedItem) {
@@ -131,9 +134,9 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     this.selectedId = id;
   }
 
-  onCancel(id) {
+  delete(id) {
     this.confirmService.open({
-      content: '确认停用吗？',
+      content: '确认删除吗？',
       onConfirm: () => {
         this.purchaseOrderService
           .cancel([id], data => {
@@ -153,6 +156,52 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   showItem(item) {
     this._showItem = true;
     this.currentPurchase = item;
+  }
+
+  audit(item) {
+    this.confirmService.open({
+      content: '确认审核吗？',
+      onConfirm: () => {
+        this.purchaseOrderService
+          .audit([item.Id], data => {
+            if (data.IsValid) {
+              this.alertService.cancelSuccess();
+              this.purchaseOrderService.list((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Purchase, err);
+              });
+            }
+          }, (err) => {
+            this.alertService.cancelFail(err);
+          });
+      }
+    });
+  }
+
+  unAudit(item) {
+    this.confirmService.open({
+      content: '确认反审核吗？',
+      onConfirm: () => {
+        this.purchaseOrderService
+          .audit([item.Id], data => {
+            if (data.IsValid) {
+              this.alertService.cancelSuccess();
+              this.purchaseOrderService.list((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Purchase, err);
+              });
+            }
+          }, (err) => {
+            this.alertService.cancelFail(err);
+          });
+      }
+    });
+  }
+
+  copy(item) {
+
+  }
+
+  storageIn(item) {
+    
   }
 
   closeItem() {

@@ -55,6 +55,15 @@
         <app-ui-button [style]="'primary'" (click)="query($event)" type="button">
             查询
         </app-ui-button>
+        <app-ui-button *ngIf="selectNav.AuditStatus === 0" [style]="'primary'" (click)="audit()" type="button">
+            审核
+        </app-ui-button>
+        <app-ui-button *ngIf="selectNav.AuditStatus === 1" [style]="'primary'" (click)="unAudit()" type="button">
+            反审核
+        </app-ui-button>
+        <app-ui-button *ngIf="selectNav.AuditStatus === 0" [style]="'primary'" (click)="delete()" type="button">
+            删除
+        </app-ui-button>
         <app-ui-button [style]="'primary'">
             导出
         </app-ui-button>

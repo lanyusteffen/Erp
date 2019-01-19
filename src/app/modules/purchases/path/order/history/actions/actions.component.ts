@@ -1,9 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, Input } from '@angular/core';
 import { PurchaseService } from '../../order.service';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { AlertService } from '@services/alert.service';
 import { PopupSelectorGoodsSimpleComponent } from '../../../../../products/components/popup-selector-goods-simple/popup-selector-goods-simple.component';
 import { DatePipe } from '@angular/common';
+import { ConfirmService } from '@services/confirm.service';
+import { ModuleName } from '@services/alert.service';
+import { NavItem } from '@contracts/nav.item';
 
 const queryItemBase = {
   CustomerId: null,
@@ -43,11 +46,19 @@ export class PurchaseActionsComponent implements OnInit {
     format: 'YYYY-MM-DD'
   };
 
+  @Input() selectedItems = <any>[];
+
+  @Input()
+  selectNav: NavItem;
+
   private queryItem = null;
 
   constructor(
     private datePipe: DatePipe,
     private elementRef: ElementRef,
+    private purchaseOrderService: PurchaseService,
+    private alertService: AlertService,
+    private confirmService: ConfirmService,
     private purchaseService: PurchaseService) {
     this.queryItem = Object.assign({}, queryItemBase);
   }
@@ -83,6 +94,70 @@ export class PurchaseActionsComponent implements OnInit {
   query() {
     const queryItem = Object.assign({}, this.queryItem);
     this.onExecuteQuery.emit(queryItem);
+  }
+
+  audit() {
+    this.confirmService.open({
+      content: '确认审核已选中采购单吗？',
+      onConfirm: () => {
+        this.purchaseOrderService
+          .audit(this.getSelected(), data => {
+            if (data.IsValid) {
+              this.alertService.cancelSuccess();
+              this.purchaseOrderService.list((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Purchase, err);
+              });
+            }
+          }, (err) => {
+            this.alertService.cancelFail(err);
+          });
+      }
+    });
+  }
+
+  unAudit() {
+    this.confirmService.open({
+      content: '确认反审核已选中采购单吗？',
+      onConfirm: () => {
+        this.purchaseOrderService
+          .unAudit(this.getSelected(), data => {
+            if (data.IsValid) {
+              this.alertService.cancelSuccess();
+              this.purchaseOrderService.list((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Purchase, err);
+              });
+            }
+          }, (err) => {
+            this.alertService.cancelFail(err);
+          });
+      }
+    });
+  }
+
+  delete() {
+    this.confirmService.open({
+      content: '确认删除已选中采购单吗？',
+      onConfirm: () => {
+        this.purchaseOrderService
+          .cancel(this.getSelected(), data => {
+            if (data.IsValid) {
+              this.alertService.cancelSuccess();
+              this.purchaseOrderService.list((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Purchase, err);
+              });
+            }
+          }, (err) => {
+            this.alertService.cancelFail(err);
+          });
+      }
+    });
+  }
+
+  /**
+   * 获取已选中采购单Id集合
+   */
+  getSelected() {
+    return this.selectedItems.map(item => item.Id);
   }
 
   showModal() {

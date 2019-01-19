@@ -136,6 +136,18 @@ export class PurchaseService {
     }, fallback, ModuleType.Webadmin);
   }
 
+  audit(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Purchase/Audit', {
+      entityIdList
+    }, next, fallback, ModuleType.Purchase);
+  }
+
+  unAudit(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Purchase/UnAudit', {
+      entityIdList
+    }, next, fallback, ModuleType.Purchase);
+  }
+
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Purchase/GetForNew', {}, next, fallback, ModuleType.Webadmin);
   }
@@ -144,8 +156,8 @@ export class PurchaseService {
     return this.http.post('/Purchase/New', purchase, next, fallback, ModuleType.Purchase);
   }
 
-  modify(area, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Purchase/Modify', area, next, fallback, ModuleType.Purchase);
+  modify(purchase, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Purchase/Modify', purchase, next, fallback, ModuleType.Purchase);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

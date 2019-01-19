@@ -12,6 +12,7 @@ export class NavsComponent implements OnInit, OnDestroy {
 
   @Output() onSelectedChange: EventEmitter<NavItem> = new EventEmitter();
   private navs: NavItem[];
+  private lastNav: NavItem = null;
   private subscription: Subscription;
 
   constructor(private navService: NavService) {
@@ -29,6 +30,14 @@ export class NavsComponent implements OnInit, OnDestroy {
   }
 
   private handleChange(nav: NavItem) {
+    if (this.lastNav == null) {
+      if (this.navs.length > 0) {
+        this.lastNav = this.navs[0];
+      }
+    }
+    this.lastNav.IsSelected = false;
+    nav.IsSelected = true;
     this.onSelectedChange.emit(nav);
+    this.lastNav = nav;
   }
 }
