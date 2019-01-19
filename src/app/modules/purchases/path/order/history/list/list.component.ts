@@ -130,16 +130,16 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     });
   }
 
-  update(id) {
-    this.selectedId = id;
+  update(item) {
+    this.selectedId = item.Id;
   }
 
-  delete(id) {
+  cancel(item) {
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.purchaseOrderService
-          .cancel([id], data => {
+          .cancel([item.Id], data => {
             if (data.IsValid) {
               this.alertService.cancelSuccess();
               this.purchaseOrderService.list((err) => {
@@ -165,13 +165,13 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
         this.purchaseOrderService
           .audit([item.Id], data => {
             if (data.IsValid) {
-              this.alertService.cancelSuccess();
+              this.alertService.auditSuccess();
               this.purchaseOrderService.list((err) => {
                 this.alertService.listErrorCallBack(ModuleName.Purchase, err);
               });
             }
           }, (err) => {
-            this.alertService.cancelFail(err);
+            this.alertService.auditFail(err);
           });
       }
     });
@@ -182,15 +182,15 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
       content: '确认反审核吗？',
       onConfirm: () => {
         this.purchaseOrderService
-          .audit([item.Id], data => {
+          .unAudit([item.Id], data => {
             if (data.IsValid) {
-              this.alertService.cancelSuccess();
+              this.alertService.unAuditSuccess();
               this.purchaseOrderService.list((err) => {
                 this.alertService.listErrorCallBack(ModuleName.Purchase, err);
               });
             }
           }, (err) => {
-            this.alertService.cancelFail(err);
+            this.alertService.unAuditFail(err);
           });
       }
     });

@@ -103,13 +103,13 @@ export class PurchaseActionsComponent implements OnInit {
         this.purchaseOrderService
           .audit(this.getSelected(), data => {
             if (data.IsValid) {
-              this.alertService.cancelSuccess();
+              this.alertService.auditSuccess();
               this.purchaseOrderService.list((err) => {
                 this.alertService.listErrorCallBack(ModuleName.Purchase, err);
               });
             }
           }, (err) => {
-            this.alertService.cancelFail(err);
+            this.alertService.auditFail(err);
           });
       }
     });
@@ -122,19 +122,19 @@ export class PurchaseActionsComponent implements OnInit {
         this.purchaseOrderService
           .unAudit(this.getSelected(), data => {
             if (data.IsValid) {
-              this.alertService.cancelSuccess();
+              this.alertService.unAuditSuccess();
               this.purchaseOrderService.list((err) => {
                 this.alertService.listErrorCallBack(ModuleName.Purchase, err);
               });
             }
           }, (err) => {
-            this.alertService.cancelFail(err);
+            this.alertService.unAuditFail(err);
           });
       }
     });
   }
 
-  delete() {
+  cancel() {
     this.confirmService.open({
       content: '确认删除已选中采购单吗？',
       onConfirm: () => {

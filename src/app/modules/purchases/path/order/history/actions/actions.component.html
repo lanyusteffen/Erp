@@ -61,7 +61,7 @@
         <app-ui-button *ngIf="selectNav.AuditStatus === 1" [style]="'primary'" (click)="unAudit()" type="button">
             反审核
         </app-ui-button>
-        <app-ui-button *ngIf="selectNav.AuditStatus === 0" [style]="'primary'" (click)="delete()" type="button">
+        <app-ui-button *ngIf="selectNav.AuditStatus === 0" [style]="'primary'" (click)="cancel()" type="button">
             删除
         </app-ui-button>
         <app-ui-button [style]="'primary'">

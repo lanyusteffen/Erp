@@ -79,6 +79,24 @@ export class AlertService {
     );
   }
 
+  auditSuccess() {
+    this.open(
+      {
+        type: 'success',
+        content: '审核成功！'
+      }
+    );
+  }
+
+  unAuditSuccess() {
+    this.open(
+      {
+        type: 'success',
+        content: '反审核成功！'
+      }
+    );
+  }
+
   addFail(err: any) {
     this.open(
       {
@@ -120,6 +138,24 @@ export class AlertService {
       {
         type: 'danger',
         content: '还原失败！' + err
+      }
+    );
+  }
+
+  auditFail(err: any) {
+    this.open(
+      {
+        type: 'danger',
+        content: '审核失败！' + err
+      }
+    );
+  }
+
+  unAuditFail(err: any) {
+    this.open(
+      {
+        type: 'danger',
+        content: '反审核失败！' + err
       }
     );
   }
