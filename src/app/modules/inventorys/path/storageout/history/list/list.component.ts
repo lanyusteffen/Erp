@@ -7,6 +7,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
+import { TabsService } from '../../../../../../components/tabs/tabs.service';
 
 @Component({
   selector: 'app-storageout-list',
@@ -21,6 +22,9 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
   private allSelected = false;
   private selectedId: number;
   private subscription: Subscription;
+  private currentStorage = <any>[];
+  private _showItem = false;
+
 
   @LocalStorage()
   systemConfig: any;
@@ -33,6 +37,7 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private appService: AppService,
     private loadingBar: SlimLoadingBarService,
+    private tabsService: TabsService,
     private datePipe: DatePipe
   ) {
     this.loadingBar.start();
@@ -105,6 +110,15 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
 
   update(id) {
     this.selectedId = id;
+    this.tabsService.create({
+      name: "修改出库单",
+      link: "/purchases/order/new"
+    });
+  }
+
+  showItem(item) {
+    this._showItem = true;
+    this.currentStorage = item;
   }
 
   onCancel(id) {
@@ -124,5 +138,9 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }  
+
+  closeItem() {
+    this._showItem = false;
   }
 }

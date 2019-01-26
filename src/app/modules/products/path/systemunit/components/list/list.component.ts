@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SystemUnitService } from '../../systemunit.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-systemunit-list',
@@ -23,8 +24,10 @@ export class SystemUnitListComponent implements OnInit, OnDestroy {
   constructor(
     private systemUnitService: SystemUnitService,
     private confirmService: ConfirmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
+    this.loadingBar.start();
     this.subscription = this.systemUnitService
       .get()
       .subscribe(({ systemUnits, currentPagination }) => {
@@ -36,6 +39,9 @@ export class SystemUnitListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.systemUnitService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.SystemUnit, err);
+      this.loadingBar.complete();
+    },()=>{
+      this.loadingBar.complete();
     });
   }
 
