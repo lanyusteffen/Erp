@@ -31,10 +31,6 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
     const link = this.tabService.remove(tab);
   }
 
-  clearAll() {
-    this.tabService.clear();
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

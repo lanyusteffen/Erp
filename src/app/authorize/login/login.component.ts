@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpService } from '@services/http.service';
 import { Router } from '@angular/router';
 import { AuthorizeService } from '../authorize.service';
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
+import { TabsService } from '@components/tabs/tabs.service';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private builder: FormBuilder,
     private httpService: HttpService,
+    private tabService: TabsService,
     private router: Router,
     private authorizeService: AuthorizeService) { }
 
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.authToken = data.Token;
         }
+        this.tabService.clear();
         this.router.navigate(['/home/index']);
       } else {
         this.loginCallBack(data.ErrorMessages);

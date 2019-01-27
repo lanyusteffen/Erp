@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tabService.clear();
     this.tabs = this.tabService.all();
   }
 

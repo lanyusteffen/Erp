@@ -63,14 +63,13 @@ export class TabsService {
   }
 
   clear() {
-    this.id = 1;
     for (let i = 0; i < this.tabs.length; i++) {
       if (i === 0) {
         continue;
       }
       this.tabs.splice(i, 1);
       --i;
+      --this.id;
     }
-    this.tabs$.next(this.tabs);
   }
 }
