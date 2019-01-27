@@ -27,7 +27,7 @@
         <td>
           <a (click)="update(item.Id)">修改</a>
           <a (click)="showItem(item)">查看明细</a>
-          <a class="text-danger" (click)="onCancel(item.Id)">作废</a>
+          <a *ngIf="selectNav.Status === 1" class="text-danger" (click)="onCancel(item.Id)">停用</a>
           <a (click)="copy(item.Id)">复制</a>
         </td>
         <td>{{item.Code}}</td>
@@ -73,8 +73,8 @@
           <tr *ngFor="let currentStorageItem of currentStorage.ItemList">
             <td>{{currentStorageItem.Name}}</td>
             <td>{{currentStorageItem.Spec}}</td>
-            <td>{{currentStorageItem.ProductSizeValue}}</td>
             <td>{{currentStorageItem.ProductColorValue}}</td>
+            <td>{{currentStorageItem.ProductSizeValue}}</td>
             <td>{{currentStorageItem.Quanlity | number: '1.2'}}</td>
             <td>{{currentStorageItem.Price | number: '1.2'}}</td>
             <td>{{currentStorageItem.Amount | number: '1.2'}}</td>

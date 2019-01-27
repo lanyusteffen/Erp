@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavItem } from '@contracts/nav.item';
 import { StatusPublic } from '@enums/status.public';
 import { StorageStatus } from '../../../enums/storage.status.public';
@@ -6,6 +6,8 @@ import { NavService } from '@components/navs/nav.service';
 import { StorageOutService } from '../storageout.service';
 import { AlertService } from '@services/alert.service';
 import { DatePipe } from '@angular/common';
+import { StorageOutListComponent } from './list/list.component';
+import { StorageOutActionsComponent } from './actions/actions.component';
 
 @Component({
   selector: 'app-storageout-history',
@@ -42,8 +44,16 @@ export class StorageOutHistoryComponent implements OnInit {
 
   }
 
+  @ViewChild(StorageOutListComponent)
+  private storageOutList: StorageOutListComponent;
+
+  @ViewChild(StorageOutActionsComponent)
+  private storageOutAction: StorageOutActionsComponent;
+
   onNavChanged(selected: NavItem) {
     this.selectNav = selected;
+    this.storageOutList.selectNav = selected;
+    this.storageOutAction.selectNav = selected;
     this.storageoutService.onNavChange(selected, (err) => {
       this.listErrorCallBack(err);
     });
@@ -66,6 +76,9 @@ export class StorageOutHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.initNavs();
+    this.selectNav = this.navService.all()[0];
+    this.storageOutList.selectNav = this.navService.all()[0];
+    this.storageOutAction.selectNav = this.navService.all()[0];
   }
 
   initNavs() {
@@ -73,7 +86,7 @@ export class StorageOutHistoryComponent implements OnInit {
       Status: StorageStatus.Normal,
       Name: '未出库',
       Code: 'Normal',
-      IsSelected: false
+      IsSelected: true
     });
     this.navService.create({
       Status: StorageStatus.PartialStorageOut,

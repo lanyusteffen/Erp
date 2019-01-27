@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { StorageOutService } from '../../storageout.service';
 import { DatePipe } from '@angular/common';
@@ -8,6 +8,7 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
+import { NavItem } from '@contracts/nav.item';
 
 @Component({
   selector: 'app-storageout-list',
@@ -23,11 +24,19 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private subscription: Subscription;
   private currentStorage = <any>[];
+  private propertyName1 = null;
+  private propertyName2 = null;
   private _showItem = false;
 
 
   @LocalStorage()
   systemConfig: any;
+
+  @LocalStorage()
+  private productConfig: any;
+
+  @Input()
+  selectNav: NavItem;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -54,6 +63,7 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
+    this.getProductConfig();
     this.storageOutOrderService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.StorageOut, err);
       this.loadingBar.complete();
@@ -78,6 +88,22 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
       });
     }
     return this.systemConfig;
+  }
+
+  getProductConfig(): any {
+    if (!this.productConfig) {
+      this.appService.getProductConfig((data) => {
+        this.productConfig = data;
+      }, (err) => {
+        this.alertService.open({
+          type: 'danger',
+          content: '获取系统配置失败' + err
+        });
+      });
+    }
+    this.propertyName1 = this.productConfig.PropertyName1;
+    this.propertyName2 = this.productConfig.PropertyName2;
+    return this.productConfig;
   }
 
   selectAll(evt) {
@@ -111,8 +137,8 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
   update(id) {
     this.selectedId = id;
     this.tabsService.create({
-      name: "修改出库单",
-      link: "/purchases/order/new"
+      name: '修改出库单',
+      link: '/purchases/order/new'
     });
   }
 
@@ -138,7 +164,7 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
           });
       }
     });
-  }  
+  }
 
   closeItem() {
     this._showItem = false;

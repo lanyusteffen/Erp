@@ -42,7 +42,7 @@ export class PurchaseHistoryComponent implements OnInit {
   private purchaseList: PurchaseListComponent;
 
   @ViewChild(PurchaseActionsComponent)
-  private purchaseListAction: PurchaseActionsComponent; 
+  private purchaseListAction: PurchaseActionsComponent;
 
   constructor(private navService: NavService,
               private alertService: AlertService,
