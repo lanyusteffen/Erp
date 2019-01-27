@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { StorageOutService } from '../../storageout.service';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { AlertService } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { DatePipe } from '@angular/common';
+import { NavItem } from '@contracts/nav.item';
 
 const queryItemBase = {
   CustomerId: null,
@@ -29,6 +30,9 @@ const queryItemBase = {
 export class StorageOutActionsComponent implements OnInit {
 
   @Output() onExecuteQuery: EventEmitter<any> = new EventEmitter();
+
+  @Input()
+  selectNav: NavItem;
 
   private datePickerConfig: IDatePickerConfig = {
     locale: 'zh-cn',

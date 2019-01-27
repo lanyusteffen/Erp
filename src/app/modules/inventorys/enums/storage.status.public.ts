@@ -41,5 +41,5 @@ export enum StorageStatus {
     /**
      * 已终止
      */
-    Stoped = -2
+    Stoped = 0
 }
