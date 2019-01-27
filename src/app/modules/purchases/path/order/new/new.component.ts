@@ -13,6 +13,7 @@ import { ErrorService } from '@services/error.service';
 import { PrimaryKeyValid } from '@validators/primary-key.valid';
 import { NumberDecimalValid } from '@validators/number-decimal.valid';
 import { PurchaseItemValid } from '@validators/purchase-item.valid';
+import { ActivatedRoute } from '@angular/router';
 
 const purchaseItem = {
   PurchaseId: null,
@@ -109,14 +110,23 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private alertService: AlertService,
     private datePipe: DatePipe,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private routeInfo: ActivatedRoute
   ) {
     this.totalAmount = 0.00;
     this.payedAmount = 0.00;
   }
 
   ngOnInit() {
-    this.newOne();
+    const purchaseId = this.routeInfo.snapshot.params["id"];
+    const type = this.routeInfo.snapshot.params["type"];
+    if (type === 'new') {
+      this.new();
+    } else if (type === 'edit') {
+      this.edit(purchaseId);
+    } else if (type === 'copy') {
+      this.copy(purchaseId);
+    }
   }
 
   ngOnDestroy() {
@@ -295,9 +305,33 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
     return validatorArrs;
   }
 
-  newOne() {
+  copy(purchaseId) {
     this.purchaseService
-      .newOne(data => {
+    .copyNew(purchaseId, data => {
+      this.propertyName1 = data.PropertyName1;
+      this.propertyName2 = data.PropertyName2;
+      data.PurchaseTime = this.datePipe.transform(<Date>data.PurchaseTime, 'yyyy-MM-dd'),
+      this.form = this.formService.createForm(data, this.getValidators());
+    }, (err) => {
+      this.alertService.getErrorCallBack(ModuleName.Purchase, err);
+    });
+  }
+
+  edit(purchaseId) {
+    this.purchaseService
+      .updateOne(purchaseId, data => {
+        this.propertyName1 = data.PropertyName1;
+        this.propertyName2 = data.PropertyName2;
+        data.PurchaseTime = this.datePipe.transform(<Date>data.PurchaseTime, 'yyyy-MM-dd'),
+        this.form = this.formService.createForm(data, this.getValidators());
+      }, (err) => {
+        this.alertService.getErrorCallBack(ModuleName.Purchase, err);
+      });
+  }
+
+  new() {
+    this.purchaseService
+      .addNew(data => {
         data.ItemList = data.ItemList.map(item => ({
           ...item,
           Spec: null,

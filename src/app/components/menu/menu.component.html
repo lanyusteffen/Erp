@@ -11,7 +11,7 @@
             <div class="sub-menu">
               <ul>
                 <li *ngFor="let subMenuLink of subMenu.subMenu">
-                  <a routerLink="{{subMenuLink.link}}" (click)="createTab(subMenuLink)">
+                  <a [routerLink]="" (click)="createTab(subMenuLink)">
                     {{subMenuLink.name}}
                   </a>
                 </li>

@@ -27,7 +27,7 @@
           <a *ngIf="selectNav.AuditStatus === 0" (click)="audit(item)">审核</a>
           <a *ngIf="selectNav.AuditStatus === 1" (click)="unAudit(item)">反审核</a>
           <a (click)="showItem(item)">查看明细</a>
-          <a (click)="update(item)">修改</a>
+          <a (click)="edit(item)">修改</a>
           <a *ngIf="selectNav.AuditStatus === 1" (click)="storageIn(item)">原单入库</a>
           <a *ngIf="selectNav.AuditStatus === 0" class="text-danger" (click)="cancel(item)">删除</a>
           <a (click)="copy(item)">复制</a>

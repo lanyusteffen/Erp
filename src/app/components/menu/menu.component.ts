@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TabsService } from '../tabs/tabs.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -8,8 +9,8 @@ import { TabsService } from '../tabs/tabs.service';
 })
 
 export class MenuComponent {
-  constructor(private tabsService: TabsService) {}
-
+  constructor(private tabService: TabsService,
+    private router: Router) {}
   menus = [
     {
       name: '采购',
@@ -18,7 +19,7 @@ export class MenuComponent {
         {
           name: '采购订单管理',
           subMenu: [
-            { name: '新增采购订单', link: '/purchases/order/new' },
+            { name: '新增采购订单', link: '/purchases/order', paras: { type: 'new', id: -1 }},
             { name: '采购订单历史', link: '/purchases/order/history' }
           ]
         }
@@ -121,9 +122,16 @@ export class MenuComponent {
   ];
 
   createTab(menu) {
-    this.tabsService.create({
+    let url = menu.link;
+    if (menu.paras !== undefined) {
+      Object.values(menu.paras).forEach(para => {
+        url += "/" + para;
+      });
+    }
+    this.tabService.create({
       name: menu.name,
-      link: menu.link
+      link: url
     });
+    this.router.navigate([url]);
   }
 }

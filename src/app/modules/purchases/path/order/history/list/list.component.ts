@@ -8,6 +8,8 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { NavItem } from '@contracts/nav.item';
+import { Router } from '@angular/router';
+import { TabsService } from '@components/tabs/tabs.service';
 
 @Component({
   selector: 'app-purchase-list',
@@ -44,7 +46,9 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private appService: AppService,
     private loadingBar: SlimLoadingBarService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router,
+    private tabService: TabsService
   ) {
     this.loadingBar.start();
     this.subscription = this.purchaseOrderService
@@ -130,10 +134,6 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
     });
   }
 
-  update(item) {
-    this.selectedId = item.Id;
-  }
-
   cancel(item) {
     this.confirmService.open({
       content: '确认删除吗？',
@@ -197,7 +197,21 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   }
 
   copy(item) {
+    const url = '/purchases/order/copy/' + item.Id;
+    this.tabService.create({
+      name: '复制采购订单',
+      link: url
+    });
+    this.router.navigate([url]);
+  }
 
+  edit(item) {
+    const url = '/purchases/order/edit/' + item.Id;
+    this.tabService.create({
+      name: '修改采购订单',
+      link: url
+    });
+    this.router.navigate([url]);
   }
 
   storageIn(item) {

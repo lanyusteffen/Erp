@@ -58,8 +58,7 @@ export class TabsService {
       --removeIndex;
     }
     this.tabs$.next(this.tabs);
-
-    return this.tabs[removeIndex].link;
+    this.router.navigate([this.tabs[removeIndex].link]);
   }
 
   clear() {

@@ -148,8 +148,20 @@ export class PurchaseService {
     }, next, fallback, ModuleType.Purchase);
   }
 
-  newOne(next: (data: any) => void, fallback: (error: any) => void) {
+  addNew(next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Purchase/GetForNew', {}, next, fallback, ModuleType.Webadmin);
+  }
+
+  copyNew(entityId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Purchase/CopyForNew', { 
+      entityId 
+    }, next, fallback, ModuleType.Webadmin);
+  }
+
+  updateOne(entityId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Purchase/GetForModify', { 
+      entityId 
+    }, next, fallback, ModuleType.Webadmin);
   }
 
   create(purchase, next: (data: any) => void, fallback: (error: any) => void) {
