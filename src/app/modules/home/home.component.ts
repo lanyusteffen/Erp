@@ -21,12 +21,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   private loading: boolean;
 
   constructor(
-    private tabsService: TabsService,
+    private tabService: TabsService,
     private alertService: AlertService,
     private confirmService: ConfirmService
   ) {
 
-    this.subscription = this.tabsService
+    this.subscription = this.tabService
       .get()
       .subscribe((tabs) => {
         this.tabs = tabs;
@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tabs = this.tabsService.all();
+    this.tabService.clear();
+    this.tabs = this.tabService.all();
   }
 
   ngOnDestroy() {

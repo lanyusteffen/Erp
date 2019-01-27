@@ -13,8 +13,8 @@ const homeTab: Tab = {
 @Injectable()
 export class TabsService {
   private tabs$ = new Subject<any>();
-  id = 1;
-  tabs: Tab[] = [homeTab];
+  private id = 1;
+  private tabs: Tab[] = [homeTab];
 
   constructor(private router: Router) { }
 
