@@ -122,16 +122,10 @@ export class MenuComponent {
   ];
 
   createTab(menu) {
-    let url = menu.link;
-    if (menu.paras !== undefined) {
-      Object.values(menu.paras).forEach(para => {
-        url += "/" + para;
-      });
-    }
     this.tabService.create({
       name: menu.name,
-      link: url
+      link: menu.link,
+      paras: menu.paras
     });
-    this.router.navigate([url]);
   }
 }

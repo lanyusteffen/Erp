@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { Router } from '@angular/router';
 import { Tab } from '@contracts/tab';
 
 const homeTab: Tab = {
@@ -16,7 +15,7 @@ export class TabsService {
   private id = 1;
   private tabs: Tab[] = [homeTab];
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   all() {
     return this.tabs;
@@ -58,7 +57,7 @@ export class TabsService {
       --removeIndex;
     }
     this.tabs$.next(this.tabs);
-    this.router.navigate([this.tabs[removeIndex].link]);
+    return this.tabs[removeIndex].link;
   }
 
   clear() {
@@ -70,5 +69,19 @@ export class TabsService {
       --i;
       --this.id;
     }
+  }
+
+  buildUrl(url, paras): string {
+    let query = '';
+    if (paras !== undefined) {
+      Object.keys(paras).forEach(key => {
+        if (query === '') {
+          query += '?' + key + '=' + paras[key];
+        } else {
+          query += '&' + key + '=' + paras[key];
+        }
+      });
+    }
+    return url + query;
   }
 }

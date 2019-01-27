@@ -4,7 +4,8 @@
   </a>
   <ul class="tabs-list">
     <li *ngFor="let tab of tabs">
-      <a routerLink="{{tab.link}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a [routerLink]="tab.link" [queryParams]="tab.paras" routerLinkActive="active" 
+        [routerLinkActiveOptions]="{exact: true}" skipLocationChange>
         {{tab.name}}
         <i *ngIf="tab.id !== 1" class="iconfont icon-close" (click)="closeTab($event, tab)"></i>
       </a>

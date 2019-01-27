@@ -74,6 +74,8 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
     format: 'YYYY-MM-DD'
   };
 
+  private subscribe: any;
+
   showModal() {
 
     const purchaseItemArr = <FormArray>this.form.controls['ItemList'];
@@ -118,18 +120,22 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const purchaseId = this.routeInfo.snapshot.params["id"];
-    const type = this.routeInfo.snapshot.params["type"];
-    if (type === 'new') {
-      this.new();
-    } else if (type === 'edit') {
-      this.edit(purchaseId);
-    } else if (type === 'copy') {
-      this.copy(purchaseId);
-    }
+    this.subscribe = this.routeInfo.queryParamMap.subscribe(
+      params => {
+        const purchaseId = params.get("id");
+        const type = params.get("type");
+        if (type === 'new') {
+          this.new();
+        } else if (type === 'edit') {
+          this.edit(purchaseId);
+        } else if (type === 'copy') {
+          this.copy(purchaseId);
+        }
+      });
   }
 
   ngOnDestroy() {
+    this.subscribe.unsubscribe();
   }
 
   hasOpenTax() {

@@ -266,7 +266,7 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuard]
               },
               {
-                path: 'purchases/order/:type/:id',
+                path: 'purchases/order',
                 component: PurchaseNewComponent,
                 canActivate: [AuthGuard]
               },

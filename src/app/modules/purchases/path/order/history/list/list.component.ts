@@ -197,21 +197,25 @@ export class PurchaseListComponent implements OnInit, OnDestroy {
   }
 
   copy(item) {
-    const url = '/purchases/order/copy/' + item.Id;
+    const link = '/purchases/order';
+    const paras = { type: 'copy', id: item.Id };
     this.tabService.create({
       name: '复制采购订单',
-      link: url
+      link: link,
+      paras: paras
     });
-    this.router.navigate([url]);
+    this.router.navigate([link], {queryParams: paras, skipLocationChange: true });
   }
 
   edit(item) {
-    const url = '/purchases/order/edit/' + item.Id;
+    const link = '/purchases/order';
+    const paras = { type: 'edit', id: item.Id };
     this.tabService.create({
       name: '修改采购订单',
-      link: url
+      link: link,
+      paras: paras
     });
-    this.router.navigate([url]);
+    this.router.navigate([link], {queryParams: paras, skipLocationChange: true });
   }
 
   storageIn(item) {

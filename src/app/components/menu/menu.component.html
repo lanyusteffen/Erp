@@ -11,7 +11,8 @@
             <div class="sub-menu">
               <ul>
                 <li *ngFor="let subMenuLink of subMenu.subMenu">
-                  <a [routerLink]="" (click)="createTab(subMenuLink)">
+                  <a [routerLink]="subMenuLink.link" [queryParams]="subMenuLink.paras" 
+                      (click)="createTab(subMenuLink)" skipLocationChange>
                     {{subMenuLink.name}}
                   </a>
                 </li>
