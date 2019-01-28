@@ -7,7 +7,8 @@
       </div>
       <div class="form-group-control">
         <app-form-field [name]="'CustomerId'" [complexType]="true">
-          <app-customer-popup-selector #formField (onConfirm)="selectCustomer($event)" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
+          <app-customer-popup-selector #formField (onConfirm)="selectCustomer($event)" [defaultTab]="this.form.controls['CustomerType'].value" 
+          [customerName]="this.form.controls['CustomerName'].value" formControlName="CustomerId" [ngModel]></app-customer-popup-selector>
         </app-form-field>
       </div>
     </div>
@@ -24,20 +25,27 @@
         <label>采购部门：</label>
       </div>
       <div class="form-group-control">
-        <app-department-selector [isEditing]="false" formControlName="DepartmentId" [ngModel]></app-department-selector>
+        <app-department-selector [isEditing]="isEditing" formControlName="DepartmentId" [ngModel]></app-department-selector>
       </div>
     </div>
     <div class="more">
-      <div>
-        <div class="form-group">
-          <div class="form-group-label">
-            <span class="required">*</span>
-            <label>采购日期：</label>
-          </div>
-          <div class="form-group-control">
-            <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" 
-            formControlName="PurchaseTime" [ngModel]></dp-date-picker> 
-          </div>
+      <div class="form-group" *ngIf="operatorType === 'copy'">
+        <div class="form-group-label">
+          <span class="required">*</span>
+          <label>采购单号：</label>
+        </div>
+        <div class="form-group-control">
+            <input type="text" class="none-input" [value]="Code" disabled="disabled" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group-label">
+          <span class="required">*</span>
+          <label>采购日期：</label>
+        </div>
+        <div class="form-group-control">
+          <dp-date-picker theme="dp-material" mode="day" [config]="datePickerConfig" 
+          formControlName="PurchaseTime" [ngModel]></dp-date-picker> 
         </div>
       </div>
     </div>
@@ -135,7 +143,7 @@
           <input style="width:80px" type="text" (change)="calculateItem('AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel] />
         </td>
         <td>
-          <app-product-storage-selector [isEditing]="false" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel]></app-product-storage-selector>
+          <app-product-storage-selector [isEditing]="isEditing" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel]></app-product-storage-selector>
         </td>
       </tr>
     </tbody>

@@ -75,6 +75,8 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
   };
 
   private subscribe: any;
+  private isEditing: boolean;
+  private operatorType: string;
 
   showModal() {
 
@@ -123,13 +125,16 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
     this.subscribe = this.routeInfo.queryParamMap.subscribe(
       params => {
         const purchaseId = params.get("id");
-        const type = params.get("type");
-        if (type === 'new') {
+        this.operatorType = params.get("type");
+        if (this.operatorType === 'new') {
           this.new();
-        } else if (type === 'edit') {
+          this.isEditing = false;
+        } else if (this.operatorType === 'edit') {
           this.edit(purchaseId);
-        } else if (type === 'copy') {
+          this.isEditing = true;
+        } else if (this.operatorType === 'copy') {
           this.copy(purchaseId);
+          this.isEditing = true;
         }
       });
   }
@@ -318,6 +323,8 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
       this.propertyName2 = data.PropertyName2;
       data.PurchaseTime = this.datePipe.transform(<Date>data.PurchaseTime, 'yyyy-MM-dd'),
       this.form = this.formService.createForm(data, this.getValidators());
+      this.payedAmount = data.PayAmount;
+      this.totalAmount = data.AfterDiscountAmount;
     }, (err) => {
       this.alertService.getErrorCallBack(ModuleName.Purchase, err);
     });
@@ -330,6 +337,8 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
         this.propertyName2 = data.PropertyName2;
         data.PurchaseTime = this.datePipe.transform(<Date>data.PurchaseTime, 'yyyy-MM-dd'),
         this.form = this.formService.createForm(data, this.getValidators());
+        this.payedAmount = data.PayAmount;
+        this.totalAmount = data.AfterDiscountAmount;
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Purchase, err);
       });

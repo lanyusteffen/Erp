@@ -39,6 +39,11 @@ export class CustomerPopupSelectorComponent implements OnInit, ControlValueAcces
     }
   }
 
+  @Input()
+  set customerName(value) {
+    this._showLabel = value;
+  }
+
   @ViewChild(PopupSelectorCustomerComponent)
   private popupSelectorCustomer: PopupSelectorCustomerComponent;
 
