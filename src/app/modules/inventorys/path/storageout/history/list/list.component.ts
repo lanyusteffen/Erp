@@ -9,6 +9,7 @@ import { AppService } from '@services/app.service';
 import { LocalStorage } from 'ngx-webstorage';
 import { TabsService } from '../../../../../../components/tabs/tabs.service';
 import { NavItem } from '@contracts/nav.item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-storageout-list',
@@ -47,7 +48,8 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private loadingBar: SlimLoadingBarService,
     private tabsService: TabsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router
   ) {
     this.loadingBar.start();
     this.subscription = this.storageOutOrderService
@@ -135,11 +137,14 @@ export class StorageOutListComponent implements OnInit, OnDestroy {
   }
 
   update(id) {
-    this.selectedId = id;
+    const link = '/inventorys/storageout';
+    const paras = { type: 'edit', id: id };
     this.tabsService.create({
       name: '修改出库单',
-      link: '/purchases/order/new'
+      link: link,
+      paras: paras
     });
+    this.router.navigate([link], {queryParams: paras, skipLocationChange: true });
   }
 
   showItem(item) {

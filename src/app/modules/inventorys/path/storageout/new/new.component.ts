@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { ErrorService } from '@services/error.service';
 import { PrimaryKeyValid } from '@validators/primary-key.valid';
 import { StorageOutItemValid } from '@validators/storageOut-item.valid';
+import { ActivatedRoute } from '@angular/router';
 
 const StorageOutItemActionRequest = {
   BelongBillId: null,
@@ -61,6 +62,9 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
   private totalAmount: number | string;
   private payedAmount: number | string;
   private errorItems = new Array();
+  private subscribe: any;
+  private operatorType: string;
+  private isEditing: boolean;
 
   private propertyName1 = null;
   private propertyName2 = null;
@@ -93,13 +97,27 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private alertService: AlertService,
     private datePipe: DatePipe,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private routeInfo: ActivatedRoute
   ) {
     this.totalAmount = 0.00;
     this.payedAmount = 0.00;
   }
 
   ngOnInit() {
+
+    this.subscribe = this.routeInfo.queryParamMap.subscribe(
+      params => {
+        const id = params.get("id");
+        this.operatorType = params.get("type");
+        if (this.operatorType === 'new') {
+          this.newOne();
+          this.isEditing = false;
+        } else if (this.operatorType === 'edit') {
+          this.edit(id);
+          this.isEditing = true;
+        }
+      });
     this.newOne();
   }
 
@@ -252,6 +270,30 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
       ]
     };
     return validatorArrs;
+  }
+
+  edit(id) {
+    this.storageOutService
+      .updateOne(id, data => {
+        data.StorageOutItemActionRequests = data.StorageOutItemActionRequests.map(item => ({
+          ...item,
+          Spec: null,
+          Quanlity: null,
+          Price: null,
+          UnitTime: null,
+          ProductUnitName: null,
+          ProductColorValue: null,
+          ProductColorId: null,
+          ProductSizeValue: null,
+          ProductSizeId: null
+        }));
+        this.propertyName1 = data.PropertyName1;
+        this.propertyName2 = data.PropertyName2;
+        data.BillTime = this.datePipe.transform(<Date>data.BillTime, 'yyyy-MM-dd'),
+          this.form = this.formService.createForm(data, this.getValidators());
+      }, (err) => {
+        this.alertService.getErrorCallBack(ModuleName.Purchase, err);
+      });
   }
 
   newOne() {

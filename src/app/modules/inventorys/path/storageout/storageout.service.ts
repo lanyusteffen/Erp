@@ -130,12 +130,18 @@ export class StorageOutService {
     return this.http.post('/StorageOut/GetForNew', {}, next, fallback, ModuleType.Webadmin);
   }
 
+  updateOne(entityId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/StorageOut/GetForModify', {
+      entityId
+    }, next, fallback, ModuleType.Webadmin);
+  }
+
   create(storageout, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/StorageOut/New', storageout, next, fallback, ModuleType.Inventory);
   }
 
-  modify(area, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/StorageOut/Modify', area, next, fallback, ModuleType.Inventory);
+  modify(storageout, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/StorageOut/Modify', storageout, next, fallback, ModuleType.Inventory);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
