@@ -43,7 +43,7 @@ export class MenuComponent {
         {
           name: '出库单管理',
           subMenu: [
-            { name: '新增出库单', link: '/inventorys/storageout/new' },
+            { name: '新增出库单', link: '/inventorys/storageout', paras: { type: 'new', id: -1 } },
             { name: '出库单历史', link: '/inventorys/storageout/history' }
           ]
         }

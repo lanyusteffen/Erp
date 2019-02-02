@@ -271,7 +271,7 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuard]
               },
               {
-                path: 'inventorys/storageout/new',
+                path: 'inventorys/storageout',
                 component: StorageOutNewComponent,
                 canActivate: [AuthGuard]
               },
