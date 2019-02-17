@@ -6,7 +6,13 @@ import { NavService } from './nav.service';
 @Component({
   selector: 'app-navs',
   templateUrl: './navs.component.html',
-  styleUrls: ['./navs.component.less']
+  styleUrls: ['./navs.component.less'],
+  providers: [
+    {
+      provide: NavService,
+      useClass: NavService
+    }
+  ]
 })
 export class NavsComponent implements OnInit, OnDestroy {
 
