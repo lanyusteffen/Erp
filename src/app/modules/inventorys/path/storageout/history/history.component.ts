@@ -6,7 +6,7 @@ import { AlertService } from '@services/alert.service';
 import { DatePipe } from '@angular/common';
 import { StorageOutListComponent } from './list/list.component';
 import { StorageOutActionsComponent } from './actions/actions.component';
-import { NavsComponent } from 'src/app/components/navs/navs.component';
+import { NavsComponent } from '@components/navs/navs.component';
 
 @Component({
   selector: 'app-storageout-history',

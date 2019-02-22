@@ -31,7 +31,7 @@ export class NavsComponent implements OnInit, OnDestroy {
     });
   }
 
-  all(): NavItem {
+  all(): NavItem[] {
     return this.navs;
   }
 

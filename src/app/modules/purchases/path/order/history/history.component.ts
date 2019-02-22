@@ -8,7 +8,7 @@ import { AlertService } from '@services/alert.service';
 import { DatePipe } from '@angular/common';
 import { PurchaseListComponent } from './list/list.component';
 import { PurchaseActionsComponent } from './actions/actions.component';
-import { NavsComponent } from 'src/app/components/navs/navs.component';
+import { NavsComponent } from '@components/navs/navs.component';
 
 @Component({
   selector: 'app-purchase-history',
