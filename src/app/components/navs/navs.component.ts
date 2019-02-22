@@ -31,6 +31,14 @@ export class NavsComponent implements OnInit, OnDestroy {
     });
   }
 
+  all(): NavItem {
+    return this.navs;
+  }
+
+  create(nav: NavItem) {
+    this.navService.create(nav);
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

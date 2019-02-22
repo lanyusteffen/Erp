@@ -3,12 +3,12 @@ import { NavItem } from '@contracts/nav.item';
 import { StatusPublic } from '@enums/status.public';
 import { AuditStatusPublic } from '@enums/audit.status.public';
 import { PurchaseOrderStatus } from '../../../enums/purchase.status.public';
-import { NavService } from '@components/navs/nav.service';
 import { PurchaseService } from '../order.service';
 import { AlertService } from '@services/alert.service';
 import { DatePipe } from '@angular/common';
 import { PurchaseListComponent } from './list/list.component';
 import { PurchaseActionsComponent } from './actions/actions.component';
+import { NavsComponent } from 'src/app/components/navs/navs.component';
 
 @Component({
   selector: 'app-purchase-history',
@@ -44,8 +44,10 @@ export class PurchaseHistoryComponent implements OnInit {
   @ViewChild(PurchaseActionsComponent)
   private purchaseListAction: PurchaseActionsComponent;
 
-  constructor(private navService: NavService,
-              private alertService: AlertService,
+  @ViewChild(NavsComponent)
+  private navBar: NavsComponent;
+
+  constructor(private alertService: AlertService,
               private datePipe: DatePipe,
               private purchaseService: PurchaseService) {
   }
@@ -76,13 +78,13 @@ export class PurchaseHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.initNavs();
-    this.selectNav = this.navService.all()[0];
-    this.purchaseList.selectNav = this.navService.all()[0];
-    this.purchaseListAction.selectNav = this.navService.all()[0];
+    this.selectNav = this.navBar.all()[0];
+    this.purchaseList.selectNav = this.navBar.all()[0];
+    this.purchaseListAction.selectNav = this.navBar.all()[0];
   }
 
   initNavs() {
-    this.navService.create({
+    this.navBar.create({
       Status: StatusPublic.Valid,
       Name: '未审核',
       Code: 'UnAudit',
@@ -90,7 +92,7 @@ export class PurchaseHistoryComponent implements OnInit {
       BusinessStatus: null,
       IsSelected: true
     });
-    this.navService.create( {
+    this.navBar.create( {
       Status: StatusPublic.Valid,
       Name: '已审核',
       Code: 'Audited',
@@ -98,7 +100,7 @@ export class PurchaseHistoryComponent implements OnInit {
       BusinessStatus: null,
       IsSelected: false
     });
-    this.navService.create({
+    this.navBar.create({
       Status: StatusPublic.Valid,
       Name: '部分入库',
       Code: 'Audited',
@@ -106,7 +108,7 @@ export class PurchaseHistoryComponent implements OnInit {
       BusinessStatus: PurchaseOrderStatus.PartialPurchaseIn,
       IsSelected: false
     });
-    this.navService.create({
+    this.navBar.create({
       Status: StatusPublic.Valid,
       Name: '全部入库',
       Code: 'Audited',
@@ -114,7 +116,7 @@ export class PurchaseHistoryComponent implements OnInit {
       BusinessStatus: PurchaseOrderStatus.AllPurchaseIn,
       IsSelected: false
     });
-    this.navService.create({
+    this.navBar.create({
       Status: StatusPublic.Valid,
       Name: '已终止',
       Code: 'Terminal',

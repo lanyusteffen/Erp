@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavItem } from '@contracts/nav.item';
-import { StatusPublic } from '@enums/status.public';
 import { StorageStatus } from '../../../enums/storage.status.public';
-import { NavService } from '@components/navs/nav.service';
 import { StorageOutService } from '../storageout.service';
 import { AlertService } from '@services/alert.service';
 import { DatePipe } from '@angular/common';
 import { StorageOutListComponent } from './list/list.component';
 import { StorageOutActionsComponent } from './actions/actions.component';
+import { NavsComponent } from 'src/app/components/navs/navs.component';
 
 @Component({
   selector: 'app-storageout-history',
@@ -37,12 +36,13 @@ export class StorageOutHistoryComponent implements OnInit {
 
   private selectNav: any;
 
-  constructor(private navService: NavService,
-    private alertService: AlertService,
+  constructor(private alertService: AlertService,
     private datePipe: DatePipe,
     private storageoutService: StorageOutService) {
-
   }
+
+  @ViewChild(NavsComponent)
+  private navBar: NavsComponent;
 
   @ViewChild(StorageOutListComponent)
   private storageOutList: StorageOutListComponent;
@@ -76,31 +76,31 @@ export class StorageOutHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.initNavs();
-    this.selectNav = this.navService.all()[0];
-    this.storageOutList.selectNav = this.navService.all()[0];
-    this.storageOutAction.selectNav = this.navService.all()[0];
+    this.selectNav = this.navBar.all()[0];
+    this.storageOutList.selectNav = this.navBar.all()[0];
+    this.storageOutAction.selectNav = this.navBar.all()[0];
   }
 
   initNavs() {
-    this.navService.create({
+    this.navBar.create({
       Status: StorageStatus.Normal,
       Name: '未出库',
       Code: 'Normal',
       IsSelected: true
     });
-    this.navService.create({
+    this.navBar.create({
       Status: StorageStatus.PartialStorageOut,
       Name: '部分出库',
       Code: 'PartialStorageOut',
       IsSelected: false
     });
-    this.navService.create({
+    this.navBar.create({
       Status: StorageStatus.AllStorageOut,
       Name: '全部出库',
       Code: 'AllStorageOut',
       IsSelected: false
     });
-    this.navService.create({
+    this.navBar.create({
       Status: StorageStatus.Stoped,
       Name: '已终止',
       Code: 'Stoped',
