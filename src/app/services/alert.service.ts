@@ -274,6 +274,10 @@ export class AlertService {
       case ModuleName.StorageOut:
         name = '出库单';
         break;
+
+      case ModuleName.Menu:
+        name = '菜单';
+        break;
     }
 
     return name;
@@ -323,5 +327,6 @@ export enum ModuleName {
   ProductColor,
   ProductSize,
   ProductUnit,
-  StorageOut
+  StorageOut,
+  Menu
 }

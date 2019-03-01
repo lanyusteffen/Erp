@@ -1,0 +1,142 @@
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { MenuService } from '../../menu.service';
+import { LocalStorage } from 'ngx-webstorage';
+import { ConfirmService } from '@services/confirm.service';
+import { AlertService, ModuleName } from '@services/alert.service';
+import { AppService } from '@services/app.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+
+@Component({
+  selector: 'app-menu-disabled-list',
+  templateUrl: './disabled.component.html',
+  styleUrls: ['./disabled.component.less'],
+  providers: [
+    AppService
+  ]
+})
+
+export class MenuDisabledListComponent implements OnInit, OnDestroy {
+  private menus = <any>[];
+  private pagination = {};
+  private allSelected = false;
+  private selectedId: number;
+  private subscription: Subscription;
+
+  @LocalStorage()
+  systemConfig: any;
+
+  @Output() selectItems: EventEmitter<any> = new EventEmitter();
+
+  constructor(
+    private menuService: MenuService,
+    private confirmService: ConfirmService,
+    private alertService: AlertService,
+    private appService: AppService,
+    private loadingBar: SlimLoadingBarService
+  ) {
+    this.loadingBar.complete();
+    this.subscription = this.menuService
+      .getDisabled()
+      .subscribe(({ menus, currentPagination }) => {
+        this.menus = menus;
+        this.pagination = currentPagination;
+      });
+  }
+
+  getSystemConfig(): any {
+    this.appService.getSystemConfig((data) => {
+      this.systemConfig = data;
+      this.menuService.listDisabled((err) => {
+       this.alertService.listErrorCallBack(ModuleName.Menu, err);
+       this.loadingBar.complete();
+      },()=>{
+        this.loadingBar.complete();
+      });
+    }, (err) => {
+      this.alertService.systemConfigFail(err);
+      this.loadingBar.complete();
+    });
+    return this.systemConfig;
+  }
+
+  ngOnInit() {
+    this.getSystemConfig();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  selectAll(evt) {
+    this.allSelected = evt.target.checked;
+    this.menus = this.menus.map(item => ({
+      ...item,
+      selected: this.allSelected
+    }));
+    this.selectItems.emit(this.allSelected ? this.menus : []);
+
+  }
+
+  select(evt, selectedItem) {
+    this.menus = this.menus.map(item => ({
+      ...item,
+      selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
+    }));
+    this.allSelected = this.menus.every(item => item.selected);
+    this.selectItems.emit(this.menus.filter(item => item.selected));
+  }
+
+  onPageChange({ current, pageSize }) {
+    this.menuService.onPageChangeDisabled({
+      PageIndex: current,
+      PageSize: pageSize
+    }, (err) => {
+      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    });
+  }
+
+  delete(id) {
+    this.confirmService.open({
+      content: '确认删除吗？',
+      onConfirm: () => {
+        this.menuService
+          .remove([id], data => {
+            if (data.IsValid) {
+              this.menuService.listDisabled((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+              }, () => {
+                this.alertService.removeSuccess();
+              });
+            } else {
+              this.alertService.removeFail(data.ErrorMessages);
+            }
+          }, (err) => {
+            this.alertService.removeFail(err);
+          });
+      }
+    });
+  }
+
+  restore(id) {
+    this.confirmService.open({
+      content: '确认还原吗？',
+      onConfirm: () => {
+        this.menuService
+          .restore([id], data => {
+            if (data.IsValid) {
+              this.menuService.listDisabled((err) => {
+                this.alertService.listErrorCallBack(ModuleName.Menu, err);
+              }, () => {
+                this.alertService.restoreSuccess();
+              });
+            } else {
+              this.alertService.restoreFail(data.ErrorMessages);
+            }
+          }, (err) => {
+            this.alertService.restoreFail(err);
+          });
+      }
+    });
+  }
+}

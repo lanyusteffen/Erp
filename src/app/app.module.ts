@@ -7,7 +7,7 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { UIModule } from '../UI/ui.module';
 import { AppComponent } from './app.component';
-import { MenuComponent } from './components/menu/menu.component';
+import { AppMenuComponent } from './components/menu/menu.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ContentComponent } from './components/content/content.component';
 import { TabsComponent } from './components/tabs/tabs.component';
@@ -189,6 +189,16 @@ import { StorageOutActionsComponent } from './modules/inventorys/path/storageout
 import { StorageOutListComponent } from './modules/inventorys/path/storageout/history/list/list.component';
 import { InventorysSharedModule } from './modules/inventorys/components/inventorys.shared.module';
 
+import { MenuListComponent } from './modules/admins/path/menu/components/list/list.component';
+import { MenuActionsComponent } from './modules/admins/path/menu/components/actions/actions.component';
+import { MenuControlComponent } from './modules/admins/path/menu/components/control/control.component';
+import { MenuDisabledListComponent  } from './modules/admins/path/menu/components/disabled/disabled.component';
+import { MenuModifyComponent } from './modules/admins/path/menu/components/modify/modify.component';
+import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.component';
+import { MenuComponent } from './modules/admins/path/menu/menu.component';
+import { MenuService } from './modules/admins/path/menu/menu.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -333,7 +343,18 @@ import { InventorysSharedModule } from './modules/inventorys/components/inventor
     StorageOutNewComponent,
     StorageOutHistoryComponent,
     StorageOutActionsComponent,
-    StorageOutListComponent
+    StorageOutListComponent,
+
+    MenuActionsComponent,
+    MenuComponent,
+    MenuControlComponent,
+    MenuDisabledListComponent,
+    MenuListComponent,
+    MenuModifyComponent,
+    MenuDisabledComponent,
+
+    AppMenuComponent
+
   ],
   imports: [
     BrowserModule,
@@ -367,8 +388,8 @@ import { InventorysSharedModule } from './modules/inventorys/components/inventor
     PurchaseService,
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
-    HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,
-    StorageOutService],
+    HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,   
+    MenuService, StorageOutService],
   bootstrap: [AppComponent]
 })
 

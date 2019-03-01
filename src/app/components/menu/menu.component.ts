@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.less']
 })
 
-export class MenuComponent {
+export class AppMenuComponent {
   constructor(private tabService: TabsService,
     private router: Router) {}
   menus = [
@@ -115,6 +115,18 @@ export class MenuComponent {
             { name: '用户管理', link: '/admins/user' },
             { name: '角色管理', link: '/admins/role' },
             { name: '系统配置', link: '/admins/systemconfig' }
+          ]
+        }
+      ]
+    },
+    {
+      name: '系统管理',
+      icon: 'set',
+      subMenu: [
+        {
+          name: '权限管理',
+          subMenu: [
+            { name: '菜单', link: '/admins/menu' }
           ]
         }
       ]
