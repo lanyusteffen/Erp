@@ -120,8 +120,8 @@ export class AppMenuComponent {
       ]
     },
     {
-      name: '系统管理',
-      icon: 'set',
+      name: '通讯录',
+      icon: 'address',
       subMenu: [
         {
           name: '权限管理',

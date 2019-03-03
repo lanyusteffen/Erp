@@ -288,12 +288,12 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuard]
               },
               {
-                path: 'admin/menu',
+                path: 'admins/menu',
                 component: MenuComponent,
                 canActivate: [AuthGuard]
               },
               {
-                path: 'admin/menu/disabled',
+                path: 'admins/menu/disabled',
                 component: MenuDisabledComponent,
                 canActivate: [AuthGuard]
               },
