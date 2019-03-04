@@ -197,6 +197,7 @@ import { MenuModifyComponent } from './modules/admins/path/menu/components/modif
 import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.component';
 import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuService } from './modules/admins/path/menu/menu.service';
+import { AdminsSharedModule } from './modules/admins/components/admins.shared.module';
 
 
 @NgModule({
@@ -370,6 +371,7 @@ import { MenuService } from './modules/admins/path/menu/menu.service';
     ProductsSharedModule,
     AppRoutingModule,
     DpDatePickerModule,
+    AdminsSharedModule,
     SlimLoadingBarModule.forRoot()
   ],
   entryComponents: [

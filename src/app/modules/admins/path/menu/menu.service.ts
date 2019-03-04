@@ -20,6 +20,10 @@ export class MenuService {
 
   constructor(private http: HttpService) { }
 
+  all(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Menu/GetList', {}, next, fallback, ModuleType.Admin);
+  }
+
   get() { return this.menus$.asObservable(); }
 
   getDisabled() { return this.menuDisabled$.asObservable(); }
@@ -50,7 +54,7 @@ export class MenuService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Webadmin);
+    }, fallback, ModuleType.Admin);
   }
 
   listDisabled(fallback: (error: any) => void, successNotify?: () => void) {
@@ -79,7 +83,7 @@ export class MenuService {
       if (successNotify !== undefined) {
         successNotify();
       }
-    }, fallback, ModuleType.Webadmin);
+    }, fallback, ModuleType.Admin);
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {

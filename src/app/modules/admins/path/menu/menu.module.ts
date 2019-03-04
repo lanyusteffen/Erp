@@ -21,6 +21,8 @@ import { BasicsSharedModule } from '../../../basics/components/basics.shared.mod
 import { MenuRoutingModule } from './menu.router';
 
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
+import { AdminsSharedModule } from '../../components/admins.shared.module';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     MenuControlComponent,
     MenuModifyComponent,
     MenuDisabledComponent,
-    MenuDisabledListComponent
+    MenuDisabledListComponent,
+    AdminsSharedModule
   ],
   imports: [
     UIModule,
