@@ -9,7 +9,6 @@ import { MenuComponent } from './menu.component';
 import { MenuListComponent } from './components/list/list.component';
 import { MenuActionsComponent } from './components/actions/actions.component';
 import { MenuControlComponent } from './components/control/control.component';
-import { MenuModifyComponent } from './components/modify/modify.component';
 import { MenuDisabledComponent } from './menu-disabled.component';
 import { MenuDisabledListComponent } from './components/disabled/disabled.component';
 
@@ -30,7 +29,6 @@ import { AdminsSharedModule } from '../../components/admins.shared.module';
     MenuListComponent,
     MenuActionsComponent,
     MenuControlComponent,
-    MenuModifyComponent,
     MenuDisabledComponent,
     MenuDisabledListComponent,
     AdminsSharedModule

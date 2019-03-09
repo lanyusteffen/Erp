@@ -193,11 +193,18 @@ import { MenuListComponent } from './modules/admins/path/menu/components/list/li
 import { MenuActionsComponent } from './modules/admins/path/menu/components/actions/actions.component';
 import { MenuControlComponent } from './modules/admins/path/menu/components/control/control.component';
 import { MenuDisabledListComponent  } from './modules/admins/path/menu/components/disabled/disabled.component';
-import { MenuModifyComponent } from './modules/admins/path/menu/components/modify/modify.component';
 import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.component';
 import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuService } from './modules/admins/path/menu/menu.service';
 import { AdminsSharedModule } from './modules/admins/components/admins.shared.module';
+
+import { OperationListComponent } from './modules/admins/path/operation/components/list/list.component';
+import { OperationActionsComponent } from './modules/admins/path/operation/components/actions/actions.component';
+import { OperationControlComponent } from './modules/admins/path/operation/components/control/control.component';
+import { OperationDisabledListComponent  } from './modules/admins/path/operation/components/disabled/disabled.component';
+import { OperationDisabledComponent } from './modules/admins/path/operation/operation-disabled.component';
+import { OperationComponent } from './modules/admins/path/operation/operation.component';
+import { OperationService } from './modules/admins/path/operation/operation.service';
 
 
 @NgModule({
@@ -351,8 +358,14 @@ import { AdminsSharedModule } from './modules/admins/components/admins.shared.mo
     MenuControlComponent,
     MenuDisabledListComponent,
     MenuListComponent,
-    MenuModifyComponent,
     MenuDisabledComponent,
+
+    OperationActionsComponent,
+    OperationComponent,
+    OperationControlComponent,
+    OperationDisabledListComponent,
+    OperationListComponent,
+    OperationDisabledComponent,
 
     AppMenuComponent
 
@@ -391,7 +404,7 @@ import { AdminsSharedModule } from './modules/admins/components/admins.shared.mo
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
     HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,   
-    MenuService, StorageOutService],
+    MenuService, OperationService, StorageOutService],
   bootstrap: [AppComponent]
 })
 

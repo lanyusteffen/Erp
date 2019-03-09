@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of menus">
+      <tr *ngFor="let item of operations">
         <td>
           <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
         </td>
@@ -31,10 +31,10 @@
     [current]="pagination.PageIndex"
     (onChange)="onPageChange($event)"
   ></app-pagination-bar>
-  <app-menu-control
-    [menuId]="selectedId"
+  <app-operation-control
+    [operationId]="selectedId"
     [type] = "update"
     [show]="_showUpdate"
     (onClose)="closeUpdate()"
-  ></app-menu-control>
+  ></app-operation-control>
 </div>

@@ -1,0 +1,83 @@
+<form [formGroup]="controlForm" (ngSubmit)="onSubmit(controlForm)" novalidate *ngIf="formReady">
+  <app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
+    <div class="card-content">
+      <div class="heading">
+        基本信息
+      </div>
+      <table class="form">
+       
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            编号：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Code'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            名称:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Name'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+            </app-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            模块：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'ButtonModule'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="ButtonModule">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            页面:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Controller'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Controller">
+            </app-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            按钮类型:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'ButtonType'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="ButtonType">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            操作链接：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'LinkUrl'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="LinkUrl">
+            </app-form-field>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+    <div app-card-footer>
+      <app-ui-button [style]="'primary'" type="submit">
+        保存
+      </app-ui-button>
+      <app-ui-button (click)="handleClose()">
+        取消
+      </app-ui-button>
+    </div>
+  </app-card>
+</form>

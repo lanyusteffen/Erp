@@ -121,12 +121,13 @@ export class AppMenuComponent {
     },
     {
       name: '通讯录',
-      icon: 'address',
+      icon: 'information',
       subMenu: [
         {
           name: '权限管理',
           subMenu: [
-            { name: '菜单', link: '/admins/menu' }
+            { name: '菜单', link: '/admins/menu' },
+            { name: '操作', link: '/admins/operation' }
           ]
         }
       ]

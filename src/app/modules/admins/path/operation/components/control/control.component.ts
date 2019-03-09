@@ -1,17 +1,17 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { MenuService } from '../../menu.service';
+import { OperationService } from '../../operation.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
-  selector: 'app-menu-control',
+  selector: 'app-operation-control',
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.less'],
   providers: [FormService]
 })
 
-export class MenuControlComponent {
+export class OperationControlComponent {
   private controlForm = new FormGroup({});
   private _show = false;
   @Output() onClose: EventEmitter<any> = new EventEmitter();
@@ -26,15 +26,15 @@ export class MenuControlComponent {
   }
   @Input() type = 'create';
 
-  private _menuId: number;
+  private _operationId: number;
 
-  get menuId() {
-    return this._menuId;
+  get operationId() {
+    return this._operationId;
   }
 
   @Input()
-  set menuId(menuId) {
-    this._menuId = menuId;
+  set operationId(operationId) {
+    this._operationId = operationId;
     this.refreshList();
   }
 
@@ -49,25 +49,25 @@ export class MenuControlComponent {
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
-        this.menuService
+        this.operationService
           .newOne(data => {
             this.controlForm = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.listErrorCallBack(ModuleName.Menu, err);
+            this.alertService.listErrorCallBack(ModuleName.Operation, err);
           });
       } else {
-        this.menuService
-          .detail(this.menuId, data => {
+        this.operationService
+          .detail(this.operationId, data => {
             this.controlForm = this.formService.createForm(data);
           }, (err) => {
-            this.alertService.listErrorCallBack(ModuleName.Menu, err);
+            this.alertService.listErrorCallBack(ModuleName.Operation, err);
           });
       }
     }
   }
 
   constructor(
-    private menuService: MenuService,
+    private operationService: OperationService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
@@ -86,10 +86,10 @@ export class MenuControlComponent {
   onSubmit({ value }) {
 
     if (this.type === 'create') {
-      this.menuService.create(value, data => {
+      this.operationService.create(value, data => {
         if (data.IsValid) {
-          this.menuService.list((err) => {
-            this.alertService.listErrorCallBack(ModuleName.Menu, err);
+          this.operationService.list((err) => {
+            this.alertService.listErrorCallBack(ModuleName.Operation, err);
           }, () => {
             this.onClose.emit();
             this.alertService.addSuccess();
@@ -101,10 +101,10 @@ export class MenuControlComponent {
         this.alertService.addFail(err);
       });
     } else {
-      this.menuService.update(value, data => {
+      this.operationService.update(value, data => {
         if (data.IsValid) {
-          this.menuService.list((err) => {
-            this.alertService.listErrorCallBack(ModuleName.Menu, err);
+          this.operationService.list((err) => {
+            this.alertService.listErrorCallBack(ModuleName.Operation, err);
           }, () => {
             this.onClose.emit();
             this.alertService.modifySuccess();
