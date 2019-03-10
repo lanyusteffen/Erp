@@ -4,11 +4,13 @@ import { UIModule } from '@UI/ui.module';
 
 import { SharedModule } from '../../../shared.module';
 import { MenuSelectorComponent } from '../components/menu-selector/menu-selector.component';
+import { ButtonTypeSelectorComponent } from '../components/buttontype-selector/buttontype-selector.component';
 
 
 @NgModule({
     declarations: [
-        MenuSelectorComponent
+        MenuSelectorComponent,
+        ButtonTypeSelectorComponent
     ],
     imports: [
         UIModule,
@@ -16,7 +18,8 @@ import { MenuSelectorComponent } from '../components/menu-selector/menu-selector
         SharedModule
     ],
     exports: [
-        MenuSelectorComponent
+        MenuSelectorComponent,
+        ButtonTypeSelectorComponent
     ],
     providers: [
     ]

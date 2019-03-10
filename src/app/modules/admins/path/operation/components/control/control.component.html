@@ -6,16 +6,7 @@
       </div>
       <table class="form">
        
-        <tr>
-          <th class="form-label">
-            <span class="required">*</span>
-            编号：
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'Code'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
-            </app-form-field>
-          </td>
+        <tr>         
           <th class="form-label">
             <span class="required">*</span>
             名称:
@@ -25,9 +16,6 @@
               <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
             </app-form-field>
           </td>
-        </tr>
-
-        <tr>
           <th class="form-label">
             <span class="required">*</span>
             模块：
@@ -37,6 +25,10 @@
               <input #formField type="text" class="form-control" [ngModel] formControlName="ButtonModule">
             </app-form-field>
           </td>
+        </tr>
+
+        <tr>
+          
           <th class="form-label">
             <span class="required">*</span>
             页面:
@@ -46,18 +38,19 @@
               <input #formField type="text" class="form-control" [ngModel] formControlName="Controller">
             </app-form-field>
           </td>
-        </tr>
 
-        <tr>
           <th class="form-label">
             <span class="required">*</span>
             按钮类型:
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'ButtonType'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="ButtonType">
+              <app-buttontype-selector formControlName="ButtonType" [ngModel]></app-buttontype-selector>
             </app-form-field>
           </td>
+        </tr>
+
+        <tr>         
           <th class="form-label">
             <span class="required">*</span>
             操作链接：
