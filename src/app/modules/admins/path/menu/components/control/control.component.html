@@ -8,27 +8,6 @@
         <tr>
           <th class="form-label">
             <span class="required">*</span>
-            父级菜单:
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'ParentId'">
-              <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
-            </app-form-field>
-          </td>
-          <th class="form-label">
-            <span class="required">*</span>
-            模块编号：
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'Code'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="ModuleCode">
-            </app-form-field>
-          </td>
-
-        </tr>
-        <tr>
-          <th class="form-label">
-            <span class="required">*</span>
             名称:
           </th>
           <td class="form-control-group">
@@ -36,8 +15,53 @@
               <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
             </app-form-field>
           </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            编号：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Code'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+            </app-form-field>
+          </td>
         </tr>
-
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            链接地址:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Link'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Link">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            链接参数:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'LinkParameters'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="LinkParameters">
+            </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            父级菜单:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'ParentId'">
+              <app-menu-selector #formField formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            备注:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Remark'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Remark">
+            </app-form-field>
+          </td>
+        </tr>
       </table>
     </div>
     <div app-card-footer>
