@@ -46,12 +46,21 @@
         </tr>
         <tr>
           <th class="form-label">
+            <span class="required">*</span>
+            图标：
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Icon'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Icon">
+            </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
             父级菜单:
           </th>
           <td class="form-control-group">
-            <app-form-field [name]="'ParentId'">
-              <app-menu-selector #formField formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
-            </app-form-field>
+            <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
           </td>
           <th class="form-label">
             备注:
