@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from '@services/http.service';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -20,6 +19,10 @@ export class CompanyService {
   };
 
   constructor(private http: HttpService) { }
+
+  all(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Company/GetList', {}, next, fallback, ModuleType.Admin);
+  }
 
   get() { return this.companys$.asObservable(); }
 

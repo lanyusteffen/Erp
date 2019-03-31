@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -79,12 +79,7 @@ export class MenuControlComponent {
     this.onClose.emit();
   }
 
-  getParent(item :any){
-    console.log(item);
-  }
-
   onSubmit({ value }) {
-
     if (this.type === 'create') {
       this.menuService.create(value, data => {
         if (data.IsValid) {

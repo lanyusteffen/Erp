@@ -27,7 +27,6 @@
         </tr>
         <tr>
           <th class="form-label">
-            <span class="required">*</span>
             链接地址:
           </th>
           <td class="form-control-group">
@@ -46,7 +45,12 @@
         </tr>
         <tr>
           <th class="form-label">
-            <span class="required">*</span>
+              父级菜单:
+            </th>
+            <td class="form-control-group">
+              <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
+            </td>
+          <th class="form-label">
             图标：
           </th>
           <td class="form-control-group">
@@ -57,15 +61,26 @@
         </tr>
         <tr>
           <th class="form-label">
-            父级菜单:
+            专属菜单：
           </th>
           <td class="form-control-group">
-            <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
+            <app-ui-radio [radioName]="'IsExclusive'" [value]="1" formControlName="IsExclusive" [label]="'是'"
+              [ngModel]></app-ui-radio>
+            <app-ui-radio [radioName]="'IsExclusive'" [checked]="true" [value]="0" formControlName="IsExclusive" [label]="'否'"
+              [ngModel]></app-ui-radio>
           </td>
+          <th class="form-label">
+            专属公司：
+          </th>
+          <td class="form-control-group">
+            <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>            
+          </td>
+        </tr>
+        <tr>
           <th class="form-label">
             备注:
           </th>
-          <td class="form-control-group">
+          <td class="form-control-group" colspan="3">
             <app-form-field [name]="'Remark'">
               <input #formField type="text" class="form-control" [ngModel] formControlName="Remark">
             </app-form-field>

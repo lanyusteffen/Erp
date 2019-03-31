@@ -3,7 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } fr
 import 'rxjs/add/operator/do';
 import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 import { Observable } from 'rxjs/Observable';
-import { AlertService } from '../services/alert.service';
+import { AlertService } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Injectable()

@@ -13,9 +13,8 @@ import { MenuDisabledComponent } from './menu-disabled.component';
 import { MenuDisabledListComponent } from './components/disabled/disabled.component';
 
 import { MenuService } from './menu.service';
-import { FormService } from '@services/form.service';
 
-import { SharedModule} from '@app/shared.module';
+import { SharedModule } from '@app/shared.module';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { MenuRoutingModule } from './menu.router';
 
