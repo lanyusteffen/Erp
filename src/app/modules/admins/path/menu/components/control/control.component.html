@@ -76,17 +76,25 @@
             <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>            
           </td>
         </tr>
-        <tr>
-          <th class="form-label">
-            备注:
-          </th>
-          <td class="form-control-group" colspan="3">
-            <app-form-field [name]="'Remark'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Remark">
-            </app-form-field>
-          </td>
-        </tr>
       </table>
+      <div class="heading">已排除此菜单公司列表</div>
+      <app-ui-table>
+        <thead>
+          <th>操作</th>
+          <th>公司</th>
+        </thead>
+        <tbody formArrayName="excludeCompanyList">
+          <tr *ngFor="let item of excludeCompanyList.controls; index as i" [formGroupName]="i">
+            <td>
+              <a class="text-success" (click)="addCompany(i)"><i class="iconfont icon-add"></i></a>
+              <a class="text-danger" (click)="removeCompany(i)"><i class="iconfont icon-close"></i></a>
+            </td>
+            <td><input type="text" formControlName="CompanyName" class="form-control" [ngModel]></td>
+          </tr>
+        </tbody>
+      </app-ui-table>
+      <div class="heading">备注</div>
+      <input type="text" formControlName="Remark" class="form-control" [ngModel]>
     </div>
     <div app-card-footer>
       <app-ui-button [style]="'primary'" type="submit">

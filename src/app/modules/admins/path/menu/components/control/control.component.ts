@@ -1,8 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+
+const ExcludeCompany = {
+  MenuId: 0,
+  CompanyId: 0,
+  CompanyName: null
+};
 
 @Component({
   selector: 'app-menu-control',
@@ -12,7 +18,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 })
 
 export class MenuControlComponent {
-  private controlForm = new FormGroup({});
+  private form = new FormGroup({});
   private _show = false;
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -51,14 +57,14 @@ export class MenuControlComponent {
       if (this.type === 'create') {
         this.menuService
           .newOne(data => {
-            this.controlForm = this.formService.createForm(data);
+            this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           });
       } else {
         this.menuService
           .detail(this.menuId, data => {
-            this.controlForm = this.formService.createForm(data);
+            this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           });
@@ -73,7 +79,8 @@ export class MenuControlComponent {
     private alertService: AlertService
   ) { }
 
-  get formReady(): boolean { return !!Object.keys(this.controlForm.controls).length; }
+  get excludeCompanyList(): FormArray { return this.form.get('ExcludeCompanyList') as FormArray; }
+  get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
   handleClose() {
     this.onClose.emit();
@@ -111,6 +118,18 @@ export class MenuControlComponent {
         this.alertService.modifyFail(err);
       });
     }
+  }
+
+  addCompany(idx) {
+    const control = <FormArray>this.form.controls['ExcludeCompanyList'];
+
+    control.insert(idx + 1, this.fb.group(ExcludeCompany));
+  }
+
+  removeCompany(idx) {
+    const control = <FormArray>this.form.controls['ExcludeCompanyList'];
+
+    control.removeAt(idx);
   }
 }
 
