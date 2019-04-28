@@ -77,13 +77,13 @@
           </td>
         </tr>
       </table>
-      <div class="heading">已排除此菜单公司列表</div>
-      <app-ui-table>
-        <thead>
+      <div *ngIf="IsExclusive == 0" class="heading">已排除此菜单公司列表</div>
+      <app-ui-table *ngIf="IsExclusive == 0">
+        <thead *ngIf="IsExclusive == 0">
           <th>操作</th>
           <th>公司</th>
         </thead>
-        <tbody formArrayName="excludeCompanyList">
+        <tbody formArrayName="ExcludeCompanyList">
           <tr *ngFor="let item of excludeCompanyList.controls; index as i" [formGroupName]="i">
             <td>
               <a class="text-success" (click)="addCompany(i)"><i class="iconfont icon-add"></i></a>
