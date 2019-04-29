@@ -30,8 +30,10 @@ export class AppMenuComponent {
       icon: 'manageorder',
       subMenu: [
         {
-          name: '商品管理',
+          name: '销售订单管理',
           subMenu: [
+            { name: '新增销售订单', link: '/sales/order', paras: { type: 'new', id: -1 }},
+            { name: '销售订单历史', link: '/sales/order/history' }
           ]
         }
       ]
@@ -120,7 +122,7 @@ export class AppMenuComponent {
       ]
     },
     {
-      name: '通讯录',
+      name: '管理',
       icon: 'information',
       subMenu: [
         {

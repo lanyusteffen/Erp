@@ -106,7 +106,6 @@ export class MenuService {
     return this.http.post('/Menu/ChangePassword', menu, next, fallback, ModuleType.Admin);
   }
 
-
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Menu/Cancel', {
       entityIdList
@@ -169,5 +168,9 @@ export class MenuService {
     return this.http.post('/Menu/Restore', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
+  }
+
+  listModule(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Menu/GetModuleList', next, fallback, ModuleType.Admin);
   }
 }

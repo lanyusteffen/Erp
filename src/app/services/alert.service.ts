@@ -279,7 +279,7 @@ export class AlertService {
         name = '菜单';
         break;
 
-        case ModuleName.Operation:
+      case ModuleName.Permission:
         name = '操作';
         break;
     }
@@ -333,5 +333,5 @@ export enum ModuleName {
   ProductUnit,
   StorageOut,
   Menu,
-  Operation
+  Permission
 }

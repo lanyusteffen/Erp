@@ -198,15 +198,6 @@ import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuService } from './modules/admins/path/menu/menu.service';
 import { AdminsSharedModule } from './modules/admins/components/admins.shared.module';
 
-import { OperationListComponent } from './modules/admins/path/operation/components/list/list.component';
-import { OperationActionsComponent } from './modules/admins/path/operation/components/actions/actions.component';
-import { OperationControlComponent } from './modules/admins/path/operation/components/control/control.component';
-import { OperationDisabledListComponent  } from './modules/admins/path/operation/components/disabled/disabled.component';
-import { OperationDisabledComponent } from './modules/admins/path/operation/operation-disabled.component';
-import { OperationComponent } from './modules/admins/path/operation/operation.component';
-import { OperationService } from './modules/admins/path/operation/operation.service';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -360,15 +351,7 @@ import { OperationService } from './modules/admins/path/operation/operation.serv
     MenuListComponent,
     MenuDisabledComponent,
 
-    OperationActionsComponent,
-    OperationComponent,
-    OperationControlComponent,
-    OperationDisabledListComponent,
-    OperationListComponent,
-    OperationDisabledComponent,
-
     AppMenuComponent
-
   ],
   imports: [
     BrowserModule,
@@ -404,7 +387,7 @@ import { OperationService } from './modules/admins/path/operation/operation.serv
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
     HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,   
-    MenuService, OperationService, StorageOutService],
+    MenuService, StorageOutService],
   bootstrap: [AppComponent]
 })
 

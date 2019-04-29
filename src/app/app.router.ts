@@ -49,8 +49,6 @@ import { PurchaseHistoryComponent } from './modules/purchases/path/order/history
 import { StorageOutHistoryComponent } from './modules/inventorys/path/storageout/history/history.component';
 import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.component';
-import { OperationComponent } from './modules/admins/path/operation/operation.component';
-import { OperationDisabledComponent } from './modules/admins/path/operation/operation-disabled.component';
 
 export const ROUTES: Routes = [
     {
@@ -297,16 +295,6 @@ export const ROUTES: Routes = [
               {
                 path: 'admins/menu/disabled',
                 component: MenuDisabledComponent,
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'admins/operation',
-                component: OperationComponent,
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'admins/operation/disabled',
-                component: OperationDisabledComponent,
                 canActivate: [AuthGuard]
               },
               { path: '**', component: PageNotFoundComponent }

@@ -5,15 +5,15 @@ import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
-  selector: 'app-menu-selector',
-  templateUrl: './menu-selector.component.html',
-  styleUrls: ['./menu-selector.component.less'],
+  selector: 'app-module-selector',
+  templateUrl: './module-selector.component.html',
+  styleUrls: ['./module-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: MenuSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: ModuleSelectorComponent, multi: true }
   ]
 })
+export class ModuleSelectorComponent implements OnInit, ControlValueAccessor {
 
-export class MenuSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;
@@ -37,10 +37,10 @@ export class MenuSelectorComponent implements OnInit, ControlValueAccessor {
 
   bindListData(next: () => void): void {
     this.menuService
-    .all(data => {
+    .listModule(data => {
       this.list = data.map(item => ({
-        label: item.Name,
-        value: item.Id
+        label: item.ModuleName,
+        value: item.ModuleType
       }));
       if (next !== null) {
         next();

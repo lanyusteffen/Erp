@@ -8,7 +8,7 @@
         <tr>
           <th class="form-label">
             <span class="required">*</span>
-            名称:
+            菜单名称:
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Name'">
@@ -17,7 +17,7 @@
           </td>
           <th class="form-label">
             <span class="required">*</span>
-            编号：
+            菜单编号:
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Code'">
@@ -45,13 +45,13 @@
         </tr>
         <tr>
           <th class="form-label">
-              父级菜单:
-            </th>
-            <td class="form-control-group">
-              <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
-            </td>
+            父级菜单:
+          </th>
+          <td class="form-control-group">
+            <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
+          </td>
           <th class="form-label">
-            图标：
+            菜单图标:
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Icon'">
@@ -61,7 +61,7 @@
         </tr>
         <tr>
           <th class="form-label">
-            专属菜单：
+            专属菜单:
           </th>
           <td class="form-control-group">
             <app-ui-radio [radioName]="'IsExclusive'" [value]="1" formControlName="IsExclusive" [label]="'是'"
@@ -70,26 +70,36 @@
               [ngModel]></app-ui-radio>
           </td>
           <th class="form-label">
-            专属公司：
+            所属模块:
           </th>
           <td class="form-control-group">
+            <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label" *ngIf="this.form.controls['IsExclusive'].value">
+            专属公司:
+          </th>
+          <td class="form-control-group" *ngIf="this.form.controls['IsExclusive'].value">
             <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>            
           </td>
         </tr>
       </table>
-      <div *ngIf="IsExclusive == 0" class="heading">已排除此菜单公司列表</div>
-      <app-ui-table *ngIf="IsExclusive == 0">
-        <thead *ngIf="IsExclusive == 0">
+      <div *ngIf="!this.form.controls['IsExclusive'].value" class="heading">排除菜单公司列表</div>
+      <app-ui-table *ngIf="!this.form.controls['IsExclusive'].value">
+        <thead *ngIf="!this.form.controls['IsExclusive'].value">
           <th>操作</th>
           <th>公司</th>
         </thead>
         <tbody formArrayName="ExcludeCompanyList">
           <tr *ngFor="let item of excludeCompanyList.controls; index as i" [formGroupName]="i">
-            <td>
+            <td width="50%">
               <a class="text-success" (click)="addCompany(i)"><i class="iconfont icon-add"></i></a>
               <a class="text-danger" (click)="removeCompany(i)"><i class="iconfont icon-close"></i></a>
             </td>
-            <td><input type="text" formControlName="CompanyName" class="form-control" [ngModel]></td>
+            <td width="50%">
+              <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>  
+            </td>
           </tr>
         </tbody>
       </app-ui-table>
