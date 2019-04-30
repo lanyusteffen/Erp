@@ -197,6 +197,12 @@ import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.
 import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuService } from './modules/admins/path/menu/menu.service';
 import { AdminsSharedModule } from './modules/admins/components/admins.shared.module';
+import { OtherExchangeUnitComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit.component';
+import { OtherExchangeUnitListComponent } from './modules/basics/path/otherexchangeunit/components/list/list.component';
+import { OtherExchangeUnitActionsComponent } from './modules/basics/path/otherexchangeunit/components/actions/actions.component';
+import { OtherExchangeUnitControlComponent } from './modules/basics/path/otherexchangeunit/components/control/control.component';
+import { OtherExchangeUnitDisabledComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.component';
+import { OtherExchangeUnitDisabledListComponent } from './modules/basics/path/otherexchangeunit/components/disabled/disabled.component';
 
 @NgModule({
   declarations: [
@@ -251,12 +257,12 @@ import { AdminsSharedModule } from './modules/admins/components/admins.shared.mo
     EmployeeControlComponent,
     EmployeeDisabledComponent,
     EmployeeDisabledListComponent,
-    OtherIncomeComponent,
-    OtherIncomeListComponent,
-    OtherIncomeActionsComponent,
-    OtherIncomeControlComponent,
-    OtherIncomeDisabledComponent,
-    OtherIncomeDisabledListComponent,
+    OtherExchangeUnitComponent,
+    OtherExchangeUnitListComponent,
+    OtherExchangeUnitActionsComponent,
+    OtherExchangeUnitControlComponent,
+    OtherExchangeUnitDisabledComponent,
+    OtherExchangeUnitDisabledListComponent,
     SupplierComponent,
     SupplierListComponent,
     SupplierActionsComponent,
