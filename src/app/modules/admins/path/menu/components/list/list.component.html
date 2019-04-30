@@ -6,9 +6,12 @@
           <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
         </th>
         <th>操作</th>
-        <th>编号</th>
         <th>名称</th>
-        <th>备注</th>
+        <th>父级菜单</th>
+        <th>专属公司</th>
+        <th>链接地址</th>
+        <th>链接参数</th>
+        <th>图标</th>
       </tr>
     </thead>
     <tbody>
@@ -20,9 +23,12 @@
           <a (click)="update(item.Id)">修改</a>
           <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
         </td>
-        <td>{{item.Code}}</td>
         <td>{{item.Name}}</td>
-        <td>{{item.Remark}}</td>
+        <td>{{item.ParentName}}</td>
+        <td>{{item.CompanyName}}</td>
+        <td>{{item.Link}}</td>
+        <td>{{item.LinkParameters}}</td>
+        <td>{{item.Icon}}</td>
       </tr>
     </tbody>
   </app-ui-table>

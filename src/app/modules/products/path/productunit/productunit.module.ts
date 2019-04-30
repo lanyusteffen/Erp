@@ -16,8 +16,6 @@ import { ProductUnitService } from './productunit.service';
 import { SharedModule } from '@app/shared.module';
 import { ProductUnitRoutingModule } from './productunit.router';
 
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
-
 @NgModule({
   declarations: [
     ProductUnitComponent,

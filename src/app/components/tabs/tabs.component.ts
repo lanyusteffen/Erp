@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { TabsService } from './tabs.service';
 import { Router } from '@angular/router';
 import { Tab } from '@contracts/tab';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @Component({
   selector: 'app-tabs',
@@ -29,7 +30,9 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
   closeTab(event: Event, tab: Tab) {
     event.preventDefault();
     event.stopPropagation();
+    
     this.router.navigateByUrl(this.tabService.remove(tab), { skipLocationChange: true });
+    SimpleReuseStrategy.detachTab(this.router.url.replace(/\//gi, '_'));
   }
 
   ngOnDestroy() {

@@ -43,7 +43,7 @@ export class MenuListComponent implements OnInit, OnDestroy {
     this.menuService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Menu, err);
       this.loadingBar.complete();
-    },()=>{
+    }, () => {
       this.loadingBar.complete();
     });
   }
@@ -59,7 +59,6 @@ export class MenuListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.menus : []);
-
   }
 
   select(evt, selectedItem) {

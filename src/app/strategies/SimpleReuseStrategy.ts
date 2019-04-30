@@ -1,11 +1,20 @@
-import { RouteReuseStrategy, DefaultUrlSerializer, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+import { Set } from 'typescript-collections';
 
 export class SimpleReuseStrategy implements RouteReuseStrategy {
 
     private static handlers: { [key: string]: DetachedRouteHandle } = {};
+    private static detachHandlers: Set<String> = new Set<string>();
 
     public static clear(): void {
         SimpleReuseStrategy.handlers = {};
+    }
+
+    public static detachTab(tabUrl: string) {
+        try {
+            SimpleReuseStrategy.detachHandlers.add(tabUrl);
+        } catch {
+        }
     }
 
     /** 表示对所有路由允许复用 如果你有路由不想利用可以在这加一些业务逻辑判断 */
@@ -18,7 +27,12 @@ export class SimpleReuseStrategy implements RouteReuseStrategy {
 
     /** 当路由离开时会触发。按path作为key存储路由快照&组件当前实例对象 */
     public store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-        SimpleReuseStrategy.handlers[this.getRouteUrl(route)] = handle;
+        const routeUrl = this.getRouteUrl(route);
+        if (SimpleReuseStrategy.detachHandlers.contains(routeUrl)) {
+            SimpleReuseStrategy.detachHandlers.remove(routeUrl);
+        } else {
+            SimpleReuseStrategy.handlers[routeUrl] = handle;
+        }
     }
 
     /** 若 path 在缓存中有的都认为允许还原路由 */

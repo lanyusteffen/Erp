@@ -122,13 +122,11 @@ export class MenuControlComponent {
 
   addCompany(idx) {
     const control = <FormArray>this.form.controls['ExcludeCompanyList'];
-
     control.insert(idx + 1, this.fb.group(ExcludeCompany));
   }
 
   removeCompany(idx) {
     const control = <FormArray>this.form.controls['ExcludeCompanyList'];
-
     control.removeAt(idx);
   }
 }
