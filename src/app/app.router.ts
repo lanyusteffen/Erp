@@ -49,6 +49,8 @@ import { PurchaseHistoryComponent } from './modules/purchases/path/order/history
 import { StorageOutHistoryComponent } from './modules/inventorys/path/storageout/history/history.component';
 import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.component';
+import { OtherExchangeUnitComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit.component';
+import { OtherExchangeUnitDisabledComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.component';
 
 export const ROUTES: Routes = [
     {
@@ -149,12 +151,12 @@ export const ROUTES: Routes = [
               },
               {
                 path: 'basics/otherexchangeunit',
-                component: OtherIncomeComponent,
+                component: OtherExchangeUnitComponent,
                 canActivate: [AuthGuard]
               },
               {
                 path: 'basics/otherexchangeunit/disabled',
-                component: OtherIncomeDisabledComponent,
+                component: OtherExchangeUnitDisabledComponent,
                 canActivate: [AuthGuard]
               },
               {

@@ -22,16 +22,16 @@ export class AppMenuComponent {
           subMenu: [
             { name: '供应商', link: '/basics/supplier' },
             { name: '客户', link: '/basics/customer' },
-            { name: '其他往来单位', link: '/basics/otherexchangeunit' },
-            { name: '地区信息', link: '/basics/area' },
+            { name: '其他往来单位', link: '/basics/otherexchangeunit' }
           ]
         },
         {
-          name: '公司内部组织',
+          name: '组织结构',
           subMenu: [
+            { name: '地区信息', link: '/basics/area' },
             { name: '部门信息', link: '/basics/department' },
-            { name: '仓库信息', link: '/products/storage' },
-            { name: '内部职员', link: '/basics/employee' }
+            { name: '内部职员', link: '/basics/employee' },
+            { name: '仓库信息', link: '/products/storage' }
           ]
         }
       ]
