@@ -50,7 +50,7 @@ export class SelectComponent {
 
   @Input()
   set value(setNewValue) {
-    if (this.options.length > 0) {
+    if (this.options.length > 0 && setNewValue) {
       const selectedValue = this.options.find(option => option.value === setNewValue) || null;
       if (selectedValue) {
         this._currentValue = selectedValue;

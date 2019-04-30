@@ -54,11 +54,11 @@ export class ModuleSelectorComponent implements OnInit, ControlValueAccessor {
     if (!this.dataInitialized) {
       this.dataInitialized = true;
       this.bindListData(() => {
-        this.innerValue = value || 0;
+        this.innerValue = value || -1;
         this.selectMenu.value = this.innerValue;
       });
     } else {
-      this.innerValue = value || 0;
+      this.innerValue = value || -1;
       this.selectMenu.value = this.innerValue;
     }
   }

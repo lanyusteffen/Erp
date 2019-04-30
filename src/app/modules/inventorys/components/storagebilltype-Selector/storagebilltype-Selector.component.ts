@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { AlertService, ModuleName } from '@services/alert.service';
+import { AlertService } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
 import { StorageOutTypeEnumPublic } from '../../enums/storagebilltype.storage';
 

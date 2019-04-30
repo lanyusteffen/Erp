@@ -58,11 +58,11 @@ export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
     if (!this.dataInitialized) {
       this.dataInitialized = true;
       this.bindListData(() => {
-        this.innerValue = value || 0;
+        this.innerValue = value || -1;
         this.selectStorage.value = this.innerValue;
       });
     } else {
-      this.innerValue = value || 0;
+      this.innerValue = value || -1;
       this.selectStorage.value = this.innerValue;
     }
   }

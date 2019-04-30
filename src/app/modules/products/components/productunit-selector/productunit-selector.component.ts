@@ -73,11 +73,11 @@ export class ProductUnitSelectorComponent implements OnInit, ControlValueAccesso
     if (!this.dataInitialized && this.productId > 0) {
       this.dataInitialized = true;
       this.bindListData(() => {
-        this.innerValue = value || 0;
+        this.innerValue = value || -1;
         this.selectProductUnit.value = this.innerValue;
       });
     } else {
-      this.innerValue = value || 0;
+      this.innerValue = value || -1;
       this.selectProductUnit.value = this.innerValue;
     }
   }
