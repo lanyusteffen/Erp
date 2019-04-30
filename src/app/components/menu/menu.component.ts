@@ -15,6 +15,7 @@ export class AppMenuComponent {
     {
       name: '资料',
       icon: 'data',
+      module: 2,
       subMenu: [
         {
           name: '往来单位',
@@ -38,6 +39,7 @@ export class AppMenuComponent {
     {
       name: '财务',
       icon: 'dollar',
+      module: 3,
       subMenu: [
         {
           name: '基础资料',
@@ -51,7 +53,8 @@ export class AppMenuComponent {
     },
     {
       name: '商品',
-      icon: 'similarproduct',
+      icon: 'category',
+      module: 4,
       subMenu: [
         {
           name: '商品管理',
@@ -65,6 +68,7 @@ export class AppMenuComponent {
     {
       name: '销售',
       icon: 'manageorder',
+      module: 5,
       subMenu: [
         {
           name: '销售订单管理',
@@ -78,6 +82,7 @@ export class AppMenuComponent {
     {
       name: '采购',
       icon: 'cart',
+      module: 6,
       subMenu: [
         {
           name: '采购订单管理',
@@ -91,6 +96,7 @@ export class AppMenuComponent {
     {
       name: '库存',
       icon: 'box',
+      module: 7,
       subMenu: [
         {
           name: '出库单管理',
@@ -104,6 +110,7 @@ export class AppMenuComponent {
     {
       name: '管理',
       icon: 'set',
+      module: 1,
       subMenu: [
         {
           name: '基础资料',
