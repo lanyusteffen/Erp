@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { MenuSelectorComponent } from '../../../../components/menu-selector/menu-selector.component';
 
 const ExcludeCompany = {
   MenuId: 0,
@@ -18,8 +19,13 @@ const ExcludeCompany = {
 })
 
 export class MenuControlComponent {
+
   private form = new FormGroup({});
   private _show = false;
+
+  @ViewChild('menuSelector')
+  private menuSelector: MenuSelectorComponent;
+
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
@@ -95,6 +101,7 @@ export class MenuControlComponent {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           }, () => {
             this.refreshList();
+            this.menuSelector.reBind();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -111,6 +118,7 @@ export class MenuControlComponent {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           }, () => {
             this.refreshList();
+            this.menuSelector.reBind();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

@@ -35,6 +35,10 @@ export class MenuSelectorComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  reBind() {
+    this.bindListData(null);
+  }
+
   bindListData(next: () => void): void {
     this.menuService
     .all(data => {

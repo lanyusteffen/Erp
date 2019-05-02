@@ -49,7 +49,7 @@
             父级菜单:
           </th>
           <td class="form-control-group">
-            <app-menu-selector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
+            <app-menu-selector #menuSelector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
           </td>
           <th class="form-label">
             菜单图标:
