@@ -26,10 +26,8 @@ import { RoleService } from './role.service';
 
 export class RoleComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private subscription: Subscription;
 
   constructor(
-    private roleService: RoleService
   ) {}
 
   ngOnInit() {

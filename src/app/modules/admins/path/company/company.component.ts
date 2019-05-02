@@ -26,10 +26,8 @@ import { CompanyService } from './company.service';
 
 export class CompanyComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private subscription: Subscription;
 
   constructor(
-    private companyService: CompanyService
   ) {}
 
   ngOnInit() {

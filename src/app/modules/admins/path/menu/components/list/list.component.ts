@@ -19,7 +19,6 @@ export class MenuListComponent implements OnInit, OnDestroy {
   private allSelected = false;
   private selectedId: number;
   private _showUpdate = false;
-  private _showPassword = false;
   private subscription: Subscription;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
@@ -86,15 +85,6 @@ export class MenuListComponent implements OnInit, OnDestroy {
 
   closeUpdate() {
     this._showUpdate = false;
-  }
-
-  changePassword(id) {
-    this.selectedId = id;
-    this._showPassword = true;
-  }
-
-  closeChangePassword() {
-    this._showPassword = false;
   }
 
   onCancel(id) {

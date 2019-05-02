@@ -30,6 +30,7 @@ export class MenuControlComponent {
   set show(isShow) {
     this._show = isShow;
   }
+  
   @Input() type = 'create';
 
   private _menuId: number;
@@ -93,6 +94,7 @@ export class MenuControlComponent {
           this.menuService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -108,6 +110,7 @@ export class MenuControlComponent {
           this.menuService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

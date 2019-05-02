@@ -26,10 +26,8 @@ import { MenuService } from './menu.service';
 
 export class MenuComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private subscription: Subscription;
 
   constructor(
-    private menuService: MenuService
   ) {}
 
   ngOnInit() {

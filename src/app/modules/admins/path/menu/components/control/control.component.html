@@ -21,7 +21,8 @@
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Code'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Code">
+                <input #formField *ngIf="type === 'create'" type="text" class="form-control" [ngModel] formControlName="Code">
+              <input #formField *ngIf="type !== 'create'" type="text" class="none-input" disabled="disabled" [ngModel] formControlName="Code">
             </app-form-field>
           </td>
         </tr>

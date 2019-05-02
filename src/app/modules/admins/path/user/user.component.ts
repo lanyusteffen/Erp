@@ -26,10 +26,8 @@ import { UserService } from './user.service';
 
 export class UserComponent implements OnInit, OnDestroy {
   private selectedItems = <any>[];
-  private subscription: Subscription;
 
   constructor(
-    private userService: UserService
   ) {}
 
   ngOnInit() {
