@@ -1,19 +1,19 @@
 <div class="menu">
   <ul class="menu-list">
-    <li *ngFor="let menu of menus">
-      <a title="{{menu.name}}">
+    <li *ngFor="let menu of this.localMenus">
+      <a title="{{menu.Name}}">
         <i class="iconfont icon-{{menu.icon}}"></i>
       </a>
       <div class="sub-menu">
         <ul>
           <li *ngFor="let subMenu of menu.subMenu">
-            <a>{{subMenu.name}}</a>
+            <a>{{subMenu.Name}}</a>
             <div class="sub-menu">
               <ul>
                 <li *ngFor="let subMenuLink of subMenu.subMenu">
-                  <a [routerLink]="subMenuLink.link" [queryParams]="subMenuLink.paras" 
+                  <a [routerLink]="subMenuLink.Link" [queryParams]="subMenuLink.LinkParameters" 
                       (click)="createTab(subMenuLink)" skipLocationChange>
-                    {{subMenuLink.name}}
+                    {{subMenuLink.Name}}
                   </a>
                 </li>
               </ul>

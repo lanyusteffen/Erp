@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TabsService } from '../../components/tabs/tabs.service';
-import { AlertService } from '../../services/alert.service';
+import { AlertService, ModuleName } from '../../services/alert.service';
 import { ConfirmService } from '../../services/confirm.service';
 import { Tab } from '@contracts/tab';
 
@@ -13,6 +13,7 @@ import { Tab } from '@contracts/tab';
 
 export class HomeComponent implements OnInit, OnDestroy {
   private tabs: Tab[];
+  private menus: any;
   private subscription: Subscription;
   private alertSubscription: Subscription;
   private confirmSubScription: Subscription;

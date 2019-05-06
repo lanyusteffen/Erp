@@ -41,7 +41,7 @@ export class MenuSelectorComponent implements OnInit, ControlValueAccessor {
 
   bindListData(next: () => void): void {
     this.menuService
-    .all(data => {
+    .allParent(data => {
       this.list = data.map(item => ({
         label: item.Name,
         value: item.Id

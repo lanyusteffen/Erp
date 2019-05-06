@@ -24,6 +24,10 @@ export class MenuService {
     return this.http.post('/Menu/GetList', {}, next, fallback, ModuleType.Admin);
   }
 
+  allParent(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Menu/GetParentList', {}, next, fallback, ModuleType.Admin);
+  }
+
   get() { return this.menus$.asObservable(); }
 
   getDisabled() { return this.menuDisabled$.asObservable(); }

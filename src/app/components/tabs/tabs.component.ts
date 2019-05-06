@@ -30,7 +30,6 @@ export class TabsComponent implements AfterViewInit, OnDestroy {
   closeTab(event: Event, tab: Tab) {
     event.preventDefault();
     event.stopPropagation();
-    
     this.router.navigateByUrl(this.tabService.remove(tab), { skipLocationChange: true });
     SimpleReuseStrategy.detachTab(this.router.url.replace(/\//gi, '_'));
   }

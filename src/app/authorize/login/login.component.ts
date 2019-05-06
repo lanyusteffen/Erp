@@ -6,6 +6,7 @@ import { HttpService } from '@services/http.service';
 import { Router } from '@angular/router';
 import { AuthorizeService } from '../authorize.service';
 import { TabsService } from '@components/tabs/tabs.service';
+import { MenuService } from '@services/menu.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { TabsService } from '@components/tabs/tabs.service';
   providers: [
     HttpService,
     AuthorizeService,
+    MenuService
   ]
 })
 export class LoginComponent implements OnInit {
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
   constructor(private builder: FormBuilder,
     private httpService: HttpService,
     private tabService: TabsService,
+    private menuService: MenuService,
     private router: Router,
     private authorizeService: AuthorizeService) { }
 
@@ -55,6 +58,9 @@ export class LoginComponent implements OnInit {
           this.authToken = data.Token;
         }
         this.tabService.clear();
+        this.menuService.initMenus(err => {
+          this.alertInfo = '登录失败:' + data;
+        });
         this.router.navigate(['/home/index']);
       } else {
         this.loginCallBack(data.ErrorMessages);
