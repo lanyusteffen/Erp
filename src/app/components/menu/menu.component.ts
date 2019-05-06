@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
 import { TabsService } from '../tabs/tabs.service';
+import { MenuService } from '@services/menu.service';
 import { Router } from '@angular/router';
+import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.less']
+  styleUrls: ['./menu.component.less'],
+  providers: [
+    MenuService
+  ]
 })
 
 export class AppMenuComponent {
-  constructor(private tabService: TabsService,
-    private router: Router) {}
-  menus = [
+
+  private menus = [
     {
       name: '资料',
       icon: 'data',
@@ -130,6 +134,24 @@ export class AppMenuComponent {
       ]
     }
   ];
+
+  constructor(private tabService: TabsService,
+    private menuService: MenuService,
+    private alertService: AlertService,
+    private router: Router) {
+      // this.menuService.getAll(data => {
+      //   for (let i = 0; i < data.length; i++) {
+      //     for (let j = 0; j < this.menus.length; j++) {
+      //       if (data[i].ModuleType === this.menus[j].module) {
+      //         console.log(j);
+      //       }
+      //     }
+      //   }
+      // }, (err) => {
+      //   this.alertService.listErrorCallBack(ModuleName.Menu, err);
+      // });
+     
+  }
 
   createTab(menu) {
     this.tabService.create({

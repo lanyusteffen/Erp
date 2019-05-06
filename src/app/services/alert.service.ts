@@ -1,7 +1,5 @@
 import { Injectable, } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { ProductColorActionsComponent } from '../modules/products/path/productcolor/components/actions/actions.component';
 
 @Injectable()
 export class AlertService {
