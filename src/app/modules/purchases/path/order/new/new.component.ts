@@ -124,8 +124,8 @@ export class PurchaseNewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribe = this.routeInfo.queryParamMap.subscribe(
       params => {
-        const purchaseId = params.get("id");
-        this.operatorType = params.get("type");
+        const purchaseId = params.get('id');
+        this.operatorType = params.get('type');
         if (this.operatorType === 'new') {
           this.new();
           this.isEditing = false;
