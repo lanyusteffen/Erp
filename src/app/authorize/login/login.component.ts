@@ -58,10 +58,11 @@ export class LoginComponent implements OnInit {
           this.authToken = data.Token;
         }
         this.tabService.clear();
-        this.menuService.initMenus(err => {
+        this.menuService.initMenusContinuation(() => {
+          this.router.navigate(['/home/index']);
+        }, err => {
           this.alertInfo = '登录失败:' + data;
         });
-        this.router.navigate(['/home/index']);
       } else {
         this.loginCallBack(data.ErrorMessages);
       }

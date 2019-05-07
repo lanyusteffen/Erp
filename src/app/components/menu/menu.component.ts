@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TabsService } from '../tabs/tabs.service';
 import { Router } from '@angular/router';
-import { AlertService, ModuleName } from '@services/alert.service';
+import { AlertService } from '@services/alert.service';
 import { MenuService } from '@services/menu.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class AppMenuComponent implements OnInit {
       name: '资料',
       icon: 'data',
       module: 2,
-      subMenu: []
+      subMenus: []
       // subMenu: [
       //   {
       //     name: '往来单位',
@@ -45,7 +45,7 @@ export class AppMenuComponent implements OnInit {
       name: '财务',
       icon: 'dollar',
       module: 3,
-      subMenu: []
+      subMenus: []
       // subMenu: [
       //   {
       //     name: '基础资料',
@@ -61,7 +61,7 @@ export class AppMenuComponent implements OnInit {
       name: '商品',
       icon: 'category',
       module: 4,
-      subMenu: []
+      subMenus: []
       // subMenu: [
       //   {
       //     name: '商品管理',
@@ -76,7 +76,7 @@ export class AppMenuComponent implements OnInit {
       name: '销售',
       icon: 'manageorder',
       module: 5,
-      subMenu: []
+      subMenus: []
       // subMenu: [
       //   {
       //     name: '销售订单管理',
@@ -91,7 +91,7 @@ export class AppMenuComponent implements OnInit {
       name: '采购',
       icon: 'cart',
       module: 6,
-      subMenu: []
+      subMenus: []
       // subMenu: [
       //   {
       //     name: '采购订单管理',
@@ -106,7 +106,7 @@ export class AppMenuComponent implements OnInit {
       name: '库存',
       icon: 'box',
       module: 7,
-      subMenu: []
+      subMenus: []
       // subMenu: [
       //   {
       //     name: '出库单管理',
@@ -121,23 +121,24 @@ export class AppMenuComponent implements OnInit {
       name: '管理',
       icon: 'set',
       module: 1,
-      subMenu: [
-        {
-          Name: '基础资料',
-          subMenu: [
-            { Name: '公司管理', Link: '/admins/company' },
-            { Name: '用户管理', Link: '/admins/user' },
-            { Name: '角色管理', Link: '/admins/role' }
-          ]
-        },
-        {
-          Name: '系统设置',
-          subMenu: [
-            { Name: '菜单设置', Link: '/admins/menu' },
-            { Name: '全局配置', Link: '/admins/systemconfig' }
-          ]
-        }
-      ]
+      subMenus: []
+      // subMenu: [
+      //   {
+      //     Name: '基础资料',
+      //     subMenu: [
+      //       { Name: '公司管理', Link: '/admins/company' },
+      //       { Name: '用户管理', Link: '/admins/user' },
+      //       { Name: '角色管理', Link: '/admins/role' }
+      //     ]
+      //   },
+      //   {
+      //     Name: '系统设置',
+      //     subMenu: [
+      //       { Name: '菜单设置', Link: '/admins/menu' },
+      //       { Name: '全局配置', Link: '/admins/systemconfig' }
+      //     ]
+      //   }
+      // ]
     }
   ];
 
@@ -156,25 +157,35 @@ export class AppMenuComponent implements OnInit {
           }
         }
       }
+      for (let j = 0; j < this.localMenus.length; j++) {
+        if (!this.localMenus[j].subMenus || this.localMenus[j].subMenus.length === 0) {
+          this.localMenus.splice(j, 1);
+          --j;
+        }
+      }
     });
   }
 
   private addSubMenu(moduleMenu: any, remoteMenu: any) {
     if (remoteMenu.LinkParameters) {
-      remoteMenu.LinkParameters = JSON.parse(remoteMenu.LinkParameters);
+      try {
+        // 提高容错度, 避免影响整个菜单加载
+        remoteMenu.LinkParameters = JSON.parse(remoteMenu.LinkParameters);
+      } catch {
+      }
     }
     if (remoteMenu.ParentId) {
-      for (let i = 0; i < moduleMenu.subMenu.length; i++) {
-        if (moduleMenu.subMenu[i].Id === remoteMenu.ParentId) {
-          if (!moduleMenu.subMenu[i].subMenu) {
-            moduleMenu.subMenu[i].subMenu = [];
+      for (let i = 0; i < moduleMenu.subMenus.length; i++) {
+        if (moduleMenu.subMenus[i].Id === remoteMenu.ParentId) {
+          if (!moduleMenu.subMenus[i].subMenus) {
+            moduleMenu.subMenus[i].subMenus = [];
           }
-          moduleMenu.subMenu[i].subMenu.push(remoteMenu);
+          moduleMenu.subMenus[i].subMenus.push(remoteMenu);
           break;
         }
       }
     } else {
-      moduleMenu.subMenu.push(remoteMenu);
+      moduleMenu.subMenus.push(remoteMenu);
     }
   }
 

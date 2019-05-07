@@ -24,6 +24,17 @@ export class MenuService {
     });
   }
 
+  initMenusContinuation(continueWith: () => void, fallback: (error: any) => void) {
+    this.fetchMenus(data => {
+      this.menus = data;
+      continueWith();
+    }, err => {
+      if (fallback) {
+        fallback(err);
+      }
+    });
+  }
+
   getMenus(next: (data: any) => void): any {
     if (!this.menus) {
       this.fetchMenus(data => {

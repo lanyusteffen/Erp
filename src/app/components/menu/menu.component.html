@@ -6,11 +6,11 @@
       </a>
       <div class="sub-menu">
         <ul>
-          <li *ngFor="let subMenu of menu.subMenu">
+          <li *ngFor="let subMenu of menu.subMenus">
             <a>{{subMenu.Name}}</a>
             <div class="sub-menu">
               <ul>
-                <li *ngFor="let subMenuLink of subMenu.subMenu">
+                <li *ngFor="let subMenuLink of subMenu.subMenus">
                   <a [routerLink]="subMenuLink.Link" [queryParams]="subMenuLink.LinkParameters" 
                       (click)="createTab(subMenuLink)" skipLocationChange>
                     {{subMenuLink.Name}}
