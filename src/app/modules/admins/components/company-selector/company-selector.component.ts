@@ -45,7 +45,7 @@ export class CompanySelectorComponent implements OnInit, ControlValueAccessor {
         next();
       }
     }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Area, err);
+      this.alertService.listErrorCallBack(ModuleName.Company, err);
     });
   }
 

@@ -8,11 +8,20 @@
         <tr>        
           <th class="form-label">
             <span class="required">*</span>
-            公司名称
+            权限名称
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Name'">
              <input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+            </app-form-field>
+          </td>
+          <th class="form-label">
+            <span class="required">*</span>
+            按钮类型:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'ButtonStyle'" [complexType]="true">
+              <app-button-style-selector #formField formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
             </app-form-field>
           </td>
         </tr>

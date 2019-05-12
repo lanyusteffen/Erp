@@ -40,9 +40,9 @@ export class PermissionControlComponent {
 
   getTitle(): string {
     if (this.type === 'create') {
-      return '添加公司';
+      return '添加权限';
     } else {
-      return '修改公司';
+      return '修改权限';
     }
   }
 

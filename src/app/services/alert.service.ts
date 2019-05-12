@@ -278,7 +278,11 @@ export class AlertService {
         break;
 
       case ModuleName.Permission:
-        name = '操作';
+        name = '权限';
+        break;
+
+      case ModuleName.ButtonStyle:
+        name = '按钮类型';
         break;
     }
 
@@ -331,5 +335,6 @@ export enum ModuleName {
   ProductUnit,
   StorageOut,
   Menu,
-  Permission
+  Permission,
+  ButtonStyle
 }

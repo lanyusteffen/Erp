@@ -18,6 +18,10 @@ export class PermissionService {
 
   constructor(private http: HttpService) { }
 
+  listButtonStyle(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Permission/GetButtonStyleList', next, fallback, ModuleType.Admin);
+  }
+
   all(next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Permission/GetList', {}, next, fallback, ModuleType.Admin);
   }
@@ -170,9 +174,5 @@ export class PermissionService {
     return this.http.post('/Permission/Restore', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
-  }
-
-  listModule(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.get('/Permission/GetModuleList', next, fallback, ModuleType.Admin);
   }
 }

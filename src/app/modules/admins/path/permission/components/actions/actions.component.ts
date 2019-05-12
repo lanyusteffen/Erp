@@ -32,7 +32,7 @@ export class PermissionActionsComponent {
 
   showDisabled() {
     this.tabsService.create({
-      name: '停用目录',
+      name: '停用权限',
       link: '/admins/permission/disabled'
     });
     this.router.navigate(['/admins/permission/disabled']);

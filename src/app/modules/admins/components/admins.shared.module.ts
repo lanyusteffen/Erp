@@ -7,6 +7,7 @@ import { MenuSelectorComponent } from '../components/menu-selector/menu-selector
 import { CompanySelectorComponent } from './company-selector/company-selector.component';
 import { ModuleSelectorComponent } from './module-selector/module-selector.component';
 import { RoleSelectorComponent } from './role-selector/role-selector.component';
+import { ButtonStyleSelectorComponent } from './button-style-selector/button-style-selector.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { RoleSelectorComponent } from './role-selector/role-selector.component';
         MenuSelectorComponent,
         CompanySelectorComponent,
         ModuleSelectorComponent,
-        RoleSelectorComponent
+        RoleSelectorComponent,
+        ButtonStyleSelectorComponent
     ],
     imports: [
         UIModule,
@@ -25,7 +27,8 @@ import { RoleSelectorComponent } from './role-selector/role-selector.component';
         MenuSelectorComponent,
         CompanySelectorComponent,
         ModuleSelectorComponent,
-        RoleSelectorComponent
+        RoleSelectorComponent,
+        ButtonStyleSelectorComponent
     ],
     providers: [
     ]
