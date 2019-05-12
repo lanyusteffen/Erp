@@ -49,7 +49,7 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
       this.systemConfig = data;
       this.companyService.listDisabled((err) => {
         this.alertService.listErrorCallBack(ModuleName.Company, err);
-        this.loadingBar.complete();     
+        this.loadingBar.complete();
       } ,()=>{
         this.loadingBar.complete();
       });
@@ -61,7 +61,7 @@ export class CompanyDisabledListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getSystemConfig();   
+    this.getSystemConfig();
   }
 
   ngOnDestroy() {

@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { CompanyService } from '../../company.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
-import { LocalStorage } from 'ngx-webstorage';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({

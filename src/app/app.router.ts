@@ -51,6 +51,8 @@ import { MenuComponent } from './modules/admins/path/menu/menu.component';
 import { MenuDisabledComponent } from './modules/admins/path/menu/menu-disabled.component';
 import { OtherExchangeUnitComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit.component';
 import { OtherExchangeUnitDisabledComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.component';
+import { PermissionComponent } from './modules/admins/path/permission/permission.component';
+import { PermissionDisabledComponent } from './modules/admins/path/permission/permission-disabled.component';
 
 export const ROUTES: Routes = [
     {
@@ -297,6 +299,16 @@ export const ROUTES: Routes = [
               {
                 path: 'admins/menu/disabled',
                 component: MenuDisabledComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'admins/permission',
+                component: PermissionComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'admins/permission/disabled',
+                component: PermissionDisabledComponent,
                 canActivate: [AuthGuard]
               },
               { path: '**', component: PageNotFoundComponent }
