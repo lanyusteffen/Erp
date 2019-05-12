@@ -8,7 +8,7 @@ import { AppService } from '@services/app.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
-  selector: 'app-disabled',
+  selector: 'app-permission-disabled-list',
   templateUrl: './disabled.component.html',
   styleUrls: ['./disabled.component.less']
 })

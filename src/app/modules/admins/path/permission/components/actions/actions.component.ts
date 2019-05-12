@@ -6,7 +6,7 @@ import { TabsService } from '@components/tabs/tabs.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-actions',
+  selector: 'app-permission-actions',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.less']
 })
@@ -33,9 +33,9 @@ export class PermissionActionsComponent {
   showDisabled() {
     this.tabsService.create({
       name: '停用目录',
-      link: '/admins/menu/disabled'
+      link: '/admins/permission/disabled'
     });
-    this.router.navigate(['/admins/menu/disabled']);
+    this.router.navigate(['/admins/permission/disabled']);
   }
 
   close() {
@@ -44,7 +44,7 @@ export class PermissionActionsComponent {
 
   onSearch(queryKey) {
     this.permissionService.onSearch(queryKey, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Menu, err);
+      this.alertService.listErrorCallBack(ModuleName.Permission, err);
     });
   }
 

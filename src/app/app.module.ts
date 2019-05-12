@@ -123,7 +123,6 @@ import { PurchaseHistoryComponent } from './modules/purchases/path/order/history
 import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
 import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
 
-
 import { ProductComponent } from './modules/products/path/product/product.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
 import { StorageComponent } from './modules/products/path/storage/storage.component';
@@ -203,6 +202,13 @@ import { OtherExchangeUnitActionsComponent } from './modules/basics/path/otherex
 import { OtherExchangeUnitControlComponent } from './modules/basics/path/otherexchangeunit/components/control/control.component';
 import { OtherExchangeUnitDisabledComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.component';
 import { OtherExchangeUnitDisabledListComponent } from './modules/basics/path/otherexchangeunit/components/disabled/disabled.component';
+import { PermissionService } from './modules/admins/path/permission/permission.service';
+import { PermissionActionsComponent } from './modules/admins/path/permission/components/actions/actions.component';
+import { PermissionComponent } from './modules/admins/path/permission/permission.component';
+import { PermissionControlComponent } from './modules/admins/path/permission/components/control/control.component';
+import { PermissionDisabledListComponent } from './modules/admins/path/permission/components/disabled/disabled.component';
+import { PermissionListComponent } from './modules/admins/path/permission/components/list/list.component';
+import { PermissionDisabledComponent } from './modules/admins/path/permission/permission-disabled.component';
 
 @NgModule({
   declarations: [
@@ -357,6 +363,13 @@ import { OtherExchangeUnitDisabledListComponent } from './modules/basics/path/ot
     MenuListComponent,
     MenuDisabledComponent,
 
+    PermissionActionsComponent,
+    PermissionComponent,
+    PermissionControlComponent,
+    PermissionDisabledListComponent,
+    PermissionListComponent,
+    PermissionDisabledComponent,
+
     AppMenuComponent
   ],
   imports: [
@@ -392,8 +405,8 @@ import { OtherExchangeUnitDisabledListComponent } from './modules/basics/path/ot
     PurchaseService,
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
-    HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,   
-    MenuService, StorageOutService],
+    HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,
+    MenuService, StorageOutService, PermissionService],
   bootstrap: [AppComponent]
 })
 

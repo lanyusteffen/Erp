@@ -5,9 +5,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
-  selector: 'app-control',
+  selector: 'app-permission-control',
   templateUrl: './control.component.html',
-  styleUrls: ['./control.component.less']
+  styleUrls: ['./control.component.less'],
+  providers: [FormService]
 })
 export class PermissionControlComponent {
 
@@ -27,12 +28,12 @@ export class PermissionControlComponent {
 
   private _companyId: number;
 
-  get companyId() {
+  get permissionId() {
     return this._companyId;
   }
 
   @Input()
-  set companyId(companyId) {
+  set permissionId(companyId) {
     this._companyId = companyId;
     this.refreshList();
   }
@@ -56,7 +57,7 @@ export class PermissionControlComponent {
           });
       } else {
         this.permissionService
-          .detail(this.companyId, data => {
+          .detail(this.permissionId, data => {
             this.form = this.formService.createForm(data);
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);

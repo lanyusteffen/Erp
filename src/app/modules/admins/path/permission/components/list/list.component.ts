@@ -6,7 +6,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-permission-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.less']
 })
