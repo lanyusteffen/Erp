@@ -46,7 +46,6 @@ export class UserPasswordComponent implements OnInit {
 
   @Input()
   set userId(userId) {
-    console.log(userId);
     this._userId = userId;
   }
 

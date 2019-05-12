@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from '@services/http.service';
 import { Subject } from 'rxjs/Subject';
-            
-@Injectable()
-export class RoleService {
-  private roles$ = new Subject<any>();
-  private rolesDisabled$ = new Subject<any>();
 
+@Injectable()
+export class PermissionService {
+  private permissions$ = new Subject<any>();
+  private permissionDisabled$ = new Subject<any>();
   private state = {
-    roles: [],
+    menus: [],
     currentQueryKey: '',
     currentPagination: {
       PageIndex: 1,
@@ -20,12 +19,16 @@ export class RoleService {
   constructor(private http: HttpService) { }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/GetList', {}, next, fallback, ModuleType.Admin);
+    return this.http.post('/Permission/GetList', {}, next, fallback, ModuleType.Admin);
   }
 
-  get() { return this.roles$.asObservable(); }
+  allParent(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Permission/GetParentList', {}, next, fallback, ModuleType.Admin);
+  }
 
-  getDisabled() { return this.rolesDisabled$.asObservable(); }
+  get() { return this.permissions$.asObservable(); }
+
+  getDisabled() { return this.permissionDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -36,19 +39,19 @@ export class RoleService {
       }
     } = this.state;
 
-    return this.http.post('/Role/GetListPaged', {
+    return this.http.post('/Permission/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize,
+      PageSize
     }, data => {
       const nextState = {
         ...this.state,
-        roles: data.RoleList,
-        currentPagination: data.RolePageQueryReq
+        menus: data.PermissionList,
+        currentPagination: data.PermissionPageQueryReq
       };
 
       this.state = nextState;
-      this.roles$.next(nextState);
+      this.permissions$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();
@@ -65,19 +68,19 @@ export class RoleService {
       }
     } = this.state;
 
-    return this.http.post('/Role/GetCancelListPaged', {
+    return this.http.post('/Permission/GetCancelListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
       PageSize
     }, data => {
       const nextState = {
         ...this.state,
-        roles: data.RoleList,
-        currentPagination: data.RolePageQueryReq
+        menus: data.PermissionList,
+        currentPagination: data.PermissionPageQueryReq
       };
 
       this.state = nextState;
-      this.rolesDisabled$.next(nextState);
+      this.permissionDisabled$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();
@@ -86,23 +89,27 @@ export class RoleService {
   }
 
   newOne(next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/GetForNew', {}, next, fallback, ModuleType.Admin);
+    return this.http.post('/Permission/GetForNew', {}, next, fallback, ModuleType.Admin);
   }
 
-  detail(roleId, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post(`/Role/GetForModify`, { EntityId: roleId }, next, fallback, ModuleType.Admin);
+  detail(menuId, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post(`/Permission/GetForModify`, { EntityId: menuId }, next, fallback, ModuleType.Admin);
   }
 
-  create(role, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/New', role, next, fallback, ModuleType.Admin);
+  create(menu, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Permission/New', menu, next, fallback, ModuleType.Admin);
   }
 
-  update(role, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/Modify', role, next, fallback, ModuleType.Admin);
+  update(menu, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Permission/Modify', menu, next, fallback, ModuleType.Admin);
+  }
+
+  changePassword(menu, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Permission/ChangePassword', menu, next, fallback, ModuleType.Admin);
   }
 
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/Cancel', {
+    return this.http.post('/Permission/Cancel', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }
@@ -154,14 +161,18 @@ export class RoleService {
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/Remove', {
+    return this.http.post('/Permission/Remove', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }
 
   restore(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
-    return this.http.post('/Role/Restore', {
+    return this.http.post('/Permission/Restore', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
+  }
+
+  listModule(next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.get('/Permission/GetModuleList', next, fallback, ModuleType.Admin);
   }
 }

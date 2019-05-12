@@ -16,13 +16,11 @@
             </app-form-field>
           </td>
           <th class="form-label">
-            <span class="required">*</span>
-            菜单编号:
+            菜单图标:
           </th>
           <td class="form-control-group">
-            <app-form-field [name]="'Code'">
-                <input #formField *ngIf="type === 'create'" type="text" class="form-control" [ngModel] formControlName="Code">
-              <input #formField *ngIf="type !== 'create'" type="text" class="none-input" disabled="disabled" [ngModel] formControlName="Code">
+            <app-form-field [name]="'Icon'">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="Icon">
             </app-form-field>
           </td>
         </tr>
@@ -52,16 +50,6 @@
             <app-menu-selector #menuSelector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
           </td>
           <th class="form-label">
-            菜单图标:
-          </th>
-          <td class="form-control-group">
-            <app-form-field [name]="'Icon'">
-              <input #formField type="text" class="form-control" [ngModel] formControlName="Icon">
-            </app-form-field>
-          </td>
-        </tr>
-        <tr>
-          <th class="form-label">
             专属菜单:
           </th>
           <td class="form-control-group">
@@ -70,12 +58,6 @@
             <app-ui-radio [radioName]="'IsExclusive'" [checked]="true" [value]="0" formControlName="IsExclusive" [label]="'否'"
               [ngModel]></app-ui-radio>
           </td>
-          <th class="form-label">
-            所属模块:
-          </th>
-          <td class="form-control-group">
-            <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
-          </td>
         </tr>
         <tr>
           <th class="form-label" *ngIf="this.form.controls['IsExclusive'].value">
@@ -83,6 +65,12 @@
           </th>
           <td class="form-control-group" *ngIf="this.form.controls['IsExclusive'].value">
             <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>            
+          </td>
+          <th class="form-label">
+            所属模块:
+          </th>
+          <td class="form-control-group">
+            <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
           </td>
         </tr>
       </table>

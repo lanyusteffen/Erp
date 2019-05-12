@@ -4,17 +4,17 @@ import { UIModule } from '@UI/ui.module';
 
 import { SharedModule } from '../../../shared.module';
 import { MenuSelectorComponent } from '../components/menu-selector/menu-selector.component';
-import { ButtonTypeSelectorComponent } from '../components/buttontype-selector/buttontype-selector.component';
 import { CompanySelectorComponent } from './company-selector/company-selector.component';
 import { ModuleSelectorComponent } from './module-selector/module-selector.component';
+import { RoleSelectorComponent } from './role-selector/role-selector.component';
 
 
 @NgModule({
     declarations: [
         MenuSelectorComponent,
-        ButtonTypeSelectorComponent,
         CompanySelectorComponent,
-        ModuleSelectorComponent
+        ModuleSelectorComponent,
+        RoleSelectorComponent
     ],
     imports: [
         UIModule,
@@ -23,9 +23,9 @@ import { ModuleSelectorComponent } from './module-selector/module-selector.compo
     ],
     exports: [
         MenuSelectorComponent,
-        ButtonTypeSelectorComponent,
         CompanySelectorComponent,
-        ModuleSelectorComponent
+        ModuleSelectorComponent,
+        RoleSelectorComponent
     ],
     providers: [
     ]

@@ -1,18 +1,19 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { RoleService } from '../../path/role/role.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
 
 @Component({
-  selector: 'app-buttontype-selector',
-  templateUrl: './buttontype-selector.component.html',
-  styleUrls: ['./buttontype-selector.component.less'],
+  selector: 'app-role-selector',
+  templateUrl: './role-selector.component.html',
+  styleUrls: ['./role-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: ButtonTypeSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: RoleSelectorComponent, multi: true }
   ]
 })
+export class RoleSelectorComponent implements OnInit, ControlValueAccessor {
 
-export class ButtonTypeSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;
@@ -26,7 +27,7 @@ export class ButtonTypeSelectorComponent implements OnInit, ControlValueAccessor
   @ViewChild(SelectComponent)
   private selectMenu: SelectComponent;
 
-  constructor(private alertService: AlertService) { }
+  constructor(private roleService: RoleService, private alertService: AlertService) { }
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
@@ -34,32 +35,24 @@ export class ButtonTypeSelectorComponent implements OnInit, ControlValueAccessor
     }
   }
 
-    bindListData(next: () => void): void {
-        this.list.push({
-            label: '新增',
-            value: 1
-        });
-        this.list.push({
-            label: '修改',
-            value: 2
-        });
-        this.list.push({
-            label: '删除',
-            value: 3
-        });
-        this.list.push({
-            label: '停用',
-            value: 4
-        });
-        this.list.push({
-            label: '停用列表',
-            value: 5
-        });
-        this.list.push({
-            label: '打印',
-            value: 6
-        });
-    }
+  reBind() {
+    this.bindListData(null);
+  }
+
+  bindListData(next: () => void): void {
+    this.roleService
+    .all(data => {
+      this.list = data.map(item => ({
+        label: item.Name,
+        value: item.Id
+      }));
+      if (next !== null) {
+        next();
+      }
+    }, (err) => {
+      this.alertService.listErrorCallBack(ModuleName.Menu, err);
+    });
+  }
 
   writeValue(value) {
     if (!this.dataInitialized) {
