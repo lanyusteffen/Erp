@@ -35,6 +35,7 @@ export class StorageSelectorComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }

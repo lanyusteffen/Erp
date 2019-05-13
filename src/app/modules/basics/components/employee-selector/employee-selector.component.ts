@@ -31,6 +31,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }

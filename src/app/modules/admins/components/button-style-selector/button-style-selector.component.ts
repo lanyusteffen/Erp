@@ -32,6 +32,7 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }

@@ -50,6 +50,7 @@ export class ProductStorageSelectorComponent implements OnInit, ControlValueAcce
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing && this.productId > 0) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }

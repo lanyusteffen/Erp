@@ -38,6 +38,7 @@ export class StorageBillTypeSelectorComponent implements OnInit, ControlValueAcc
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
+      this.dataInitialized = true;
       this.bindListData(null);
     }
   }
@@ -97,5 +98,4 @@ export class StorageBillTypeSelectorComponent implements OnInit, ControlValueAcc
     this.innerValue = value;
     this.onChange(value);
     this.selectChanged.emit(value);
-  }
 }
