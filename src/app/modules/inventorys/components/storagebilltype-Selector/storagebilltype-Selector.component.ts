@@ -6,8 +6,8 @@ import { StorageOutTypeEnumPublic } from '../../enums/storagebilltype.storage';
 
 @Component({
   selector: 'app-storagebilltype-selector',
-  templateUrl: './storagebilltype-Selector.component.html',
-  styleUrls: ['./storagebilltype-Selector.component.less'],
+  templateUrl: './storagebilltype-selector.component.html',
+  styleUrls: ['./storagebilltype-selector.component.less'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: StorageBillTypeSelectorComponent, multi: true }
   ]
@@ -98,4 +98,5 @@ export class StorageBillTypeSelectorComponent implements OnInit, ControlValueAcc
     this.innerValue = value;
     this.onChange(value);
     this.selectChanged.emit(value);
+  }
 }
