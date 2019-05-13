@@ -30,6 +30,12 @@ export class SelectComponent {
   @Input()
   set options(list) {
     this._options = list;
+    if (!this.useDefault) {
+      this._currentValue = this._options && this._options.length > 0 ? {
+        label: this._options[0].label,
+        value: this._options[0].value
+      } : null;
+    }
     this.cd.markForCheck();
   }
 

@@ -20,9 +20,7 @@
             按钮类型:
           </th>
           <td class="form-control-group">
-            <app-form-field [name]="'ButtonStyle'" [complexType]="true">
-              <app-button-style-selector #formField formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
-            </app-form-field>
+              <app-button-style-selector [required]="true" formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
           </td>
         </tr>
       </table>

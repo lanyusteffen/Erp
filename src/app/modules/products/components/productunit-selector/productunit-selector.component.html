@@ -3,6 +3,6 @@
   [options]="list"
   [shown]="productId > 0"
   [value]="innerValue"
-  [useDefault]="required"
+  [useDefault]="!required"
   (onChange)="handleChange($event)"
 ></app-ui-select>
