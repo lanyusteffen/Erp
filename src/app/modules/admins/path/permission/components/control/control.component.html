@@ -8,7 +8,7 @@
         <tr>        
           <th class="form-label">
             <span class="required">*</span>
-            权限名称
+            权限名称:
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Name'">
@@ -21,6 +21,17 @@
           </th>
           <td class="form-control-group">
               <app-button-style-selector [required]="true" formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
+          </td>
+        </tr>
+        <tr *ngIf="this.form.controls['ButtonStyle'].value === 99">        
+          <th class="form-label">
+            <span class="required">*</span>
+            关键字:
+          </th>
+          <td class="form-control-group">
+            <app-form-field [name]="'Keycode'">
+             <input #formField type="text" class="form-control" [ngModel] formControlName="Keycode">
+            </app-form-field>
           </td>
         </tr>
       </table>
