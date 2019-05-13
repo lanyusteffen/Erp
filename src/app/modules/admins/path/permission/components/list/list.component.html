@@ -31,10 +31,10 @@
     [current]="pagination.PageIndex"
     (onChange)="onPageChange($event)"
   ></app-pagination-bar>
-  <app-company-control
+  <app-permission-control
     [type]="'update'"
-    [companyId]="selectedId"
+    [permissionId]="selectedId"
     [show]="_showUpdate"
     (onClose)="closeUpdate()"
-  ></app-company-control>
+  ></app-permission-control>
 </div>

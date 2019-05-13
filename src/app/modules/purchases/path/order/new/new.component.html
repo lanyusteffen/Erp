@@ -101,7 +101,7 @@
         <td><input style="width:60px" type="text" formControlName="Spec" [ngModel] class="none-input" disabled="disabled"></td>
         <td>
           <input type="hidden" formControlName="UnitTime" [ngModel] />
-          <app-productunit-selector (selectChanged)="selectProductUnit($event, i)" formControlName="ProductUnitId" [useDefault]="false" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
+          <app-productunit-selector (selectChanged)="selectProductUnit($event, i)" formControlName="ProductUnitId" [required]="true" [productId]="item.value.ProductId" [isEditing]="false" [ngModel]></app-productunit-selector>
         </td>
         <td>
           <input type="hidden" formControlName="ProductColorId" [ngModel] />
@@ -143,7 +143,7 @@
           <input style="width:80px" type="text" (change)="calculateItem('AfterTaxAmount', i, true)" formControlName="AfterTaxAmount" class="form-control" [ngModel] />
         </td>
         <td>
-          <app-product-storage-selector [isEditing]="isEditing" formControlName="StorageId" [productId]="item.value.ProductId" [useDefault]="false" [ngModel]></app-product-storage-selector>
+          <app-product-storage-selector [isEditing]="isEditing" formControlName="StorageId" [productId]="item.value.ProductId" [required]="true" [ngModel]></app-product-storage-selector>
         </td>
       </tr>
     </tbody>

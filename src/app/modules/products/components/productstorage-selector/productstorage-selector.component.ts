@@ -27,9 +27,6 @@ export class ProductStorageSelectorComponent implements OnInit, ControlValueAcce
   @Input()
   private _productId = -1;
 
-  @Input()
-  private useDefault = true;
-
   get productId(): number {
     return this._productId;
   }

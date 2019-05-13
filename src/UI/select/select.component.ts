@@ -20,9 +20,12 @@ export class SelectComponent {
     value: this._defaultValue
   };
 
-  private _currentValue = (this.useDefault ? this._defaultOption : null);
-
   _options = [];
+
+  private _currentValue = (this.useDefault ? this._defaultOption : (this._options && this._options.length > 0 ? {
+    label: this._options[0].label,
+    value: this._options[0].value
+  } : null));
 
   @Input()
   set options(list) {

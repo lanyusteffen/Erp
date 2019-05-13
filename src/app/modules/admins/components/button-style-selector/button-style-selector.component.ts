@@ -22,6 +22,9 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
   private dataInitialized = false;
 
   @Input()
+  private required = false;
+
+  @Input()
   private isEditing = false;
 
   // 获取模板内的第一个指定组件
