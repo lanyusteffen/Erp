@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PermissionService } from '../../permission.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { ErrorService } from '@services/error.service';
 
 @Component({
   selector: 'app-permission-control',
@@ -47,12 +48,15 @@ export class PermissionControlComponent {
     }
   }
 
-  private getValidators() {
+  private getKeycodeValidators() {
+    return [
+      Validators.required,
+      Validators.maxLength(20)
+    ];
+  }
+
+  private getInitValidators() {
     const validatorArrs = {
-      Keycode: [
-        Validators.required,
-        Validators.maxLength(20)
-      ],
       Name: [
         Validators.required
       ]
@@ -65,14 +69,14 @@ export class PermissionControlComponent {
       if (this.type === 'create') {
         this.permissionService
           .newOne(data => {
-            this.form = this.formService.createForm(data, this.getValidators());
+            this.form = this.formService.createForm(data, this.getInitValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           });
       } else {
         this.permissionService
           .detail(this.permissionId, data => {
-            this.form = this.formService.createForm(data, this.getValidators());
+            this.form = this.formService.createForm(data, this.getInitValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           });
@@ -80,8 +84,19 @@ export class PermissionControlComponent {
     }
   }
 
+  getErrorMessage(key: string, controlErrors: ValidationErrors) {
+    switch (key) {
+      case 'Keycode':
+        return '权限关键字必填!';
+      case 'Name':
+        return '权限名称必填';
+    }
+    return controlErrors.errMsg;
+  }
+
   constructor(
     private permissionService: PermissionService,
+    private errorService: ErrorService,
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
@@ -93,8 +108,20 @@ export class PermissionControlComponent {
     this.onClose.emit();
   }
 
+  selectButtonStyleChanged(value) {
+    if (value === 99) {
+      this.form.controls['Keycode'].setValidators(this.getKeycodeValidators());
+      this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: true});
+    } else {
+      this.form.controls['Keycode'].clearValidators();
+      this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: true});
+    }
+  }
+
   onSubmit({ value }, isValid) {
     if (!isValid) {
+      this.errorService.renderErrorItems(this.form,
+        (key, controlErrors) => this.getErrorMessage(key, controlErrors));
       return;
     }
     if (this.type === 'create') {

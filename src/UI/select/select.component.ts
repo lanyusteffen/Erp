@@ -1,4 +1,4 @@
-import { Component, Input, Output, ViewEncapsulation, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, ViewEncapsulation, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-ui-select',

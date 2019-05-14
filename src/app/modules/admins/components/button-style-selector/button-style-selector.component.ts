@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { PermissionService } from '../../path/permission/permission.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
@@ -20,6 +20,8 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
   private onTouched;
   private onChange;
   private dataInitialized = false;
+
+  @Output() selectChanged: EventEmitter<any> = new EventEmitter();
 
   @Input()
   private required = false;
@@ -79,5 +81,6 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
   handleChange(value) {
     this.innerValue = value;
     this.onChange(value);
+    this.selectChanged.emit(value);
   }
 }

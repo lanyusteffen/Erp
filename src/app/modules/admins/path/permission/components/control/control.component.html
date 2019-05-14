@@ -20,7 +20,7 @@
             按钮类型:
           </th>
           <td class="form-control-group">
-            <app-button-style-selector [required]="true" formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
+            <app-button-style-selector (selectChanged)="selectButtonStyleChanged($event)" [required]="true" formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
           </td>
         </tr>
         <tr *ngIf="this.form.controls['ButtonStyle'].value === 99">        
