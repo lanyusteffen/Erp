@@ -9,8 +9,11 @@ import { Component, Input, Output, ViewEncapsulation, EventEmitter, ChangeDetect
 
 export class SelectComponent {
 
+  @Output() onChange: EventEmitter<any> = new EventEmitter();
+
   private _defaultValue = -1;
   private _defaultText = '请选择';
+  private isLabelDirty: Boolean = false;
 
   @Input()
   private useDefault = true;
@@ -22,20 +25,15 @@ export class SelectComponent {
 
   _options = [];
 
-  private _currentValue = (this.useDefault ? this._defaultOption : (this._options && this._options.length > 0 ? {
-    label: this._options[0].label,
-    value: this._options[0].value
-  } : null));
+  private _currentValue = this.useDefault ?
+              this._defaultOption.value : null;
+  private _currentLabel = this.useDefault ?
+              this._defaultOption.label : '';
 
   @Input()
   set options(list) {
     this._options = list;
-    if (!this.useDefault) {
-      this._currentValue = this._options && this._options.length > 0 ? {
-        label: this._options[0].label,
-        value: this._options[0].value
-      } : null;
-    }
+    this.setValueInternal();
     this.cd.markForCheck();
   }
 
@@ -57,29 +55,47 @@ export class SelectComponent {
     this._defaultText = value;
   }
 
-  @Input()
-  set value(setNewValue) {
-    if (this.options.length > 0 && setNewValue) {
-      const selectedValue = this.options.find(option => option.value === setNewValue) || null;
-      if (selectedValue) {
-        this._currentValue = selectedValue;
-      } else {
-        this._currentValue = (this.useDefault ? this._defaultOption : this.options[0]);
-      }
-      this.cd.markForCheck();
+  private setLabelInternal() {
+    const selectedOption = this.options.find(option => option.value === this._currentValue) || null;
+    if (selectedOption) {
+      this._currentLabel = selectedOption.label;
     }
   }
 
-  get value() {
-    return this._currentValue.value;
+  private setValueInternal() {
+    if (this.options.length > 0) {
+      if (this._currentValue) {
+        this.setLabelInternal();
+        this.cd.markForCheck();
+      }
+    }
   }
 
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
+  @Input()
+  set value(value) {
+    this._currentValue = value;
+    this.isLabelDirty = true;
+    this.setValueInternal();
+  }
+
+  get label() {
+    if (this.isLabelDirty) {
+      this.setLabelInternal();
+      this.isLabelDirty = false;
+    }
+    return this._currentLabel;
+  }
+
+  get value() {
+    return this._currentValue;
+  }
 
   constructor(private cd: ChangeDetectorRef) {
   }
 
   handleChange(value) {
+    this._currentValue = value;
+    this.isLabelDirty = true;
     this.onChange.emit(value);
     this.cd.markForCheck();
   }

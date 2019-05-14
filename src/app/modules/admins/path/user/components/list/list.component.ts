@@ -43,7 +43,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.userService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.User, err);
       this.loadingBar.complete();
-    },()=>{
+    }, () => {
       this.loadingBar.complete();
     });
   }

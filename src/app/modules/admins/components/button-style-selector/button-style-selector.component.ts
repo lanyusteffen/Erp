@@ -31,7 +31,7 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectMenu: SelectComponent;
+  private selectButtonStyle: SelectComponent;
 
   constructor(private permissionService: PermissionService, private alertService: AlertService) { }
 
@@ -62,11 +62,13 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || -1;
-        this.selectMenu.value = this.innerValue;
+        this.selectButtonStyle.value = this.innerValue;
+        this.triggerChanged(value);
       });
     } else {
       this.innerValue = value || -1;
-      this.selectMenu.value = this.innerValue;
+      this.selectButtonStyle.value = this.innerValue;
+      this.triggerChanged(value);
     }
   }
 
@@ -78,9 +80,18 @@ export class ButtonStyleSelectorComponent implements OnInit, ControlValueAccesso
     this.onTouched = fn;
   }
 
+  triggerChanged(setNewValue) {
+    if (this.selectChanged && setNewValue) {
+      this.selectChanged.emit({
+        label: this.selectButtonStyle.label,
+        value: setNewValue
+      });
+    }
+  }
+
   handleChange(value) {
     this.innerValue = value;
     this.onChange(value);
-    this.selectChanged.emit(value);
+    this.triggerChanged(value);
   }
 }

@@ -41,6 +41,8 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     this.companyService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Company, err);
       this.loadingBar.complete();
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
@@ -55,7 +57,6 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.companys : []);
-
   }
 
   select(evt, selectedItem) {

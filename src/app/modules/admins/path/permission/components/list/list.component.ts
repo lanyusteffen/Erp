@@ -42,6 +42,8 @@ export class PermissionListComponent implements OnInit, OnDestroy {
     this.permissionService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Company, err);
       this.loadingBar.complete();
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
@@ -56,7 +58,6 @@ export class PermissionListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.companys : []);
-
   }
 
   select(evt, selectedItem) {

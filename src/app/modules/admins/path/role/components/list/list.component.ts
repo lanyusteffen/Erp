@@ -43,7 +43,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
     this.roleService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Role, err);
       this.loadingBar.complete();
-    },()=>{
+    }, () => {
       this.loadingBar.complete();
     });
   }
@@ -59,7 +59,6 @@ export class RoleListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.roles : []);
-
   }
 
   select(evt, selectedItem) {

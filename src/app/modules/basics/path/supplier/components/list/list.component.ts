@@ -40,7 +40,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.supplierService.list((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Supplier,err);
+      this.alertService.listErrorCallBack(ModuleName.Supplier, err);
       this.loadingBar.complete();
     }, () => {
       this.loadingBar.complete();
@@ -56,7 +56,6 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     this.supplierService.contactList(customerId, data => {
       this.contactList = data;
     }, (err) => {
-
     });
   }
 

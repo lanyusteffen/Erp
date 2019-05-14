@@ -23,7 +23,7 @@
             <app-button-style-selector (selectChanged)="selectButtonStyleChanged($event)" [required]="true" formControlName="ButtonStyle" [ngModel]></app-button-style-selector>
           </td>
         </tr>
-        <tr *ngIf="this.form.controls['ButtonStyle'].value === 99">        
+        <tr *ngIf="this.form.controls['ButtonStyle'].value === 999">        
           <th class="form-label">
             <span class="required">*</span>
             关键字:

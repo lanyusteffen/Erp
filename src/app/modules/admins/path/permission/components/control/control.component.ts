@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PermissionService } from '../../permission.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormBuilder, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { ErrorService } from '@services/error.service';
 
@@ -100,7 +100,8 @@ export class PermissionControlComponent {
     private formService: FormService,
     private fb: FormBuilder,
     private alertService: AlertService
-  ) { }
+  ) {
+  }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
@@ -108,11 +109,13 @@ export class PermissionControlComponent {
     this.onClose.emit();
   }
 
-  selectButtonStyleChanged(value) {
-    if (value === 99) {
+  selectButtonStyleChanged(item) {
+    if (item.value === 999) {
+      this.form.controls['Name'].setValue('');
       this.form.controls['Keycode'].setValidators(this.getKeycodeValidators());
       this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: true});
     } else {
+      this.form.controls['Name'].setValue(item.label);
       this.form.controls['Keycode'].clearValidators();
       this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: true});
     }

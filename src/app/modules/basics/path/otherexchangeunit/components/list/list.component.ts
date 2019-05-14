@@ -43,7 +43,7 @@ export class OtherExchangeUnitListComponent implements OnInit, OnDestroy {
     this.otherExchangeUnitService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.OtherExchangeUnit, err);
       this.loadingBar.complete();
-    },()=>{
+    }, () => {
       this.loadingBar.complete();
     });
   }

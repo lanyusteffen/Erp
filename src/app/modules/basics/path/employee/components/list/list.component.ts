@@ -46,34 +46,18 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-        this.employeeService.list((err) => {
-          this.alertService.listErrorCallBack(ModuleName.Employee, err);
-          this.loadingBar.complete();
-        },()=>{
-          this.loadingBar.complete();
-        });
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
-        this.loadingBar.complete();
-      });
-    }
-    return this.systemConfig;
-  }
-
-
   ngOnInit() {
-    this.getSystemConfig();
-    
+    this.employeeService.list((err) => {
+      this.alertService.listErrorCallBack(ModuleName.Employee, err);
+      this.loadingBar.complete();
+    }, () => {
+      this.loadingBar.complete();
+    });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
@@ -82,7 +66,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.employees : []);
-
   }
 
   select(evt, selectedItem) {

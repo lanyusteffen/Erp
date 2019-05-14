@@ -40,7 +40,7 @@ export class AreaListComponent implements OnInit, OnDestroy {
     this.areaService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Area, err);
       this.loadingBar.complete();
-    },()=>{
+    }, () => {
       this.loadingBar.complete();
     });
   }
@@ -49,7 +49,6 @@ export class AreaListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-
   selectAll(evt) {
     this.allSelected = evt.target.checked;
     this.areas = this.areas.map(item => ({
@@ -57,7 +56,6 @@ export class AreaListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.areas : []);
-
   }
 
   select(evt, selectedItem) {

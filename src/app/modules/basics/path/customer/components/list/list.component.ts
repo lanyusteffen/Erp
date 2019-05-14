@@ -43,6 +43,8 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     this.customerService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Customer, err);
       this.loadingBar.complete();
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 

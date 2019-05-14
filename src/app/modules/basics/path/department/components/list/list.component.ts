@@ -4,7 +4,6 @@ import { DepartmentService } from '../../department.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { AppService } from '@services/app.service';
-import { LocalStorage } from 'ngx-webstorage';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 
@@ -28,9 +27,6 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
-  @LocalStorage()
-  systemConfig: any;
-
   constructor(
     private departmentService: DepartmentService,
     private confirmService: ConfirmService,
@@ -38,7 +34,6 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private loadingBar: SlimLoadingBarService
   ) {
-    //this.systemConfig = this.getSystemConfig();
     this.loadingBar.start();
     this.subscription = this.departmentService
       .get()
@@ -48,23 +43,11 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
       });
   }
 
-
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
-      });
-    }
-    return this.systemConfig;
-  }
-
   ngOnInit() {
     this.departmentService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Department, err);
       this.loadingBar.complete();
-    },()=>{
+    }, () => {
       this.loadingBar.complete();
     });
   }
@@ -73,7 +56,6 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-
   selectAll(evt) {
     this.allSelected = evt.target.checked;
     this.departments = this.departments.map(item => ({
@@ -81,7 +63,6 @@ export class DepartmentListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.departments : []);
-
   }
 
   select(evt, selectedItem) {
