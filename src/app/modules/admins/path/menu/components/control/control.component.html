@@ -50,14 +50,11 @@
             <app-menu-selector #menuSelector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
           </td>
           <th class="form-label">
-            专属菜单:
-          </th>
-          <td class="form-control-group">
-            <app-ui-radio [radioName]="'IsExclusive'" [value]="1" formControlName="IsExclusive" [label]="'是'"
-              [ngModel]></app-ui-radio>
-            <app-ui-radio [radioName]="'IsExclusive'" [checked]="true" [value]="0" formControlName="IsExclusive" [label]="'否'"
-              [ngModel]></app-ui-radio>
-          </td>
+              所属模块:
+            </th>
+            <td class="form-control-group">
+              <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
+            </td>
         </tr>
         <tr>
           <th class="form-label" *ngIf="this.form.controls['IsExclusive'].value">
@@ -67,11 +64,14 @@
             <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>            
           </td>
           <th class="form-label">
-            所属模块:
-          </th>
-          <td class="form-control-group">
-            <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
-          </td>
+              专属菜单:
+            </th>
+            <td class="form-control-group">
+              <app-ui-radio [radioName]="'IsExclusive'" [value]="1" formControlName="IsExclusive" [label]="'是'"
+                [ngModel]></app-ui-radio>
+              <app-ui-radio [radioName]="'IsExclusive'" [checked]="true" [value]="0" formControlName="IsExclusive" [label]="'否'"
+                [ngModel]></app-ui-radio>
+            </td>
         </tr>
       </table>
       <div *ngIf="!this.form.controls['IsExclusive'].value" class="heading">排除菜单公司列表</div>
