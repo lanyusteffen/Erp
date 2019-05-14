@@ -15,7 +15,9 @@ import { MenuService } from '@services/menu.service';
 
 export class AppMenuComponent implements OnInit {
 
-  private localMenus = [
+  private localMenus = [];
+
+  private basicMenus = [
     {
       name: '资料',
       icon: 'data',
@@ -151,18 +153,19 @@ export class AppMenuComponent implements OnInit {
   ngOnInit(): void {
     this.menuService.getMenus(remoteMenus => {
       for (let i = 0; i < remoteMenus.length; i++) {
-        for (let j = 0; j < this.localMenus.length; j++) {
-          if (remoteMenus[i].ModuleType === this.localMenus[j].module) {
-            this.addSubMenu(this.localMenus[j], remoteMenus[i]);
+        for (let j = 0; j < this.basicMenus.length; j++) {
+          if (remoteMenus[i].ModuleType === this.basicMenus[j].module) {
+            this.addSubMenu(this.basicMenus[j], remoteMenus[i]);
           }
         }
       }
-      for (let j = 0; j < this.localMenus.length; j++) {
-        if (!this.localMenus[j].subMenus || this.localMenus[j].subMenus.length === 0) {
-          this.localMenus.splice(j, 1);
+      for (let j = 0; j < this.basicMenus.length; j++) {
+        if (!this.basicMenus[j].subMenus || this.basicMenus[j].subMenus.length === 0) {
+          this.basicMenus.splice(j, 1);
           --j;
         }
       }
+      this.localMenus = this.basicMenus;
     });
   }
 
