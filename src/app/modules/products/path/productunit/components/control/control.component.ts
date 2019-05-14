@@ -88,7 +88,10 @@ export class ProductUnitControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.productUnitService.create(value, data => {
         this.validate(data, '添加');

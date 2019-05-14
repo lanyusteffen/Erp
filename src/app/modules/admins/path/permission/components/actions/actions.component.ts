@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.less']
 })
+
 export class PermissionActionsComponent {
 
   private _show = false;

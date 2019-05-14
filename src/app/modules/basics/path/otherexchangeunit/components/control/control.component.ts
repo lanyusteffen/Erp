@@ -118,7 +118,10 @@ export class OtherExchangeUnitControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.otherExchangeUnitService.create(value, data => {
         if (data.IsValid) {

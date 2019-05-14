@@ -9,16 +9,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   </div>
 `,
   styles: [`
-  :host {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+    :host {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-  .content {
-    flex: 1;
-    display: flex;
-  }
+    .content {
+      flex: 1;
+      display: flex;
+    }
 `]
 })
 export class PermissionComponent implements OnInit, OnDestroy {

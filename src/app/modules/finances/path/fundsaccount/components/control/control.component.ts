@@ -88,7 +88,10 @@ export class FundsAccountControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.fundsAccountService.create(value, data => {
         this.validate(data, '添加');

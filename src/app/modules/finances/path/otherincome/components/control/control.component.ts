@@ -88,7 +88,10 @@ export class OtherIncomeControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.otherIncomeService.create(value, data => {
         this.validate(data, '添加');

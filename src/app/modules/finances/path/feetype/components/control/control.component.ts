@@ -75,7 +75,10 @@ export class FeeTypeControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.feeTypeService.create(value, data => {
         if (data.IsValid) {

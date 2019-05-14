@@ -134,7 +134,10 @@ export class SystemUnitControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.systemUnitService.create(value, data => {
         this.validate(data, '添加');

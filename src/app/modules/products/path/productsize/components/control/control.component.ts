@@ -138,7 +138,10 @@ export class ProductSizeControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.productSizeService.create(value, data => {
         this.validate(data, '添加');

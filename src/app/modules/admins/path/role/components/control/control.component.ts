@@ -86,8 +86,10 @@ export class RoleControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
-
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.roleService.create(value, data => {
         if (data.IsValid) {

@@ -115,7 +115,10 @@ export class SupplierControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.supplierService.create(value, data => {
         if (data.IsValid) {

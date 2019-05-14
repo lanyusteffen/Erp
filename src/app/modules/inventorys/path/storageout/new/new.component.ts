@@ -289,7 +289,6 @@ export class StorageOutNewComponent implements OnInit, OnDestroy {
         }));
         this.propertyName1 = data.PropertyName1;
         this.propertyName2 = data.PropertyName2;
-        debugger;
         data.BillTime = this.datePipe.transform(<Date>data.BillTime, 'yyyy-MM-dd'),
           this.form = this.formService.createForm(data, this.getValidators());
       }, (err) => {

@@ -138,7 +138,10 @@ export class ProductColorControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.productColorService.create(value, data => {
         this.validate(data, '添加');

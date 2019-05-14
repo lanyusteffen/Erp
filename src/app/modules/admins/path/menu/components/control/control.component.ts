@@ -93,7 +93,10 @@ export class MenuControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.menuService.create(value, data => {
         if (data.IsValid) {

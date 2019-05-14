@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { StorageService } from '../../storage.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { ErrorService } from '@services/error.service';
 
@@ -141,7 +141,10 @@ export class StorageControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.storageService.create(value, data => {
         this.validate(data, '添加');

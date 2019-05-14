@@ -1,4 +1,4 @@
-﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
     <div class="actions">
         <app-ui-button [style]="'primary'" type="submit">
             <i class="iconfont icon-save"></i>

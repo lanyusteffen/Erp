@@ -1,12 +1,11 @@
-﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate *ngIf="formReady">
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
     <app-card [header]="title" [show]="_show" (onCancel)="handleClose()">
         <div class="card-content">
             <div class="heading">
                 基本信息
             </div>
             <table class="form">
-
-				 <tr>                    
+                <tr>                    
                     <th>
                         <span class="required">*</span>
                         名称：
@@ -16,8 +15,7 @@
                             <input #formField type="text" class="form-control" [ngModel] formControlName="Name" (blur)="setErrorMessage('Name','名称',form.get('Name').errors)">
                         </app-form-field>
                     </td>
-                </tr>
-				               
+                </tr>         
             </table>
         </div>
         <div app-card-footer>

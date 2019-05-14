@@ -113,7 +113,10 @@ export class CustomerControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.customerService.create(value, data => {
         if (data.IsValid) {

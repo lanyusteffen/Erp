@@ -79,7 +79,10 @@ export class CompanyControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.companyService.create(value, data => {
         if (data.IsValid) {

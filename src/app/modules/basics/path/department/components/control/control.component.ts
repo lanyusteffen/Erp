@@ -54,7 +54,6 @@ export class DepartmentControlComponent {
     this.errorService.removeErrorItems(this.errorItems, propertyName);
 
     if (errors) {
-
       if (errors.maxlength) {
         const errorItem = {
           AttemptedValue: '',
@@ -77,7 +76,6 @@ export class DepartmentControlComponent {
         };
         this.errorItems.push(errorItem);
       }
-
     }
     this.errorService.setErrorItems(this.errorItems);
   }
@@ -156,7 +154,10 @@ export class DepartmentControlComponent {
     }
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (value.Id === 0) {
       this.departmentService.create(value, data => {
         this.validate(data, '添加');

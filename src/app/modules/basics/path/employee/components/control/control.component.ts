@@ -167,21 +167,22 @@ export class EmployeeControlComponent {
     }
   }
 
-  onSubmit({ value }, IsValid) {
-    if (IsValid) {
-      if (value.Id === 0) {
-        this.employeeService.create(value, data => {
-          this.validate(data, '添加');
-        }, (err) => {
-          this.alertService.addFail(err);
-        });
-      } else {
-        this.employeeService.modify(value, data => {
-          this.validate(data, '修改');
-        }, (err) => {
-          this.alertService.modifyFail(err);
-        });
-      }
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
+    if (value.Id === 0) {
+      this.employeeService.create(value, data => {
+        this.validate(data, '添加');
+      }, (err) => {
+        this.alertService.addFail(err);
+      });
+    } else {
+      this.employeeService.modify(value, data => {
+        this.validate(data, '修改');
+      }, (err) => {
+        this.alertService.modifyFail(err);
+      });
     }
   }
 }

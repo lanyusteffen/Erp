@@ -89,7 +89,10 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
         }
     }
 
-    onSubmit({ value }) {
+    onSubmit({ value }, isValid) {
+        if (!isValid) {
+          return;
+        }
         this.save({ value });
     }
 }

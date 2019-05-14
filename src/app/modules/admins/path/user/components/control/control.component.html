@@ -1,4 +1,4 @@
-<form [formGroup]="controlForm" (ngSubmit)="onSubmit(controlForm)" novalidate *ngIf="formReady">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
   <app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
     <div class="card-content">
       <div class="heading">
@@ -8,7 +8,7 @@
         <tr>
           <th class="form-label">
             <span class="required">*</span>
-            用户编号：
+            用户编号:
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'Code'">
@@ -21,19 +21,9 @@
           </th>
           <td class="form-control-group">
             <app-form-field [name]="'LoginName'">
-             <input #formField type="text" class="form-control" [ngModel] formControlName="LoginName">
+              <input #formField type="text" class="form-control" [ngModel] formControlName="LoginName">
             </app-form-field>
           </td>
-        </tr>
-        <tr>
-          <th class="form-label">
-            <span class="required">*</span>
-           职员名称 ：
-          </th>
-          <td class="form-control-group">
-           <app-employee-selector  formControlName="EmployeeCustomerCategoryName" ngModel></app-employee-selector>
-          </td>
-          
         </tr>
         <tr>
           <th class="form-label">
@@ -61,6 +51,15 @@
               </small> -->
               <input #formField type="password" [name]="ConfirmPassword" class="form-control" [ngModel] formControlName="ConfirmPassword">
             </app-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class="form-label">
+            <span class="required">*</span>
+            职员名称:
+          </th>
+          <td class="form-control-group">
+           <app-employee-selector  formControlName="EmployeeCustomerCategoryName" [ngModel]></app-employee-selector>
           </td>
         </tr>
       </table>

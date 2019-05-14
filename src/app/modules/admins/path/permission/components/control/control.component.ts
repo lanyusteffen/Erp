@@ -10,6 +10,7 @@ import { AlertService, ModuleName } from '@services/alert.service';
   styleUrls: ['./control.component.less'],
   providers: [FormService]
 })
+
 export class PermissionControlComponent {
 
   private form = new FormGroup({});
@@ -79,7 +80,10 @@ export class PermissionControlComponent {
     this.onClose.emit();
   }
 
-  onSubmit({ value }) {
+  onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
     if (this.type === 'create') {
       this.permissionService.create(value, data => {
         if (data.IsValid) {
