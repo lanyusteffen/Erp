@@ -7,7 +7,7 @@ export class PermissionService {
   private permissions$ = new Subject<any>();
   private permissionDisabled$ = new Subject<any>();
   private state = {
-    menus: [],
+    permissions: [],
     currentQueryKey: '',
     currentPagination: {
       PageIndex: 1,
@@ -50,7 +50,7 @@ export class PermissionService {
     }, data => {
       const nextState = {
         ...this.state,
-        menus: data.PermissionList,
+        permissions: data.PermissionList,
         currentPagination: data.PermissionPageQueryReq
       };
 
@@ -79,7 +79,7 @@ export class PermissionService {
     }, data => {
       const nextState = {
         ...this.state,
-        menus: data.PermissionList,
+        permissions: data.PermissionList,
         currentPagination: data.PermissionPageQueryReq
       };
 

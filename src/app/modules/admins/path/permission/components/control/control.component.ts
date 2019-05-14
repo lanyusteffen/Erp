@@ -71,14 +71,14 @@ export class PermissionControlComponent {
           .newOne(data => {
             this.form = this.formService.createForm(data, this.getInitValidators());
           }, (err) => {
-            this.alertService.listErrorCallBack(ModuleName.Company, err);
+            this.alertService.listErrorCallBack(ModuleName.Permission, err);
           });
       } else {
         this.permissionService
           .detail(this.permissionId, data => {
             this.form = this.formService.createForm(data, this.getInitValidators());
           }, (err) => {
-            this.alertService.listErrorCallBack(ModuleName.Company, err);
+            this.alertService.listErrorCallBack(ModuleName.Permission, err);
           });
       }
     }
@@ -113,11 +113,11 @@ export class PermissionControlComponent {
     if (item.value === 999) {
       this.form.controls['Name'].setValue('');
       this.form.controls['Keycode'].setValidators(this.getKeycodeValidators());
-      this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: true});
+      this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: false});
     } else {
       this.form.controls['Name'].setValue(item.label);
       this.form.controls['Keycode'].clearValidators();
-      this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: true});
+      this.form.controls['Keycode'].updateValueAndValidity({emitEvent: false, onlySelf: false});
     }
   }
 
@@ -131,7 +131,7 @@ export class PermissionControlComponent {
       this.permissionService.create(value, data => {
         if (data.IsValid) {
           this.permissionService.list((err) => {
-            this.alertService.listErrorCallBack(ModuleName.Company, err);
+            this.alertService.listErrorCallBack(ModuleName.Permission, err);
           }, () => {
             this.refreshList();
             this.onClose.emit();
@@ -147,7 +147,7 @@ export class PermissionControlComponent {
       this.permissionService.update(value, data => {
         if (data.IsValid) {
           this.permissionService.list((err) => {
-            this.alertService.listErrorCallBack(ModuleName.Company, err);
+            this.alertService.listErrorCallBack(ModuleName.Permission, err);
           }, () => {
             this.refreshList();
             this.onClose.emit();

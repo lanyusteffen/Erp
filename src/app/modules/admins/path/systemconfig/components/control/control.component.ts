@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
 import { Subscription } from 'rxjs/Subscription';
 import { IDatePickerConfig } from 'ng2-date-picker';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-systemconfig-control',
@@ -32,8 +33,10 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
     constructor(
         private systemConfigService: SystemConfigService,
         private alertService: AlertService,
-        private formService: FormService
+        private formService: FormService,
+        private loadingBar: SlimLoadingBarService
     ) {
+        this.loadingBar.start();
         this.subscription = this.systemConfigService.get().subscribe();
     }
 
@@ -42,8 +45,10 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
             (data) => {
                 this.form = this.formService.createForm(data);
                 this.type = 'Update';
+                this.loadingBar.complete();
             }, (e) => {
                 this.systemConfigService.newOne((data) => {
+                    this.loadingBar.complete();
                     this.form = this.formService.createForm(data);
                     this.type = 'create';
                 }, null);

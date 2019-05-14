@@ -13,7 +13,7 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 export class PermissionListComponent implements OnInit, OnDestroy {
 
-  private companys = <any>[];
+  private permissions = <any>[];
   private pagination = {};
   private _showContact = false;
   private allSelected = false;
@@ -32,15 +32,15 @@ export class PermissionListComponent implements OnInit, OnDestroy {
     this.loadingBar.start();
     this.subscription = this.permissionService
       .get()
-      .subscribe(({ companys, currentPagination }) => {
-        this.companys = companys;
+      .subscribe(({ permissions, currentPagination }) => {
+        this.permissions = permissions;
         this.pagination = currentPagination;
       });
   }
 
   ngOnInit() {
     this.permissionService.list((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Company, err);
+      this.alertService.listErrorCallBack(ModuleName.Permission, err);
       this.loadingBar.complete();
     }, () => {
       this.loadingBar.complete();
@@ -53,20 +53,20 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   selectAll(evt) {
     this.allSelected = evt.target.checked;
-    this.companys = this.companys.map(item => ({
+    this.permissions = this.permissions.map(item => ({
       ...item,
       selected: this.allSelected
     }));
-    this.selectItems.emit(this.allSelected ? this.companys : []);
+    this.selectItems.emit(this.allSelected ? this.permissions : []);
   }
 
   select(evt, selectedItem) {
-    this.companys = this.companys.map(item => ({
+    this.permissions = this.permissions.map(item => ({
       ...item,
       selected: item.Id === selectedItem.Id ? evt.target.checked : item.selected
     }));
-    this.allSelected = this.companys.every(item => item.selected);
-    this.selectItems.emit(this.companys.filter(item => item.selected));
+    this.allSelected = this.permissions.every(item => item.selected);
+    this.selectItems.emit(this.permissions.filter(item => item.selected));
   }
 
   onPageChange({ current, pageSize }) {
