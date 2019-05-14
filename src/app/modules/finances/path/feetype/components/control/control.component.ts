@@ -85,6 +85,7 @@ export class FeeTypeControlComponent {
           this.feeTypeService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Feetype, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -100,6 +101,7 @@ export class FeeTypeControlComponent {
           this.feeTypeService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Feetype, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

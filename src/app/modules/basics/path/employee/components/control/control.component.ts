@@ -39,7 +39,7 @@ export class EmployeeControlComponent {
   set employeeId(employeeId) {
     if (employeeId !== undefined) {
       this._employeeId = employeeId;
-      this.showPop();
+      this.refreshList();
     }
   }
 
@@ -112,7 +112,7 @@ export class EmployeeControlComponent {
   }
 
 
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.employeeService
@@ -156,6 +156,7 @@ export class EmployeeControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

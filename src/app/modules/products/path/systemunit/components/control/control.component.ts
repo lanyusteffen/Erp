@@ -33,7 +33,7 @@ export class SystemUnitControlComponent {
   @Input()
   set systemUnitId(systemUnitId) {
     this._systemUnitId = systemUnitId;
-    this.showPop();
+    this.refreshList();
   }
 
   get title() {
@@ -68,7 +68,6 @@ export class SystemUnitControlComponent {
         };
         this.errorItems.push(errorItem);
       }
-
     }
     this.errorService.setErrorItems(this.errorItems);
   }
@@ -83,7 +82,7 @@ export class SystemUnitControlComponent {
     return validatorArrs;
   }
 
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.systemUnitService
@@ -123,6 +122,7 @@ export class SystemUnitControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

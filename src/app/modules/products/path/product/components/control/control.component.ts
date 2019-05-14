@@ -315,7 +315,6 @@ export class ProductControlComponent {
           PropertyName: 'SystemUnitId'
         };
         this.errorItems.push(errorItem);
-
         isValid = false;
       }
     }
@@ -324,18 +323,16 @@ export class ProductControlComponent {
   }
 
   validateForm() {
-    var controls = this.form.controls;
+    const controls = this.form.controls;
     Object.keys(this.product).forEach(name => {
       if (controls[name] && this.validationNames[name]) {
-        this.setErrorMessage(name,this.validationNames[name],controls[name].errors)
+        this.setErrorMessage(name,this.validationNames[name], controls[name].errors);
       }
     });
   }
 
   onSubmit({ value }, isValid) {
-
     isValid = this.validateItem(isValid);
-
     if (isValid) {
       if (this.type === 'create') {
         this.productService.create(value, data => {
@@ -343,6 +340,7 @@ export class ProductControlComponent {
             this.productService.list((err) => {
               this.listErrorCallBack(err);
             }, () => {
+              this.refreshList();
               this.onClose.emit();
               this.alertService.addSuccess();
             });
@@ -358,6 +356,7 @@ export class ProductControlComponent {
             this.productService.list((err) => {
               this.listErrorCallBack(err);
             }, () => {
+              this.refreshList();
               this.onClose.emit();
               this.alertService.modifySuccess();
             });

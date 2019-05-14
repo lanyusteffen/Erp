@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DepartmentService } from '../../department.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { ErrorService } from '@services/error.service';
 
@@ -45,9 +45,8 @@ export class DepartmentControlComponent {
   @Input()
   set departmentId(departmentId) {
     this._departmentId = departmentId;
-    this.showPop();
+    this.refreshList();
   }
-
 
   public setErrorMessage(propertyName, displayName, errors): void {
 
@@ -90,8 +89,7 @@ export class DepartmentControlComponent {
     return validatorArrs;
   }
 
-
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.departmentService
@@ -143,6 +141,7 @@ export class DepartmentControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

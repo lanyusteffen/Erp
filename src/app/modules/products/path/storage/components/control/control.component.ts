@@ -35,7 +35,7 @@ export class StorageControlComponent {
   @Input()
   set storageId(storageId) {
     this._storageId = storageId;
-    this.showPop();
+    this.refreshList();
   }
 
   public setErrorMessage(propertyName, displayName, errors): void {
@@ -85,7 +85,7 @@ export class StorageControlComponent {
     return validatorArrs;
   }
 
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.storageService
@@ -130,6 +130,7 @@ export class StorageControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

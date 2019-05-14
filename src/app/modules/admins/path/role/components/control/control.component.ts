@@ -96,6 +96,7 @@ export class RoleControlComponent {
           this.roleService.list((err) => {
             this.listErrorCallBack(err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -111,6 +112,7 @@ export class RoleControlComponent {
           this.roleService.list((err) => {
            this.listErrorCallBack(err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

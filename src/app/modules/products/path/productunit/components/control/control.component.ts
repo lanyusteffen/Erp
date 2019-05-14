@@ -31,14 +31,14 @@ export class ProductUnitControlComponent {
   @Input()
   set productUnitId(productUnitId) {
     this._productUnitId = productUnitId;
-    this.showPop();
+    this.refreshList();
   }
 
   get title() {
     return this.type === 'create' ? '新增商品单位' : '修改商品单位';
   }
 
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.productUnitService
@@ -77,6 +77,7 @@ export class ProductUnitControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

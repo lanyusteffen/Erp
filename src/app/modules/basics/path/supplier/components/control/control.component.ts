@@ -125,6 +125,7 @@ export class SupplierControlComponent {
           this.supplierService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Supplier, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -138,6 +139,7 @@ export class SupplierControlComponent {
           this.supplierService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Supplier, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

@@ -33,7 +33,7 @@ export class ProductColorControlComponent {
   @Input()
   set productColorId(productColorId) {
     this._productColorId = productColorId;
-    this.showPop();
+    this.refreshList();
   }
 
   get title() {
@@ -41,7 +41,7 @@ export class ProductColorControlComponent {
   }
 
   public setErrorMessage(propertyName, displayName, errors): void {
-    
+
     this.errorService.removeErrorItems(this.errorItems, propertyName);
 
     if (errors) {
@@ -87,7 +87,7 @@ export class ProductColorControlComponent {
     return validatorArrs;
   }
 
-  private showPop(): void {
+  private refreshList(): void {
     if (this._show) {
       if (this.type === 'create') {
         this.productColorService
@@ -127,6 +127,7 @@ export class ProductColorControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

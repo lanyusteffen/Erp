@@ -31,14 +31,14 @@ export class OtherIncomeControlComponent {
   @Input()
   set otherIncomeId(otherIncomeId) {
     this._otherIncomeId = otherIncomeId;
-    this.showPop();
+    this.refreshList();
   }
 
   get title() {
     return this.type === 'create' ? '新增其他收入' : '修改其他收入';
   }
 
-  private showPop(): void {
+  private refreshList(): void {
     if (this._show) {
       if (this.type === 'create') {
         this.otherIncomeService
@@ -77,6 +77,7 @@ export class OtherIncomeControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

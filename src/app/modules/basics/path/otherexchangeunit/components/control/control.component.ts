@@ -128,6 +128,7 @@ export class OtherExchangeUnitControlComponent {
           this.otherExchangeUnitService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.OtherExchangeUnit, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -143,6 +144,7 @@ export class OtherExchangeUnitControlComponent {
           this.otherExchangeUnitService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.OtherExchangeUnit, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

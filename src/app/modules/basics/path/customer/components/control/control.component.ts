@@ -123,6 +123,7 @@ export class CustomerControlComponent {
           this.customerService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Customer, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -135,6 +136,7 @@ export class CustomerControlComponent {
     } else {
       this.customerService.update(value, data => {
         if (data.IsValid) {
+          this.refreshList();
           this.onClose.emit();
           this.customerService.list((err) => {
             this.alertService.modifyFail(err);

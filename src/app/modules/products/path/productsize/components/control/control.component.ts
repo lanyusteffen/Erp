@@ -33,7 +33,7 @@ export class ProductSizeControlComponent {
   @Input()
   set productSizeId(productSizeId) {
     this._productSizeId = productSizeId;
-    this.showPop();
+    this.refreshList();
   }
 
   get title() {
@@ -87,7 +87,7 @@ export class ProductSizeControlComponent {
     return validatorArrs;
   }
 
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.productSizeService
@@ -127,6 +127,7 @@ export class ProductSizeControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

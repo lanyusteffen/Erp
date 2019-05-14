@@ -89,6 +89,7 @@ export class CompanyControlComponent {
           this.companyService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -104,6 +105,7 @@ export class CompanyControlComponent {
           this.companyService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PermissionService } from '../../permission.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 
 @Component({
@@ -47,19 +47,32 @@ export class PermissionControlComponent {
     }
   }
 
+  private getValidators() {
+    const validatorArrs = {
+      Keycode: [
+        Validators.required,
+        Validators.maxLength(20)
+      ],
+      Name: [
+        Validators.required
+      ]
+    };
+    return validatorArrs;
+  }
+
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.permissionService
           .newOne(data => {
-            this.form = this.formService.createForm(data);
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           });
       } else {
         this.permissionService
           .detail(this.permissionId, data => {
-            this.form = this.formService.createForm(data);
+            this.form = this.formService.createForm(data, this.getValidators());
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           });
@@ -90,6 +103,7 @@ export class PermissionControlComponent {
           this.permissionService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -105,6 +119,7 @@ export class PermissionControlComponent {
           this.permissionService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.Company, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });

@@ -31,14 +31,14 @@ export class FundsAccountControlComponent {
   @Input()
   set fundsAccountId(fundsAccountId) {
     this._fundsAccountId = fundsAccountId;
-    this.showPop();
+    this.refreshList();
   }
 
   get title() {
     return this.type === 'create' ? '新增资金账户' : '修改资金账户';
   }
 
-  private showPop(): void {
+  private refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.fundsAccountService
@@ -77,6 +77,7 @@ export class FundsAccountControlComponent {
 
   validate(data, option: string): void {
     if (data.IsValid) {
+      this.refreshList();
       this.onClose.emit();
       this.alertService.open({
         type: 'success',

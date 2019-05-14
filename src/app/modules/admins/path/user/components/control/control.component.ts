@@ -89,6 +89,7 @@ export class UserControlComponent {
           this.userService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.User, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.addSuccess();
           });
@@ -104,6 +105,7 @@ export class UserControlComponent {
           this.userService.list((err) => {
             this.alertService.listErrorCallBack(ModuleName.User, err);
           }, () => {
+            this.refreshList();
             this.onClose.emit();
             this.alertService.modifySuccess();
           });
