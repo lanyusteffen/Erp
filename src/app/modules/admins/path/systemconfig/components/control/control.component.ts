@@ -48,9 +48,9 @@ export class SystemConfigControlComponent implements OnInit, OnDestroy {
                 this.loadingBar.complete();
             }, (e) => {
                 this.systemConfigService.newOne((data) => {
-                    this.loadingBar.complete();
-                    this.form = this.formService.createForm(data);
+                     this.form = this.formService.createForm(data);
                     this.type = 'create';
+                    this.loadingBar.complete();
                 }, null);
             }
         );

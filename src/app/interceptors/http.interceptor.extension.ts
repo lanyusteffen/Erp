@@ -4,7 +4,6 @@ import 'rxjs/add/operator/do';
 import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 import { Observable } from 'rxjs/Observable';
 import { AlertService } from '@services/alert.service';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Injectable()
 export class HttpExtensionInterceptor implements HttpInterceptor {
@@ -16,8 +15,7 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
   private persistenceAuthToken: string;
 
   constructor(
-    private alertService: AlertService,
-    private loadingBar: SlimLoadingBarService
+    private alertService: AlertService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -36,19 +34,11 @@ export class HttpExtensionInterceptor implements HttpInterceptor {
       });
     }
 
-    if (!this.loadingBar.visible) {
-      this.loadingBar.start();
-    }
-
     return next
       .handle(req)
       .do((event: HttpEvent<any>) => {
 
         if (event instanceof HttpResponse) {
-
-          if (this.loadingBar.visible) {
-            this.loadingBar.complete();
-          }
 
           const { body } = event;
 
