@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from './http.service';
-import { SessionStorage, LocalStorage } from 'ngx-webstorage';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Injectable()
 export class MenuService {
 
-  private menus: any = null;
-
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService,
+              private localStorageService: LocalStorageService) {}
 
   private fetchMenus(next: (data: any) => void, fallback: (error: any) => void) {
     this.http.post('/Menu/GetMenuList', {}, next, fallback, ModuleType.Admin);
@@ -15,7 +14,7 @@ export class MenuService {
 
   initMenus(fallback: (error: any) => void) {
     this.fetchMenus(data => {
-      this.menus = data;
+      this.localStorageService.store('menus', data);
     }, err => {
       if (fallback) {
         fallback(err);
@@ -25,8 +24,7 @@ export class MenuService {
 
   initMenusContinuation(continueWith: () => void, fallback: (err: any) => void) {
     this.fetchMenus(data => {
-      this.menus = data;
-      console.log(this);
+      this.localStorageService.store('menus', data);
       continueWith();
     }, err => {
       if (fallback) {
@@ -36,18 +34,19 @@ export class MenuService {
   }
 
   getMenusCached(next: (data: any) => void, noCached: () => void): any {
-    if (!this.menus) {
-      console.log(this);
+    const menus = this.localStorageService.retrieve('menus');
+    if (!menus) {
       noCached();
     } else {
-      next(this.menus);
+      next(menus);
     }
   }
 
   getMenus(next: (data: any) => void, fallback: (err: any) => void): any {
-    if (!this.menus) {
+    const menus = this.localStorageService.retrieve('menus');
+    if (!menus) {
       this.fetchMenus(data => {
-        this.menus = data;
+        this.localStorageService.store('menus', data);
         next(data);
       }, err => {
         if (fallback) {
@@ -55,7 +54,7 @@ export class MenuService {
         }
       });
     } else {
-      next(this.menus);
+      next(menus);
     }
   }
 }
