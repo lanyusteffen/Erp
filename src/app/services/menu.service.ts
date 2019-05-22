@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from './http.service';
-import { SessionStorage } from 'ngx-webstorage';
+import { SessionStorage, LocalStorage } from 'ngx-webstorage';
 
 @Injectable()
 export class MenuService {
 
-  @SessionStorage()
   private menus: any = null;
 
   constructor(private http: HttpService) {}
@@ -24,9 +23,10 @@ export class MenuService {
     });
   }
 
-  initMenusContinuation(continueWith: () => void, fallback: (error: any) => void) {
+  initMenusContinuation(continueWith: () => void, fallback: (err: any) => void) {
     this.fetchMenus(data => {
       this.menus = data;
+      console.log(this);
       continueWith();
     }, err => {
       if (fallback) {
@@ -35,15 +35,27 @@ export class MenuService {
     });
   }
 
-  getMenus(next: (data: any) => void): any {
+  getMenusCached(next: (data: any) => void, noCached: () => void): any {
+    if (!this.menus) {
+      console.log(this);
+      noCached();
+    } else {
+      next(this.menus);
+    }
+  }
+
+  getMenus(next: (data: any) => void, fallback: (err: any) => void): any {
     if (!this.menus) {
       this.fetchMenus(data => {
         this.menus = data;
         next(data);
       }, err => {
+        if (fallback) {
+          fallback(err);
+        }
       });
     } else {
-      return next(this.menus);
+      next(this.menus);
     }
   }
 }

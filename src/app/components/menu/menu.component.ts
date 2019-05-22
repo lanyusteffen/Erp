@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TabsService } from '../tabs/tabs.service';
-import { Router } from '@angular/router';
-import { AlertService } from '@services/alert.service';
+import { Router, NavigationExtras } from '@angular/router';
 import { MenuService } from '@services/menu.service';
+import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 
 @Component({
   selector: 'app-menu',
@@ -145,13 +145,25 @@ export class AppMenuComponent implements OnInit {
   ];
 
   constructor(private tabService: TabsService,
-    private alertService: AlertService,
     private menuService: MenuService,
     private router: Router) {
   }
 
+  toLogin(): void {
+    // Set our navigation extras object
+    // that contains our global query params and fragment
+    const navigationExtras: NavigationExtras = {
+      //   queryParams: { 'return': sessionId },
+      //   fragment: 'anchor'
+      };
+    SimpleReuseStrategy.clear();
+
+    // Navigate to the login page with extras
+    this.router.navigate(['/authorize/login'], navigationExtras);
+  }
+
   ngOnInit(): void {
-    this.menuService.getMenus(remoteMenus => {
+    this.menuService.getMenusCached(remoteMenus => {
       for (let i = 0; i < remoteMenus.length; i++) {
         for (let j = 0; j < this.basicMenus.length; j++) {
           if (remoteMenus[i].ModuleType === this.basicMenus[j].module) {
@@ -166,6 +178,8 @@ export class AppMenuComponent implements OnInit {
         }
       }
       this.localMenus = this.basicMenus;
+    }, () => {
+      this.toLogin();
     });
   }
 

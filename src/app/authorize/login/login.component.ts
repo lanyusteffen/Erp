@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
   @LocalStorage()
   private cacheUserName: string;
 
-  loginForm: FormGroup;
-  alertInfo: string;
+  private loginForm: FormGroup;
+  private alertInfo: string;
 
   constructor(private builder: FormBuilder,
     private httpService: HttpService,

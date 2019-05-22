@@ -7,6 +7,7 @@ import {Ng2Webstorage} from 'ngx-webstorage';
 @NgModule({
   imports: [
     CommonModule,
+    Ng2Webstorage.forRoot(),
     ReactiveFormsModule,
     Ng2Webstorage
   ],
