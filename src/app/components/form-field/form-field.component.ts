@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ContentChild, Renderer2, AfterContentInit, QueryList, ElementRef } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, Input, ContentChild, Renderer2, AfterContentInit, QueryList, ElementRef } from '@angular/core';
 import { ErrorService } from '@services/error.service';
 import { Subscription } from 'rxjs/Subscription';
 import { PopupNoInputControlInterface } from '@contracts/popup-noinput-control.interface';

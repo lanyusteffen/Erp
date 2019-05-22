@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+﻿import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-confirm',

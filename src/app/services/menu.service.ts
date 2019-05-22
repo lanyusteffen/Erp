@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from './http.service';
 import { LocalStorageService } from 'ngx-webstorage';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MenuService {
 
   constructor(private http: HttpService,

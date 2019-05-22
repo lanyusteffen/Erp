@@ -1,4 +1,4 @@
-import { RoleDisabledComponent } from './role-disabled.component';
+﻿import { RoleDisabledComponent } from './role-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RoleComponent } from './role.component';

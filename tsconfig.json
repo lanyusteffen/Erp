@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -17,17 +18,40 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["./app/*"],
-      "@UI/*": ["./UI/*"],
-      "@modules/*": ["./app/modules/*"],
-      "@directives/*": ["./app/directives/*"],
-      "@services/*": ["./app/services/*"],
-      "@pipes/*": ["./app/pipes/*"],
-      "@components/*": ["./app/components/*"],
-      "@strategies/*": ["./app/strategies/*"],
-      "@validators/*": ["./app/validators/*"],
-      "@contracts/*": ["./app/contracts/*"],
-      "@enums/*": ["./app/enums/*"]
-    }
+      "@app/*": [
+        "./app/*"
+      ],
+      "@UI/*": [
+        "./UI/*"
+      ],
+      "@modules/*": [
+        "./app/modules/*"
+      ],
+      "@directives/*": [
+        "./app/directives/*"
+      ],
+      "@services/*": [
+        "./app/services/*"
+      ],
+      "@pipes/*": [
+        "./app/pipes/*"
+      ],
+      "@components/*": [
+        "./app/components/*"
+      ],
+      "@strategies/*": [
+        "./app/strategies/*"
+      ],
+      "@validators/*": [
+        "./app/validators/*"
+      ],
+      "@contracts/*": [
+        "./app/contracts/*"
+      ],
+      "@enums/*": [
+        "./app/enums/*"
+      ]
+    },
+    "module": "es2015"
   }
 }

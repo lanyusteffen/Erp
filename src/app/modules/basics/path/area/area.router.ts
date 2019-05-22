@@ -1,4 +1,4 @@
-import { AreaDisabledComponent } from './area-disabled.component';
+﻿import { AreaDisabledComponent } from './area-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AreaComponent } from './area.component';

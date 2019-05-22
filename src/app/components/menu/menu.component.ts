@@ -164,20 +164,21 @@ export class AppMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuService.getMenusCached(remoteMenus => {
+      const sourceBasicMenus = this.basicMenus;
       for (let i = 0; i < remoteMenus.length; i++) {
-        for (let j = 0; j < this.basicMenus.length; j++) {
-          if (remoteMenus[i].ModuleType === this.basicMenus[j].module) {
-            this.addSubMenu(this.basicMenus[j], remoteMenus[i]);
+        for (let j = 0; j < sourceBasicMenus.length; j++) {
+          if (remoteMenus[i].ModuleType === sourceBasicMenus[j].module) {
+            this.addSubMenu(sourceBasicMenus[j], remoteMenus[i]);
           }
         }
       }
-      for (let j = 0; j < this.basicMenus.length; j++) {
-        if (!this.basicMenus[j].subMenus || this.basicMenus[j].subMenus.length === 0) {
-          this.basicMenus.splice(j, 1);
+      for (let j = 0; j < sourceBasicMenus.length; j++) {
+        if (!sourceBasicMenus[j].subMenus || sourceBasicMenus[j].subMenus.length === 0) {
+          sourceBasicMenus.splice(j, 1);
           --j;
         }
       }
-      this.localMenus = this.basicMenus;
+      this.localMenus = sourceBasicMenus.map(x => Object.assign({}, x));
     }, () => {
       this.toLogin();
     });
@@ -197,12 +198,12 @@ export class AppMenuComponent implements OnInit {
           if (!moduleMenu.subMenus[i].subMenus) {
             moduleMenu.subMenus[i].subMenus = [];
           }
-          moduleMenu.subMenus[i].subMenus.push(remoteMenu);
+          moduleMenu.subMenus[i].subMenus.push(Object.assign({}, remoteMenu));
           break;
         }
       }
     } else {
-      moduleMenu.subMenus.push(remoteMenu);
+      moduleMenu.subMenus.push(Object.assign({}, remoteMenu));
     }
   }
 

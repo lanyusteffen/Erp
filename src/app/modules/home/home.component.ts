@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TabsService } from '../../components/tabs/tabs.service';
 import { AlertService, ModuleName } from '../../services/alert.service';

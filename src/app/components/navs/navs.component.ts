@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { NavItem } from '@contracts/nav.item';
 import { Subscription } from 'rxjs/Subscription';
 import { NavService } from './nav.service';

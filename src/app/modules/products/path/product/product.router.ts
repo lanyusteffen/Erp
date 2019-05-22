@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+﻿import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ProductDisabledComponent } from './product-disabled.component';
 import { ProductComponent } from './product.component';

@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+﻿import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PurchaseNewComponent } from './new/new.component';
 import { PurchaseHistoryComponent } from './history/history.component';

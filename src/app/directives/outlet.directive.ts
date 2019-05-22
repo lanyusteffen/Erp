@@ -1,4 +1,4 @@
-import {
+﻿import {
   Directive,
   Input,
   OnInit,

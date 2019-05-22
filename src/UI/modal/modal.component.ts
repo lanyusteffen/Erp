@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
+﻿import { Component, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-ui-modal',

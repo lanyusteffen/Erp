@@ -1,4 +1,4 @@
-import { CustomerDisabledComponent } from './customer-disabled.component';
+﻿import { CustomerDisabledComponent } from './customer-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CustomerComponent } from './customer.component';

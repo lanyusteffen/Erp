@@ -1,4 +1,4 @@
-import { Component, Input, Output, ViewEncapsulation, EventEmitter, ElementRef, ViewChild, ChangeDetectorRef, forwardRef, enableProdMode } from '@angular/core';
+﻿import { Component, Input, Output, ViewEncapsulation, EventEmitter, ElementRef, ViewChild, ChangeDetectorRef, forwardRef, enableProdMode } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 const CHECKBOX_VALUE_ACCESSOR: any = {

@@ -1,4 +1,4 @@
-import { DepartmentDisabledComponent } from './department-disabled.component';
+﻿import { DepartmentDisabledComponent } from './department-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DepartmentComponent } from './department.component';

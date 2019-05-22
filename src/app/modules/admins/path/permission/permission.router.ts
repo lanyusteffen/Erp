@@ -1,4 +1,4 @@
-import { PermissionDisabledComponent } from './permission-disabled.component';
+﻿import { PermissionDisabledComponent } from './permission-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PermissionComponent } from './permission.component';

@@ -1,4 +1,4 @@
-import { UserDisabledComponent } from './user-disabled.component';
+﻿import { UserDisabledComponent } from './user-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { UserComponent } from './user.component';

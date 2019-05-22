@@ -1,4 +1,4 @@
-import { MenuDisabledComponent } from './menu-disabled.component';
+﻿import { MenuDisabledComponent } from './menu-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { MenuComponent } from './menu.component';

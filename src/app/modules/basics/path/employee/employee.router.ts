@@ -1,4 +1,4 @@
-import { EmployeeDisabledComponent } from './employee-disabled.component';
+﻿import { EmployeeDisabledComponent } from './employee-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { EmployeeComponent } from './employee.component';

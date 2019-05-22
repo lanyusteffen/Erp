@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+﻿import { FormControl } from '@angular/forms';
 export class PrimaryKeyValid {
 
     private static REGEXID = new RegExp('^\\d+$');

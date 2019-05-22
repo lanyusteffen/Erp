@@ -1,4 +1,4 @@
-import { SupplierDisabledComponent } from './supplier-disabled.component';
+﻿import { SupplierDisabledComponent } from './supplier-disabled.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { SupplierComponent } from './supplier.component';

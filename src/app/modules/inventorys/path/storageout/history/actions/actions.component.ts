@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { StorageOutService } from '../../storageout.service';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { AlertService } from '@services/alert.service';
