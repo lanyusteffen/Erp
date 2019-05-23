@@ -50,11 +50,11 @@
             <app-menu-selector #menuSelector formControlName="ParentId" [ngModel] (onChange)="getParent($event)"></app-menu-selector>
           </td>
           <th class="form-label">
-              所属模块:
-            </th>
-            <td class="form-control-group">
-              <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
-            </td>
+            所属模块:
+          </th>
+          <td class="form-control-group">
+            <app-module-selector formControlName="ModuleType" [ngModel]></app-module-selector>
+          </td>
         </tr>
         <tr>
           <th class="form-label" *ngIf="this.form.controls['IsExclusive'].value">
@@ -87,7 +87,8 @@
               <a class="text-danger" (click)="removeCompany(i)"><i class="iconfont icon-close"></i></a>
             </td>
             <td width="50%">
-              <app-company-selector formControlName="CompanyId" [ngModel]></app-company-selector>  
+              <app-company-selector formControlName="CompanyId" (selectChanged)="selectCompanyChanged($event, i)" [ngModel]></app-company-selector>
+              <input type="hidden" formControlName="CompanyName" [ngModel]>
             </td>
           </tr>
         </tbody>

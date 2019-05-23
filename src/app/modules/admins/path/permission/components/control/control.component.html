@@ -35,6 +35,24 @@
           </td>
         </tr>
       </table>
+      <div class="heading">特殊菜单权限</div>
+      <app-ui-table>
+        <thead>
+          <th>操作</th>
+          <th>菜单</th>
+        </thead>
+        <tbody formArrayName="MenuPermissionList">
+          <tr *ngFor="let item of menuPermissionList.controls; index as i" [formGroupName]="i">
+            <td width="50%">
+              <a class="text-success" (click)="addMenu(i)"><i class="iconfont icon-add"></i></a>
+              <a class="text-danger" (click)="removeMenu(i)"><i class="iconfont icon-close"></i></a>
+            </td>
+            <td width="50%">
+              <app-menu-selector getAll="true" formControlName="MenuId" [ngModel]></app-menu-selector>
+            </td>
+          </tr>
+        </tbody>
+      </app-ui-table>
       <div class="heading">备注</div>
       <input type="text" formControlName="Remark" class="form-control" [ngModel]>
     </div>

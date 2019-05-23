@@ -2,14 +2,13 @@
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {Ng2Webstorage} from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 @NgModule({
   imports: [
     CommonModule,
-    Ng2Webstorage.forRoot(),
     ReactiveFormsModule,
-    Ng2Webstorage
+    NgxWebstorageModule
   ],
   exports: [
     LoginComponent

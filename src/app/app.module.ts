@@ -209,7 +209,7 @@ import { PermissionControlComponent } from './modules/admins/path/permission/com
 import { PermissionDisabledListComponent } from './modules/admins/path/permission/components/disabled/disabled.component';
 import { PermissionListComponent } from './modules/admins/path/permission/components/list/list.component';
 import { PermissionDisabledComponent } from './modules/admins/path/permission/permission-disabled.component';
-import { Ng2Webstorage } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -375,7 +375,7 @@ import { Ng2Webstorage } from 'ngx-webstorage';
   ],
   imports: [
     BrowserModule,
-    Ng2Webstorage.forRoot(),
+    NgxWebstorageModule.forRoot(),
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

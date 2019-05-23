@@ -23,6 +23,9 @@ export class MenuSelectorComponent implements OnInit, ControlValueAccessor {
   @Input()
   private isEditing = false;
 
+  @Input()
+  private getAll = false;
+
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
   private selectMenu: SelectComponent;
@@ -41,18 +44,33 @@ export class MenuSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   bindListData(next: () => void): void {
-    this.menuService
-    .allParent(data => {
-      this.list = data.map(item => ({
-        label: item.Name,
-        value: item.Id
-      }));
-      if (next !== null) {
-        next();
-      }
-    }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Menu, err);
-    });
+    if (this.getAll) {
+      this.menuService
+        .all(data => {
+          this.list = data.map(item => ({
+            label: item.Name,
+            value: item.Id
+          }));
+          if (next !== null) {
+            next();
+          }
+        }, (err) => {
+          this.alertService.listErrorCallBack(ModuleName.Menu, err);
+        });
+    } else {
+      this.menuService
+        .allParent(data => {
+          this.list = data.map(item => ({
+            label: item.Name,
+            value: item.Id
+          }));
+          if (next !== null) {
+            next();
+          }
+        }, (err) => {
+          this.alertService.listErrorCallBack(ModuleName.Menu, err);
+        });
+    }
   }
 
   writeValue(value) {

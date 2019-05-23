@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CompanyService } from '../../path/company/company.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
@@ -19,12 +19,14 @@ export class CompanySelectorComponent implements OnInit, ControlValueAccessor {
   private onChange;
   private dataInitialized = false;
 
+  @Output() selectChanged: EventEmitter<any> = new EventEmitter();
+
   @Input()
   private isEditing = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectMenu: SelectComponent;
+  private selectCompany: SelectComponent;
 
   constructor(private companyService: CompanyService, private alertService: AlertService) { }
 
@@ -55,11 +57,11 @@ export class CompanySelectorComponent implements OnInit, ControlValueAccessor {
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || -1;
-        this.selectMenu.value = this.innerValue;
+        this.selectCompany.value = this.innerValue;
       });
     } else {
       this.innerValue = value || -1;
-      this.selectMenu.value = this.innerValue;
+      this.selectCompany.value = this.innerValue;
     }
   }
 
@@ -71,8 +73,18 @@ export class CompanySelectorComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
+  triggerChanged(setNewValue) {
+    if (this.selectChanged && setNewValue) {
+      this.selectChanged.emit({
+        label: this.selectCompany.label,
+        value: setNewValue
+      });
+    }
+  }
+
   handleChange(value) {
     this.innerValue = value;
     this.onChange(value);
+    this.triggerChanged(value);
   }
 }

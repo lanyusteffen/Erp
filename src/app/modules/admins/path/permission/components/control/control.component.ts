@@ -1,9 +1,15 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PermissionService } from '../../permission.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidationErrors, FormArray } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { ErrorService } from '@services/error.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+
+const MenuPermission = {
+  MenuId: 0,
+  PermissionId: 0
+};
 
 @Component({
   selector: 'app-permission-control',
@@ -37,6 +43,7 @@ export class PermissionControlComponent {
   @Input()
   set permissionId(companyId) {
     this._companyId = companyId;
+    this.loadingBar.start();
     this.refreshList();
   }
 
@@ -70,15 +77,19 @@ export class PermissionControlComponent {
         this.permissionService
           .newOne(data => {
             this.form = this.formService.createForm(data, this.getInitValidators());
+            this.loadingBar.complete();
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Permission, err);
+            this.loadingBar.complete();
           });
       } else {
         this.permissionService
           .detail(this.permissionId, data => {
             this.form = this.formService.createForm(data, this.getInitValidators());
+            this.loadingBar.complete();
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Permission, err);
+            this.loadingBar.complete();
           });
       }
     }
@@ -99,11 +110,13 @@ export class PermissionControlComponent {
     private errorService: ErrorService,
     private formService: FormService,
     private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
   }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
+  get menuPermissionList(): FormArray { return this.form.get('MenuPermissionList') as FormArray; }
 
   handleClose() {
     this.onClose.emit();
@@ -127,6 +140,7 @@ export class PermissionControlComponent {
         (key, controlErrors) => this.getErrorMessage(key, controlErrors));
       return;
     }
+    this.loadingBar.start();
     if (this.type === 'create') {
       this.permissionService.create(value, data => {
         if (data.IsValid) {
@@ -135,13 +149,16 @@ export class PermissionControlComponent {
           }, () => {
             this.refreshList();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.addSuccess();
           });
         } else {
             this.alertService.addFail(data.ErrorMessages);
+            this.loadingBar.complete();
         }
       }, (err) => {
         this.alertService.addFail(err);
+        this.loadingBar.complete();
       });
     } else {
       this.permissionService.update(value, data => {
@@ -151,14 +168,27 @@ export class PermissionControlComponent {
           }, () => {
             this.refreshList();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.modifySuccess();
           });
         } else {
           this.alertService.modifyFail(data.ErrorMessages);
+          this.loadingBar.complete();
         }
       }, (err) => {
         this.alertService.modifyFail(err);
+        this.loadingBar.complete();
       });
     }
+  }
+
+  addMenu(idx) {
+    const ctrlArray = <FormArray>this.form.controls['MenuPermissionList'];
+    ctrlArray.insert(idx + 1, this.fb.group(MenuPermission));
+  }
+
+  removeMenu(idx) {
+    const ctrlArray = <FormArray>this.form.controls['MenuPermissionList'];
+    ctrlArray.removeAt(idx);
   }
 }

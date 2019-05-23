@@ -4,6 +4,7 @@ import { FormService } from '@services/form.service';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { MenuSelectorComponent } from '../../../../components/menu-selector/menu-selector.component';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 const ExcludeCompany = {
   MenuId: 0,
@@ -36,7 +37,7 @@ export class MenuControlComponent {
   set show(isShow) {
     this._show = isShow;
   }
-  
+
   @Input() type = 'create';
 
   private _menuId: number;
@@ -48,6 +49,7 @@ export class MenuControlComponent {
   @Input()
   set menuId(menuId) {
     this._menuId = menuId;
+    this.loadingBar.start();
     this.refreshList();
   }
 
@@ -65,15 +67,19 @@ export class MenuControlComponent {
         this.menuService
           .newOne(data => {
             this.form = this.formService.createForm(data);
+            this.loadingBar.complete();
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
+            this.loadingBar.complete();
           });
       } else {
         this.menuService
           .detail(this.menuId, data => {
             this.form = this.formService.createForm(data);
+            this.loadingBar.complete();
           }, (err) => {
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
+            this.loadingBar.complete();
           });
       }
     }
@@ -83,8 +89,10 @@ export class MenuControlComponent {
     private menuService: MenuService,
     private formService: FormService,
     private fb: FormBuilder,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
+  ) {
+  }
 
   get excludeCompanyList(): FormArray { return this.form.get('ExcludeCompanyList') as FormArray; }
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
@@ -97,6 +105,7 @@ export class MenuControlComponent {
     if (!isValid) {
       return;
     }
+    this.loadingBar.start();
     if (this.type === 'create') {
       this.menuService.create(value, data => {
         if (data.IsValid) {
@@ -106,13 +115,16 @@ export class MenuControlComponent {
             this.refreshList();
             this.menuSelector.reBind();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.addSuccess();
           });
         } else {
           this.alertService.addFail(data.ErrorMessages);
+          this.loadingBar.complete();
         }
       }, (err) => {
         this.alertService.addFail(err);
+        this.loadingBar.complete();
       });
     } else {
       this.menuService.update(value, data => {
@@ -123,25 +135,34 @@ export class MenuControlComponent {
             this.refreshList();
             this.menuSelector.reBind();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.modifySuccess();
           });
         } else {
           this.alertService.modifyFail(data.ErrorMessages);
+          this.loadingBar.complete();
         }
       }, (err) => {
         this.alertService.modifyFail(err);
+        this.loadingBar.complete();
       });
     }
   }
 
   addCompany(idx) {
-    const control = <FormArray>this.form.controls['ExcludeCompanyList'];
-    control.insert(idx + 1, this.fb.group(ExcludeCompany));
+    const ctrlArray = <FormArray>this.form.controls['ExcludeCompanyList'];
+    ctrlArray.insert(idx + 1, this.fb.group(ExcludeCompany));
   }
 
   removeCompany(idx) {
-    const control = <FormArray>this.form.controls['ExcludeCompanyList'];
-    control.removeAt(idx);
+    const ctrlArray = <FormArray>this.form.controls['ExcludeCompanyList'];
+    ctrlArray.removeAt(idx);
+  }
+
+  selectCompanyChanged(item, idx) {
+    const ctrlArray = <FormArray>this.form.controls['ExcludeCompanyList'];
+    const eachListControls = <FormGroup>ctrlArray.controls[idx];
+    eachListControls.controls['CompanyName'].setValue(item.label);
   }
 }
 
