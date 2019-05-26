@@ -25,6 +25,7 @@ export class RoleControlComponent {
     this._show = isShow;
   }
   @Input() type = 'create';
+  @Input() isInternal = false;
 
   private _roleId: number;
 

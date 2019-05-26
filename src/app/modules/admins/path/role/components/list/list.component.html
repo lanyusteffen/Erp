@@ -33,6 +33,7 @@
   ></app-pagination-bar>
   <app-role-control
     [type]="'update'"
+    [isInternal]="isInternal"
     [roleId]="selectedId"
     [show]="_showUpdate"
     (onClose)="closeUpdate()"
