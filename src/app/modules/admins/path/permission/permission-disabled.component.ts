@@ -17,7 +17,7 @@ import { AppService } from '@services/app.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">l
+  <div class="content">
     <app-permission-disabled-list (selectItems)="selectItems($event)"></app-permission-disabled-list>
   </div>
   `,

@@ -4,6 +4,7 @@ import { RoleService } from '../../role.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-role-list',
@@ -19,6 +20,9 @@ export class RoleListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private _showUpdate = false;
   private subscription: Subscription;
+  private routeSubscription: Subscription;
+
+  private isInternal = false;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -26,7 +30,8 @@ export class RoleListComponent implements OnInit, OnDestroy {
     private roleService: RoleService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private loadingBar: SlimLoadingBarService
+    private loadingBar: SlimLoadingBarService,
+    private routeInfo: ActivatedRoute
   ) {
     this.loadingBar.start();
     this.subscription = this.roleService
@@ -38,12 +43,19 @@ export class RoleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.roleService.list((err) => {
-      this.alertService.listErrorCallBack(ModuleName.Role, err);
-      this.loadingBar.complete();
-    }, () => {
-      this.loadingBar.complete();
-    });
+    this.routeSubscription = this.routeInfo.queryParamMap.subscribe(
+      params => {
+        try {
+          this.isInternal = JSON.parse(params.get('isInternal'));
+        } catch {
+        }
+        this.roleService.list((err) => {
+          this.alertService.listErrorCallBack(ModuleName.Role, err);
+          this.loadingBar.complete();
+        }, () => {
+          this.loadingBar.complete();
+        });
+      });
   }
 
   ngOnDestroy() {

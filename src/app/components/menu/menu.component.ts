@@ -136,7 +136,7 @@ export class AppMenuComponent implements OnInit {
       //   {
       //     Name: '系统设置',
       //     subMenu: [
-      //       { Name: '菜单设置', Link: '/admins/menu' },
+      //       { Name: '菜单设置', Link: '/admins/menu', paras: { isInternal: true } },
       //       { Name: '全局配置', Link: '/admins/systemconfig' }
       //     ]
       //   }
