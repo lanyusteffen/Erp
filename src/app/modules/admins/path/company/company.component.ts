@@ -1,9 +1,7 @@
-﻿import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CompanyService } from './company.service';
+﻿import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-company',
+  selector: 'app-admins-company',
   template: `
     <app-company-actions [selectedItems]="selectedItems"></app-company-actions>
     <div class="content">
@@ -24,17 +22,11 @@ import { CompanyService } from './company.service';
   `]
 })
 
-export class CompanyComponent implements OnInit, OnDestroy {
+export class CompanyComponent {
   private selectedItems = <any>[];
 
   constructor(
   ) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 
   selectItems(selected) {
     this.selectedItems = selected;

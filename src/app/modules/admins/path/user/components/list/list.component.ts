@@ -18,7 +18,6 @@ import { AppService } from '@services/app.service';
 export class UserListComponent implements OnInit, OnDestroy {
   private users = <any>[];
   private pagination = {};
-  private _showContact = false;
   private allSelected = false;
   private selectedId: number;
   private _showUpdate = false;

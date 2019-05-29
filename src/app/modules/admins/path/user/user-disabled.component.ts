@@ -1,10 +1,8 @@
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from './user.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
-import { LocalStorage } from 'ngx-webstorage';
-import { AppService } from '@services/app.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-user-disabled',
@@ -37,48 +35,27 @@ import { AppService } from '@services/app.service';
       flex: 1;
       display: flex;
     }
-  `],
-  providers: [
-    AppService
-  ]
+  `]
 })
 
-export class UserDisabledComponent implements OnInit, OnDestroy {
+export class UserDisabledComponent {
   private selectedItems = <any>[];
-  private subscription: Subscription;
-
-  @LocalStorage()
-  systemConfig: any;
 
   constructor(
     private userService: UserService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
+    private loadingBar: SlimLoadingBarService
   ) { }
 
-  ngOnInit() {
-    this.systemConfig = this.getSystemConfig();
-  }
-
   onSearch(queryKey) {
+    this.loadingBar.start();
     this.userService.onSearchDisabled(queryKey, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    }, () => {
+      this.loadingBar.complete();
     });
-  }
-
-  ngOnDestroy() {
-  }
-
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.systemConfigFail(err);
-      });
-    }
-    return this.systemConfig;
   }
 
   selectItems(selected) {
@@ -86,6 +63,7 @@ export class UserDisabledComponent implements OnInit, OnDestroy {
   }
 
   delete() {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
@@ -93,14 +71,18 @@ export class UserDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.userService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.removeSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.removeFail(err);
           });
       }
@@ -108,6 +90,7 @@ export class UserDisabledComponent implements OnInit, OnDestroy {
   }
 
   restore() {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
@@ -115,14 +98,18 @@ export class UserDisabledComponent implements OnInit, OnDestroy {
           .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.userService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.restoreSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.restoreFail(err);
           });
       }

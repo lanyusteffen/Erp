@@ -1,8 +1,7 @@
-﻿import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-systemconfig',
+  selector: 'app-admins-systemconfig',
   template: `
     <div class="content">
       <app-systemconfig-control></app-systemconfig-control>
@@ -22,15 +21,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   `]
 })
 
-export class SystemConfigComponent implements OnInit, OnDestroy {
+export class SystemConfigComponent {
 
   constructor(
   ) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
-
 }

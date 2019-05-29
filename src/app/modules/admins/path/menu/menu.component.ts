@@ -1,9 +1,7 @@
-﻿import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MenuService } from './menu.service';
+﻿import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-menu',
+  selector: 'app-admins-menu',
   template: `
     <app-menu-actions [selectedItems]="selectedItems"></app-menu-actions>
     <div class="content">
@@ -24,17 +22,11 @@ import { MenuService } from './menu.service';
   `]
 })
 
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent {
   private selectedItems = <any>[];
 
   constructor(
   ) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 
   selectItems(selected) {
     this.selectedItems = selected;

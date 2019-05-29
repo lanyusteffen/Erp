@@ -1,7 +1,7 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-permission',
+  selector: 'app-admins-permission',
   template: `
   <app-permission-actions [selectedItems]="selectedItems"></app-permission-actions>
   <div class="content">
@@ -21,18 +21,12 @@
     }
 `]
 })
-export class PermissionComponent implements OnInit, OnDestroy {
+export class PermissionComponent {
 
   private selectedItems = <any>[];
 
   constructor(
   ) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 
   selectItems(selected) {
     this.selectedItems = selected;

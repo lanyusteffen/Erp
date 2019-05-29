@@ -15,9 +15,8 @@ import { UserDisabledComponent } from './user-disabled.component';
 import { UserDisabledListComponent } from './components/disabled/disabled.component';
 
 import { UserService } from './user.service';
-import { FormService } from '@services/form.service';
 
-import { SharedModule} from '@app/shared.module';
+import { SharedModule } from '@app/shared.module';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { UserRoutingModule } from './user.router';
 

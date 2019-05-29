@@ -1,7 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouteReuseStrategy } from '@angular/router';
 
 import { PermissionComponent } from './permission.component';
 import { PermissionListComponent } from './components/list/list.component';
@@ -17,7 +16,6 @@ import { PermissionService } from './permission.service';
 import { SharedModule} from '@app/shared.module';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { PermissionRoutingModule } from './permission.router';
-import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
 import { AdminsSharedModule } from '../../components/admins.shared.module';
 
 @NgModule({
@@ -39,7 +37,9 @@ import { AdminsSharedModule } from '../../components/admins.shared.module';
     SharedModule,
     PermissionRoutingModule
   ],
-  providers: [ PermissionService, { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy } ]
+  providers: [
+    PermissionService
+  ]
 })
 
 export class RoleModule {}

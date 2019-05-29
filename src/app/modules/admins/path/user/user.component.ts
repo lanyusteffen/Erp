@@ -1,9 +1,7 @@
-﻿import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService } from './user.service';
+﻿import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-user',
+  selector: 'app-admins-user',
   template: `
     <app-user-actions [selectedItems]="selectedItems"></app-user-actions>
     <div class="content">
@@ -24,17 +22,11 @@ import { UserService } from './user.service';
   `]
 })
 
-export class UserComponent implements OnInit, OnDestroy {
+export class UserComponent {
   private selectedItems = <any>[];
 
   constructor(
   ) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 
   selectItems(selected) {
     this.selectedItems = selected;

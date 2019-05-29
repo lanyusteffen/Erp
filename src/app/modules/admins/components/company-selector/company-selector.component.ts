@@ -28,7 +28,9 @@ export class CompanySelectorComponent implements OnInit, ControlValueAccessor {
   @ViewChild(SelectComponent)
   private selectCompany: SelectComponent;
 
-  constructor(private companyService: CompanyService, private alertService: AlertService) { }
+  constructor(private companyService: CompanyService,
+    private alertService: AlertService) {
+    }
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {

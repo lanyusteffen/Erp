@@ -1,9 +1,7 @@
-﻿import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RoleService } from './role.service';
+﻿import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-role',
+  selector: 'app-admins-role',
   template: `
     <app-role-actions [selectedItems]="selectedItems"></app-role-actions>
     <div class="content">
@@ -24,17 +22,11 @@ import { RoleService } from './role.service';
   `]
 })
 
-export class RoleComponent implements OnInit, OnDestroy {
+export class RoleComponent {
   private selectedItems = <any>[];
 
   constructor(
   ) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 
   selectItems(selected) {
     this.selectedItems = selected;

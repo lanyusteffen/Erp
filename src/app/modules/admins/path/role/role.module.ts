@@ -13,9 +13,8 @@ import { RoleDisabledComponent } from './role-disabled.component';
 import { RoleDisabledListComponent } from './components/disabled/disabled.component';
 
 import { RoleService } from './role.service';
-import { FormService } from '@services/form.service';
 
-import { SharedModule} from '@app/shared.module';
+import { SharedModule } from '@app/shared.module';
 import { BasicsSharedModule } from '../../../basics/components/basics.shared.module';
 import { RoleRoutingModule } from './role.router';
 import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
