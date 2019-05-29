@@ -2,7 +2,7 @@ import { FormGroup, FormArray, FormBuilder, Validators, FormControl, AbstractCon
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { PopupSelectorGoodsComponent } from '../../../../products/components/popup-selector-goods/popup-selector-goods.component';
-import { StorageBillTypeSelectorComponent } from '../../../components/storagebilltype-selector/storagebilltype-selector.component';
+import { StorageBillTypeSelectorComponent } from '../../../components/storage-billtype-selector/storage-billtype-selector.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { StorageOutService } from '../storageout.service';

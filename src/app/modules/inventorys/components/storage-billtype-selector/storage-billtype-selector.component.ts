@@ -2,12 +2,12 @@ import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angu
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
-import { StorageOutTypeEnumPublic } from '../../enums/storagebilltype.storage';
+import { StorageOutTypeEnumPublic } from '../../enums/storage-billtype.storage';
 
 @Component({
   selector: 'app-storagebilltype-selector',
-  templateUrl: './storagebilltype-selector.component.html',
-  styleUrls: ['./storagebilltype-selector.component.less'],
+  templateUrl: './storage-billtype-selector.component.html',
+  styleUrls: ['./storage-billtype-selector.component.less'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: StorageBillTypeSelectorComponent, multi: true }
   ]

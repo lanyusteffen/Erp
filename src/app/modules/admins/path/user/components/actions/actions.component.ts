@@ -4,6 +4,7 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '@components/tabs/tabs.service';
 import { Router } from '@angular/router';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-user-actions',
@@ -22,7 +23,8 @@ export class UserActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService,
-	private router: Router
+    private router: Router,
+    private loadingBar: SlimLoadingBarService
   ) { }
 
   show() {
@@ -35,7 +37,7 @@ export class UserActionsComponent {
       name: '停用用户',
       link: '/admins/user/disabled'
     });
-	this.router.navigate(['/admins/user/disabled']);
+    this.router.navigate(['/admins/user/disabled']);
   }
 
   close() {
@@ -43,24 +45,33 @@ export class UserActionsComponent {
   }
 
   onSearch(queryKey) {
+    this.loadingBar.start();
     this.userService.onSearch(queryKey, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.User, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
   onCancel() {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.userService
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.removeSuccess();
               this.userService.list((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.User, err);
+              }, () => {
+                this.loadingBar.complete();
+                this.alertService.removeSuccess();
               });
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.removeFail(err);
           });
       }

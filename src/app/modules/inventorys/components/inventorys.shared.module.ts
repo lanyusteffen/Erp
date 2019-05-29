@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UIModule } from '@UI/ui.module';
 
 import { SharedModule } from '../../../shared.module';
-import { StorageBillTypeSelectorComponent } from './storagebilltype-selector/storagebilltype-selector.component';
+import { StorageBillTypeSelectorComponent } from './storage-billtype-selector/storage-billtype-selector.component';
 
 
 @NgModule({

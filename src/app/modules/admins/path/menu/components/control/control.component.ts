@@ -110,6 +110,7 @@ export class MenuControlComponent {
       this.menuService.create(value, data => {
         if (data.IsValid) {
           this.menuService.list((err) => {
+            this.loadingBar.complete();
             this.alertService.listErrorCallBack(ModuleName.Menu, err);
           }, () => {
             this.refreshList();
@@ -119,12 +120,12 @@ export class MenuControlComponent {
             this.alertService.addSuccess();
           });
         } else {
-          this.alertService.addFail(data.ErrorMessages);
           this.loadingBar.complete();
+          this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.addFail(err);
         this.loadingBar.complete();
+        this.alertService.addFail(err);
       });
     } else {
       this.menuService.update(value, data => {
@@ -139,12 +140,12 @@ export class MenuControlComponent {
             this.alertService.modifySuccess();
           });
         } else {
-          this.alertService.modifyFail(data.ErrorMessages);
           this.loadingBar.complete();
+          this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
-        this.alertService.modifyFail(err);
         this.loadingBar.complete();
+        this.alertService.modifyFail(err);
       });
     }
   }

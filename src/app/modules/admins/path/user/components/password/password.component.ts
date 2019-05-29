@@ -1,16 +1,15 @@
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../user.service';
-import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { CustomValidators } from 'ng2-validation';
 import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-user-password',
   templateUrl: './password.component.html',
-  styleUrls: ['./password.component.less'],
-  providers: [FormService]
+  styleUrls: ['./password.component.less']
 })
 
 export class UserPasswordComponent implements OnInit {
@@ -76,8 +75,8 @@ export class UserPasswordComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private formService: FormService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) {
   }
 
@@ -105,15 +104,19 @@ export class UserPasswordComponent implements OnInit {
     value.Id = this._userId;
 
     this.userService.changePassword(value, data => {
+      this.loadingBar.start();
       if (data.IsValid) {
         this.userService.list((err) => {
+          this.loadingBar.complete();
           this.alertService.listErrorCallBack(ModuleName.User, err);
         }, () => {
           this.onClose.emit();
+          this.loadingBar.complete();
           this.alertService.modifySuccess();
         });
       }
     }, (err) => {
+      this.loadingBar.complete();
       this.alertService.modifyFail(err);
     });
   }

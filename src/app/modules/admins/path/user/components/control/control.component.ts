@@ -1,20 +1,25 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../user.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-user-control',
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.less'],
-  providers: [FormService]
+  providers: [
+    FormService
+  ]
 })
 
 export class UserControlComponent {
+
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
+
   private form = new FormGroup({});
   private _show = false;
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
     return this._show;
@@ -24,6 +29,7 @@ export class UserControlComponent {
   set show(isShow) {
     this._show = isShow;
   }
+
   @Input() type = 'create';
 
   private _userId: number;
@@ -35,6 +41,7 @@ export class UserControlComponent {
   @Input()
   set userId(userId) {
     this._userId = userId;
+    this.loadingBar.start();
     this.refreshList();
   }
 
@@ -52,14 +59,18 @@ export class UserControlComponent {
         this.userService
           .newOne(data => {
             this.form = this.formService.createForm(data);
+            this.loadingBar.complete();
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.listErrorCallBack(ModuleName.User, err);
           });
       } else {
         this.userService
           .detail(this.userId, data => {
             this.form = this.formService.createForm(data);
+            this.loadingBar.complete();
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.listErrorCallBack(ModuleName.User, err);
           });
       }
@@ -69,9 +80,10 @@ export class UserControlComponent {
   constructor(
     private userService: UserService,
     private formService: FormService,
-    private fb: FormBuilder,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
+  ) {
+  }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
@@ -83,6 +95,7 @@ export class UserControlComponent {
     if (!isValid) {
       return;
     }
+    this.loadingBar.start();
     if (this.type === 'create') {
       this.userService.create(value, data => {
         if (data.IsValid) {
@@ -91,12 +104,15 @@ export class UserControlComponent {
           }, () => {
             this.refreshList();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.addSuccess();
           });
         } else {
+          this.loadingBar.complete();
           this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
+        this.loadingBar.complete();
         this.alertService.addFail(err);
       });
     } else {
@@ -107,16 +123,17 @@ export class UserControlComponent {
           }, () => {
             this.refreshList();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.modifySuccess();
           });
         } else {
+          this.loadingBar.complete();
           this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
+        this.loadingBar.complete();
         this.alertService.modifyFail(err);
       });
     }
   }
 }
-
-

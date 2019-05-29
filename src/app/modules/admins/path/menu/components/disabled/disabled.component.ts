@@ -23,9 +23,6 @@ export class MenuDisabledListComponent implements OnInit, OnDestroy {
   private selectedId: number;
   private subscription: Subscription;
 
-  @LocalStorage()
-  systemConfig: any;
-
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -44,24 +41,13 @@ export class MenuDisabledListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSystemConfig(): any {
-    this.appService.getSystemConfig((data) => {
-      this.systemConfig = data;
-      this.menuService.listDisabled((err) => {
-       this.alertService.listErrorCallBack(ModuleName.Menu, err);
-       this.loadingBar.complete();
-      },()=>{
-        this.loadingBar.complete();
-      });
-    }, (err) => {
-      this.alertService.systemConfigFail(err);
-      this.loadingBar.complete();
-    });
-    return this.systemConfig;
-  }
-
   ngOnInit() {
-    this.getSystemConfig();
+    this.menuService.listDisabled((err) => {
+      this.loadingBar.complete();
+      this.alertService.listErrorCallBack(ModuleName.Menu, err);
+     }, () => {
+       this.loadingBar.complete();
+     });
   }
 
   ngOnDestroy() {
@@ -75,7 +61,6 @@ export class MenuDisabledListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.menus : []);
-
   }
 
   select(evt, selectedItem) {
@@ -88,15 +73,20 @@ export class MenuDisabledListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange({ current, pageSize }) {
+    this.loadingBar.start();
     this.menuService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
   delete(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
@@ -104,14 +94,18 @@ export class MenuDisabledListComponent implements OnInit, OnDestroy {
           .remove([id], data => {
             if (data.IsValid) {
               this.menuService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.removeSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.removeFail(err);
           });
       }
@@ -126,14 +120,18 @@ export class MenuDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.menuService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Menu, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.restoreSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.restoreFail(err);
           });
       }

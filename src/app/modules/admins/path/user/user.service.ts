@@ -102,14 +102,13 @@ export class UserService {
     return this.http.post('/User/ChangePassword', user, next, fallback, ModuleType.Admin);
   }
 
-
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/User/Cancel', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }
 
-  onPageChange(pagination, fallback: (error: any) => void) {
+  onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -119,10 +118,10 @@ export class UserService {
     };
 
     this.state = nextState;
-    this.list(fallback);
+    this.list(fallback, successNotify);
   }
 
-  onPageChangeDisabled(pagination, fallback: (error: any) => void) {
+  onPageChangeDisabled(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -132,27 +131,27 @@ export class UserService {
     };
 
     this.state = nextState;
-    this.listDisabled(fallback);
+    this.listDisabled(fallback, successNotify);
   }
 
-  onSearch(queryKey, fallback: (error: any) => void) {
+  onSearch(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list(fallback);
+    this.list(fallback, successNotify);
   }
 
-  onSearchDisabled(queryKey, fallback: (error: any) => void) {
+  onSearchDisabled(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled(fallback);
+    this.listDisabled(fallback, successNotify);
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

@@ -69,11 +69,15 @@ export class MenuListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange({ current, pageSize }) {
+    this.loadingBar.start();
     this.menuService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.Menu, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
@@ -87,6 +91,7 @@ export class MenuListComponent implements OnInit, OnDestroy {
   }
 
   onCancel(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认停用吗？',
       onConfirm: () => {
@@ -94,14 +99,18 @@ export class MenuListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.menuService.list((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Menu, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.cancelSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.cancelFail(err);
           });
       }

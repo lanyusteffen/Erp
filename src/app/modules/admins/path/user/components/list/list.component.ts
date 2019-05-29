@@ -3,13 +3,16 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../../user.service';
 import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
-import { LocalStorage } from 'ngx-webstorage';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { AppService } from '@services/app.service';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.less']
+  styleUrls: ['./list.component.less'],
+  providers: [
+    AppService
+  ]
 })
 
 export class UserListComponent implements OnInit, OnDestroy {
@@ -41,8 +44,8 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userService.list((err) => {
-      this.alertService.listErrorCallBack(ModuleName.User, err);
       this.loadingBar.complete();
+      this.alertService.listErrorCallBack(ModuleName.User, err);
     }, () => {
       this.loadingBar.complete();
     });
@@ -59,7 +62,6 @@ export class UserListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.users : []);
-
   }
 
   select(evt, selectedItem) {
@@ -72,11 +74,15 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange({ current, pageSize }) {
+    this.loadingBar.start();
     this.userService.onPageChange({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.User, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
@@ -99,6 +105,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   onCancel(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认停用吗？',
       onConfirm: () => {
@@ -106,14 +113,18 @@ export class UserListComponent implements OnInit, OnDestroy {
           .cancel([id], data => {
             if (data.IsValid) {
               this.userService.list((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.User, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.cancelSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.cancelFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.cancelFail(err);
           });
       }

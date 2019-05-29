@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../user.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-user-modify',
@@ -34,6 +35,7 @@ export class UserModifyComponent {
   @Input()
   set userId(userId) {
     this._userId = userId;
+    this.loadingBar.start();
     this.refreshList();
   }
 
@@ -46,7 +48,9 @@ export class UserModifyComponent {
       this.userService
         .detail(this.userId, data => {
           this.modifyForm = this.formService.createForm(data);
+          this.loadingBar.complete();
         }, (err) => {
+          this.loadingBar.complete();
           this.alertService.listErrorCallBack(ModuleName.User, err);
         });
     }
@@ -55,8 +59,8 @@ export class UserModifyComponent {
   constructor(
     private userService: UserService,
     private formService: FormService,
-    private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
   ) { }
 
   get formReady(): boolean { return !!Object.keys(this.modifyForm.controls).length; }
@@ -66,22 +70,28 @@ export class UserModifyComponent {
   }
 
   onSubmit({ value }, isValid) {
+    if (!isValid) {
+      return;
+    }
+    this.loadingBar.start();
     this.userService.update(value, data => {
       if (data.IsValid) {
         this.userService.list((err) => {
+          this.loadingBar.complete();
           this.alertService.listErrorCallBack(ModuleName.User, err);
         }, () => {
           this.onClose.emit();
+          this.loadingBar.complete();
           this.alertService.modifySuccess();
         });
       } else {
+        this.loadingBar.complete();
         this.alertService.modifyFail(data.ErrorMessages);
       }
     }, (err) => {
+      this.loadingBar.complete();
       this.alertService.modifyFail(err);
     });
   }
-
 }
-
 

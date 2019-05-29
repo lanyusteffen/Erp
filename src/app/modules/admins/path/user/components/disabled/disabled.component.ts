@@ -44,24 +44,23 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSystemConfig(): any {
-    this.appService.getSystemConfig((data) => {
-      this.systemConfig = data;
-      this.userService.listDisabled((err) => {
-       this.alertService.listErrorCallBack(ModuleName.User, err);
-       this.loadingBar.complete();
-      },()=>{
-        this.loadingBar.complete();
-      });
-    }, (err) => {
-      this.alertService.systemConfigFail(err);
-      this.loadingBar.complete();
-    });
-    return this.systemConfig;
-  }
-
   ngOnInit() {
-    this.getSystemConfig();
+    this.appService.getSystemConfig((data) => {
+      if (data.IsValid) {
+        this.userService.listDisabled((err) => {
+          this.loadingBar.complete();
+          this.alertService.listErrorCallBack(ModuleName.User, err);
+         }, () => {
+           this.loadingBar.complete();
+         });
+      } else {
+        this.loadingBar.complete();
+        this.alertService.listErrorCallBack(ModuleName.User, data.ErrorMessages);
+      }
+    }, (err) => {
+      this.loadingBar.complete();
+      this.alertService.listErrorCallBack(ModuleName.User, err);
+    });
   }
 
   ngOnDestroy() {
@@ -75,7 +74,6 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.users : []);
-
   }
 
   select(evt, selectedItem) {
@@ -88,15 +86,20 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange({ current, pageSize }) {
+    this.loadingBar.start();
     this.userService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
   delete(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
@@ -104,14 +107,18 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
           .remove([id], data => {
             if (data.IsValid) {
               this.userService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.removeSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.removeFail(err);
           });
       }
@@ -119,6 +126,7 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
   }
 
   restore(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
@@ -126,14 +134,18 @@ export class UserDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.userService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.User, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.restoreSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.restoreFail(err);
           });
       }
