@@ -1,4 +1,4 @@
-<div class="table-wrapper">
+﻿<div class="table-wrapper">
   <app-ui-table>
     <thead>
       <tr>
@@ -6,9 +6,8 @@
           <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
         </th>
         <th>操作</th>
-        <th>编号</th>
-        <th>名称</th>
-        <th>备注</th>
+        <th>角色名称</th>
+        <th>是否为内部角色, 是则不能删除</th>
       </tr>
     </thead>
     <tbody>
@@ -20,9 +19,8 @@
           <a (click)="update(item.Id)">修改</a>
           <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
         </td>
-        <td>{{item.Code}}</td>
-        <td>{{item.Name}}</td>
-        <td>{{item.Remark}}</td>
+        <td>角色名称</td>
+        <td>是否为内部角色, 是则不能删除</td>
       </tr>
     </tbody>
   </app-ui-table>
@@ -31,11 +29,4 @@
     [current]="pagination.PageIndex"
     (onChange)="onPageChange($event)"
   ></app-pagination-bar>
-  <app-role-control
-    [type]="'update'"
-    [isInternal]="isInternal"
-    [roleId]="selectedId"
-    [show]="_showUpdate"
-    (onClose)="closeUpdate()"
-  ></app-role-control>
 </div>

@@ -26,7 +26,8 @@ export class RoleComponent {
   private selectedItems = <any>[];
 
   constructor(
-  ) {}
+  ) {
+  }
 
   selectItems(selected) {
     this.selectedItems = selected;

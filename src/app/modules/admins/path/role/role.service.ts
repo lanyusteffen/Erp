@@ -1,12 +1,11 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpService, ModuleType } from '@services/http.service';
 import { Subject } from 'rxjs/Subject';
-            
+
 @Injectable()
 export class RoleService {
   private roles$ = new Subject<any>();
-  private rolesDisabled$ = new Subject<any>();
-
+  private roleDisabled$ = new Subject<any>();
   private state = {
     roles: [],
     currentQueryKey: '',
@@ -17,7 +16,8 @@ export class RoleService {
     }
   };
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService) {
+  }
 
   all(next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Role/GetList', {}, next, fallback, ModuleType.Admin);
@@ -25,7 +25,7 @@ export class RoleService {
 
   get() { return this.roles$.asObservable(); }
 
-  getDisabled() { return this.rolesDisabled$.asObservable(); }
+  getDisabled() { return this.roleDisabled$.asObservable(); }
 
   list(fallback: (error: any) => void, successNotify?: () => void) {
     const {
@@ -39,7 +39,7 @@ export class RoleService {
     return this.http.post('/Role/GetListPaged', {
       QueryKey: currentQueryKey,
       PageIndex,
-      PageSize,
+      PageSize
     }, data => {
       const nextState = {
         ...this.state,
@@ -77,7 +77,7 @@ export class RoleService {
       };
 
       this.state = nextState;
-      this.rolesDisabled$.next(nextState);
+      this.roleDisabled$.next(nextState);
 
       if (successNotify !== undefined) {
         successNotify();
@@ -101,13 +101,17 @@ export class RoleService {
     return this.http.post('/Role/Modify', role, next, fallback, ModuleType.Admin);
   }
 
+  changePassword(role, next: (data: any) => void, fallback: (error: any) => void) {
+    return this.http.post('/Role/ChangePassword', role, next, fallback, ModuleType.Admin);
+  }
+
   cancel(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {
     return this.http.post('/Role/Cancel', {
       entityIdList
     }, next, fallback, ModuleType.Admin);
   }
 
-  onPageChange(pagination, fallback: (error: any) => void) {
+  onPageChange(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -117,10 +121,10 @@ export class RoleService {
     };
 
     this.state = nextState;
-    this.list(fallback);
+    this.list(fallback, successNotify);
   }
 
-  onPageChangeDisabled(pagination, fallback: (error: any) => void) {
+  onPageChangeDisabled(pagination, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentPagination: {
@@ -130,27 +134,27 @@ export class RoleService {
     };
 
     this.state = nextState;
-    this.listDisabled(fallback);
+    this.listDisabled(fallback, successNotify);
   }
 
-  onSearch(queryKey, fallback: (error: any) => void) {
+  onSearch(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.list(fallback);
+    this.list(fallback, successNotify);
   }
 
-  onSearchDisabled(queryKey, fallback: (error: any) => void) {
+  onSearchDisabled(queryKey, fallback: (error: any) => void, successNotify?: () => void) {
     const nextState = {
       ...this.state,
       currentQueryKey: queryKey
     };
 
     this.state = nextState;
-    this.listDisabled(fallback);
+    this.listDisabled(fallback, successNotify);
   }
 
   remove(entityIdList, next: (data: any) => void, fallback: (error: any) => void) {

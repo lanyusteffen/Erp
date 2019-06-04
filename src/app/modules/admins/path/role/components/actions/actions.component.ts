@@ -4,6 +4,7 @@ import { ConfirmService } from '@services/confirm.service';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { TabsService } from '@components/tabs/tabs.service';
 import { Router } from '@angular/router';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-role-actions',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 })
 
 export class RoleActionsComponent {
+
   private _show = false;
   private selectedId: number;
 
@@ -22,8 +24,10 @@ export class RoleActionsComponent {
     private confirmService: ConfirmService,
     private alertService: AlertService,
     private tabsService: TabsService,
-	private router: Router
-  ) { }
+    private router: Router,
+    private loadingBar: SlimLoadingBarService
+  ) {
+  }
 
   show() {
     this._show = true;
@@ -35,7 +39,7 @@ export class RoleActionsComponent {
       name: '停用角色',
       link: '/admins/role/disabled'
     });
-	this.router.navigate(['/admins/role/disabled']);
+    this.router.navigate(['/admins/role/disabled']);
   }
 
   close() {
@@ -43,24 +47,33 @@ export class RoleActionsComponent {
   }
 
   onSearch(queryKey) {
+    this.loadingBar.start();
     this.roleService.onSearch(queryKey, (err) => {
+      this.loadingBar.complete();
       this.alertService.listErrorCallBack(ModuleName.Role, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
   onCancel() {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
         this.roleService
           .cancel(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
-              this.alertService.removeSuccess();
               this.roleService.list((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Role, err);
+              }, () => {
+                this.alertService.removeSuccess();
+                this.loadingBar.complete();
               });
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.removeFail(err);
           });
       }

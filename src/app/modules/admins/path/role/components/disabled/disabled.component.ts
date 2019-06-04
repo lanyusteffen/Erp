@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+﻿import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { RoleService } from '../../role.service';
 import { LocalStorage } from 'ngx-webstorage';
@@ -24,7 +24,7 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @LocalStorage()
-  systemConfig: any;
+  private systemConfig: any;
 
   @Output() selectItems: EventEmitter<any> = new EventEmitter();
 
@@ -35,7 +35,7 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private loadingBar: SlimLoadingBarService
   ) {
-    this.loadingBar.start();
+    this.loadingBar.complete();
     this.subscription = this.roleService
       .getDisabled()
       .subscribe(({ roles, currentPagination }) => {
@@ -44,25 +44,23 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSystemConfig(): any {
-    this.appService.getSystemConfig((data) => {
-      this.systemConfig = data;
-      this.roleService.listDisabled((err) => {
-        this.alertService.listErrorCallBack(ModuleName.Role, err);
-        this.loadingBar.complete();
-      },()=>{
-        this.loadingBar.complete();
-      });
-    }, (err) => {
-      this.alertService.systemConfigFail(err);
-      this.loadingBar.complete();
-    });
-    return this.systemConfig;
-  }
-
   ngOnInit() {
-    this.getSystemConfig();
-   
+    this.appService.getSystemConfig((data) => {
+      if (data.IsValid) {
+        this.roleService.listDisabled((err) => {
+          this.loadingBar.complete();
+          this.alertService.listErrorCallBack(ModuleName.Role, err);
+         }, () => {
+           this.loadingBar.complete();
+         });
+      } else {
+        this.loadingBar.complete();
+        this.alertService.listErrorCallBack(ModuleName.Role, data.ErrorMessages);
+      }
+    }, (err) => {
+      this.loadingBar.complete();
+      this.alertService.listErrorCallBack(ModuleName.Role, err);
+    });
   }
 
   ngOnDestroy() {
@@ -76,7 +74,6 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
       selected: this.allSelected
     }));
     this.selectItems.emit(this.allSelected ? this.roles : []);
-
   }
 
   select(evt, selectedItem) {
@@ -89,15 +86,20 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange({ current, pageSize }) {
+    this.loadingBar.start();
     this.roleService.onPageChangeDisabled({
       PageIndex: current,
       PageSize: pageSize
     }, (err) => {
-      this.alertService.listErrorCallBack(ModuleName.Role, err);
+      this.loadingBar.complete();
+      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    }, () => {
+      this.loadingBar.complete();
     });
   }
 
   delete(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
@@ -105,14 +107,18 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
           .remove([id], data => {
             if (data.IsValid) {
               this.roleService.listDisabled((err) => {
-                this.alertService.listErrorCallBack(ModuleName.Role, err);
+                this.loadingBar.complete();
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.removeSuccess();
               });
             } else {
+              this.loadingBar.complete();
               this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.removeFail(err);
           });
       }
@@ -120,6 +126,7 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
   }
 
   restore(id) {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
@@ -127,14 +134,18 @@ export class RoleDisabledListComponent implements OnInit, OnDestroy {
           .restore([id], data => {
             if (data.IsValid) {
               this.roleService.listDisabled((err) => {
+                this.loadingBar.complete();
                 this.alertService.listErrorCallBack(ModuleName.Role, err);
               }, () => {
+                this.loadingBar.complete();
                 this.alertService.restoreSuccess();
               });
             } else {
-              this.alertService.restoreFail(data.ErrorMessages)
+              this.loadingBar.complete();
+              this.alertService.restoreFail(data.ErrorMessage);
             }
           }, (err) => {
+            this.loadingBar.complete();
             this.alertService.restoreFail(err);
           });
       }

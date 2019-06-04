@@ -1,16 +1,14 @@
-import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { RoleService } from './role.service';
 import { ConfirmService } from '@services/confirm.service';
-import { AlertService } from '@services/alert.service';
-import { LocalStorage } from 'ngx-webstorage';
-import { AppService } from '@services/app.service';
+import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-role-disabled',
   template: `
   <div class="actions">
-    <app-quick-search [placeholder]="'输入编号、名称、手机号、联系人查询'" (onSearch)="onSearchDisabled($event)"></app-quick-search>
+    <app-quick-search [placeholder]="'输入编号、名称'" (onSearch)="onSearchDisabled($event)"></app-quick-search>
     <app-ui-button [style]="'danger'" [disabled]="!selectedItems.length" (click)="restore()">
         <i class="iconfont icon-delete"></i>
         还原
@@ -22,7 +20,7 @@ import { AppService } from '@services/app.service';
     <div class="more">
     </div>
   </div>
-  <div class="content">l
+  <div class="content">
     <app-role-disabled-list (selectItems)="selectItems($event)"></app-role-disabled-list>
   </div>
   `,
@@ -37,61 +35,28 @@ import { AppService } from '@services/app.service';
       flex: 1;
       display: flex;
     }
-  `],
-  providers: [
-    AppService
-  ]
+  `]
 })
 
-export class RoleDisabledComponent implements OnInit, OnDestroy {
+export class RoleDisabledComponent {
   private selectedItems = <any>[];
-  private subscription: Subscription;
-
-  @LocalStorage()
-  systemConfig: any;
 
   constructor(
     private roleService: RoleService,
     private confirmService: ConfirmService,
     private alertService: AlertService,
-    private appService: AppService
-  ) { }
-
-  ngOnInit() {
-    this.systemConfig = this.getSystemConfig();
+    private loadingBar: SlimLoadingBarService
+  ) {
   }
 
   onSearch(queryKey) {
+    this.loadingBar.start();
     this.roleService.onSearchDisabled(queryKey, (err) => {
-      this.alertService.open({
-        type: 'danger',
-        content: '绑定费用类型列表失败, ' + err
-      });
+      this.loadingBar.complete();
+      this.alertService.listErrorCallBack(ModuleName.Cancel, err);
+    }, () => {
+      this.loadingBar.complete();
     });
-  }
-
-  ngOnDestroy() {
-  }
-
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定停用列表失败!' + err
-    });
-  }
-
-  getSystemConfig(): any {
-    if (!this.systemConfig) {
-      this.appService.getSystemConfig((data) => {
-        this.systemConfig = data;
-      }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
-      });
-    }
-    return this.systemConfig;
   }
 
   selectItems(selected) {
@@ -99,6 +64,7 @@ export class RoleDisabledComponent implements OnInit, OnDestroy {
   }
 
   delete() {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认删除吗？',
       onConfirm: () => {
@@ -106,30 +72,26 @@ export class RoleDisabledComponent implements OnInit, OnDestroy {
           .remove(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.roleService.listDisabled((err) => {
-                this.listErrorCallBack(err);
+                this.loadingBar.complete();
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '删除成功！'
-                });
+                this.loadingBar.complete();
+                this.alertService.removeSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '删除失败, ' + data.ErrorMessages
-              });
+              this.loadingBar.complete();
+              this.alertService.removeFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '删除失败, ' + err
-            });
+            this.loadingBar.complete();
+            this.alertService.removeFail(err);
           });
       }
     });
   }
 
   restore() {
+    this.loadingBar.start();
     this.confirmService.open({
       content: '确认还原吗？',
       onConfirm: () => {
@@ -137,24 +99,19 @@ export class RoleDisabledComponent implements OnInit, OnDestroy {
           .restore(this.selectedItems.map(item => item.Id), data => {
             if (data.IsValid) {
               this.roleService.listDisabled((err) => {
-               this.listErrorCallBack(err);
+                this.loadingBar.complete();
+                this.alertService.listErrorCallBack(ModuleName.Cancel, err);
               }, () => {
-                this.alertService.open({
-                  type: 'success',
-                  content: '还原成功！'
-                });
+                this.loadingBar.complete();
+                this.alertService.restoreSuccess();
               });
             } else {
-              this.alertService.open({
-                type: 'danger',
-                content: '还原失败, ' + data.ErrorMessages
-              });
+              this.loadingBar.complete();
+              this.alertService.restoreFail(data.ErrorMessages);
             }
           }, (err) => {
-            this.alertService.open({
-              type: 'danger',
-              content: '还原失败, ' + err
-            });
+            this.loadingBar.complete();
+            this.alertService.restoreFail(err);
           });
       }
     });

@@ -1,20 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RoleService } from '../../role.service';
 import { FormService } from '@services/form.service';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
-import { AlertService } from '@services/alert.service';
+import { FormGroup } from '@angular/forms';
+import { AlertService, ModuleName } from '@services/alert.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
   selector: 'app-role-control',
   templateUrl: './control.component.html',
   styleUrls: ['./control.component.less'],
-  providers: [FormService]
+  providers: [
+    FormService
+  ]
 })
 
 export class RoleControlComponent {
+
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
+
   private form = new FormGroup({});
   private _show = false;
-  @Output() onClose: EventEmitter<any> = new EventEmitter();
 
   get show() {
     return this._show;
@@ -24,8 +29,8 @@ export class RoleControlComponent {
   set show(isShow) {
     this._show = isShow;
   }
+
   @Input() type = 'create';
-  @Input() isInternal = false;
 
   private _roleId: number;
 
@@ -36,6 +41,7 @@ export class RoleControlComponent {
   @Input()
   set roleId(roleId) {
     this._roleId = roleId;
+    this.loadingBar.start();
     this.refreshList();
   }
 
@@ -47,28 +53,25 @@ export class RoleControlComponent {
     }
   }
 
-  listErrorCallBack(err: any): void {
-    this.alertService.open({
-      type: 'danger',
-      content: '绑定角色列表失败!' + err
-    });
-  }
-
   refreshList() {
     if (this._show) {
       if (this.type === 'create') {
         this.roleService
           .newOne(data => {
             this.form = this.formService.createForm(data);
+            this.loadingBar.complete();
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.loadingBar.complete();
+            this.alertService.listErrorCallBack(ModuleName.Role, err);
           });
       } else {
         this.roleService
           .detail(this.roleId, data => {
             this.form = this.formService.createForm(data);
+            this.loadingBar.complete();
           }, (err) => {
-            this.listErrorCallBack(err);
+            this.loadingBar.complete();
+            this.alertService.listErrorCallBack(ModuleName.Role, err);
           });
       }
     }
@@ -77,9 +80,10 @@ export class RoleControlComponent {
   constructor(
     private roleService: RoleService,
     private formService: FormService,
-    private fb: FormBuilder,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private loadingBar: SlimLoadingBarService
+  ) {
+  }
 
   get formReady(): boolean { return !!Object.keys(this.form.controls).length; }
 
@@ -91,40 +95,46 @@ export class RoleControlComponent {
     if (!isValid) {
       return;
     }
+    this.loadingBar.start();
     if (this.type === 'create') {
       this.roleService.create(value, data => {
         if (data.IsValid) {
           this.roleService.list((err) => {
-            this.listErrorCallBack(err);
+            this.loadingBar.complete();
+            this.alertService.listErrorCallBack(ModuleName.Role, err);
           }, () => {
             this.refreshList();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.addSuccess();
           });
         } else {
+          this.loadingBar.complete();
           this.alertService.addFail(data.ErrorMessages);
         }
       }, (err) => {
+        this.loadingBar.complete();
         this.alertService.addFail(err);
       });
     } else {
       this.roleService.update(value, data => {
         if (data.IsValid) {
           this.roleService.list((err) => {
-           this.listErrorCallBack(err);
+            this.alertService.listErrorCallBack(ModuleName.Role, err);
           }, () => {
             this.refreshList();
             this.onClose.emit();
+            this.loadingBar.complete();
             this.alertService.modifySuccess();
           });
         } else {
+          this.loadingBar.complete();
           this.alertService.modifyFail(data.ErrorMessages);
         }
       }, (err) => {
+        this.loadingBar.complete();
         this.alertService.modifyFail(err);
       });
     }
   }
 }
-
-

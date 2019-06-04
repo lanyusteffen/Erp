@@ -5,18 +5,18 @@ import { RoleComponent } from './role.component';
 
 export const ROUTES: Routes = [
     {
-      path: '',
-      children: [
-        { path: '', component: RoleComponent },
-        { path: 'disabled', component: RoleDisabledComponent }
-      ]
+        path: '',
+        children: [
+            { path: '', component: RoleComponent },
+            { path: 'disabled', component: RoleDisabledComponent }
+        ]
     }
-  ];
+];
 
-  @NgModule({
+@NgModule({
     imports: [RouterModule.forChild(ROUTES)],
     exports: [RouterModule]
-  })
+})
 
-  export class RoleRoutingModule {
-  }
+export class RoleRoutingModule {
+}
