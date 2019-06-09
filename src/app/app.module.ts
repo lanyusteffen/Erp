@@ -113,7 +113,6 @@ import { SystemConfigService } from './modules/admins/path/systemconfig/systemco
 import { CompanyService } from './modules/admins/path/company/company.service';
 import { UserService } from './modules/admins/path/user/user.service';
 import { RoleService } from './modules/admins/path/role/role.service';
-import { UserModifyComponent } from './modules/admins/path/user/components/modify/modify.component';
 import { UserPasswordComponent } from './modules/admins/path/user/components/password/password.component';
 import { DpDatePickerModule, DatePickerComponent } from 'ng2-date-picker';
 
