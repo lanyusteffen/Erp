@@ -1,41 +1,42 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onSubmit(form, form.valid)" novalidate *ngIf="formReady">
-  <app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
-	<div class="card-content">
-		<div class="heading">
-			基本信息
+  	<app-card [header]="getTitle()" [show]="_show" (onCancel)="handleClose()">
+		<div class="card-content">
+			<div class="heading">
+				基本信息
+			</div>
+			<table class="form">
+				<tr>
+					<th class="form-label">
+						<span class="required">*</span>
+						角色名称:
+					</th>
+					<td class="form-control-group">
+						<app-form-field [name]="'Name'">
+							<input #formField type="text" class="form-control" [ngModel] formControlName="Name">
+						</app-form-field>
+					</td>
+					<th class="form-label">
+						<span class="required">*</span>
+						内部角色:
+					</th>
+					<td class="form-control-group">
+						<app-ui-radio [radioName]="'IsInternal'" [value]="1" formControlName="IsInternal" [label]="'是'"
+							[ngModel]></app-ui-radio>
+						<app-ui-radio [radioName]="'IsInternal'" [checked]="true" [value]="0" formControlName="IsInternal" [label]="'否'"
+							[ngModel]></app-ui-radio>
+					</td>
+				</tr>
+			</table>
+			<div class="heading">备注</div>
+			<input type="text" formControlName="Remark" class="form-control" [ngModel]>
 		</div>
-		<table class="form">
-			<tr>
-				<th class="form-label">
-					<span class="required">*</span>
-					角色名称:
-				</th>
-				<td class="form-control-group">
-					<app-form-field [name]="'Name'">
-						<input #formField type="text" class="form-control" [ngModel] formControlName="Name">
-					</app-form-field>
-				</td>
-				<th class="form-label">
-					<span class="required">*</span>
-					是否为内部角色, 是则不能删除:
-				</th>
-				<td class="form-control-group">
-					<app-form-field [name]="'IsInternal'">
-						<input #formField type="text" class="form-control" [ngModel] formControlName="IsInternal">
-					</app-form-field>
-				</td>
-			</tr>
-		</table>
-		<div class="heading">备注</div>
-		<input type="text" formControlName="Remark" class="form-control" [ngModel]>
-	</div>
-    <div app-card-footer>
-      <app-ui-button [style]="'primary'" type="submit">
-        保存
-      </app-ui-button>
-      <app-ui-button (click)="handleClose()">
-        取消
-      </app-ui-button>
-    </div>
-  </app-card>
+		<div app-card-footer>
+		<app-ui-button [style]="'primary'" type="submit">
+			保存
+		</app-ui-button>
+		<app-ui-button (click)="handleClose()">
+			取消
+		</app-ui-button>
+		</div>
+  	</app-card>
 </form>

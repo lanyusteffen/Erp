@@ -7,7 +7,7 @@
         </th>
         <th>操作</th>
 	      <th>角色名称</th>
-	      <th>是否为内部角色, 是则不能删除</th>
+	      <th>内部角色</th>
       </tr>
     </thead>
     <tbody>
@@ -19,8 +19,8 @@
           <a (click)="restore(item.Id)">还原</a>
           <a class="text-danger" *ngIf="!systemConfig.IsOpenBill" (click)="delete(item.Id)">删除</a>
         </td>
-        <td>角色名称</td>
-        <td>是否为内部角色, 是则不能删除</td>
+        <td>{{item.Name}}</td>
+        <td>{{item.IsInternal}}</td>
       </tr>
     </tbody>
   </app-ui-table>
