@@ -284,6 +284,10 @@ export class AlertService {
       case ModuleName.ButtonStyle:
         name = '按钮类型';
         break;
+
+      case ModuleName.Receive:
+        name = '入库单';
+      break;
     }
 
     return name;
@@ -336,5 +340,6 @@ export enum ModuleName {
   StorageOut,
   Menu,
   Permission,
-  ButtonStyle
+  ButtonStyle,
+  Receive
 }

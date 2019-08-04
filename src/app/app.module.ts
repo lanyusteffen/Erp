@@ -287,7 +287,6 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     UserControlComponent,
     UserDisabledComponent,
     UserDisabledListComponent,
-    UserModifyComponent,
     UserPasswordComponent,
     RoleComponent,
     RoleListComponent,

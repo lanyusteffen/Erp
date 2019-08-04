@@ -9,7 +9,6 @@ import { UserComponent } from './user.component';
 import { UserListComponent } from './components/list/list.component';
 import { UserActionsComponent } from './components/actions/actions.component';
 import { UserControlComponent } from './components/control/control.component';
-import { UserModifyComponent } from './components/modify/modify.component';
 import { UserPasswordComponent } from './components/password/password.component';
 import { UserDisabledComponent } from './user-disabled.component';
 import { UserDisabledListComponent } from './components/disabled/disabled.component';
@@ -28,7 +27,6 @@ import { SimpleReuseStrategy } from '@strategies/SimpleReuseStrategy';
     UserListComponent,
     UserActionsComponent,
     UserControlComponent,
-    UserModifyComponent,
     UserPasswordComponent,
     UserDisabledComponent,
     UserDisabledListComponent
