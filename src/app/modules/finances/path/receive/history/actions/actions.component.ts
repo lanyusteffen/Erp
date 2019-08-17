@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, Input } from '@angular/core';
-import { ReceiveService } from '../../order.service';
+import { ReceiveService } from '../../receive.service';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { AlertService } from '@services/alert.service';
 import { DatePipe } from '@angular/common';
