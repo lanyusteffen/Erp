@@ -208,7 +208,15 @@ import { PermissionControlComponent } from './modules/admins/path/permission/com
 import { PermissionDisabledListComponent } from './modules/admins/path/permission/components/disabled/disabled.component';
 import { PermissionListComponent } from './modules/admins/path/permission/components/list/list.component';
 import { PermissionDisabledComponent } from './modules/admins/path/permission/permission-disabled.component';
+
+import { ReceiveHistoryComponent } from './modules/finances/path/receive/history/history.component';
+import { ReceiveActionsComponent } from './modules/finances/path/receive/history/actions/actions.component';
+import { ReceiveListComponent } from './modules/finances/path/receive/history/list/list.component';
+import { ReceiveNewComponent } from './modules/finances/path/receive/new/new.component';
+import { ReceiveService } from './modules/finances/path/receive/receive.service';
+
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -369,6 +377,11 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     PermissionListComponent,
     PermissionDisabledComponent,
 
+    ReceiveHistoryComponent,
+    ReceiveActionsComponent,
+    ReceiveListComponent,
+    ReceiveNewComponent,
+
     AppMenuComponent
   ],
   imports: [
@@ -406,7 +419,8 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
     HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,
-    MenuService, StorageOutService, PermissionService],
+    MenuService, StorageOutService, PermissionService,
+    ReceiveService],
   bootstrap: [AppComponent]
 })
 

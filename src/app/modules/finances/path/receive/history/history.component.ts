@@ -72,7 +72,7 @@ export class ReceiveHistoryComponent implements OnInit {
   listErrorCallBack(err: any): void {
     this.alertService.open({
       type: 'danger',
-      content: '绑定采购订单列表失败!' + err
+      content: '绑定收款单列表失败!' + err
     });
   }
 

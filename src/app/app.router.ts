@@ -53,6 +53,7 @@ import { OtherExchangeUnitComponent } from './modules/basics/path/otherexchangeu
 import { OtherExchangeUnitDisabledComponent } from './modules/basics/path/otherexchangeunit/other-exchange-unit-disabled.component';
 import { PermissionComponent } from './modules/admins/path/permission/permission.component';
 import { PermissionDisabledComponent } from './modules/admins/path/permission/permission-disabled.component';
+import { ReceiveHistoryComponent } from './modules/finances/path/receive/history/history.component';
 
 export const ROUTES: Routes = [
     {
@@ -309,6 +310,11 @@ export const ROUTES: Routes = [
               {
                 path: 'admins/permission/disabled',
                 component: PermissionDisabledComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'finances/receive/history',
+                component: ReceiveHistoryComponent,
                 canActivate: [AuthGuard]
               },
               { path: '**', component: PageNotFoundComponent }
