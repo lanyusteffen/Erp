@@ -1,7 +1,7 @@
 <div class="actions">
     <div class="form-group">
       <div class="form-group-label">
-        <label>供应商：</label>
+        <label>付款单位：</label>
       </div>
       <div class="form-group-control">
         <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
@@ -9,7 +9,7 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>采购员：</label>
+        <label>经手人：</label>
       </div>
       <div class="form-group-control">
         <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
@@ -17,31 +17,18 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>采购部门：</label>
+        <label>收款账户：</label>
       </div>
       <div class="form-group-control">
-        <app-department-selector (onSelectedChange)="selectDepartment($event)" [isEditing]="false"></app-department-selector>
+        <app-fundsaccount-selector (onSelectedChange)="selectDepartment($event)" [isEditing]="false"></app-fundsaccount-selector>
       </div>
     </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>商品：</label>
-      </div>
-      <div class="form-group-control">
-          <div class="selector-group">
-              <input #queryGoodsName type="text" disabled="disabled" class="form-control" />
-              <span class="addon" (click)="showModal($event)">
-                <i class="iconfont"></i>选择
-              </span>
-            </div>
-        <app-popup-selector-goods-simple [customerId]="selectedCustomer ? selectedCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods-simple>
-      </div>
-    </div>
+   
 </div>
 <div class="actions">
     <div class="form-group">
         <div class="form-group-label">
-            <label>采购日期：</label>
+            <label>收款时间：</label>
         </div>
         <div class="form-group-control">
           <dp-date-picker theme="dp-material" [(ngModel)]="queryItem.BeginDate" mode="day" [config]="datePickerConfig"></dp-date-picker> 

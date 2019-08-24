@@ -43,7 +43,7 @@ const receiveItem = {
 };
 
 @Component({
-  selector: 'app-receive-order-new',
+  selector: 'app-receive-new',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.less'],
   providers: [ FormService, DatePipe ]

@@ -1,39 +1,33 @@
-import { Component, Input,Output, OnInit, ViewChild } from '@angular/core';
-import { EmployeeService } from '../../path/employee/employee.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FundsAccountService } from '../../path/fundsaccount/fundsaccount.service';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SelectComponent } from '@UI/select/select.component';
-import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
-  selector: 'app-employee-selector',
-  templateUrl: './employee-selector.component.html',
-  styleUrls: ['./employee-selector.component.less'],
+  selector: 'app-fundsaccount-selector',
+  templateUrl: './fundsaccount-selector.component.html',
+  styleUrls: ['./fundsaccount-selector.component.less'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: EmployeeSelectorComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: FundsAccountSelectorComponent, multi: true }
   ]
 })
 
-export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
+export class FundsAccountSelectorComponent implements OnInit, ControlValueAccessor {
   private list = [];
   private innerValue: any;
   private onTouched;
   private onChange;
   private dataInitialized = false;
 
-  
-  @LocalStorage()
-  @Output()
-  selectedTab: string;
-
   @Input()
   private isEditing = false;
 
   // 获取模板内的第一个指定组件
   @ViewChild(SelectComponent)
-  private selectEmployee: SelectComponent;
+  private selectArea: SelectComponent;
 
-  constructor(private employeeService: EmployeeService, private alertService: AlertService) {  }
+  constructor(private fundsAccountService: FundsAccountService, private alertService: AlertService) { }
 
   ngOnInit() {
     if (!this.dataInitialized && !this.isEditing) {
@@ -43,7 +37,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   bindListData(next: () => void): void {
-    this.employeeService
+    this.fundsAccountService
     .all(data => {
       this.list = data.map(item => ({
         label: item.Name,
@@ -53,7 +47,7 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
         next();
       }
     }, (err) => {
-      this.alertService.getErrorCallBack(ModuleName.Employee, err);
+      this.alertService.listErrorCallBack(ModuleName.Area, err);
     });
   }
 
@@ -62,14 +56,12 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
       this.dataInitialized = true;
       this.bindListData(() => {
         this.innerValue = value || -1;
-        this.selectEmployee.value = this.innerValue;
+        this.selectArea.value = this.innerValue;
       });
     } else {
       this.innerValue = value || -1;
-      this.selectEmployee.value = this.innerValue;
+      this.selectArea.value = this.innerValue;
     }
-    
-    this.getDisplayName(value);
   }
 
   registerOnChange(fn) {
@@ -83,16 +75,5 @@ export class EmployeeSelectorComponent implements OnInit, ControlValueAccessor {
   handleChange(value) {
     this.innerValue = value;
     this.onChange(value);
-    this.getDisplayName(value);
-  }
-
-  getDisplayName(value){
-
-    this.list.forEach((item)=>{
-      if(item.value === value){
-        this.selectedTab = item.label;
-        return;
-      }
-    });
   }
 }

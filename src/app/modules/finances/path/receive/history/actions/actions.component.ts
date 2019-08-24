@@ -6,8 +6,8 @@ import { DatePipe } from '@angular/common';
 import { ConfirmService } from '@services/confirm.service';
 import { ModuleName } from '@services/alert.service';
 import { NavItem } from '@contracts/nav.item';
-import { PopupSelectorGoodsSimpleComponent } from 
-'../../../../../products/components/popup-selector-goods-simple/popup-selector-goods-simple.component';
+import { FundsAccountSelectorComponent } from '../../../../components/fundsaccount.component-selector/fundsaccount-selector.component';
+
 
 const queryItemBase = {
   CustomerId: null,
@@ -31,8 +31,8 @@ const queryItemBase = {
 })
 export class ReceiveActionsComponent implements OnInit {
 
-  @ViewChild(PopupSelectorGoodsSimpleComponent)
-  private goodsPopupSelector: PopupSelectorGoodsSimpleComponent;
+  @ViewChild(FundsAccountSelectorComponent)
+  private fundsAccountsSelector: FundsAccountSelectorComponent;
 
   @ViewChild('queryGoodsName')
   private el: ElementRef;
@@ -162,6 +162,5 @@ export class ReceiveActionsComponent implements OnInit {
   }
 
   showModal() {
-    this.goodsPopupSelector.show = true;
   }
 }

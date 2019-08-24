@@ -34,11 +34,12 @@
     [current]="pagination.PageIndex"
     (onChange)="onPageChange($event)"
   ></app-pagination-bar>
-  <!-- <app-user-modify
+  <app-user-control
     [userId]="selectedId"
     [show]="_showUpdate"
+    [type]="modify" 
     (onClose)="closeUpdate()"
-  ></app-user-modify> -->
+  ></app-user-control>
   <app-user-password
     [userId]="selectedId"
     [show]="_showPassword"

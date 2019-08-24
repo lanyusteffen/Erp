@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter,ViewChild } from '@angular/core';
 import { UserService } from '../../user.service';
 import { FormService } from '@services/form.service';
 import { FormGroup } from '@angular/forms';
 import { AlertService, ModuleName } from '@services/alert.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { EmployeeSelectorComponent } from '../../../../../basics/components/employee-selector/employee-selector.component';
 
 @Component({
   selector: 'app-user-control',
@@ -15,6 +16,9 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 })
 
 export class UserControlComponent {
+
+  @ViewChild(EmployeeSelectorComponent)
+  private employeeSelector: EmployeeSelectorComponent;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
 
@@ -92,6 +96,9 @@ export class UserControlComponent {
   }
 
   onSubmit({ value }, isValid) {
+
+    value.EmployeeName = this.employeeSelector.selectedTab ;
+
     if (!isValid) {
       return;
     }

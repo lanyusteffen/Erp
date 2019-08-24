@@ -156,7 +156,7 @@ export class ReceiveService {
     }
 
     addNew(next: (data: any) => void, fallback: (error: any) => void) {
-        return this.http.post('/Receive/GetForNew', {}, next, fallback, ModuleType.Webadmin);
+        return this.http.post('/Receive/GetForNew', {}, next, fallback, ModuleType.Finance);
     }
 
     copyNew(entityId, next: (data: any) => void, fallback: (error: any) => void) {
@@ -168,7 +168,7 @@ export class ReceiveService {
     updateOne(entityId, next: (data: any) => void, fallback: (error: any) => void) {
         return this.http.post('/Receive/GetForModify', {
             entityId
-        }, next, fallback, ModuleType.Webadmin);
+        }, next, fallback, ModuleType.Finance);
     }
 
     create(receive, next: (data: any) => void, fallback: (error: any) => void) {

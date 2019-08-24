@@ -1,0 +1,92 @@
+<div class="table-wrapper">
+    <app-ui-table>
+        <thead>
+            <tr>
+                <th>
+                    <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+                </th>
+                <th>操作</th>
+
+                <th>单据编号</th>
+
+                <th>付款单位</th>
+
+                <th>经手人</th>
+
+                <th>收款日期</th>
+
+                <th>收款账户</th>
+
+                <th>收款总金额</th>
+
+                <th>优惠金额</th>
+
+                <th>已用金额</th>
+
+                <th>可用金额</th>
+
+                <th>结算单据</th>
+
+                <th>核销单据</th>
+
+                <th>单据状态</th>
+
+                <th>单据备注</th>
+
+                <th>制单人</th>
+
+                <th>输出操作</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of receives">
+                <td>
+                    <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+                </td>
+                <td>
+                    <a (click)="update(item.Id)">修改</a>
+                    <a class="text-danger" *ngIf="!item.IsUsed" (click)="onRemove(item.Id)">删除</a>
+                    <a class="text-danger" (click)="onCancel(item.Id)">停用</a>
+                </td>
+
+                <td>{{item.Code}}</td>
+
+                <td>{{item.CustomerName}}</td>
+
+                <td>{{item.EmployeeName}}</td>
+
+                <td>{{item.BillTime}}</td>
+
+                <td>{{item.ReceiveAccounts}}</td>
+
+                <td>{{item.TotalPayAmount}}</td>
+
+                <td>{{item.TotalDiscountAmount}}</td>
+
+                <td>{{item.TotalCheckoutAmount}}</td>
+
+                <td>{{item.PayedAmount}}</td>
+
+                <td>{{item.AvailableAmount}}</td>
+
+                <td>{{item.SettlementBills}}</td>
+
+                <td>{{item.VerifyBills}}</td>
+
+                <td>{{item.Status}}</td>
+
+                <td>{{item.Remark}}</td>
+
+                <td>{{item.CreateUserName}}</td>
+
+                <td></td>
+
+            </tr>
+        </tbody>
+    </app-ui-table>
+    <app-pagination-bar [total]="pagination.ItemCount" [current]="pagination.PageIndex"
+        (onChange)="onPageChange($event)"></app-pagination-bar>
+    <app-fundsaccount-control [type]="'update'" [fundsAccountId]="selectedId" [show]="_showUpdate"
+        (onClose)="closeUpdate()"></app-fundsaccount-control>
+</div>

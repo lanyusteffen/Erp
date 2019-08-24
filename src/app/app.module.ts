@@ -214,6 +214,7 @@ import { ReceiveActionsComponent } from './modules/finances/path/receive/history
 import { ReceiveListComponent } from './modules/finances/path/receive/history/list/list.component';
 import { ReceiveNewComponent } from './modules/finances/path/receive/new/new.component';
 import { ReceiveService } from './modules/finances/path/receive/receive.service';
+import { FinancesSharedModule } from './modules/finances/components/finances.shared.module';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { from } from 'rxjs';
@@ -395,6 +396,7 @@ import { from } from 'rxjs';
     AuthorizeModule,
     SharedModule,
     BasicsSharedModule,
+    FinancesSharedModule,
     InventorysSharedModule,
     ProductsSharedModule,
     AppRoutingModule,

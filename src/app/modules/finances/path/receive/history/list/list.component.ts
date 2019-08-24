@@ -64,7 +64,6 @@ export class ReceiveListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSystemConfig();
-    this.getProductConfig();
     this.receiveOrderService.list((err) => {
       this.alertService.listErrorCallBack(ModuleName.Receive, err);
       this.loadingBar.complete();
@@ -77,21 +76,6 @@ export class ReceiveListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  getProductConfig(): any {
-    if (!this.productConfig) {
-      this.appService.getProductConfig((data) => {
-        this.productConfig = data;
-      }, (err) => {
-        this.alertService.open({
-          type: 'danger',
-          content: '获取系统配置失败' + err
-        });
-      });
-    }
-    this.propertyName1 = this.productConfig.PropertyName1;
-    this.propertyName2 = this.productConfig.PropertyName2;
-    return this.productConfig;
-  }
 
   getSystemConfig(): any {
     if (!this.systemConfig) {
