@@ -9,6 +9,8 @@ export class PurchaseItemValid {
             return null;
         }
 
+        console.log(itemArr);
+
         const result = new Array();
 
         for (let i = 0; i < itemArr.length; i++) {

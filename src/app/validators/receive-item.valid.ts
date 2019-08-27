@@ -5,6 +5,7 @@ export class ReceiveItemValid {
 
     public static validation(itemArr: FormArray) {
 
+        
         if (itemArr.value == null || typeof itemArr.value === 'undefined') {
             return null;
         }
@@ -13,24 +14,31 @@ export class ReceiveItemValid {
 
         for (let i = 0; i < itemArr.length; i++) {
             const item = <FormGroup>itemArr.at(i);
-            const goodsIdCtrl = <FormControl>item.controls['GoodsId'];
-            const quanlityCtrl = <FormControl>item.controls['Quanlity'];
-            const priceCtrl = <FormControl>item.controls['Price'];
-            if (PrimaryKeyValid.validation(goodsIdCtrl) != null) {
+
+
+            const accountIdCtrl = <FormControl>item.controls['AccountId'];
+            
+            const priceCtrl = <FormControl>item.controls['PayAmount'];
+
+            if (accountIdCtrl == null || priceCtrl==null) {
                 continue;
             }
 
-            if (NumberDecimalValid.validation(quanlityCtrl) != null || parseInt(quanlityCtrl.value, 10) < 0) {
+            
+            if(PrimaryKeyValid.validation(accountIdCtrl)!=null || parseInt(accountIdCtrl.value, 10) < 0){
                 result.push({
                     valid: false,
-                    propertyName: 'Quanlity',
+                    propertyName: 'AccountId',
                     row: i,
-                    errMsg: '数量必须为正数!'
+                    errMsg: '请选择银行账户!'
                 });
-            } else if (NumberDecimalValid.validation(priceCtrl) != null || parseInt(priceCtrl.value, 10) < 0) {
+            }
+
+
+           if (NumberDecimalValid.validation(priceCtrl) != null || parseInt(priceCtrl.value, 10) < 0) {
                 result.push({
                     valid: false,
-                    propertyName: 'Price',
+                    propertyName: 'PayAmount',
                     row: i,
                     errMsg: '价格必须为正数!'
                 });
