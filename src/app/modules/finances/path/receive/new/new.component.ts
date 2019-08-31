@@ -1,5 +1,5 @@
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ɵSWITCH_CHANGE_DETECTOR_REF_FACTORY__POST_R3__ } from '@angular/core';
 import { PopupSelectorEmployeeComponent } from '../../../../basics/components/popup-selector-employee/popup-selector-employee.component';
 import { CustomerPopupSelectorComponent } from '../../../../basics/components/customer-popup-selector/customer-popup-selector.component';
 import { IDatePickerConfig } from 'ng2-date-picker';
@@ -14,36 +14,80 @@ import { NumberDecimalValid } from '@validators/number-decimal.valid';
 import { ReceiveItemValid } from '@validators/receive-item.valid';
 import { ActivatedRoute } from '@angular/router';
 
-const receiveItem = {
-BillTime: "0001-01-01 00:00:00",
-BillType: 0,
-Code: null,
-CompanyId: 0,
-CustomerId: 0,
-CustomerName: null,
-CustomerType: 0,
-EmployeeId: 0,
-EmployeeName: null,
-FinanceShouldPayActionRequest: {},
-FinanceShouoldReiceveActionRequest: {},
-Id: 0,
-Name: null,
-ReceiveAccountActionRequests: [],
-ReceiveBillActionRequests: [],
-ReceiveItemActionRequests: [],
-ReceiveTime: null,
-Remark: null,
-SortIndex: 0,
-SourceUserId: null,
-Status: 1,
-TotalCheckoutAmount: null,
-TotalDiscountAmount: null,
-TotalPayAmount: null,
-TransactionId: null,
-TransactionKey: null,
-UserId: 0,
-UserName: null,
+//收款单
+const receive = {
+  BillTime: "0001-01-01 00:00:00",
+  BillType: 0,
+  Code: null,
+  CompanyId: 0,
+  CustomerId: 0,
+  CustomerName: null,
+  CustomerType: 0,
+  EmployeeId: 0,
+  EmployeeName: null,
+  FinanceShouldPayActionRequest: {},
+  FinanceShouoldReiceveActionRequest: {},
+  Id: 0,
+  Name: null,
+  ReceiveAccountActionRequests: [],
+  ReceiveBillActionRequests: [],
+  ReceiveItemActionRequests: [],
+  ReceiveTime: null,
+  TotalCheckoutAmount: null,
+  TotalDiscountAmount: null,
+  TotalPayAmount: null
 };
+
+//收款单明细
+const receiveItem = {
+  BillCode: null,
+  BillId: 0,
+  BillType: 0,
+  Code: null,
+  CompanyId: 0,
+  CurrentCheckOutAmount: null,
+  Id: 0,
+  Name: null,
+  ReceiveId: 0
+};
+
+//收款账户
+var receiveAccount = {
+  AccountCode: null,
+  AccountId: 0,
+  AccountInfo: null,
+  Code: null,
+  CompanyId: 0,
+  Id: 0,
+  Name: null,
+  PayAmount: 0,
+  ReceiveId: 0
+};
+
+var receiveBill = {
+  BillAmount: 0,
+  BillCode: null,
+  BillId: 0,
+  BillTime: "0001-01-01 00:00:00",
+  BillType: 0,
+  CheckoutAmount: null,
+  Code: null,
+  CompanyId: 0,
+  CustomerId: 0,
+  CustomerType: 0,
+  Id: 0,
+  Name: null,
+  Remark: null,
+  SortIndex: 0,
+  Status: 1,
+  TransactionId: null,
+  TransactionKey: null,
+  UnCheckoutAmount: null,
+  CurrentCheckOutAmount:null,
+  UserId: 0,
+  UserName: null
+
+}
 
 @Component({
   selector: 'app-receive-new',
@@ -164,14 +208,24 @@ export class ReceiveNewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit({ value }, isValid) {
+
+    console.log(value);
+      
+    value.BillTime = this.datePipe.transform(<Date>value.BillTime, 'yyyy-MM-dd HH:mm:ss');
+
+    this.resolveReceiveItems(value);
+    
+    return;
+
     if (isValid) {
-      value.ReceiveTime = this.datePipe.transform(<Date>value.ReceiveTime, 'yyyy-MM-dd HH:mm:ss');
+    
+
       if (value.Id === 0) {
         this.receiveService.create(value, data => {
           if (data.IsValid) {
             this.alertService.open({
               type: 'success',
-              content: '采购单' + data.Code + '新增成功！'
+              content: '收款单' + data.Code + '新增成功！'
             });
             this.reset();
           } else {
@@ -199,6 +253,26 @@ export class ReceiveNewComponent implements OnInit, OnDestroy {
       this.errorService.renderErrorItems(this.form,
         (key, controlErrors) => this.getErrorMessage(key, controlErrors));
     }
+  }
+
+  resolveReceiveItems(receive){
+
+    var receiveBillActionRequests = receive.ReceiveBillActionRequests;
+
+    receive.ReceiveItemActionRequests = [];
+
+    receiveBillActionRequests.forEach((val, idx, array) => {
+     
+      var receiveItemActionRequest ={
+        BillId : val.BillId,
+        BillCode : val.BillCode,
+        BillType : val.BillType,
+        CurrentCheckOutAmount : val.CurrentCheckOutAmount
+      };
+
+      receive.ReceiveItemActionRequests.push(receiveItemActionRequest);
+    });
+
   }
 
   getErrorMessage(key: string, controlErrors: ValidationErrors) {
@@ -250,25 +324,24 @@ export class ReceiveNewComponent implements OnInit, OnDestroy {
 
   new() {
     this.receiveService
-      .addNew(data => {
-        console.log(data);       
-        data.ReceiveTime = this.datePipe.transform(<Date>data.ReceiveTime, 'yyyy-MM-dd'),
+      .addNew(data => {    
+        data.BillTime = this.datePipe.transform(<Date>data.BillTime, 'yyyy-MM-dd'),
         this.form = this.formService.createForm(data, this.getValidators());
       }, (err) => {
         this.alertService.getErrorCallBack(ModuleName.Receive, err);
       });
   }
 
-  addReceiveAccount(idx, newReceiveItem) {
+  addReceiveAccount(idx, newReceiveAccount) {
 
     const control = <FormArray>this.form.controls['ReceiveAccountActionRequests'];
-    control.insert(idx, this.fb.group(newReceiveItem));
+    control.insert(idx, this.fb.group(newReceiveAccount));
   }
 
   addAccount(idx) {
     const control = <FormArray>this.form.controls['ReceiveAccountActionRequests'];
-    const newReceiveItem = Object.assign({}, receiveItem);
-    control.insert(idx + 1, this.fb.group(newReceiveItem));
+    const newReceiveAccount = Object.assign({}, receiveAccount);
+    control.insert(idx + 1, this.fb.group(newReceiveAccount));
   }
 
   removeAccount(idx) {
@@ -285,8 +358,8 @@ export class ReceiveNewComponent implements OnInit, OnDestroy {
 
   addBillItem(idx) {
     const control = <FormArray>this.form.controls['ReceiveBillActionRequests'];
-    const newReceiveItem = Object.assign({}, receiveItem);
-    control.insert(idx + 1, this.fb.group(newReceiveItem));
+    const newReceiveBill = Object.assign({}, receiveBill);
+    control.insert(idx + 1, this.fb.group(newReceiveBill));
   }
 
   removeBillItem(idx) {
@@ -295,35 +368,55 @@ export class ReceiveNewComponent implements OnInit, OnDestroy {
     control.removeAt(idx);
   }
 
-  calculate() {
-    this.calculateAll(0.00, -1);
-  }
+  calculateBill(){
 
-  calculateAll(calculatedReceiveAmount, index) {
+    const itemArr = <FormArray>this.form.controls['ReceiveBillActionRequests'];   
 
-    const itemArr = <FormArray>this.form.controls['ReceiveAccountActionRequest'];
-    for (let i = 0; i < itemArr.length; i++) {
-      if (i !== index) {
-        calculatedReceiveAmount += this.calculateItem('Amount', i, false);
+    let totalCheckoutAmount = 0;
+
+    if(itemArr!=null){
+      for (let i = 0; i < itemArr.length; i++) {
+        const item = <FormGroup>itemArr.at(i);
+
+        const payAmountCtrl = <FormControl>item.controls['CurrentCheckOutAmount'];
+
+        if (payAmountCtrl != null && NumberDecimalValid.validation(payAmountCtrl) == null) {
+
+          totalCheckoutAmount += Number(payAmountCtrl.value);
+        }
+
       }
-    }
-
-    this.totalPayAmount = angularMath.getNumberWithDecimals(calculatedReceiveAmount, 2);
-
-    const totalDiscountAmount = (<FormControl>this.form.controls['TotalDiscountAmount']).value;
-    let totalDiscountRate = (<FormControl>this.form.controls['TotalDiscountRate']).value;
-    totalDiscountRate = totalDiscountRate / 100.00;
-
-    calculatedReceiveAmount = calculatedReceiveAmount * (1 - totalDiscountRate);
-    calculatedReceiveAmount = calculatedReceiveAmount - totalDiscountAmount;
-
-    this.totalPayAmount = angularMath.getNumberWithDecimals(calculatedReceiveAmount, 2);
+    }    
+    
+    this.totalCheckoutAmount = angularMath.getNumberWithDecimals(Number(totalCheckoutAmount), 2);
+    
+    return totalCheckoutAmount;
   }
 
-  calculateItem(source, index, hasCalculateAll) {
 
-    const itemArr = <FormArray>this.form.controls['ReceiveAccountActionRequest'];
-    const item = <FormGroup>itemArr.at(index);
+  calculateAmount(source, index, hasCalculateAll) {
+
+    const itemArr = <FormArray>this.form.controls['ReceiveAccountActionRequests'];   
+
+    let totalPayAmount = 0;
+
+    if(itemArr!=null){
+      for (let i = 0; i < itemArr.length; i++) {
+        const item = <FormGroup>itemArr.at(i);
+
+        const payAmountCtrl = <FormControl>item.controls['PayAmount'];
+
+        if (payAmountCtrl != null && NumberDecimalValid.validation(payAmountCtrl) == null) {
+
+           totalPayAmount += Number(payAmountCtrl.value);
+        }
+
+      }
+    }    
+    
+    this.totalPayAmount = angularMath.getNumberWithDecimals(Number(totalPayAmount), 2);
+    
+    return totalPayAmount;
 
   }
 }
