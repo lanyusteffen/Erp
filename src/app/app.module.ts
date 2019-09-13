@@ -122,6 +122,13 @@ import { PurchaseHistoryComponent } from './modules/purchases/path/order/history
 import { PurchaseActionsComponent } from './modules/purchases/path/order/history/actions/actions.component';
 import { PurchaseListComponent } from './modules/purchases/path/order/history/list/list.component';
 
+import { SalesService } from './modules/sales/path/order/order.service';
+import { SaleNewComponent } from './modules/sales/path/order/new/new.component';
+import { SaleHistoryComponent } from './modules/sales/path/order/history/history.component';
+import { SaleActionsComponent } from './modules/sales/path/order/history/actions/actions.component';
+import { SaleListComponent } from './modules/sales/path/order/history/list/list.component';
+
+
 import { ProductComponent } from './modules/products/path/product/product.component';
 import { ProductDisabledComponent } from './modules/products/path/product/product-disabled.component';
 import { StorageComponent } from './modules/products/path/storage/storage.component';
@@ -359,6 +366,11 @@ import { from } from 'rxjs';
     PurchaseActionsComponent,
     PurchaseListComponent,
 
+    SaleNewComponent,
+    SaleHistoryComponent,
+    SaleActionsComponent,
+    SaleListComponent,
+
     StorageOutNewComponent,
     StorageOutHistoryComponent,
     StorageOutActionsComponent,
@@ -417,7 +429,7 @@ import { from } from 'rxjs';
     FundsAccountService, OtherIncomeService, FeeTypeService,
     SystemConfigService, CompanyService, UserService, RoleService,
     AreaService, CustomerService, DepartmentService, EmployeeService, OtherExchangeUnitService, SupplierService,
-    PurchaseService,
+    PurchaseService,SalesService,
     ProductService, SystemUnitService, StorageService,
     ProductColorService, ProductSizeService, ProductUnitService, ProductConfigService,
     HttpService, TabsService, NavService, AlertService, ConfirmService, ErrorService, AuthGuard, AuthService,

@@ -55,6 +55,8 @@ import { PermissionComponent } from './modules/admins/path/permission/permission
 import { PermissionDisabledComponent } from './modules/admins/path/permission/permission-disabled.component';
 import { ReceiveHistoryComponent } from './modules/finances/path/receive/history/history.component';
 import { ReceiveNewComponent } from './modules/finances/path/receive/new/new.component';
+import { SaleNewComponent } from './modules/sales/path/order/new/new.component';
+import { SaleHistoryComponent } from './modules/sales/path/order/history/history.component';
 
 export const ROUTES: Routes = [
     {
@@ -279,6 +281,21 @@ export const ROUTES: Routes = [
                 canActivate: [AuthGuard]
               },
               {
+                path: 'purchases/order/history',
+                component: PurchaseHistoryComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'sales/order',
+                component: SaleNewComponent,
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'sales/order/history',
+                component: SaleHistoryComponent,
+                canActivate: [AuthGuard]
+              },
+              {
                 path: 'inventorys/storageout',
                 component: StorageOutNewComponent,
                 canActivate: [AuthGuard]
@@ -286,11 +303,6 @@ export const ROUTES: Routes = [
               {
                 path: 'inventorys/storageout/history',
                 component: StorageOutHistoryComponent,
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'purchases/order/history',
-                component: PurchaseHistoryComponent,
                 canActivate: [AuthGuard]
               },
               {

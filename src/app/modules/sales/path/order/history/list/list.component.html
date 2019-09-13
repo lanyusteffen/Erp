@@ -1,0 +1,93 @@
+<div class="table-wrapper">
+  <app-ui-table>
+    <thead>
+      <tr>
+        <th>
+          <app-ui-checkbox [checked]="allSelected" (onChange)="selectAll($event)"></app-ui-checkbox>
+        </th>
+        <th>操作</th>
+        <th>单据编号</th>
+        <th>供应商</th>
+        <th>销售员</th>
+        <th>销售部门</th>
+        <th>销售日期</th>
+        <th>销售数量</th>
+        <th>销售金额</th>
+        <th>单据状态</th>
+        <th>单据备注</th>
+        <th>制单人</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of sales">
+        <td>
+          <app-ui-checkbox [checked]="item.selected" (onChange)="select($event, item)"></app-ui-checkbox>
+        </td>
+        <td>
+          <a *ngIf="selectNav.AuditStatus === 0" (click)="audit(item)">审核</a>
+          <a *ngIf="selectNav.AuditStatus === 1" (click)="unAudit(item)">反审核</a>
+          <a (click)="showItem(item)">查看明细</a>
+          <a (click)="edit(item)">修改</a>
+          <a *ngIf="selectNav.AuditStatus === 1" (click)="storageIn(item)">原单入库</a>
+          <a *ngIf="selectNav.AuditStatus === 0" class="text-danger" (click)="cancel(item)">删除</a>
+          <a (click)="copy(item)">复制</a>
+        </td>
+        <td>{{item.Code}}</td>
+        <td>{{item.CustomerName}}</td>
+        <td>{{item.EmployeeName}}</td>
+        <td>{{item.DepartmentName}}</td>
+        <td>{{item.PurchaseTime}}</td>
+        <td>{{item.Quanlity | number: '1.2'}}</td>
+        <td>{{item.Amount | number: '1.2'}}</td>
+        <td>{{item.StatusDes}}</td>
+        <td>{{item.Remark}}</td>
+        <td>{{item.CreateUserName}}</td>
+      </tr>
+    </tbody>
+  </app-ui-table>
+  <app-pagination-bar
+    [total]="pagination.ItemCount"
+    [current]="pagination.PageIndex"
+    (onChange)="onPageChange($event)"
+  ></app-pagination-bar>
+  <app-card [header]="'销售单明细'" [show]="_showItem" (onCancel)="closeItem()">
+      <app-ui-table>
+          <thead>
+            <tr>
+              <th>商品</th>
+              <th>规格型号</th>
+              <th width="60px">{{propertyName1}}</th>
+              <th width="60px">{{propertyName2}}</th>
+              <th>销售数量</th>
+              <th>销售单价</th>
+              <th>销售金额</th>
+              <th *ngIf="currentSale.IsOpenDiscount">折扣率</th>
+              <th *ngIf="currentSale.IsOpenDiscount">折扣额</th>
+              <th *ngIf="currentSale.IsOpenDiscount">折后金额</th>
+              <th *ngIf="currentSale.IsOpenTax">税率</th>
+              <th *ngIf="currentSale.IsOpenTax">税额</th>
+              <th *ngIf="currentSale.IsOpenTax">税后金额</th>
+              <th>仓库</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let saleItem of currentSale.ItemList">
+              <td>{{saleItem.Name}}</td>
+              <td>{{saleItem.Spec}}</td>
+              <td>{{saleItem.ProductSizeValue}}</td>
+              <td>{{saleItem.ProductColorValue}}</td>
+              <td>{{saleItem.Quanlity | number: '1.2'}}</td>
+              <td>{{saleItem.Price | number: '1.2'}}</td>
+              <td>{{saleItem.Amount | number: '1.2'}}</td>
+              <td *ngIf="currentSale.IsOpenDiscount">{{saleItem.DiscountRate | number: '1.2'}}</td>
+              <td *ngIf="currentSale.IsOpenDiscount">{{saleItem.DiscountAmount | number: '1.2'}}</td>
+              <td *ngIf="currentSale.IsOpenDiscount">{{saleItem.AfterDiscountAmount | number: '1.2'}}</td>
+              <td *ngIf="currentSale.IsOpenTax">{{saleItem.TaxRate | number: '1.2'}}</td>
+              <td *ngIf="currentPurchase.IsOpenTax">{{saleItem.TaxAmount | number: '1.2'}}</td>
+              <td *ngIf="currentSale.IsOpenTax">{{saleItem.AfterTaxAmount | number: '1.2'}}</td>
+              <td>{{saleItem.StorageName}}</td>
+            </tr>
+          </tbody>
+      </app-ui-table>
+  </app-card>
+</div>

@@ -1,7 +1,7 @@
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { PrimaryKeyValid } from './primary-key.valid';
 import { NumberDecimalValid } from './number-decimal.valid';
-export class PurchaseItemValid {
+export class SaleItemValid {
 
     public static validation(itemArr: FormArray) {
 

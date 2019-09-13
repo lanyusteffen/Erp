@@ -1,0 +1,71 @@
+<div class="actions">
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>供应商：</label>
+      </div>
+      <div class="form-group-control">
+        <app-customer-popup-selector (onConfirm)="selectCustomer($event)"></app-customer-popup-selector>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>销售员：</label>
+      </div>
+      <div class="form-group-control">
+        <app-popup-selector-employee (onConfirm)="selectEmployee($event)"></app-popup-selector-employee>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>销售部门：</label>
+      </div>
+      <div class="form-group-control">
+        <app-department-selector (onSelectedChange)="selectDepartment($event)" [isEditing]="false"></app-department-selector>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>商品：</label>
+      </div>
+      <div class="form-group-control">
+          <div class="selector-group">
+              <input #queryGoodsName type="text" disabled="disabled" class="form-control" />
+              <span class="addon" (click)="showModal($event)">
+                <i class="iconfont"></i>选择
+              </span>
+            </div>
+        <app-popup-selector-goods-simple [customerId]="selectedCustomer ? selectedCustomer.Id : null" (onConfirm)="selectGoods($event)"></app-popup-selector-goods-simple>
+      </div>
+    </div>
+</div>
+<div class="actions">
+    <div class="form-group">
+        <div class="form-group-label">
+            <label>销售日期：</label>
+        </div>
+        <div class="form-group-control">
+          <dp-date-picker theme="dp-material" [(ngModel)]="queryItem.BeginDate" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+        </div>
+        <span> ~ </span>
+        <div class="form-group-control">
+          <dp-date-picker theme="dp-material" [(ngModel)]="queryItem.EndDate" mode="day" [config]="datePickerConfig"></dp-date-picker> 
+        </div>
+    </div>
+    <div class="more">
+        <app-ui-button [style]="'primary'" (click)="query($event)" type="button">
+            查询
+        </app-ui-button>
+        <app-ui-button *ngIf="selectNav.AuditStatus === 0" [style]="'primary'" (click)="audit()" type="button">
+            审核
+        </app-ui-button>
+        <app-ui-button *ngIf="selectNav.AuditStatus === 1" [style]="'primary'" (click)="unAudit()" type="button">
+            反审核
+        </app-ui-button>
+        <app-ui-button *ngIf="selectNav.AuditStatus === 0" [style]="'primary'" (click)="cancel()" type="button">
+            删除
+        </app-ui-button>
+        <app-ui-button [style]="'primary'">
+            导出
+        </app-ui-button>
+    </div>
+</div>

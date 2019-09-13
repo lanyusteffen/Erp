@@ -288,6 +288,10 @@ export class AlertService {
       case ModuleName.Receive:
         name = '入库单';
       break;
+
+      case ModuleName.Sale:
+        name = '销售订单';
+      break;
     }
 
     return name;
@@ -341,5 +345,6 @@ export enum ModuleName {
   Menu,
   Permission,
   ButtonStyle,
-  Receive
+  Receive,
+  Sale
 }
