@@ -405,7 +405,7 @@ export class SaleNewComponent implements OnInit, OnDestroy {
     let wholeDiscountRate = (<FormControl>this.form.controls['WholeDiscountRate']).value;
     wholeDiscountRate = wholeDiscountRate / 100.00;
 
-    calculatedSaleAmount = calculatedSaleAmount * (1 - wholeDiscountRate);
+    calculatedSaleAmount = calculatedSaleAmount * wholeDiscountRate;
     calculatedSaleAmount = calculatedSaleAmount - wholeDiscountAmount;
 
     this.payedAmount = angularMath.getNumberWithDecimals(calculatedSaleAmount, 2);
